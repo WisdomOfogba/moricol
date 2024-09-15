@@ -9,8 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "primary-50": "#FDF5E8",
+        "primary-400": "#E8AE42",
+        "primary-500": "#E29A13",
+        "primary-600": "#AA740E",
+        "primary-700": "#714D0A",
+        "secondary-400": "#E04235",
+        "secondary-600": "#A20E02",
+        "gray-700": "#374151",
+      },
+      fontSize: {
+        "5.5xl": "3.5rem",
       },
     },
   },
