@@ -1,7 +1,5 @@
-import Image from "next/image";
-
-export default function Blog({ param }: { param: string }) {
-  console.log(param);
+export default function Blog({ params }: { params: { id: string } }) {
+  console.log(params.id);
 
   return (
     <>

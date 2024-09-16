@@ -34,7 +34,7 @@ export default function Blog() {
           {Array(8)
             .fill("")
             .map((_, i) => (
-              <BlogCard id={i} />
+              <BlogCard key={i} id={i} />
             ))}
         </div>
       </section>
@@ -83,7 +83,7 @@ function BlogCard({ id }: { id: number }) {
           </h3>
           <p className="text-xxs">
             Dive into the world of verified seller networks and learn how
-            Payluk's rigorous identity verification process ...
+            Payluk&apos;s rigorous identity verification process ...
           </p>
 
           <div className="my-4 h-[0.42px] bg-[#E5E5E5]" />
