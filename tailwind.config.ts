@@ -16,9 +16,11 @@ const config: Config = {
         "primary-700": "#714D0A",
         "secondary-400": "#E04235",
         "secondary-600": "#A20E02",
+        "gray-500": "#6D7280",
         "gray-700": "#374151",
       },
       fontSize: {
+        "xxs": "0.638rem",
         "5.5xl": "3.5rem",
       },
     },
