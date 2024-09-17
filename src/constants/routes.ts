@@ -4,7 +4,7 @@ export const routes = {
   BLOG: "/blog",
   HOMECARE: "/homecare-services",
   CONSULTANCY: "/consultancy",
-  ONLINEPHARMACY: "/online-pharmarcy",
+  ONLINEPHARMACY: "/online-pharmacy",
   RECRUITMENT: "/recruitment",
   TRAINING: "/training",
   LOAN: "/loan",
