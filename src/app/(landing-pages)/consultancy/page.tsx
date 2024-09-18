@@ -1,4 +1,4 @@
-import CircleFolderSVG from "@/assets/svgs/circlefoldersvg";
+import CircleFolderSVG from "@/components/svgs/circlefoldersvg";
 import Image from "next/image";
 
 export default function Consultancy() {
@@ -6,16 +6,16 @@ export default function Consultancy() {
     <main className="pb-20">
       <section className="flex items-center justify-between gap-x-20 px-20 py-12">
         <div className="max-w-[600px]">
-          <h1 className="text-5.5xl mb-8 font-bold leading-[3.5rem]">
+          <h1 className="mb-8 text-5.5xl font-bold leading-[3.5rem]">
             Your Virtual Healthcare Hub
           </h1>
           <p>
-            Welcome to Moricol Healthcare&apos;s Telemedicine platform - your gateway
-            to accessible, convenient, and reliable healthcare from the comfort
-            of your home. Our telemedicine service is designed to connect you
-            with experienced Specialists, enabling you to receive personalized
-            medical consultations and expert advice without leaving your
-            doorstep.
+            Welcome to Moricol Healthcare&apos;s Telemedicine platform - your
+            gateway to accessible, convenient, and reliable healthcare from the
+            comfort of your home. Our telemedicine service is designed to
+            connect you with experienced Specialists, enabling you to receive
+            personalized medical consultations and expert advice without leaving
+            your doorstep.
           </p>
           <div className="mt-9 flex gap-x-2.5">
             <button className="w-full rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
@@ -67,7 +67,7 @@ export default function Consultancy() {
           height={600}
         />
         <div className="max-w-[600px]">
-          <h1 className="text-5.5xl mb-8 font-bold leading-[3.5rem]">
+          <h1 className="mb-8 text-5.5xl font-bold leading-[3.5rem]">
             Your Virtual Massage Hub
           </h1>
           <p>

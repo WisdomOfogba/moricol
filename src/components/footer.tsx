@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { footerLinks } from "@/constants/navlinks";
-import LocationSVG from "@/assets/svgs/locationsvg";
+import LocationSVG from "@/components/svgs/locationsvg";
 
 export default function Footer() {
   return (

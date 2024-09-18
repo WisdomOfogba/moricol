@@ -1,6 +1,6 @@
-import HierarchySVG from "@/assets/svgs/hierarchysvg";
-import StarSVG from "@/assets/svgs/starsvg";
-import Timersvg from "@/assets/svgs/timersvg";
+import HierarchySVG from "@/components/svgs/hierarchysvg";
+import StarSVG from "@/components/svgs/starsvg";
+import Timersvg from "@/components/svgs/timersvg";
 
 export const loans = [
   {
