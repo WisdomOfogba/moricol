@@ -10,17 +10,22 @@ const config: Config = {
     extend: {
       colors: {
         "primary-50": "#FDF5E8",
+        "primary-300": "#EEC271",
         "primary-400": "#E8AE42",
         "primary-500": "#E29A13",
         "primary-600": "#AA740E",
         "primary-700": "#714D0A",
+        "secondary-50": "#FCE8E6",
+        "secondary-300": "#E87167",
         "secondary-400": "#E04235",
+        "secondary-500": "#D81302",
         "secondary-600": "#A20E02",
+        "warning-500": "#CA8A04",
         "gray-500": "#6D7280",
         "gray-700": "#374151",
       },
       fontSize: {
-        "xxs": "0.638rem",
+        xxs: "0.638rem",
         "5.5xl": "3.5rem",
       },
     },
