@@ -10,7 +10,7 @@ export default function DashboardToolbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
-    <div className="relative flex h-[74px] items-center justify-end gap-x-9 bg-primary-500 px-10">
+    <header className="relative flex h-[74px] items-center justify-end gap-x-9 bg-primary-500 px-10">
       <MdNotifications className="text-3xl text-primary-50" />
       <Image
         src="/images/client.jpg"
@@ -22,7 +22,7 @@ export default function DashboardToolbar() {
       />
 
       {showProfileMenu && <ProfileDropdown />}
-    </div>
+    </header>
   );
 }
 
