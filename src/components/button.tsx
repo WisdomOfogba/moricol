@@ -18,7 +18,7 @@ const buttonVariants = cva("rounded-lg leading-[18.2px]", {
       primary:
         "py-3.5 px-4 bg-primary-500 text-white border border-primary-500 hover:bg-primary-500/80 hover:border-primary-500/80 transition-color duration-300",
       outline: "py-3.5 px-4 border border-[#E6E7EC]",
-      text: "",
+      text: "font-medium text-primary-500",
     },
     size: {
       fit: "w-fit",

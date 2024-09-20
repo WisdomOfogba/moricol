@@ -10,7 +10,7 @@ export default function DashboardToolbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
-    <header className="relative flex h-[74px] items-center justify-end gap-x-9 bg-primary-500 px-10">
+    <header className="sticky top-0 z-10 flex h-[74px] items-center justify-end gap-x-9 bg-primary-500 px-10">
       <MdNotifications className="text-3xl text-primary-50" />
       <Image
         src="/images/client.jpg"
@@ -28,7 +28,7 @@ export default function DashboardToolbar() {
 
 function ProfileDropdown() {
   return (
-    <article className="absolute top-[74px] w-full max-w-[320px] rounded-b-xl shadow-xl">
+    <article className="absolute top-[74px] w-full max-w-[320px] rounded-b-xl bg-white shadow-xl right-2">
       <div className="flex flex-col items-center justify-center gap-y-2 py-2">
         <div className="relative h-20 w-20 rounded-full bg-[url('/images/client.jpg')] bg-cover bg-no-repeat">
           <div className="absolute left-[57px] top-[60px]">

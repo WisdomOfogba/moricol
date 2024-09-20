@@ -7,9 +7,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex">
+    <section className="flex h-screen overflow-hidden">
       <DashboardSidebar />
-      <div className="grow">
+      <div className="no-scrollbar grow overflow-y-auto relative">
         <DashboardToolbar />
         {children}
       </div>
