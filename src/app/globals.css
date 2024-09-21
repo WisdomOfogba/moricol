@@ -16,3 +16,7 @@
     scrollbar-width: none;
   }
 }
+
+.gray-container {
+  @apply mx-auto max-w-[818px] rounded-3xl bg-gray-50;
+}

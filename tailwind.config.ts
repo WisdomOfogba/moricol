@@ -22,8 +22,6 @@ const config: Config = {
         "secondary-600": "#A20E02",
         "warning-500": "#CA8A04",
         "success-500": "#22C55E",
-        "gray-500": "#6D7280",
-        "gray-700": "#374151",
       },
       fontSize: {
         xxs: "0.638rem",

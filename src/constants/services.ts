@@ -60,6 +60,20 @@ export const services = {
           "This Platform includes an intuitive Appointment Scheduling and Reminders feature, enabling caregivers and Specialists to efficiently schedule, manage, and remind patients of their domiciliary care appointments.",
       },
     ],
+    services: [
+      {
+        bg: "/images/dashboard/swedish.png",
+        service: "Mobility assisting",
+      },
+      {
+        bg: "/images/dashboard/swedish.png",
+        service: "Personal Care",
+      },
+      {
+        bg: "/images/dashboard/swedish.png",
+        service: "Companionship",
+      },
+    ],
   },
   training: {
     title: "Training",
