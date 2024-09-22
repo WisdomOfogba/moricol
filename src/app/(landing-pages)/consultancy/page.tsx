@@ -1,4 +1,4 @@
-import CircleFolderSVG from "@/components/svgs/circlefoldersvg";
+import { CircleFolderSVG } from "@/components/svgs";
 import Image from "next/image";
 
 export default function Consultancy() {

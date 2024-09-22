@@ -1,4 +1,4 @@
-import { loans } from "@/constants/loan";
+import { loans } from "@/constants";
 import Image from "next/image";
 
 export default function Loan() {
@@ -10,12 +10,12 @@ export default function Loan() {
             Find Help in your Health Journey
           </h1>
           <p>
-            We understand that your health is a priority, and we&apos;re committed to
-            ensuring you have access to the best care possible. Medical expenses
-            can often come unannounced, causing stress and financial strain. Our
-            Medical Loan service is designed to ease this burden and empower you
-            to prioritize your well-being without compromising on quality
-            healthcare. experience.
+            We understand that your health is a priority, and we&apos;re
+            committed to ensuring you have access to the best care possible.
+            Medical expenses can often come unannounced, causing stress and
+            financial strain. Our Medical Loan service is designed to ease this
+            burden and empower you to prioritize your well-being without
+            compromising on quality healthcare. experience.
           </p>
           <div className="mt-9 flex gap-x-2.5">
             <button className="w-full max-w-[293px] rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
@@ -41,9 +41,15 @@ export default function Loan() {
           </h2>
 
           <div className="grid grid-cols-3 gap-x-20">
-            {loans.map(({ svg, details }, i) => (
-              <article className="rounded-lg border-4 border-[#9CA3AF] p-8 shadow-lg" key={i}>
-                <div className="mb-4 flex justify-center">{svg()}</div>
+            {loans.map(({ SvgComponent, details }, i) => (
+              <article
+                className="rounded-lg border-4 border-[#9CA3AF] p-8 shadow-lg"
+                key={i}
+              >
+                <div className="mb-4 flex justify-center">
+                  {" "}
+                  <SvgComponent />
+                </div>
                 <p className="fong text-center">{details}</p>
               </article>
             ))}

@@ -1,9 +1,8 @@
 import Accordion from "@/components/accordion";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { faq } from "@/constants/faq";
-import { feedback } from "@/constants/feedback";
-import { services } from "@/constants/services";
+import { faq, feedback, landingPageServices } from "@/constants";
+
 import { SectionTemplateProps } from "@/definition";
 import Image from "next/image";
 import Link from "next/link";
@@ -101,10 +100,10 @@ function Category() {
   return (
     <section className="relative flex flex-col items-center pb-32 pt-20">
       <div className="mb-8 max-w-[900px] text-center">
-        <p className="text-primary-600 mb-2 text-xl font-medium">
+        <p className="mb-2 text-xl font-medium text-primary-600">
           WHAT YOU NEED IN HEALTHCARE
         </p>
-        <h2 className="text-5.5xl mb-6 font-extrabold leading-[3.5rem]">
+        <h2 className="mb-6 text-5.5xl font-extrabold leading-[3.5rem]">
           Pick a Category
         </h2>
         <p className="text-lg">
@@ -116,11 +115,11 @@ function Category() {
       <Image src="/images/category-img.png" alt="" width={1100} height={694} />
 
       {/* Circles */}
-      <div className="bg-secondary-400 absolute -right-[201px] bottom-[125px] -z-50 h-[596px] w-[596px] rounded-full">
-        <div className="bg-secondary-600 absolute right-[257px] top-[76px] -z-50 h-[154px] w-[154px] rounded-full" />
+      <div className="absolute -right-[201px] bottom-[125px] -z-50 h-[596px] w-[596px] rounded-full bg-secondary-400">
+        <div className="absolute right-[257px] top-[76px] -z-50 h-[154px] w-[154px] rounded-full bg-secondary-600" />
       </div>
       <div className="absolute -left-[355px] top-1/2 -z-50 h-[710px] w-[710px] -translate-y-1/2 rounded-full bg-primary-500">
-        <div className="bg-primary-400 absolute right-[120px] top-[132px] h-[131px] w-[131px] rounded-full" />
+        <div className="absolute right-[120px] top-[132px] h-[131px] w-[131px] rounded-full bg-primary-400" />
       </div>
     </section>
   );
@@ -129,7 +128,7 @@ function Category() {
 function Telemedicine() {
   return (
     <SectionTemplateV1
-      data={Object.assign(services.telemedicine, {
+      data={Object.assign(landingPageServices.telemedicine, {
         img: {
           imgURL: "/images/telemedicine-img.png",
           altText:
@@ -143,7 +142,7 @@ function Telemedicine() {
 function HomeCare() {
   return (
     <SectionTemplateV2
-      data={Object.assign(services.homeCare, {
+      data={Object.assign(landingPageServices.homeCare, {
         img: {
           imgURL: "/images/homecare-img.png",
           altText:
@@ -157,7 +156,7 @@ function HomeCare() {
 function Training() {
   return (
     <SectionTemplateV1
-      data={Object.assign(services.training, {
+      data={Object.assign(landingPageServices.training, {
         img: {
           imgURL: "/images/training-img.png",
           altText:
@@ -171,7 +170,7 @@ function Training() {
 function OnlinePharmarcy() {
   return (
     <SectionTemplateV2
-      data={Object.assign(services.onlinePharmacy, {
+      data={Object.assign(landingPageServices.onlinePharmacy, {
         img: {
           imgURL: "/images/online-pharmacy.png",
           altText: "A supplement tablet in someone's palm",
@@ -184,7 +183,7 @@ function OnlinePharmarcy() {
 function Recruitment() {
   return (
     <SectionTemplateV1
-      data={Object.assign(services.recruitment, {
+      data={Object.assign(landingPageServices.recruitment, {
         img: {
           imgURL: "/images/recruitment.png",
           altText: "A man on black suit smiling at the camera",
@@ -197,7 +196,7 @@ function Recruitment() {
 function MedicalLoan() {
   return (
     <SectionTemplateV2
-      data={Object.assign(services.medicalLoan, {
+      data={Object.assign(landingPageServices.medicalLoan, {
         img: {
           imgURL: "/images/medical-loan.png",
           altText: "A sthethoscope, calculator and drug container on a table",
@@ -210,7 +209,7 @@ function MedicalLoan() {
 function MassageTherapy() {
   return (
     <SectionTemplateV1
-      data={Object.assign(services.massageTherapy, {
+      data={Object.assign(landingPageServices.massageTherapy, {
         img: {
           imgURL: "/images/massage-therapy.png",
           altText: "A woman laying on the table and being massaged",
@@ -304,8 +303,8 @@ function Persuasion() {
         <Image src="/images/persuasion.png" alt="" width={524} height={557} />
       </div>
       <div>
-        <h3 className="text-primary-600 mb-2 font-medium">YOU CAN!</h3>
-        <h2 className="text-5.5xl mb-6 font-extrabold leading-[3.5rem]">
+        <h3 className="mb-2 font-medium text-primary-600">YOU CAN!</h3>
+        <h2 className="mb-6 text-5.5xl font-extrabold leading-[3.5rem]">
           Embrace Your Wellness Journey with Moricol Healthcare
         </h2>
         <p className="text-lg">
@@ -325,7 +324,7 @@ function FAQ() {
   return (
     <section className="bg-[#F1F5F9] p-20">
       <div className="mx-auto mb-14 max-w-[900px] text-center">
-        <h2 className="text-5.5xl mb-6 font-extrabold leading-[3.5rem] text-primary-500">
+        <h2 className="mb-6 text-5.5xl font-extrabold leading-[3.5rem] text-primary-500">
           Frequently asked questions
         </h2>
         <p className="text-xl text-[#475569]">
@@ -376,17 +375,17 @@ function SectionTemplateV1({ data }: { data: SectionTemplateProps }) {
           height={900}
         />
         {/* Circles */}
-        <div className="bg-primary-400 absolute -top-[46px] left-[63px] h-20 w-20 rounded-full" />
+        <div className="absolute -top-[46px] left-[63px] h-20 w-20 rounded-full bg-primary-400" />
         <div className="absolute -left-[59px] bottom-[265px] -z-10 h-[99px] w-[99px] rounded-full bg-[#38BDF8]" />
       </div>
 
       {/* Right side */}
       <div className="w-[700px]">
         <div className="mb-9">
-          <h3 className="text-primary-600 mb-2 text-xl font-semibold">
+          <h3 className="mb-2 text-xl font-semibold text-primary-600">
             SERVICES
           </h3>
-          <h2 className="text-5.5xl mb-6 font-extrabold leading-[3.5rem]">
+          <h2 className="mb-6 text-5.5xl font-extrabold leading-[3.5rem]">
             {data.title}
           </h2>
           <p className="text-lg">{data.description}</p>
@@ -421,10 +420,10 @@ function SectionTemplateV2({ data }: { data: SectionTemplateProps }) {
       {/* Left side */}
       <div className="w-[700px]">
         <div className="mb-9">
-          <h3 className="text-primary-600 mb-2 text-xl font-semibold">
+          <h3 className="mb-2 text-xl font-semibold text-primary-600">
             SERVICES
           </h3>
-          <h2 className="text-5.5xl mb-6 font-extrabold leading-[3.5rem]">
+          <h2 className="mb-6 text-5.5xl font-extrabold leading-[3.5rem]">
             {data.title}
           </h2>
           <p className="text-lg">{data.description}</p>

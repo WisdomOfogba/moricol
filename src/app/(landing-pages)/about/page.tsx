@@ -1,4 +1,4 @@
-import { about } from "@/constants/about";
+import { about } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -80,17 +80,17 @@ export default function AboutUs() {
               </p>
 
               <div className="mb-9 flex items-center gap-x-6">
-                <div className="bg-primary-400 flex h-14 w-14 items-center justify-center rounded-full"></div>
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
                 <p className="text-lg">
                   Plot 3703 - 3704 Babangida Boulevard, Maitama Abuja, Nigeria
                 </p>
               </div>
               <div className="mb-9 flex items-center gap-x-6">
-                <div className="bg-primary-400 flex h-14 w-14 items-center justify-center rounded-full"></div>
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
                 <p className="text-lg">+234 818 153 5915</p>
               </div>
               <div className="flex items-center gap-x-6">
-                <div className="bg-primary-400 flex h-14 w-14 items-center justify-center rounded-full"></div>
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
                 <p className="text-lg">info@moricolhealth.com</p>
               </div>
             </article>
@@ -275,12 +275,12 @@ function ThreeYellowLines({
   return (
     <div className="flex max-w-[275px] flex-col gap-y-1.5">
       <div
-        className="bg-primary-400 h-[3px] max-w-[146px]"
+        className="h-[3px] max-w-[146px] bg-primary-400"
         style={{ marginLeft: lineOneMarginLeft }}
       />
-      <div className="bg-primary-400 h-[3px]" />
+      <div className="h-[3px] bg-primary-400" />
       <div
-        className="bg-primary-400 h-[3px] max-w-[95px]"
+        className="h-[3px] max-w-[95px] bg-primary-400"
         style={{ marginLeft: lineThreeMarginLeft }}
       />
     </div>
