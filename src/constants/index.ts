@@ -441,11 +441,11 @@ export const navLinks = [
   },
   {
     href: routes.HOMECARE,
-    name: "Homecare Services",
+    name: "Homecare",
   },
   {
     href: routes.ONLINEPHARMACY,
-    name: "Online pharmacy",
+    name: "Pharmacy",
   },
   {
     href: routes.RECRUITMENT,
