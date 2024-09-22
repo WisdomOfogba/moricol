@@ -15,7 +15,13 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-      <div>
+    </nav>
+  );
+}
+
+// Language Switcher but currently not supported
+{
+  /* <div>
         <button className="flex items-center rounded-lg bg-primary-50">
           <div className="border-r-2 border-r-primary-500 py-3.5 pl-2 pr-2.5">
             <Image
@@ -45,7 +51,5 @@ export default function Navbar() {
             </div>
           </div>
         </button>
-      </div>
-    </nav>
-  );
+      </div> */
 }

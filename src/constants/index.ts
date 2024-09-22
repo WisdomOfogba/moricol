@@ -444,10 +444,6 @@ export const navLinks = [
     name: "Homecare Services",
   },
   {
-    href: routes.CONSULTANCY,
-    name: "Consultancy",
-  },
-  {
     href: routes.ONLINEPHARMACY,
     name: "Online pharmacy",
   },
@@ -463,6 +459,14 @@ export const navLinks = [
     href: routes.LOAN,
     name: "Loan",
   },
+  {
+    href: routes.TELEMEDICINE,
+    name: "Telemedicine",
+  },
+  {
+    href: routes.MASSAGE,
+    name: "Massage",
+  },
 ];
 
 export const footerLinks = [
@@ -471,11 +475,11 @@ export const footerLinks = [
     name: "Home",
   },
   {
-    href: "",
+    href: routes.HOMECARE,
     name: "Domiciliary Care",
   },
   {
-    href: "",
+    href: routes.TELEMEDICINE,
     name: "Telemedicine",
   },
   {
