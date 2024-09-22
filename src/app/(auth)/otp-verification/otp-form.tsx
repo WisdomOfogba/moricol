@@ -78,6 +78,8 @@ export default function OtpForm() {
 
     // Handle form submission logic here
 
+    router.push("/signin");
+
     if (emailVerificationType === "signup")
       router.push("/verify-email-success");
 

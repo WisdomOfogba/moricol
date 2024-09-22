@@ -3,12 +3,20 @@
 import SubmitButton from "@/components/auth/form-button";
 import TextInput from "@/components/auth/text-input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ResetPasswordForm() {
+  const router = useRouter();
   //   const [state, formAction] = useFormState('', initialState);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    router.push("/success");
+  };
+
   return (
-    <form className="lg:mt-20">
+    <form className="lg:mt-20" onSubmit={handleSubmit}>
       <div className="mb-5">
         <h2 className="mb-2 text-2xl font-bold leading-9 text-primary-700 lg:text-[1.875rem] lg:leading-[1.813rem]">
           Reset Password
@@ -40,7 +48,7 @@ export default function ResetPasswordForm() {
         <SubmitButton pendingText="Submitting..." text="Reset Password" />
         <Link
           href="/signin"
-          className="text-[#040308 rounded border border-[#040308] py-3.5 text-center font-semibold"
+          className="text-[#040308 rounded border border-[#040308] py-3.5 text-center font-semibold transition duration-300 hover:border-primary-500 hover:text-primary-500"
         >
           BACK TO LOGIN
         </Link>

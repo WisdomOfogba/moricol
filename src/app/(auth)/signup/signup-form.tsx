@@ -9,8 +9,10 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LuPencilLine } from "react-icons/lu";
 import { MdOutlineAlternateEmail, MdPhoneIphone } from "react-icons/md";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
+  const router = useRouter();
   const [formStep, setFormStep] = useState(0);
   // const [isSuccessful, setIsSuccessful] = useState(false);
 
@@ -22,14 +24,15 @@ export default function SignupForm() {
     setFormStep(formStep - 1);
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push("/otp-verification");
 
-  //   setIsSuccessful(true);
-  // };
+    // setIsSuccessful(true);
+  };
 
   return (
-    <form action="">
+    <form action="" onSubmit={handleSubmit}>
       <h2 className="mb-5 text-center text-2xl font-bold leading-9 text-primary-700 lg:mb-4 lg:text-[1.875rem] lg:leading-[2.813rem]">
         SIGN UP
       </h2>

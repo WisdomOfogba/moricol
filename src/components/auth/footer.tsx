@@ -13,13 +13,13 @@ export default function AuthFooter() {
 
       <div className="flex items-center justify-center gap-x-2.5">
         <Image
-          src="/images/google-play.png"
+          src="/buttons/google-play.png"
           alt="Google play logo"
           width={101.3}
           height={30.01}
         />
         <Image
-          src="/images/ap-store.png"
+          src="/buttons/ap-store.png"
           alt="Apple store logo"
           width={101.3}
           height={30.01}

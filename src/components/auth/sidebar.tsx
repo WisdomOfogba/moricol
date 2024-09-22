@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AuthSidebar({ imgUrl }: { imgUrl: string }) {
   return (
-    <section className="bg-primary-300 flex w-[611px] shrink-0 flex-col items-center justify-between py-20 text-center text-gray-800">
+    <section className="flex w-[611px] shrink-0 flex-col items-center justify-between bg-primary-300 py-20 text-center text-gray-800">
       <div>
         <h1 className="mb-3 text-2xl font-semibold">
           Let&apos;s Get You Started
@@ -12,7 +12,7 @@ export default function AuthSidebar({ imgUrl }: { imgUrl: string }) {
         </p>
       </div>
 
-      <div className="bg-secondary-300 relative h-[410.78px] w-[410.78px] rounded-full">
+      <div className="relative h-[410.78px] w-[410.78px] rounded-full bg-secondary-300">
         <Image
           src={imgUrl}
           alt=""

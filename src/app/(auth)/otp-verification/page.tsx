@@ -6,7 +6,7 @@ import { Suspense } from "react";
 export default function OtpVerification() {
   return (
     <main className="flex h-screen min-h-screen overflow-hidden">
-      <AuthSidebar imgUrl="/images/health-tracking.png" />
+      <AuthSidebar imgUrl="/images/auth/jar-vitamins.png" />
 
       <section className="grow overflow-y-auto px-14 py-9">
         <div className="relative mx-auto mb-6 h-[80.76px] w-[161px] shrink-0 lg:mb-9 lg:h-[111.36px] lg:w-[222px]">

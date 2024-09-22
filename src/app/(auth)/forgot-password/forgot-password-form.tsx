@@ -2,12 +2,19 @@
 
 import SubmitButton from "@/components/auth/form-button";
 import TextInput from "@/components/auth/text-input";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {
+  const router = useRouter();
   //   const [state, formAction] = useFormState('', initialState);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    return router.push("/reset-password");
+  };
+
   return (
-    <form className="lg:mt-20">
+    <form onSubmit={handleSubmit} className="lg:mt-20">
       <div className="mb-5">
         <h2 className="mb-2 text-2xl font-bold leading-9 text-primary-700 lg:text-[1.875rem] lg:leading-[1.813rem]">
           Forgot Password
