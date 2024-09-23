@@ -10,11 +10,11 @@ export default function MasseuseCard() {
   const handleReviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push("masseuse-specialists/1/reviews");
+    router.push("specialists/1/reviews");
   };
 
   return (
-    <Link href="masseuse-specialists/1" className="block">
+    <Link href="specialists/1" className="block">
       <article className="flex items-center gap-x-4 border-b border-gray-300 p-4">
         <Image
           src="/images/client.jpg"

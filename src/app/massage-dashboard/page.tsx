@@ -9,7 +9,7 @@ export default function Home() {
         <p className="text-gray-500">Find your suitable doctors here</p>
       </section>
       <section className="mb-7 border-y border-y-gray-300 py-6">
-        <p className="mb-2 text-xl">Schedule a Massage Appointment</p>
+        <p className="mb-2 text-lg">Schedule a Massage Appointment</p>
         <Button className="max-w-[377px]">
           Schedule a Massage Appointment
         </Button>

@@ -1,4 +1,5 @@
 export const routes = {
+  // Landing page links
   HOME: "/",
   ABOUT: "/about",
   BLOG: "/blog",
@@ -9,4 +10,12 @@ export const routes = {
   LOAN: "/loan",
   TELEMEDICINE: "/telemedicine",
   MASSAGE: "/massage",
+
+  // Massage dashboard links
+  MASSAGEDASHBOARDHOME: "/massage-dashboard",
+  MASSAGESPECIALISTS: "/massage-dashboard/specialists",
+  MASSAGESERVICES: "/massage-dashboard/services",
+  MASSAGEAPPOINTMENTS: "/massage-dashboard/appointments",
+
+  // General dashboard pages links
 };

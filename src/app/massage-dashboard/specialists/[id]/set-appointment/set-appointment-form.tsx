@@ -4,17 +4,25 @@ import SelectInput from "@/components/auth/select-input";
 import TextInput from "@/components/auth/text-input";
 import TextAreaInput from "@/components/auth/textarea-input";
 import Button from "@/components/button";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function SetAppointmentForm() {
+  const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState("office");
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLocation(event.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    router.push("payment");
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <fieldset className="border-b border-b-[#EAECF0] px-5 pb-9">
         <SelectInput label="Massage Therapy Categories" name="gender">
           <option></option>

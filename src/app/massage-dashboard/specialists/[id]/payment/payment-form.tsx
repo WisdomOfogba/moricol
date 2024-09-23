@@ -1,9 +1,7 @@
 import SelectInput from "@/components/auth/select-input";
 import TextInput from "@/components/auth/text-input";
 import Button from "@/components/button";
-import AppleSvg from "@/components/svgs/applesvg";
-import GoogleSvg from "@/components/svgs/googlesvg";
-import PaypalSvg from "@/components/svgs/paypalsvg";
+import { AppleSvg, GoogleSvg, PaypalSvg } from "@/components/svgs";
 
 export default function PaymentForm() {
   return (

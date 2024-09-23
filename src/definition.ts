@@ -21,3 +21,9 @@ export interface SectionTemplateProps {
     altText: string;
   };
 }
+
+export interface DashboardAsideLinksProps {
+  name: string;
+  link: string;
+  SVGComponent: React.ComponentType<{ fill?: string }>;
+}

@@ -10,7 +10,7 @@ export default function MassageServiceCard({
   service: string;
 }) {
   return (
-    <Link href={`massage-services/${id}`}>
+    <Link href={`services/${id}`}>
       <article
         className="relative h-[172.1px] max-w-[181.78px] rounded bg-cover bg-no-repeat object-top"
         style={{ backgroundImage: `url(${bg})` }}

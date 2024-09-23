@@ -1,10 +1,9 @@
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
-import BadgeSvg from "@/components/svgs/badgesvg";
-import TwoUsersSvg from "@/components/svgs/twouserssvg";
 import Image from "next/image";
-import Link from "next/link";
+import StartMassageForm from "./start-massage-form";
+import { BadgeSvg, TwoUsersSvg } from "@/components/svgs";
 
-export default function MasseuseProfile() {
+export default function MasseuseAppointment() {
   return (
     <main>
       <NavigateToPrevPage />
@@ -64,14 +63,15 @@ export default function MasseuseProfile() {
               <li>Hot Stone Massage (3000/hr)</li>
             </ul>
           </article>
-          <div className="mt-20 text-center">
-            <Link
-              href="1/set-appointment"
-              className="transition-color inline-block w-full max-w-[640px] rounded-lg border border-primary-500 bg-primary-500 px-4 py-3 text-center text-white duration-300 hover:border-primary-500/80 hover:bg-primary-500/80"
-            >
-              BOOK SWEDISH APPOINTMENT
-            </Link>
-          </div>
+          <div className="-mx-9 border-t border-t-primary-500" />
+          <article>
+            <h3 className="mb-3 text-lg font-medium">Note</h3>
+            <p>
+              Both parties have to click on &quot;Start Massage&quot; for your
+              massage to start reading
+            </p>
+          </article>
+          <StartMassageForm />
         </section>
       </div>
     </main>

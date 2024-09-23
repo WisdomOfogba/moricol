@@ -2,8 +2,8 @@ import Link from "next/link";
 import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MassageServiceCard from "@/components/massage/massage-service-card";
-import UsersSVG from "@/components/svgs/userssvg";
 import { services } from "@/constants";
+import { UsersSVG } from "@/components/svgs";
 
 export default function MassageServices() {
   return (
@@ -18,7 +18,7 @@ export default function MassageServices() {
           </Button>
         </section>
         <section className="grid max-w-[768px] grid-cols-4 gap-x-4 gap-y-9">
-          <Link href="masseuse-specialists">
+          <Link href="specialists">
             <article className="flex h-[172.1px] flex-col items-center justify-center gap-y-5 rounded bg-[#BD3D44] font-semibold text-white">
               <UsersSVG />
               <p>All Masseuse</p>

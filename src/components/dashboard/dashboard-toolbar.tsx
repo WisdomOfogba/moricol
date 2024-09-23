@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Button from "../button";
 import { MdNotifications } from "react-icons/md";
-import EditSVG from "../svgs/EditSVG";
+import { EditSVG } from "../svgs";
 
 export default function DashboardToolbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);

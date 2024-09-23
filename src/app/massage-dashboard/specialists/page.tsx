@@ -1,8 +1,7 @@
 import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MasseuseCard from "@/components/massage/masseuse-card";
-import FavouriteSVG from "@/components/svgs/favouritesvg";
-import FilterSVG from "@/components/svgs/filtersvg";
+import { FavouriteSVG, FilterSVG } from "@/components/svgs";
 
 export default function AllMasseuse() {
   return (

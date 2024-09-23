@@ -1,8 +1,7 @@
 import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import AppointmentButtons from "@/components/massage/appointment-button";
-import CalendarSvg from "@/components/svgs/calendarsvg";
-import GridViewSvg from "@/components/svgs/gridviewsvg";
+import { CalendarSvg, GridViewSvg } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,10 +62,7 @@ const AppointmentCard = ({ appointmentType }: { appointmentType: string }) => {
       : "text-primary-500";
 
   return (
-    <Link
-      href="massage-appointments/1"
-      className="relative block max-w-[374px]"
-    >
+    <Link href="appointments/1" className="relative block max-w-[374px]">
       <article className="shadow-custom flex items-end gap-x-6 rounded-xl bg-white p-2.5 pb-4 lg:rounded">
         <div className="relative h-20 w-20 overflow-hidden rounded-xl">
           <Image
