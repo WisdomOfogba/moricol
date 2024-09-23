@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   CartSvg,
   ChevronDownSvg,
@@ -5,7 +6,6 @@ import {
   NotificationSvg,
   SearchSvg,
 } from "@/components/svgs";
-import Image from "next/image";
 
 export default function TrainingLayout({
   children,
@@ -23,10 +23,12 @@ export default function TrainingLayout({
 function ToolBar() {
   return (
     <header className="flex gap-x-20 border-b bg-white px-5 py-4">
+      {/* Logo */}
       <div className="relative h-16 w-[127px]">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
       </div>
 
+      {/* Button and Input */}
       <div className="flex gap-x-4">
         <button className="flex w-52 items-center justify-between border border-[#E9EAF0] px-4 py-3 text-[#4E5566]">
           Browse <ChevronDownSvg />
@@ -41,6 +43,7 @@ function ToolBar() {
         </div>
       </div>
 
+      {/* Icon and Profile */}
       <div className="flex grow items-center justify-end gap-x-6">
         <button className="relative">
           <NotificationSvg />
