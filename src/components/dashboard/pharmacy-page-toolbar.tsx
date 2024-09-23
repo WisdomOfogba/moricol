@@ -1,6 +1,6 @@
 import { cn } from "@/util/cn";
 import Button from "../button";
-import HeartSVG from "../svgs/heartsvg";
+import { HeartSVG } from "../svgs";
 
 export default function PageToolBar() {
   return (

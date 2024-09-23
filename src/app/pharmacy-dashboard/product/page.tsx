@@ -1,9 +1,9 @@
-import SelectInput from "@/components/auth/select-input";
+// import SelectInput from "@/components/auth/select-input";
 import Button from "@/components/button";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import ReviewCard from "@/components/dashboard/review-card";
-import HeartSVG from "@/components/svgs/heartsvg";
-import StarSVG from "@/components/svgs/rating-star";
+import { HeartSVG, StarSVG } from "@/components/svgs";
+
 import Image from "next/image";
 
 export default function ProductPage() {
@@ -28,8 +28,11 @@ export default function ProductPage() {
               {[
                 Array(6)
                   .fill("")
-                  .map(() => (
-                    <div className="relative mb-6 h-[79px] w-[79px] border border-[#DBDBDB]">
+                  .map((_, i) => (
+                    <div
+                      key={i}
+                      className="relative mb-6 h-[79px] w-[79px] border border-[#DBDBDB]"
+                    >
                       <Image
                         src="/images/dashboard/drug.png"
                         alt=""

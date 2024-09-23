@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { BiDownload, BiUpload } from "react-icons/bi";
+import { BiUpload } from "react-icons/bi";
 
 interface FileAttachmentProps {
   title: string;
@@ -14,8 +14,6 @@ interface FileAttachmentProps {
 const FileInput: React.FC<FileAttachmentProps> = ({
   title,
   onUpload,
-  onDownload,
-  downloadUrl,
   acceptedFileTypes = "*",
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);

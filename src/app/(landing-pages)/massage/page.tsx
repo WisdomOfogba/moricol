@@ -1,5 +1,6 @@
 import { CircleFolderSVG } from "@/components/svgs";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Massage() {
   return (
@@ -25,12 +26,18 @@ export default function Massage() {
             to cater to every aspect of your well-being.
           </p>
           <div className="mt-9 flex gap-x-2.5">
-            <button className="w-full rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
+            <button className="hover w-full rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
               GET STARTED
             </button>
-            <button className="w-full rounded-lg border border-primary-500 px-9 py-3 text-primary-500">
+            {/* <button className="w-full rounded-lg border border-primary-500 px-9 py-3 text-primary-500">
               LOGIN
-            </button>
+            </button> */}
+            <Link
+              href="/massage-dashboard"
+              className="inline-block w-full rounded-lg border border-primary-500 py-3 text-center text-primary-500 transition duration-300 hover:bg-primary-50"
+            >
+              LOGIN
+            </Link>
           </div>
         </div>
       </section>

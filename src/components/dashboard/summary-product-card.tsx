@@ -14,7 +14,7 @@ export default function SummaryProductCard() {
       </div>
       <div>
         <h3 className="text-xs">
-          L'Oréal, Revitalift Triple Power, Anti-Aging
+          L&apos;Oréal, Revitalift Triple Power, Anti-Aging
         </h3>
         <div className="mt-3 text-xs text-gray-500">
           <p>₦344</p>

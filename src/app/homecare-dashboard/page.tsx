@@ -1,21 +1,21 @@
 import SelectInput from "@/components/auth/select-input";
 import TextInput from "@/components/auth/text-input";
-import TextAreaInput from "@/components/auth/textarea-input";
+// import TextAreaInput from "@/components/auth/textarea-input";
 import Button from "@/components/button";
-import FileInput from "@/components/file-input";
-import { services } from "@/constants/services";
+// import FileInput from "@/components/file-input";
+import { landingPageServices } from "@/constants";
 
-const conditions = [
-  "Stroke",
-  "Cancer",
-  "Parkison's",
-  "Diabetes",
-  "Learning disabilities",
-  "Alzeheimer's",
-  "Blindness",
-  "Mental Illness",
-  "Others",
-];
+// const conditions = [
+//   "Stroke",
+//   "Cancer",
+//   "Parkison's",
+//   "Diabetes",
+//   "Learning disabilities",
+//   "Alzeheimer's",
+//   "Blindness",
+//   "Mental Illness",
+//   "Others",
+// ];
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
       <section className="px-20 pb-9 pt-3">
         <div className="border-grey-300 border-b pb-5">
           <p className="text-grey-800 mb-1 inline-block font-medium">
-            Which of these best describes your situation?"
+            Which of these best describes your situation?
           </p>
           <div className="flex items-center gap-x-9">
             <div className="flex items-center gap-x-2.5">
@@ -64,7 +64,7 @@ export default function Home() {
           <TextInput name="" label="Which Service is required?" />
         </div>
         <div className="mb-6 grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-5 justify-between">
-          {services.homeCare.services.map(({ bg, service }) => (
+          {landingPageServices.homeCare.services.map(({ bg, service }) => (
             <ServiceCard key={service} bg={bg} service={service} />
           ))}
         </div>

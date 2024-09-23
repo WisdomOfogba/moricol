@@ -20,38 +20,38 @@ export default function Navbar() {
 }
 
 // Language Switcher but currently not supported
-function LanguageSwitcher() {
-  return (
-    <div>
-      <button className="flex items-center rounded-lg bg-primary-50">
-        <div className="border-r-2 border-r-primary-500 py-3.5 pl-2 pr-2.5">
-          <Image
-            src="/icons/world.svg"
-            alt="World icon"
-            width={20}
-            height={20}
-          />
-        </div>
-        <div className="flex pl-2.5 pr-1.5">
-          <>
-            <Image
-              src="/icons/usa-flag.svg"
-              alt="USA flag"
-              width={20}
-              height={15}
-            />
-            <p className="ml-2 mr-2.5">EN</p>
-          </>
-          <div className="px-[3.75px] pb-[6.75px] pt-[8.25px]">
-            <Image
-              src="/icons/chevron.svg"
-              alt="chevron icon"
-              width={16.5}
-              height={9}
-            />
-          </div>
-        </div>
-      </button>
-    </div>
-  );
-}
+// function LanguageSwitcher() {
+//   return (
+//     <div>
+//       <button className="flex items-center rounded-lg bg-primary-50">
+//         <div className="border-r-2 border-r-primary-500 py-3.5 pl-2 pr-2.5">
+//           <Image
+//             src="/icons/world.svg"
+//             alt="World icon"
+//             width={20}
+//             height={20}
+//           />
+//         </div>
+//         <div className="flex pl-2.5 pr-1.5">
+//           <>
+//             <Image
+//               src="/icons/usa-flag.svg"
+//               alt="USA flag"
+//               width={20}
+//               height={15}
+//             />
+//             <p className="ml-2 mr-2.5">EN</p>
+//           </>
+//           <div className="px-[3.75px] pb-[6.75px] pt-[8.25px]">
+//             <Image
+//               src="/icons/chevron.svg"
+//               alt="chevron icon"
+//               width={16.5}
+//               height={9}
+//             />
+//           </div>
+//         </div>
+//       </button>
+//     </div>
+//   );
+// }

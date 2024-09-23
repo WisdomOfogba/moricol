@@ -1,5 +1,5 @@
 import Image from "next/image";
-import StarSVG from "../svgs/rating-star";
+import { StarSVG } from "../svgs";
 import Link from "next/link";
 import { cn } from "@/util/cn";
 

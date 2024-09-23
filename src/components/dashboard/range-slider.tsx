@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function RangeSlider() {
   const [minValue, setMinValue] = useState(40);
-  const [maxValue, setMaxValue] = useState(950);
+  const [maxValue] = useState(950);
 
   return (
     <div className="range-slider flex flex-col">

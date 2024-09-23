@@ -1,6 +1,6 @@
 import Button from "@/components/button";
 import SummaryProductCard from "@/components/dashboard/summary-product-card";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function page() {
   return (
@@ -24,44 +24,44 @@ export default function page() {
   );
 }
 
-function OrderSummary() {
-  return (
-    <article className="relative flex items-center gap-x-4">
-      <div className="relative h-[101.73px] w-[97px] overflow-hidden">
-        <Image
-          src="/images/dashboard/drug.png"
-          alt=""
-          fill
-          sizes="60px"
-          className="shrink-0"
-        />
-        <div className="abolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-[#0C0C0D75] p-1.5 text-xs font-bold text-white">
-          x1
-        </div>
-      </div>
-      <div>
-        <h3 className="mb-2 text-xs">
-          L'Oréal, Revitalift Triple Power, Anti-Aging
-        </h3>
-        <div className="mb-2.5 text-xs text-gray-500">
-          <p>
-            Order Number:{" "}
-            <span className="mb-0.5 text-primary-500">00012345GT</span>
-          </p>
-          <p>
-            Order Number: <span className="text-primary-500">00012345GT</span>
-          </p>
-        </div>
-        <span className="rounded bg-[#1F922B] px-3 py-1 text-xs font-bold text-white">
-          Delivered
-        </span>
-      </div>
-      <button className="absolute right-8 top-0 text-xs font-bold text-[#E31E25]">
-        More Details
-      </button>
-    </article>
-  );
-}
+// function OrderSummary() {
+//   return (
+//     <article className="relative flex items-center gap-x-4">
+//       <div className="relative h-[101.73px] w-[97px] overflow-hidden">
+//         <Image
+//           src="/images/dashboard/drug.png"
+//           alt=""
+//           fill
+//           sizes="60px"
+//           className="shrink-0"
+//         />
+//         <div className="abolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-[#0C0C0D75] p-1.5 text-xs font-bold text-white">
+//           x1
+//         </div>
+//       </div>
+//       <div>
+//         <h3 className="mb-2 text-xs">
+//           L&apos;Oréal, Revitalift Triple Power, Anti-Aging
+//         </h3>
+//         <div className="mb-2.5 text-xs text-gray-500">
+//           <p>
+//             Order Number:{" "}
+//             <span className="mb-0.5 text-primary-500">00012345GT</span>
+//           </p>
+//           <p>
+//             Order Number: <span className="text-primary-500">00012345GT</span>
+//           </p>
+//         </div>
+//         <span className="rounded bg-[#1F922B] px-3 py-1 text-xs font-bold text-white">
+//           Delivered
+//         </span>
+//       </div>
+//       <button className="absolute right-8 top-0 text-xs font-bold text-[#E31E25]">
+//         More Details
+//       </button>
+//     </article>
+//   );
+// }
 
 function OrderDetail() {
   return (

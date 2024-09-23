@@ -1,8 +1,7 @@
 import Button from "@/components/button";
 import SummaryProductCard from "@/components/dashboard/summary-product-card";
-import LocationSVG from "@/components/svgs/locationsvg";
-import PhoneSVG from "@/components/svgs/phonesvg";
-import OneUserSvg from "@/components/svgs/user";
+import { LocationSVG, OneUserSvg, PhoneSVG } from "@/components/svgs";
+
 import Image from "next/image";
 
 export default function Checkout() {
@@ -180,10 +179,10 @@ export default function Checkout() {
   );
 }
 
-function Payment() {
-  return (
-    <section className="gray-container py-14">
-      <form className="max-w-[466px]"></form>
-    </section>
-  );
-}
+// function Payment() {
+//   return (
+//     <section className="gray-container py-14">
+//       <form className="max-w-[466px]"></form>
+//     </section>
+//   );
+// }

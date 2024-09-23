@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
-import { categories } from "@/constants/categories";
+import { categories } from "@/constants";
 import RangeSlider from "@/components/dashboard/range-slider";
 import ProductCard from "@/components/dashboard/pharmacy-product-card";
 
@@ -210,7 +210,7 @@ function CategoryProducts({
             {[
               { rate: 5, number: 3 },
               { rate: 2, number: 2 },
-            ].map(({ rate, number }, i) => (
+            ].map(({ number }, i) => (
               <li key={i} className="flex items-center gap-x-1.5">
                 <input type="checkbox" />
 

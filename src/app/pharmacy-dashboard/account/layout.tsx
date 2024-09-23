@@ -1,4 +1,4 @@
-import HeartSVG from "@/components/svgs/heartsvg";
+import { HeartSVG } from "@/components/svgs";
 import Link from "next/link";
 
 const accountLinks = [
@@ -24,7 +24,7 @@ export default function AccountLayout({
         <aside className="w-[243px] shrink-0 rounded border border-[#CACACA] p-6">
           <ul className="grid gap-y-5">
             {accountLinks.map(({ name, link, icon }) => (
-              <li className="border-b border-gray-300 pb-5 last:border-none last:pb-0">
+              <li key={link} className="border-b border-gray-300 pb-5 last:border-none last:pb-0">
                 <Link
                   href={link}
                   className="flex items-center gap-x-2 text-sm text-primary-500"
