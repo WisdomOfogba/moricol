@@ -499,3 +499,34 @@ export const footerLinks = [
     name: "Loan",
   },
 ];
+
+export const trainingDashboardProfileLinks = [
+  {
+    href: routes.TRAININGPROFILEDASHBOARD,
+    name: "Dashboard",
+  },
+  {
+    href: routes.TRAININGPROFILECOURSES,
+    name: "Courses",
+  },
+  {
+    href: routes.TRAININGPROFILETEACHERS,
+    name: "Teachers",
+  },
+  {
+    href: routes.TRAININGPROFILEMESSAGE,
+    name: "Message",
+  },
+  {
+    href: routes.TRAININGPROFILEWISHLIST,
+    name: "Wishlist",
+  },
+  {
+    href: routes.TRAININGPROFILEPURCHASEHISTORY,
+    name: "Purchase History",
+  },
+  {
+    href: routes.TRAININGPROFILESETTINGS,
+    name: "Settings",
+  },
+];

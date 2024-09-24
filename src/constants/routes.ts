@@ -17,5 +17,15 @@ export const routes = {
   MASSAGESERVICES: "/massage-dashboard/services",
   MASSAGEAPPOINTMENTS: "/massage-dashboard/appointments",
 
+  // TraIning dashboard profile links
+  TRAININGPROFILEDASHBOARD: "/dashboard/training/profile",
+  TRAININGPROFILECOURSES: "/dashboard/training/profile/courses",
+  TRAININGPROFILETEACHERS: "/dashboard/training/profile/teachers",
+  TRAININGPROFILEMESSAGE: "/dashboard/training/profile/messages",
+  TRAININGPROFILEWISHLIST: "/dashboard/training/profile/wishlists",
+  TRAININGPROFILEPURCHASEHISTORY:
+    "/dashboard/training/profile/purchase-history",
+  TRAININGPROFILESETTINGS: "/dashboard/training/profile/settings",
+
   // General dashboard pages links
 };

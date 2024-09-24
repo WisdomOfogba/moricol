@@ -6,6 +6,7 @@ import {
   NotificationSvg,
   SearchSvg,
 } from "@/components/svgs";
+import Link from "next/link";
 
 export default function TrainingLayout({
   children,
@@ -58,7 +59,7 @@ function ToolBar() {
             1
           </div>
         </button>
-        <button>
+        <Link href="/dashboard/training/profile" className="block">
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image
               src="/images/client.jpg"
@@ -67,7 +68,7 @@ function ToolBar() {
               style={{ objectFit: "cover" }}
             />
           </div>
-        </button>
+        </Link>
       </div>
     </header>
   );

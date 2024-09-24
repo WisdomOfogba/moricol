@@ -1,0 +1,17 @@
+export default function TrainingProfilePurchaseHistory() {
+  return (
+    <main className="px-14 py-12">
+      <section>
+        <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
+          Purchase History
+        </h2>
+
+        <ul>
+          <li>
+            {/* <PurchaseHistory /> */}
+          </li>
+        </ul>
+      </section>
+    </main>
+  );
+}

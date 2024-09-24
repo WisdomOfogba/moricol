@@ -27,3 +27,10 @@ export interface DashboardAsideLinksProps {
   link: string;
   SVGComponent: React.ComponentType<{ fill?: string }>;
 }
+
+export interface SummaryCardProps {
+  color: string;
+  icon: React.ReactNode;
+  total: number;
+  title: string;
+}
