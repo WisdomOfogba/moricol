@@ -1,3 +1,5 @@
+import PurchaseHistoryCard from "../../components/purchase-history-card";
+
 export default function TrainingProfilePurchaseHistory() {
   return (
     <main className="px-14 py-12">
@@ -8,7 +10,7 @@ export default function TrainingProfilePurchaseHistory() {
 
         <ul>
           <li>
-            {/* <PurchaseHistory /> */}
+            <PurchaseHistoryCard />
           </li>
         </ul>
       </section>

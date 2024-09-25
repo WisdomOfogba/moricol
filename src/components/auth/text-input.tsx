@@ -25,7 +25,7 @@ export default function TextInput({
   const errorMessage = hasError ? errors && errors[name][0] : "";
 
   return (
-    <div>
+    <div className="w-full">
       {label && (
         <label
           htmlFor={name}

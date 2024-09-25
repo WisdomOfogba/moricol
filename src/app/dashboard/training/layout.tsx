@@ -25,9 +25,9 @@ function ToolBar() {
   return (
     <header className="flex gap-x-20 border-b bg-white px-5 py-4">
       {/* Logo */}
-      <div className="relative h-16 w-[127px]">
+      <Link href="/" className="relative block h-16 w-[127px]">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
-      </div>
+      </Link>
 
       {/* Button and Input */}
       <div className="flex gap-x-4">

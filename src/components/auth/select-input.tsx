@@ -16,7 +16,7 @@ export default function SelectInput({
   ...props
 }: SelectInputProps) {
   return (
-    <div>
+    <div className="">
       <label
         htmlFor={name}
         className="text-grey-800 mb-2.5 inline-block font-medium"

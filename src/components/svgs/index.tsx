@@ -4,6 +4,7 @@ interface Props {
   fillColor?: string;
   fill?: string;
   className?: string;
+  stroke?: string;
 }
 
 export function AppleSvg() {
@@ -849,7 +850,7 @@ export function CartSvg() {
   );
 }
 
-export function PlaySVG() {
+export function PlaySVG({ className, stroke, fill = '"#E29A13"' }: Props) {
   return (
     <svg
       width="32"
@@ -857,21 +858,22 @@ export function PlaySVG() {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
     >
       <path
         opacity="0.2"
         d="M16 4C13.6266 4 11.3066 4.70379 9.33316 6.02236C7.35977 7.34094 5.8217 9.21509 4.91345 11.4078C4.0052 13.6005 3.76756 16.0133 4.23058 18.3411C4.6936 20.6689 5.83649 22.8071 7.51472 24.4853C9.19295 26.1635 11.3312 27.3064 13.6589 27.7694C15.9867 28.2324 18.3995 27.9948 20.5922 27.0866C22.7849 26.1783 24.6591 24.6402 25.9776 22.6668C27.2962 20.6935 28 18.3734 28 16C28 14.4241 27.6896 12.8637 27.0866 11.4078C26.4835 9.95189 25.5996 8.62901 24.4853 7.51471C23.371 6.40041 22.0481 5.51649 20.5922 4.91344C19.1363 4.31038 17.5759 4 16 4ZM14 20V12L20 16L14 20Z"
-        fill="#E29A13"
+        fill={fill}
       />
       <path
         d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z"
-        stroke="#E29A13"
+        stroke={stroke}
         stroke-width="2"
         stroke-miterlimit="10"
       />
       <path
         d="M20 16L14 12V20L20 16Z"
-        stroke="#E29A13"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -965,7 +967,7 @@ export function TrophySvg() {
   );
 }
 
-export function ArrowRightSvg({ className }: Props) {
+export function ArrowRightSvg({ className, stroke = "#E29A13" }: Props) {
   return (
     <svg
       width="24"
@@ -977,14 +979,160 @@ export function ArrowRightSvg({ className }: Props) {
     >
       <path
         d="M20.25 12H3.75"
-        stroke="#E29A13"
+        stroke={stroke}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M10.5 5.25L3.75 12L10.5 18.75"
+        stroke={stroke}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function DollarSignSvg() {
+  return (
+    <svg
+      width="12"
+      height="14"
+      viewBox="0 0 12 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.375 3.875C10.375 3.46462 10.2942 3.05826 10.1371 2.67911C9.98008 2.29997 9.74989 1.95547 9.45971 1.66529C9.16953 1.37511 8.82503 1.14492 8.44589 0.987876C8.06674 0.830831 7.66038 0.75 7.25 0.75H4.4375C3.6087 0.75 2.81384 1.07924 2.22779 1.66529C1.64174 2.25134 1.3125 3.0462 1.3125 3.875C1.3125 4.7038 1.64174 5.49866 2.22779 6.08471C2.81384 6.67076 3.6087 7 4.4375 7H7.875C8.7038 7 9.49866 7.32924 10.0847 7.91529C10.6708 8.50134 11 9.2962 11 10.125C11 10.9538 10.6708 11.7487 10.0847 12.3347C9.49866 12.9208 8.7038 13.25 7.875 13.25H4.125C3.2962 13.25 2.50134 12.9208 1.91529 12.3347C1.32924 11.7487 1 10.9538 1 10.125"
         stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function CreditCardSvg() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M17.5 4.375H2.5C2.15482 4.375 1.875 4.65482 1.875 5V15C1.875 15.3452 2.15482 15.625 2.5 15.625H17.5C17.8452 15.625 18.125 15.3452 18.125 15V5C18.125 4.65482 17.8452 4.375 17.5 4.375Z"
+        stroke="#23BD33"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.125 13.125H15.625"
+        stroke="#23BD33"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M9.375 13.125H10.625"
+        stroke="#23BD33"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M1.875 7.56641H18.125"
+        stroke="#23BD33"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function PaperPlaneSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20.5811 11.3465L4.74536 2.47843C4.61214 2.40383 4.45932 2.37166 4.30732 2.38624C4.15533 2.40081 4.01141 2.46143 3.89479 2.55999C3.77817 2.65855 3.69441 2.79035 3.65471 2.93779C3.615 3.08523 3.62125 3.24127 3.6726 3.38506L6.65957 11.7486C6.71783 11.9117 6.71783 12.09 6.65957 12.2531L3.6726 20.6166C3.62124 20.7604 3.615 20.9165 3.65471 21.0639C3.69441 21.2113 3.77817 21.3431 3.89479 21.4417C4.01141 21.5403 4.15533 21.6009 4.30732 21.6155C4.45932 21.63 4.61214 21.5979 4.74536 21.5233L20.5811 12.6552C20.6975 12.5901 20.7943 12.4951 20.8617 12.3801C20.9291 12.2651 20.9647 12.1342 20.9647 12.0008C20.9647 11.8675 20.9291 11.7366 20.8617 11.6216C20.7943 11.5066 20.6975 11.4116 20.5811 11.3465Z"
+        fill="white"
+      />
+      <path
+        d="M6.75 12H12.75"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function PencilLine() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9 20.2518H4.5C4.30109 20.2518 4.11032 20.1728 3.96967 20.0322C3.82902 19.8915 3.75 19.7008 3.75 19.5018V15.3125C3.75 15.214 3.7694 15.1165 3.80709 15.0255C3.84478 14.9345 3.90003 14.8518 3.96967 14.7822L15.2197 3.53217C15.3603 3.39152 15.5511 3.3125 15.75 3.3125C15.9489 3.3125 16.1397 3.39152 16.2803 3.53217L20.4697 7.72151C20.6103 7.86216 20.6893 8.05293 20.6893 8.25184C20.6893 8.45075 20.6103 8.64152 20.4697 8.78217L9 20.2518Z"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.75 6L18 11.25"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M20.2492 20.2492H8.99916L3.79688 15.0469"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function CancelSvg() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.0625 3.9375L3.9375 14.0625"
+        stroke="#8C94A3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M14.0625 14.0625L3.9375 3.9375"
+        stroke="#8C94A3"
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"

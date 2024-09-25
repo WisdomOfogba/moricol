@@ -18,18 +18,15 @@ export default function Training() {
           your needs and aspirations
         </p>
         <div className="mt-9 flex gap-x-2.5">
-          <button className="w-full rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
-            GET STARTED
-          </button>
-          {/* <button className="w-full rounded-lg border border-primary-500 px-9 py-3 text-primary-500">
-            LOGIN
-          </button> */}
           <Link
             href="/dashboard/training"
-            className="inline-block w-full rounded-lg border border-primary-500 py-3 text-center text-primary-500 transition duration-300 hover:bg-primary-50"
+            className="inline-block w-full rounded-lg border border-primary-500 bg-primary-500 px-9 py-3 text-center text-primary-50 transition duration-300 hover:border-primary-500/70 hover:bg-primary-500/70"
           >
-            LOGIN
+            GET STARTED
           </Link>
+          <button className="w-full rounded-lg border border-primary-500 px-9 py-3 text-primary-500">
+            LOGIN
+          </button>
         </div>
       </div>
     </header>

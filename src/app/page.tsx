@@ -61,13 +61,13 @@ function Hero() {
         </p>
         <div className="flex items-center gap-x-9">
           <Image
-            src="/buttons/google-play.svg"
+            src="/buttons/google-play.png"
             alt="Google play store download button"
             width={162}
             height={48}
           />
           <Image
-            src="/buttons/app-store.svg"
+            src="/buttons/ap-store.png"
             alt="Apple store download button"
             width={162}
             height={48}
