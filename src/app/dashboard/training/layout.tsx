@@ -53,12 +53,12 @@ function ToolBar() {
         <button>
           <HeartSVG className="h-6 w-6" fill="#1D2026" />
         </button>
-        <button className="relative">
+        <Link href="shopping-cart" className="relative">
           <CartSvg />
           <div className="absolute -top-[3px] left-[11px] flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-medium leading-none text-white">
             1
           </div>
-        </button>
+        </Link>
         <Link href="/dashboard/training/profile" className="block">
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image

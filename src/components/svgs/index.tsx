@@ -357,7 +357,7 @@ export function PhoneSVG() {
   );
 }
 
-export function StarSVG({ fill = "#9F9FA0" }: Props) {
+export function StarSVG({ fill = "#9F9FA0", className }: Props) {
   return (
     <svg
       width="13"
@@ -365,6 +365,7 @@ export function StarSVG({ fill = "#9F9FA0" }: Props) {
       viewBox="0 0 13 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
     >
       <path
         d="M2.57986 13.3077L3.60369 8.41911L0.169922 5.13107L4.70627 4.69615L6.47041 0.0859375L8.23454 4.69615L12.7709 5.13107L9.33713 8.41911L10.361 13.3077L6.47041 10.7155L2.57986 13.3077Z"
@@ -745,7 +746,7 @@ export function FilterSVG() {
   );
 }
 
-export function ChevronDownSvg({ className }: { className?: string }) {
+export function ChevronDownSvg({ className, stroke = "#4E5566" }: Props) {
   return (
     <svg
       width="12"
@@ -757,7 +758,7 @@ export function ChevronDownSvg({ className }: { className?: string }) {
     >
       <path
         d="M11 1L6 6L1 1"
-        stroke="#4E5566"
+        stroke={stroke}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -914,7 +915,11 @@ export function CheckSquareOffsetSvg() {
   );
 }
 
-export function TrophySvg() {
+export function TrophySvg({
+  fill = "#23BD33",
+  stroke = "#23BD33",
+  className,
+}: Props) {
   return (
     <svg
       width="32"
@@ -922,43 +927,44 @@ export function TrophySvg() {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
     >
       <path
         opacity="0.2"
         d="M7 7V13.887C7 18.8496 10.9693 22.963 15.9318 22.9997C17.1194 23.0088 18.297 22.7826 19.3968 22.3344C20.4966 21.8861 21.4968 21.2246 22.3398 20.388C23.1828 19.5514 23.8518 18.5563 24.3084 17.4599C24.7649 16.3635 25 15.1876 25 14V7C25 6.73478 24.8946 6.48043 24.7071 6.29289C24.5196 6.10536 24.2652 6 24 6H8C7.73478 6 7.48043 6.10536 7.29289 6.29289C7.10536 6.48043 7 6.73478 7 7Z"
-        fill="#23BD33"
+        fill={fill}
       />
       <path
         d="M7 7V13.887C7 18.8496 10.9693 22.963 15.9318 22.9997C17.1194 23.0088 18.297 22.7826 19.3968 22.3344C20.4966 21.8861 21.4968 21.2246 22.3398 20.388C23.1828 19.5514 23.8518 18.5563 24.3084 17.4599C24.7649 16.3635 25 15.1876 25 14V7C25 6.73478 24.8946 6.48043 24.7071 6.29289C24.5196 6.10536 24.2652 6 24 6H8C7.73478 6 7.48043 6.10536 7.29289 6.29289C7.10536 6.48043 7 6.73478 7 7Z"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M12 28H20"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M16 23V28"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M24.7773 16H26.0004C27.0613 16 28.0787 15.5786 28.8288 14.8284C29.579 14.0783 30.0004 13.0609 30.0004 12V10C30.0004 9.73478 29.895 9.48043 29.7075 9.29289C29.52 9.10536 29.2656 9 29.0004 9H25.0004"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M7.24576 16H5.98438C4.92351 16 3.90609 15.5786 3.15595 14.8284C2.4058 14.0783 1.98438 13.0609 1.98438 12V10C1.98438 9.73478 2.08973 9.48043 2.27727 9.29289C2.4648 9.10536 2.71916 9 2.98438 9H6.98438"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -1015,7 +1021,7 @@ export function DollarSignSvg() {
   );
 }
 
-export function CreditCardSvg() {
+export function CreditCardSvg({ className, stroke = "#23BD33" }: Props) {
   return (
     <svg
       width="20"
@@ -1023,31 +1029,32 @@ export function CreditCardSvg() {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
     >
       <path
         d="M17.5 4.375H2.5C2.15482 4.375 1.875 4.65482 1.875 5V15C1.875 15.3452 2.15482 15.625 2.5 15.625H17.5C17.8452 15.625 18.125 15.3452 18.125 15V5C18.125 4.65482 17.8452 4.375 17.5 4.375Z"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="1.3"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M13.125 13.125H15.625"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="1.3"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M9.375 13.125H10.625"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M1.875 7.56641H18.125"
-        stroke="#23BD33"
+        stroke={stroke}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -1134,6 +1141,619 @@ export function CancelSvg() {
         d="M14.0625 14.0625L3.9375 3.9375"
         stroke="#8C94A3"
         stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function FolderSvg() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.5 16.25V5C2.5 4.83424 2.56585 4.67527 2.68306 4.55806C2.80027 4.44085 2.95924 4.375 3.125 4.375H7.29167C7.4269 4.375 7.55848 4.41886 7.66667 4.5L9.83333 6.125C9.94152 6.20614 10.0731 6.25 10.2083 6.25H15.625C15.7908 6.25 15.9497 6.31585 16.0669 6.43306C16.1842 6.55027 16.25 6.70924 16.25 6.875V8.75"
+        stroke="#E29A13"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M2.5 16.25L4.84285 10.3929C4.88924 10.2769 4.96932 10.1775 5.07275 10.1075C5.17619 10.0374 5.29823 10 5.42315 10H9.18576C9.30916 10 9.42979 9.96348 9.53245 9.89503L11.0925 8.85497C11.1952 8.78652 11.3158 8.75 11.4392 8.75H17.8829C17.9819 8.75 18.0795 8.77353 18.1677 8.81866C18.2558 8.86379 18.332 8.92922 18.3899 9.00956C18.4478 9.0899 18.4858 9.18284 18.5007 9.28074C18.5156 9.37864 18.5071 9.47869 18.4758 9.57264L16.25 16.25H2.5Z"
+        stroke="#E29A13"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ClockSvg({ stroke = "#FD8E1F" }: Props) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
+        stroke={stroke}
+        stroke-width="1.3"
+        stroke-miterlimit="10"
+      />
+      <path
+        d="M10 5.625V10H14.375"
+        stroke={stroke}
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function NetworkSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 20V10"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18 20V4"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M6 20V16"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function TwoUserCutOffSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8.25 15C10.9424 15 13.125 12.8174 13.125 10.125C13.125 7.43261 10.9424 5.25 8.25 5.25C5.55761 5.25 3.375 7.43261 3.375 10.125C3.375 12.8174 5.55761 15 8.25 15Z"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+      />
+      <path
+        d="M14.5703 5.43076C15.2408 5.24184 15.9441 5.1988 16.6326 5.30454C17.3212 5.41029 17.9791 5.66236 18.562 6.04377C19.1449 6.42519 19.6393 6.92709 20.012 7.51568C20.3846 8.10427 20.6268 8.76588 20.7221 9.45594C20.8175 10.146 20.764 10.8485 20.565 11.5161C20.366 12.1837 20.0263 12.8009 19.5687 13.3262C19.1111 13.8514 18.5463 14.2726 17.9123 14.5611C17.2782 14.8497 16.5897 14.9991 15.8931 14.9992"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M1.5 18.5059C2.26138 17.4229 3.27215 16.539 4.44698 15.9288C5.62182 15.3186 6.92623 15.0001 8.25008 15C9.57393 14.9999 10.8784 15.3184 12.0532 15.9285C13.2281 16.5386 14.239 17.4225 15.0004 18.5054"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.8906 15C17.2146 14.999 18.5193 15.3171 19.6943 15.9273C20.8693 16.5375 21.8799 17.4218 22.6407 18.5054"
+        stroke="#A1A5B3"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function StackSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 16.5L12 21.75L21 16.5"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M3 12L12 17.25L21 12"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M3 7.5L12 12.75L21 7.5L12 2.25L3 7.5Z"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function NotepadSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9 12H15"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M9 15H15"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M5.25 3.75H18.75C18.9489 3.75 19.1397 3.82902 19.2803 3.96967C19.421 4.11032 19.5 4.30109 19.5 4.5V18.75C19.5 19.3467 19.2629 19.919 18.841 20.341C18.419 20.7629 17.8467 21 17.25 21H6.75C6.15326 21 5.58097 20.7629 5.15901 20.341C4.73705 19.919 4.5 19.3467 4.5 18.75V4.5C4.5 4.30109 4.57902 4.11032 4.71967 3.96967C4.86032 3.82902 5.05109 3.75 5.25 3.75Z"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.5 2.25V5.25"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12 2.25V5.25"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M16.5 2.25V5.25"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function TvSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4.5 18L19.5 18C20.3284 18 21 17.3284 21 16.5V6C21 5.17157 20.3284 4.5 19.5 4.5L4.5 4.5C3.67157 4.5 3 5.17157 3 6V16.5C3 17.3284 3.67157 18 4.5 18Z"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15 21H9"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function NotebookSvg() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.5 10.5H16.5"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M10.5 13.5H16.5"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M19.5 3.75H4.5C4.08579 3.75 3.75 4.08579 3.75 4.5V19.5C3.75 19.9142 4.08579 20.25 4.5 20.25H19.5C19.9142 20.25 20.25 19.9142 20.25 19.5V4.5C20.25 4.08579 19.9142 3.75 19.5 3.75Z"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.5 3.75V20.25"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function Whatsapp() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_6270_26706)">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M16.629 3.34007C14.8749 1.58386 12.542 0.616264 10.0567 0.615234C4.93543 0.615234 0.767494 4.78306 0.765434 9.90566C0.764748 11.5432 1.19253 13.1417 2.00563 14.5507L0.6875 19.3652L5.61292 18.0732C6.97008 18.8135 8.49798 19.2036 10.0529 19.2041H10.0568C15.1774 19.2041 19.3458 15.0359 19.3478 9.9131C19.3488 7.43042 18.3833 5.09617 16.629 3.34007ZM10.0567 17.635H10.0535C8.66781 17.6344 7.30882 17.262 6.12299 16.5586L5.84112 16.3911L2.9183 17.1579L3.69844 14.3082L3.51476 14.016C2.74171 12.7865 2.3335 11.3654 2.33419 9.90623C2.33579 5.64846 5.80015 2.18445 10.0598 2.18445C12.1224 2.18513 14.0614 2.98943 15.5194 4.44912C16.9774 5.90881 17.7798 7.84904 17.7791 9.91253C17.7773 14.1706 14.3132 17.635 10.0567 17.635ZM14.2926 11.8513C14.0605 11.735 12.9191 11.1736 12.7062 11.096C12.4936 11.0185 12.3386 10.9799 12.184 11.2122C12.0292 11.4445 11.5843 11.9675 11.4488 12.1224C11.3133 12.2773 11.1781 12.2968 10.9459 12.1805C10.7137 12.0644 9.96568 11.8191 9.07888 11.0282C8.3888 10.4126 7.92291 9.6524 7.78741 9.42009C7.65214 9.18754 7.78627 9.07402 7.88927 8.9463C8.14058 8.63422 8.39223 8.30704 8.4696 8.1522C8.54707 7.99724 8.50828 7.86163 8.45014 7.74547C8.39223 7.62932 7.92795 6.48662 7.73454 6.02165C7.54594 5.56915 7.35471 5.63026 7.21212 5.62317C7.07685 5.61642 6.92201 5.61504 6.76717 5.61504C6.61245 5.61504 6.36091 5.67306 6.14805 5.90561C5.9353 6.13804 5.33563 6.6996 5.33563 7.84229C5.33563 8.98498 6.1675 10.0889 6.28355 10.2438C6.39959 10.3988 7.92062 12.7437 10.2494 13.7492C10.8033 13.9886 11.2356 14.1313 11.5729 14.2383C12.1291 14.415 12.635 14.39 13.0351 14.3303C13.4812 14.2636 14.4085 13.7686 14.6021 13.2264C14.7955 12.6841 14.7955 12.2193 14.7374 12.1224C14.6795 12.0256 14.5247 11.9675 14.2926 11.8513Z"
+          fill="#4E5566"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_6270_26706">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function CircleCancel({ className, stroke = "#8C94A3" }: Props) {
+  return (
+    <svg
+      width="25"
+      height="24"
+      viewBox="0 0 25 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
+    >
+      <path
+        d="M12.5 21C17.4706 21 21.5 16.9706 21.5 12C21.5 7.02944 17.4706 3 12.5 3C7.52944 3 3.5 7.02944 3.5 12C3.5 16.9706 7.52944 21 12.5 21Z"
+        stroke={stroke}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+      />
+      <path
+        d="M15.5 9L9.5 15"
+        stroke={stroke}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.5 15L9.5 9"
+        stroke={stroke}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function Envelop() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21 5.25L12 13.5L3 5.25"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M3 5.25H21V18C21 18.1989 20.921 18.3897 20.7803 18.5303C20.6397 18.671 20.4489 18.75 20.25 18.75H3.75C3.55109 18.75 3.36032 18.671 3.21967 18.5303C3.07902 18.3897 3 18.1989 3 18V5.25Z"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M10.3667 12L3.23438 18.538"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M20.7653 18.5381L13.6328 12"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function Twitter() {
+  return (
+    <svg
+      width="20"
+      height="18"
+      viewBox="0 0 20 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 2.79875C19.2563 3.125 18.4637 3.34125 17.6375 3.44625C18.4875 2.93875 19.1363 2.14125 19.4412 1.18C18.6488 1.6525 17.7738 1.98625 16.8412 2.1725C16.0887 1.37125 15.0162 0.875 13.8462 0.875C11.5763 0.875 9.74875 2.7175 9.74875 4.97625C9.74875 5.30125 9.77625 5.61375 9.84375 5.91125C6.435 5.745 3.41875 4.11125 1.3925 1.6225C1.03875 2.23625 0.83125 2.93875 0.83125 3.695C0.83125 5.115 1.5625 6.37375 2.6525 7.1025C1.99375 7.09 1.3475 6.89875 0.8 6.5975C0.8 6.61 0.8 6.62625 0.8 6.6425C0.8 8.635 2.22125 10.29 4.085 10.6712C3.75125 10.7625 3.3875 10.8062 3.01 10.8062C2.7475 10.8062 2.4825 10.7913 2.23375 10.7362C2.765 12.36 4.2725 13.5538 6.065 13.5925C4.67 14.6838 2.89875 15.3412 0.98125 15.3412C0.645 15.3412 0.3225 15.3263 0 15.285C1.81625 16.4563 3.96875 17.125 6.29 17.125C13.835 17.125 17.96 10.875 17.96 5.4575C17.96 5.27625 17.9538 5.10125 17.945 4.9275C18.7588 4.35 19.4425 3.62875 20 2.79875Z"
+        fill="#4E5566"
+      />
+    </svg>
+  );
+}
+
+export function Facebook() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_6270_10601)">
+        <path
+          d="M13.3312 3.32083H15.1571V0.140833C14.8421 0.0975 13.7587 0 12.4971 0C9.86458 0 8.06125 1.65583 8.06125 4.69917V7.5H5.15625V11.055H8.06125V20H11.6229V11.0558H14.4104L14.8529 7.50083H11.6221V5.05167C11.6229 4.02417 11.8996 3.32083 13.3312 3.32083Z"
+          fill="#4E5566"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_6270_10601">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function Clipboard() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15.75 15.75H20.25V3.75H8.25V8.25"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.75 8.25H3.75V20.25H15.75V8.25Z"
+        stroke="#4E5566"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function Spinner({ className }: Props) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
+    >
+      <path
+        d="M12 3V6"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.9"
+        d="M18.3635 5.63672L16.2422 7.75804"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.8"
+        d="M21 12H18"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.7"
+        d="M18.3635 18.3635L16.2422 16.2422"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.6"
+        d="M12 21V18"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.5"
+        d="M5.63281 18.3635L7.75413 16.2422"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.4"
+        d="M3 12H6"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        opacity="0.3"
+        d="M5.63281 5.63672L7.75413 7.75804"
+        stroke="#E29A13"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function GreenCheckmarCircle() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+        fill="#23BD33"
+        stroke="#23BD33"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M16.125 9.75L10.625 15L7.875 12.375"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function File({ className }: Props) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
+    >
+      <path
+        d="M12.5 14H3.49998C3.36737 14 3.2402 13.9473 3.14643 13.8535C3.05267 13.7598 3 13.6326 3 13.5V2.5C3 2.3674 3.05267 2.24022 3.14643 2.14645C3.2402 2.05268 3.36737 2 3.49998 2H9.50017L13 5.5V13.5C13 13.6326 12.9473 13.7598 12.8536 13.8535C12.7598 13.9473 12.6326 14 12.5 14Z"
+        fill="white"
+        stroke="#1D2026"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path d="M9.5 2V5.5H13.0005" fill="#1D2026" />
+      <path
+        d="M9.5 2V5.5H13.0005"
+        stroke="#1D2026"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ChatCircles() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.66184 10.9952C1.96297 9.81705 1.71822 8.42432 1.97355 7.07852C2.22888 5.73271 2.96672 4.5264 4.04852 3.6861C5.13033 2.84581 6.48168 2.42934 7.84882 2.51489C9.21596 2.60044 10.5048 3.18213 11.4735 4.15074C12.4421 5.11934 13.0238 6.40822 13.1093 7.77536C13.1949 9.1425 12.7784 10.4939 11.9381 11.5757C11.0978 12.6575 9.89152 13.3953 8.54572 13.6507C7.19991 13.906 5.80718 13.6612 4.62905 12.9624L4.62907 12.9623L2.6863 13.5174C2.60592 13.5404 2.52086 13.5414 2.43994 13.5204C2.35902 13.4995 2.28518 13.4573 2.22607 13.3981C2.16696 13.339 2.12473 13.2652 2.10376 13.1843C2.08279 13.1033 2.08384 13.0183 2.10681 12.9379L2.66189 10.9951L2.66184 10.9952Z"
+        stroke="#8C94A3"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M7.19531 13.7411C7.47183 14.5261 7.919 15.24 8.50462 15.8314C9.09023 16.4228 9.79972 16.877 10.582 17.1612C11.3642 17.4454 12.1998 17.5526 13.0284 17.4751C13.8571 17.3975 14.6582 17.1371 15.3742 16.7127L15.3741 16.7127L17.3169 17.2677C17.3973 17.2907 17.4823 17.2918 17.5633 17.2708C17.6442 17.2498 17.718 17.2076 17.7771 17.1485C17.8363 17.0894 17.8785 17.0155 17.8995 16.9346C17.9204 16.8537 17.9194 16.7686 17.8964 16.6883L17.3413 14.7455L17.3414 14.7455C17.8346 13.9138 18.1051 12.9689 18.1268 12.0022C18.1485 11.0354 17.9207 10.0794 17.4653 9.22635C17.01 8.37329 16.3425 7.65197 15.5272 7.132C14.7119 6.61202 13.7764 6.31095 12.8108 6.25781"
+        stroke="#8C94A3"
+        stroke-width="1.3"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
