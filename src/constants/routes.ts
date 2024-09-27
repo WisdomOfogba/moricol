@@ -17,7 +17,7 @@ export const routes = {
   MASSAGESERVICES: "/massage-dashboard/services",
   MASSAGEAPPOINTMENTS: "/massage-dashboard/appointments",
 
-  // TraIning dashboard profile links
+  // Training dashboard profile links
   TRAININGPROFILEDASHBOARD: "/dashboard/training/profile",
   TRAININGPROFILECOURSES: "/dashboard/training/profile/courses",
   TRAININGPROFILETEACHERS: "/dashboard/training/profile/teachers",
@@ -26,6 +26,19 @@ export const routes = {
   TRAININGPROFILEPURCHASEHISTORY:
     "/dashboard/training/profile/purchase-history",
   TRAININGPROFILESETTINGS: "/dashboard/training/profile/settings",
+
+  // Pharmarcy dashboard profile links
+  PHARMARCYCATEGORY: "/dashboard/pharmarcy/categories",
+  PHARMARCYCART: "/dashboard/pharmarcy/cart",
+  PHARMARCYACCOUNT: "/dashboard/pharmarcy/account",
+  PHARMARCYCHECKOUT: "/dashboard/pharmarcy/checkout",
+  PHARMARCYPRESCRIPTION: "/dashboard/pharmarcy/prescription",
+  PHARMARCYPRODUCT: "/dashboard/pharmarcy/product",
+
+  // Homecare dashboard profile links
+  HOMECAREDASHBOARDHOME: "/dashboard/homecare",
+  HOMECAREAPPOINTMENTS: "/dashboard/homecare/appointments",
+  HOMECARECAREGIVERS: "/dashboard/homecare/care-givers",
 
   // General dashboard pages links
 };

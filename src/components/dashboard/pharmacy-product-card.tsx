@@ -9,7 +9,7 @@ export default function ProductCard({
   bestSelling?: boolean;
 }) {
   return (
-    <Link href="pharmacy/product" className="block">
+    <Link href="pharmarcy/product" className="block">
       <article className="relative max-w-[151.24px] text-center">
         <div className="relative h-[214.51px] w-[151.24px] overflow-hidden">
           <Image
