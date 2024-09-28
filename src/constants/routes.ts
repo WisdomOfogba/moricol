@@ -12,10 +12,10 @@ export const routes = {
   MASSAGE: "/massage",
 
   // Massage dashboard links
-  MASSAGEDASHBOARDHOME: "/massage-dashboard",
-  MASSAGESPECIALISTS: "/massage-dashboard/specialists",
-  MASSAGESERVICES: "/massage-dashboard/services",
-  MASSAGEAPPOINTMENTS: "/massage-dashboard/appointments",
+  MASSAGEDASHBOARDHOME: "/dashboard/massage",
+  MASSAGESPECIALISTS: "/dashboard/massage/specialists",
+  MASSAGESERVICES: "/dashboard/massage/services",
+  MASSAGEAPPOINTMENTS: "/dashboard/massage/appointments",
 
   // Training dashboard profile links
   TRAININGPROFILEDASHBOARD: "/dashboard/training/profile",
