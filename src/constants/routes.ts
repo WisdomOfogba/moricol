@@ -35,6 +35,7 @@ export const routes = {
   PHARMARCYCHECKOUT: "/dashboard/pharmarcy/checkout",
   PHARMARCYPRESCRIPTION: "/dashboard/pharmarcy/prescription",
   PHARMARCYPRODUCT: "/dashboard/pharmarcy/product",
+  PHARMARCYPAYMENT: "/dashboard/pharmarcy/payment",
 
   // Homecare dashboard profile links
   HOMECAREDASHBOARDHOME: "/dashboard/homecare",

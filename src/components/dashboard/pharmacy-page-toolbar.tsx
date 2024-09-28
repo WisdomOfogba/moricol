@@ -1,6 +1,8 @@
 import { cn } from "@/util/cn";
 import Button from "../button";
 import { HeartSVG } from "../svgs";
+import { routes } from "@/constants/routes";
+import Link from "next/link";
 
 export default function PageToolBar() {
   return (
@@ -21,10 +23,10 @@ export default function PageToolBar() {
           <HeartSVG />
           <NumberBadge className="absolute -right-2 -top-1" />
         </button>
-        <button className="relative">
+        <Link href={routes.PHARMARCYCART} className="relative">
           <CartSVG />
           <NumberBadge className="absolute -right-2 -top-1" />
-        </button>
+        </Link>
       </div>
     </section>
   );
