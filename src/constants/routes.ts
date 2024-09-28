@@ -28,6 +28,7 @@ export const routes = {
   TRAININGPROFILESETTINGS: "/dashboard/training/profile/settings",
 
   // Pharmarcy dashboard profile links
+  PHARMARCYDASHBOARDHOME: "/dashboard/pharmarcy",
   PHARMARCYCATEGORY: "/dashboard/pharmarcy/categories",
   PHARMARCYCART: "/dashboard/pharmarcy/cart",
   PHARMARCYACCOUNT: "/dashboard/pharmarcy/account",

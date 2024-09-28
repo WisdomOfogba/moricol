@@ -38,7 +38,7 @@ const FileInput: React.FC<FileAttachmentProps> = ({
           accept={acceptedFileTypes}
         />
         <BiUpload className="mr-2 inline text-primary-500" size={20} />
-        Upload Attachment
+        Upload all attachment
         {fileName && (
           <p className="mt-2 text-sm text-gray-600">Uploaded: {fileName}</p>
         )}

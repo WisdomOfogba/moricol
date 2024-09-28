@@ -203,7 +203,7 @@ function CategoryProducts({
         </div>
 
         {/* Review */}
-        <div className="bg-gray-100 p-5">
+        {/* <div className="bg-gray-100 p-5">
           <h2 className="mb-5">BY REVIEW</h2>
 
           <ul className="grid gap-y-1.5">
@@ -218,7 +218,7 @@ function CategoryProducts({
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Color */}
         <div className="bg-gray-100 p-5">

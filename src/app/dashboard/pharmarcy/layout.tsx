@@ -3,7 +3,7 @@ import { MenuSVG } from "@/components/svgs";
 import { routes } from "@/constants/routes";
 
 const links = [
-  { name: "Home", link: routes.MASSAGEDASHBOARDHOME, SVGComponent: MenuSVG },
+  { name: "Home", link: routes.PHARMARCYDASHBOARDHOME, SVGComponent: MenuSVG },
   {
     name: "Category",
     link: routes.PHARMARCYCATEGORY,
