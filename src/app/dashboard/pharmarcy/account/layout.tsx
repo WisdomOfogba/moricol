@@ -1,11 +1,19 @@
 import { HeartSVG } from "@/components/svgs";
+import { routes } from "@/constants/routes";
 import Link from "next/link";
 
 const accountLinks = [
-  { name: "My Orders", link: "/", icon: <OrderSvg /> },
-  { name: "Saved Items", link: "/", icon: <HeartSVG className="h-5 w-5" /> },
-  { name: "Addresses", link: "/", icon: <AddressBookSvg /> },
-  { name: "Inbox", link: "/", icon: <Inbox /> },
+  { name: "My Orders", link: routes.PHARMARCYACCOUNT, icon: <OrderSvg /> },
+  {
+    name: "Saved Items",
+    link: routes.PHARMARCYACCOUNTSAVEDITEMS,
+    icon: <HeartSVG className="h-5 w-5" />,
+  },
+  {
+    name: "Addresses",
+    link: routes.PHARMARCYACCOUNTADDRESSES,
+    icon: <AddressBookSvg />,
+  },
 ];
 
 export default function AccountLayout({
@@ -24,7 +32,10 @@ export default function AccountLayout({
         <aside className="w-[243px] shrink-0 rounded border border-[#CACACA] p-6">
           <ul className="grid gap-y-5">
             {accountLinks.map(({ name, link, icon }) => (
-              <li key={link} className="border-b border-gray-300 pb-5 last:border-none last:pb-0">
+              <li
+                key={link}
+                className="border-b border-gray-300 pb-5 last:border-none last:pb-0"
+              >
                 <Link
                   href={link}
                   className="flex items-center gap-x-2 text-sm text-primary-500"
@@ -98,23 +109,6 @@ function AddressBookSvg() {
         stroke-width="1.47728"
         stroke-linecap="round"
         stroke-linejoin="round"
-      />
-    </svg>
-  );
-}
-
-function Inbox() {
-  return (
-    <svg
-      width="18"
-      height="17"
-      viewBox="0 0 18 17"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13.9833 1.6875H4.3246C3.77584 1.68805 3.24972 1.90628 2.86169 2.29431C2.47367 2.68234 2.25543 3.20846 2.25488 3.75722V13.4159C2.25543 13.9646 2.47367 14.4908 2.86169 14.8788C3.24972 15.2668 3.77584 15.4851 4.3246 15.4856H13.9833C14.532 15.4851 15.0581 15.2668 15.4462 14.8788C15.8342 14.4908 16.0524 13.9646 16.053 13.4159V3.75722C16.0524 3.20846 15.8342 2.68234 15.4462 2.29431C15.0581 1.90628 14.532 1.68805 13.9833 1.6875ZM4.3246 3.06731H13.9833C14.1662 3.06749 14.3416 3.14024 14.4709 3.26958C14.6002 3.39892 14.673 3.5743 14.6732 3.75722V9.27646H12.9719C12.7447 9.27624 12.5211 9.33218 12.3208 9.43931C12.1205 9.54644 11.9498 9.70142 11.8239 9.89047L10.8539 11.3462H7.45263L6.48262 9.89047C6.35671 9.70142 6.18601 9.54644 5.98572 9.43931C5.78543 9.33218 5.56176 9.27624 5.33462 9.27646H3.63469V3.75722C3.63488 3.5743 3.70762 3.39892 3.83696 3.26958C3.96631 3.14024 4.14168 3.06749 4.3246 3.06731ZM13.9833 14.1058H4.3246C4.14168 14.1056 3.96631 14.0329 3.83696 13.9035C3.70762 13.7742 3.63488 13.5988 3.63469 13.4159V10.6563H5.33462L6.30463 12.112C6.43054 12.301 6.60123 12.456 6.80153 12.5631C7.00182 12.6703 7.22549 12.7262 7.45263 12.726H10.8539C11.081 12.7262 11.3047 12.6703 11.505 12.5631C11.7053 12.456 11.876 12.301 12.0019 12.112L12.9719 10.6563H14.6725V13.4159C14.6723 13.5988 14.5996 13.7742 14.4702 13.9035C14.3409 14.0329 14.1662 14.1056 13.9833 14.1058Z"
-        fill="#E29A13"
       />
     </svg>
   );

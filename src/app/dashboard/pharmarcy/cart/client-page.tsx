@@ -4,7 +4,9 @@ import {
   SliderNextButton,
   SliderPrevButton,
 } from "@/components/dashboard/slider";
+import { routes } from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CartPage() {
   return (
@@ -102,7 +104,12 @@ export default function CartPage() {
             </Button>
           </form>
           <form className="grow">
-            <Button>Proceed to Checkout</Button>
+            <Link
+              href={routes.PHARMARCYCHECKOUT}
+              className="inline-block w-full rounded-lg bg-primary-500 py-3 text-center font-semibold text-white"
+            >
+              Proceed to Checkout
+            </Link>
           </form>
         </div>
       </section>

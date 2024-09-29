@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ModalLayout from "./modal-layout";
+import ModalLayout from "../../../../components/layouts/modal-layout";
 import Button from "@/components/button";
 import { CancelSvg, ChevronDownSvg, PaperPlaneSvg } from "@/components/svgs";
 

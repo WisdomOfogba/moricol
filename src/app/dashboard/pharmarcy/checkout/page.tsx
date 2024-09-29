@@ -1,12 +1,13 @@
 import Button from "@/components/button";
 import SummaryProductCard from "@/components/dashboard/summary-product-card";
 import { LocationSVG, OneUserSvg, PhoneSVG } from "@/components/svgs";
-
+import { routes } from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Checkout() {
   return (
-    <main className="px-8 py-6">
+    <main className="px-8 py-6 pb-20">
       <section className="mb-9">
         <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
           <h1 className="shrink-0 text-lg font-semibold text-primary-500">
@@ -106,7 +107,7 @@ export default function Checkout() {
               </label>
             </div>
 
-            <div className="mt-3.5 flex items-center gap-x-2">
+            {/* <div className="mt-3.5 flex items-center gap-x-2">
               <input type="radio" id="paystack" />
               <label htmlFor="paystack" className="flex items-center gap-x-0.5">
                 <div className="relative h-3.5 w-3.5 overflow-hidden">
@@ -120,7 +121,7 @@ export default function Checkout() {
                 </div>
                 Flutterwave
               </label>
-            </div>
+            </div> */}
           </section>
         </section>
         <section className="grid w-[372px] shrink-0 gap-y-2">
@@ -172,17 +173,14 @@ export default function Checkout() {
               Apply Coupon
             </Button>
           </article>
-          <Button>Place Order</Button>
+          <Link
+            href={routes.PHARMARCYPAYMENT}
+            className="inline-block rounded-lg bg-primary-500 py-3 text-center font-semibold text-white"
+          >
+            Place Order
+          </Link>
         </section>
       </div>
     </main>
   );
 }
-
-// function Payment() {
-//   return (
-//     <section className="gray-container py-14">
-//       <form className="max-w-[466px]"></form>
-//     </section>
-//   );
-// }

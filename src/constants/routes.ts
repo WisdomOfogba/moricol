@@ -28,7 +28,7 @@ export const routes = {
   TRAININGPROFILESETTINGS: "/dashboard/training/profile/settings",
 
   // Pharmarcy dashboard profile links
-  PHARMARCYDASHBOARDHOME: "/dashboard/pharmarcy",
+  PHARMARCYDASHBOARD: "/dashboard/pharmarcy",
   PHARMARCYCATEGORY: "/dashboard/pharmarcy/categories",
   PHARMARCYCART: "/dashboard/pharmarcy/cart",
   PHARMARCYACCOUNT: "/dashboard/pharmarcy/account",
@@ -36,6 +36,12 @@ export const routes = {
   PHARMARCYPRESCRIPTION: "/dashboard/pharmarcy/prescription",
   PHARMARCYPRODUCT: "/dashboard/pharmarcy/product",
   PHARMARCYPAYMENT: "/dashboard/pharmarcy/payment",
+  PHARMARCYACCOUNTSAVEDITEMS: "/dashboard/pharmarcy/account/saved-items",
+  PHARMARCYACCOUNTADDRESSES: "/dashboard/pharmarcy/account/addresses",
+  PHARMARCYRETURNPOLICY: "/dashboard/pharmarcy/account/return-policy",
+  PHARMARCYPRODUCTREVIEW: "/dashboard/pharmarcy/product-review",
+  PHARMARCYRETURNPRODUCT: "/dashboard/pharmarcy/account/return-product",
+  PHARMARCYORDERTRACKING: "/dashboard/pharmarcy/account/track-order",
 
   // Homecare dashboard profile links
   HOMECAREDASHBOARDHOME: "/dashboard/homecare",

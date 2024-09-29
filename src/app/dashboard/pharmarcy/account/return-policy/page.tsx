@@ -1,3 +1,6 @@
+import Button from "@/components/button";
+import { refundPolicyAgreement } from "../../action";
+
 export default function ReturnPolicy() {
   return (
     <section className="text-sm">
@@ -28,26 +31,16 @@ export default function ReturnPolicy() {
         aliquam vel erat venenatis congue. A ultricies ut nisl tortor. Laoreet
         cursus pharetra mi hendrerit pellentesque magna tristique tincidunt
         semper. Diam vulputate nulla ultricies tortor varius molestie nulla
-        libero dolor. Sit volutpat nascetur risus dolor phasellus gravida
-        facilisis. Libero egestas imperdiet eu egestas potenti urna neque
-        pretium. Nulla orci mattis integer commodo. Egestas in faucibus feugiat
-        lorem fermentum vitae. Aliquam quisque elit auctor at volutpat vel.
-        Gravida tellus amet egestas pulvinar sodales bibendum. Blandit placerat
-        pharetra egestas leo mi pulvinar lacus sit pretium. Et risus risus urna
-        adipiscing id pellentesque. Purus massa mi dolor est. Amet ornare nec
-        quis tortor. Enim eget nunc ullamcorper vel neque in quis ut. Id risus
-        gravida sed eros et volutpat vulputate venenatis. Egestas dolor tellus
-        amet facilisis velit vulputate venenatis nibh donec. Tincidunt morbi
-        ipsum.
       </p>
 
-      <form className="mt-5">
+      <form className="mt-5" action={refundPolicyAgreement}>
         <div className="flex items-center gap-x-2">
           <input type="checkbox" id="agree" className="h-5 w-5" />
           <label htmlFor="agree" className="text-gray-500">
             You have agreed to our return policy
           </label>
         </div>
+        <Button className="mt-10 lg:max-w-[360px]">Continue</Button>
       </form>
     </section>
   );
