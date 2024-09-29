@@ -1,7 +1,7 @@
 import SelectInput from "@/components/auth/select-input";
 import TextInput from "@/components/auth/text-input";
-import Button from "@/components/button";
 import { AppleSvg, GoogleSvg, PaypalSvg } from "@/components/svgs";
+import PaymentSuccessful from "../../../modals/payment-success";
 
 export default function PaymentForm() {
   return (
@@ -66,9 +66,7 @@ export default function PaymentForm() {
       </div>
 
       <div className="mt-5 bg-gray-50">
-        <Button>
-          Pay ₦5,700 <span>{">"}</span>
-        </Button>
+        <PaymentSuccessful />
       </div>
     </form>
   );

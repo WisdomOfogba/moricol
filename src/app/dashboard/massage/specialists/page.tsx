@@ -1,7 +1,8 @@
 import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MasseuseCard from "@/components/massage/masseuse-card";
-import { FavouriteSVG, FilterSVG } from "@/components/svgs";
+import FilterButton from "@/components/modals/filter";
+import { FavouriteSVG } from "@/components/svgs";
 
 export default function AllMasseuse() {
   return (
@@ -10,13 +11,7 @@ export default function AllMasseuse() {
 
       <div className="px-20">
         <section className="flex items-center justify-center gap-x-3 border-b border-b-gray-300 py-6">
-          <Button
-            variant="outline"
-            className="flex max-w-[653px] items-center justify-between"
-          >
-            Filter Location, masseuse & dates
-            <FilterSVG />
-          </Button>
+          <FilterButton />
           <Button variant="outline" className="w-fit">
             <FavouriteSVG />
           </Button>

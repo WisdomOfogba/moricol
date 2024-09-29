@@ -1,5 +1,7 @@
 import Button from "@/components/button";
+import { routes } from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,9 +19,12 @@ export default function Home() {
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="shrink-0 text-xl">Top Masseuse</h2>
-          <Button variant="text" className="w-fit">
+          <Link
+            href={routes.MASSAGESPECIALISTS}
+            className="w-fit text-primary-500"
+          >
             View all
-          </Button>
+          </Link>
         </div>
         <div className="flex flex-wrap justify-between gap-x-6 gap-y-9">
           <MasseuseCard />

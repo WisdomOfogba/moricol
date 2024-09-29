@@ -4,6 +4,7 @@ import AppointmentButtons from "@/components/massage/appointment-button";
 import { CalendarSvg, GridViewSvg } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
+import ViewRescheduleButton from "../modals/view-reschedule";
 
 export default function MassageAppointments() {
   return (
@@ -82,9 +83,7 @@ const AppointmentCard = ({ appointmentType }: { appointmentType: string }) => {
         </div>
 
         {appointmentType.toLowerCase() === "rescheduled appointment" && (
-          <button className="absolute right-5 top-3 text-sm font-medium text-primary-500">
-            View
-          </button>
+          <ViewRescheduleButton />
         )}
       </article>
     </Link>
