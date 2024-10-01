@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import { routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,9 +11,9 @@ export default function Home() {
       </section>
       <section className="mb-7 border-y border-y-gray-300 py-6">
         <p className="mb-2 text-lg">Schedule a Massage Appointment</p>
-        <Button className="max-w-[377px]">
+        <Link href={routes.MASSAGESPECIALISTS} className="max-w-[377px]">
           Schedule a Massage Appointment
-        </Button>
+        </Link>
       </section>
       <section>
         <div className="mb-3 flex items-center justify-between">

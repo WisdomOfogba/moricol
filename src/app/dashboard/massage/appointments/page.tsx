@@ -63,29 +63,31 @@ const AppointmentCard = ({ appointmentType }: { appointmentType: string }) => {
       : "text-primary-500";
 
   return (
-    <Link href="appointments/1" className="relative block max-w-[374px]">
-      <article className="shadow-custom flex items-end gap-x-6 rounded-xl bg-white p-2.5 pb-4 lg:rounded">
-        <div className="relative h-20 w-20 overflow-hidden rounded-xl">
-          <Image
-            src="/images/client.jpg"
-            alt="Doctor profile"
-            fill
-            sizes="90px"
-            style={{ objectFit: "cover" }}
-            priority
-          />
-        </div>
+    <article className="shadow-custom relative max-w-[394px] rounded bg-white p-2.5 pb-4 lg:rounded-xl">
+      <Link href="appointments/1" className="block">
+        <section className="flex items-end gap-x-6">
+          <div className="relative h-20 w-20 overflow-hidden rounded-xl">
+            <Image
+              src="/images/client.jpg"
+              alt="Doctor profile"
+              fill
+              sizes="90px"
+              style={{ objectFit: "cover" }}
+              priority
+            />
+          </div>
 
-        <div>
-          <p className={`mb-1 text-[0.625rem] ${color}`}>{appointmentType}</p>
-          <h3 className="mb-2 font-medium text-[#374151]">Vivian Akpa</h3>
-          <p className="text-sm">June 12, 09:00 AM - 10:00 AM</p>
-        </div>
+          <div>
+            <p className={`mb-1 text-[0.625rem] ${color}`}>{appointmentType}</p>
+            <h3 className="mb-2 font-medium text-[#374151]">Vivian Akpa</h3>
+            <p className="text-sm">June 12, 09:00 AM - 10:00 AM</p>
+          </div>
+        </section>
+      </Link>
 
-        {appointmentType.toLowerCase() === "rescheduled appointment" && (
-          <ViewRescheduleButton />
-        )}
-      </article>
-    </Link>
+      {appointmentType.toLowerCase() === "rescheduled appointment" && (
+        <ViewRescheduleButton />
+      )}
+    </article>
   );
 };
