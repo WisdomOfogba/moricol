@@ -4,7 +4,6 @@ import Button from "@/components/button";
 import ModalLayout from "@/components/layouts/modal-layout";
 import { CancelSvg, CompletedSvg } from "@/components/svgs";
 import { routes } from "@/constants/routes";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 

@@ -6,7 +6,7 @@ import { CancelSvg } from "@/components/svgs";
 import { routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
-import { use, useState } from "react";
+import { useState } from "react";
 
 export default function PaymentSuccessful() {
   const [isModalOpen, setIsModalOpen] = useState(false);
