@@ -1,5 +1,7 @@
 import { loans } from "@/constants";
+import { routes } from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Loan() {
   return (
@@ -18,12 +20,18 @@ export default function Loan() {
             compromising on quality healthcare. experience.
           </p>
           <div className="mt-9 flex gap-x-2.5">
-            <button className="w-full max-w-[293px] rounded-lg bg-primary-500 px-9 py-3 text-primary-50">
+            <Link
+              href={routes.LOANDASHBOARDHOME}
+              className="block w-full max-w-[293px] rounded-lg bg-primary-500 px-9 py-3 text-center text-primary-50"
+            >
               GET STARTED
-            </button>
-            <button className="w-full max-w-[293px] rounded-lg border border-primary-500 bg-white px-9 py-3 text-primary-500">
+            </Link>
+            <Link
+              href={routes.LOGIN}
+              className="block w-full max-w-[293px] rounded-lg border border-primary-500 bg-white px-9 py-3 text-center text-primary-500"
+            >
               LOGIN
-            </button>
+            </Link>
           </div>
         </div>
         <Image

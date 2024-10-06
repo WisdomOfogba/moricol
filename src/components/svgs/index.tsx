@@ -36,16 +36,16 @@ export function BadgeSvg() {
       <path
         d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15Z"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.21 13.8909L3 23.0009L8 20.0009L13 23.0009L11.79 13.8809"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -92,7 +92,7 @@ export function CircleFolderSVG({ fillColor }: Props) {
         height="50.6106"
         rx="25.3053"
         stroke={fillColor}
-        stroke-width="0.589388"
+        strokeWidth="0.589388"
       />
       <path
         d="M38.6514 18.6122H22.1485C21.8359 18.6122 21.536 18.488 21.315 18.2669C21.0939 18.0459 20.9697 17.746 20.9697 17.4334C20.9697 17.1208 21.0939 16.821 21.315 16.5999C21.536 16.3788 21.8359 16.2546 22.1485 16.2546H38.6514C38.964 16.2546 39.2638 16.3788 39.4849 16.5999C39.706 16.821 39.8301 17.1208 39.8301 17.4334C39.8301 17.746 39.706 18.0459 39.4849 18.2669C39.2638 18.488 38.964 18.6122 38.6514 18.6122Z"
@@ -113,8 +113,8 @@ export function CircleFolderSVG({ fillColor }: Props) {
         height="54.2879"
         rx="27.1439"
         stroke={fillColor}
-        stroke-width="1.17878"
-        stroke-dasharray="4.72 2.36"
+        strokeWidth="1.17878"
+        strokeDasharray="4.72 2.36"
       />
     </svg>
   );
@@ -133,16 +133,16 @@ export function LocationSVG({ fill = "#E6F6FC", className }: Props) {
       <path
         d="M12 13.0156C13.6569 13.0156 15 11.6725 15 10.0156C15 8.35877 13.6569 7.01562 12 7.01562C10.3431 7.01562 9 8.35877 9 10.0156C9 11.6725 10.3431 13.0156 12 13.0156Z"
         stroke={fill}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M19.5 10.0156C19.5 16.7656 12 22.0156 12 22.0156C12 22.0156 4.5 16.7656 4.5 10.0156C4.5 8.0265 5.29018 6.11885 6.6967 4.71232C8.10322 3.3058 10.0109 2.51563 12 2.51562C13.9891 2.51563 15.8968 3.3058 17.3033 4.71232C18.7098 6.11885 19.5 8.0265 19.5 10.0156V10.0156Z"
         stroke={fill}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -311,30 +311,30 @@ export function HierarchySVG() {
       <path
         d="M8 8H21.3334V24H8"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M21.3333 16H40V48H21.3333"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M40 32H58.6667"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 40H21.3334V56H8"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -387,23 +387,23 @@ export function ThreeStarSVG() {
       <path
         d="M12.6932 38.4403L15.4639 32.5656C15.8196 31.8115 16.8471 31.8115 17.2028 32.5656L19.9735 38.4403L26.1696 39.3883C26.9646 39.5099 27.2814 40.5325 26.7059 41.1195L22.2232 45.6891L23.2811 52.1448C23.417 52.9739 22.5855 53.6059 21.8742 53.2144L16.3334 50.1648L10.7925 53.2144C10.0812 53.6059 9.2497 52.9739 9.38556 52.1448L10.4435 45.6891L5.96082 41.1195C5.38527 40.5325 5.70212 39.5099 6.49711 39.3883L12.6932 38.4403Z"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M44.6931 38.4403L47.464 32.5656C47.8195 31.8115 48.8472 31.8115 49.2027 32.5656L51.9736 38.4403L58.1696 39.3883C58.9646 39.5099 59.2814 40.5325 58.7059 41.1195L54.2232 45.6891L55.2811 52.1448C55.4171 52.9739 54.5856 53.6059 53.8742 53.2144L48.3334 50.1648L42.7926 53.2144C42.0811 53.6059 41.2496 52.9739 41.3856 52.1448L42.4435 45.6891L37.9608 41.1195C37.3854 40.5325 37.7022 39.5099 38.4971 39.3883L44.6931 38.4403Z"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M28.6931 14.4404L31.464 8.56562C31.8195 7.81146 32.8472 7.81146 33.2027 8.56562L35.9736 14.4404L42.1696 15.3883C42.9645 15.5099 43.2813 16.5326 42.7059 17.1194L38.2232 21.689L39.2811 28.1448C39.4171 28.9739 38.5856 29.6059 37.8741 29.2144L32.3334 26.1647L26.7925 29.2144C26.0812 29.6059 25.2497 28.9739 25.3856 28.1448L26.4435 21.689L21.9608 17.1194C21.3853 16.5326 21.7021 15.5099 22.4971 15.3883L28.6931 14.4404Z"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -421,23 +421,23 @@ export function Timersvg() {
       <path
         d="M24.5 5.33337H40.5"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M32.5 26.6666V37.3333"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M32.5 58.6667C44.2821 58.6667 53.8333 49.1155 53.8333 37.3333C53.8333 25.5513 44.2821 16 32.5 16C20.7179 16 11.1667 25.5513 11.1667 37.3333C11.1667 49.1155 20.7179 58.6667 32.5 58.6667Z"
         stroke="#475569"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -455,30 +455,30 @@ export function TwoUsersSvg() {
       <path
         d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 9C11.2091 9 13 7.20914 13 5C13 2.79086 11.2091 1 9 1C6.79086 1 5 2.79086 5 5C5 7.20914 6.79086 9 9 9Z"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M23 19.0009V17.0009C22.9993 16.1146 22.7044 15.2536 22.1614 14.5532C21.6184 13.8527 20.8581 13.3524 20 13.1309"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 1.13086C16.8604 1.35116 17.623 1.85156 18.1676 2.55317C18.7122 3.25478 19.0078 4.11769 19.0078 5.00586C19.0078 5.89403 18.7122 6.75694 18.1676 7.45855C17.623 8.16016 16.8604 8.66056 16 8.88086"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -496,13 +496,13 @@ export function OneUserSvg() {
       <path
         d="M1.56348 9.78746C1.56348 9.11656 1.82999 8.47313 2.30439 7.99873C2.7788 7.52433 3.42222 7.25781 4.09313 7.25781H9.15243C9.82334 7.25781 10.4668 7.52433 10.9412 7.99873C11.4156 8.47313 11.6821 9.11656 11.6821 9.78746C11.6821 10.1229 11.5488 10.4446 11.3116 10.6818C11.0744 10.919 10.7527 11.0523 10.4173 11.0523H2.8283C2.49285 11.0523 2.17114 10.919 1.93394 10.6818C1.69673 10.4446 1.56348 10.1229 1.56348 9.78746Z"
         stroke="#E29A13"
-        stroke-width="1.37981"
-        stroke-linejoin="round"
+        strokeWidth="1.37981"
+        strokeLinejoin="round"
       />
       <path
         d="M6.6231 4.72863C7.67108 4.72863 8.52062 3.87908 8.52062 2.83111C8.52062 1.78314 7.67108 0.933594 6.6231 0.933594C5.57513 0.933594 4.72559 1.78314 4.72559 2.83111C4.72559 3.87908 5.57513 4.72863 6.6231 4.72863Z"
         stroke="#E29A13"
-        stroke-width="1.37981"
+        strokeWidth="1.37981"
       />
     </svg>
   );
@@ -656,13 +656,13 @@ export function SingleUserSvg() {
       <path
         d="M1.01733 9.682C1.01733 9.01109 1.28385 8.36766 1.75825 7.89326C2.23265 7.41886 2.87608 7.15234 3.54699 7.15234H8.60629C9.2772 7.15234 9.92062 7.41886 10.395 7.89326C10.8694 8.36766 11.1359 9.01109 11.1359 9.682C11.1359 10.0174 11.0027 10.3392 10.7655 10.5764C10.5283 10.8136 10.2066 10.9468 9.87112 10.9468H2.28216C1.94671 10.9468 1.62499 10.8136 1.38779 10.5764C1.15059 10.3392 1.01733 10.0174 1.01733 9.682Z"
         stroke="#E29A13"
-        stroke-width="1.37981"
-        stroke-linejoin="round"
+        strokeWidth="1.37981"
+        strokeLinejoin="round"
       />
       <path
         d="M6.07717 4.6226C7.12499 4.6226 7.97441 3.77318 7.97441 2.72536C7.97441 1.67755 7.12499 0.828125 6.07717 0.828125C5.02935 0.828125 4.17993 1.67755 4.17993 2.72536C4.17993 3.77318 5.02935 4.6226 6.07717 4.6226Z"
         stroke="#E29A13"
-        stroke-width="1.37981"
+        strokeWidth="1.37981"
       />
     </svg>
   );
@@ -706,9 +706,9 @@ export function DownloadSvg() {
       <path
         d="M4 16V17C4 17.7956 4.31607 18.5587 4.87868 19.1213C5.44129 19.6839 6.20435 20 7 20H17C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17V16M16 12L12 16M12 16L8 12M12 16V4"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -726,65 +726,65 @@ export function FilterSVG() {
       <path
         d="M12 11.25V20.25"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 3.75V8.25"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.75 18.75V20.25"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.75 3.75V15.75"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M21 15.75H16.5"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M5.25 15.75V20.25"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M5.25 3.75V12.75"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M3 12.75H7.5"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M14.25 8.25H9.75"
         stroke="#E29A13"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -803,9 +803,9 @@ export function ChevronDownSvg({ className, stroke = "#4E5566" }: Props) {
       <path
         d="M11 1L6 6L1 1"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -823,16 +823,16 @@ export function SearchSvg() {
       <path
         d="M10.875 18.75C15.2242 18.75 18.75 15.2242 18.75 10.875C18.75 6.52576 15.2242 3 10.875 3C6.52576 3 3 6.52576 3 10.875C3 15.2242 6.52576 18.75 10.875 18.75Z"
         stroke="#1D2026"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16.4414 16.4434L20.9977 20.9997"
         stroke="#1D2026"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -850,16 +850,16 @@ export function NotificationSvg() {
       <path
         d="M5.26855 9.74994C5.26731 8.86045 5.44213 7.97951 5.78294 7.1579C6.12375 6.33628 6.62381 5.59025 7.25429 4.9628C7.88476 4.33535 8.6332 3.83889 9.45644 3.50204C10.2797 3.16519 11.1615 2.99461 12.0509 3.00013C15.7625 3.02772 18.7312 6.11275 18.7312 9.83468V10.4999C18.7312 13.8577 19.4337 15.8061 20.0524 16.871C20.1191 16.9848 20.1546 17.1142 20.1553 17.246C20.156 17.3779 20.1219 17.5076 20.0565 17.6221C19.991 17.7366 19.8966 17.8318 19.7826 17.8982C19.6686 17.9645 19.5392 17.9996 19.4073 17.9999H4.59173C4.45985 17.9996 4.33038 17.9645 4.2164 17.8981C4.10242 17.8318 4.00795 17.7366 3.94252 17.622C3.8771 17.5075 3.84303 17.3778 3.84376 17.2459C3.84449 17.114 3.87999 16.9846 3.94667 16.8709C4.56573 15.8059 5.26855 13.8575 5.26855 10.4999L5.26855 9.74994Z"
         stroke="#1D2026"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 18V18.75C9 19.5456 9.31607 20.3087 9.87868 20.8713C10.4413 21.4339 11.2044 21.75 12 21.75C12.7956 21.75 13.5587 21.4339 14.1213 20.8713C14.6839 20.3087 15 19.5456 15 18.75V18"
         stroke="#1D2026"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -878,7 +878,7 @@ export function CartSvg() {
         d="M8.25 20.25C8.25 20.6642 7.91421 21 7.5 21C7.08579 21 6.75 20.6642 6.75 20.25C6.75 19.8358 7.08579 19.5 7.5 19.5C7.91421 19.5 8.25 19.8358 8.25 20.25Z"
         fill="#1D2026"
         stroke="#1D2026"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
       <path
         d="M17.25 21.75C18.0784 21.75 18.75 21.0784 18.75 20.25C18.75 19.4216 18.0784 18.75 17.25 18.75C16.4216 18.75 15.75 19.4216 15.75 20.25C15.75 21.0784 16.4216 21.75 17.25 21.75Z"
@@ -887,9 +887,9 @@ export function CartSvg() {
       <path
         d="M3.96429 6.75H20.7857L18.3108 15.4121C18.2213 15.7255 18.0321 16.0012 17.7718 16.1975C17.5116 16.3938 17.1945 16.5 16.8685 16.5H7.88145C7.55549 16.5 7.23839 16.3938 6.97816 16.1975C6.71792 16.0012 6.52872 15.7255 6.43917 15.4121L3.04827 3.54396C3.0035 3.38725 2.90889 3.24939 2.77878 3.15124C2.64866 3.05309 2.49011 3 2.32713 3H0.75"
         stroke="#1D2026"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -913,15 +913,15 @@ export function PlaySVG({ className, stroke, fill = '"#E29A13"' }: Props) {
       <path
         d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z"
         stroke={stroke}
-        stroke-width="2"
-        stroke-miterlimit="10"
+        strokeWidth="2"
+        strokeMiterlimit="10"
       />
       <path
         d="M20 16L14 12V20L20 16Z"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -944,16 +944,16 @@ export function CheckSquareOffsetSvg() {
       <path
         d="M5.5 17.9091V6.5C5.5 6.23478 5.60536 5.98043 5.79289 5.79289C5.98043 5.60536 6.23478 5.5 6.5 5.5H25.5C25.7652 5.5 26.0196 5.60536 26.2071 5.79289C26.3946 5.98043 26.5 6.23478 26.5 6.5V25.5C26.5 25.7652 26.3946 26.0196 26.2071 26.2071C26.0196 26.3946 25.7652 26.5 25.5 26.5H16.9545"
         stroke="#564FFD"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 19L8 27L4 23"
         stroke="#564FFD"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -981,37 +981,37 @@ export function TrophySvg({
       <path
         d="M7 7V13.887C7 18.8496 10.9693 22.963 15.9318 22.9997C17.1194 23.0088 18.297 22.7826 19.3968 22.3344C20.4966 21.8861 21.4968 21.2246 22.3398 20.388C23.1828 19.5514 23.8518 18.5563 24.3084 17.4599C24.7649 16.3635 25 15.1876 25 14V7C25 6.73478 24.8946 6.48043 24.7071 6.29289C24.5196 6.10536 24.2652 6 24 6H8C7.73478 6 7.48043 6.10536 7.29289 6.29289C7.10536 6.48043 7 6.73478 7 7Z"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 28H20"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16 23V28"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M24.7773 16H26.0004C27.0613 16 28.0787 15.5786 28.8288 14.8284C29.579 14.0783 30.0004 13.0609 30.0004 12V10C30.0004 9.73478 29.895 9.48043 29.7075 9.29289C29.52 9.10536 29.2656 9 29.0004 9H25.0004"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.24576 16H5.98438C4.92351 16 3.90609 15.5786 3.15595 14.8284C2.4058 14.0783 1.98438 13.0609 1.98438 12V10C1.98438 9.73478 2.08973 9.48043 2.27727 9.29289C2.4648 9.10536 2.71916 9 2.98438 9H6.98438"
         stroke={stroke}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1030,16 +1030,16 @@ export function ArrowRightSvg({ className, stroke = "#E29A13" }: Props) {
       <path
         d="M20.25 12H3.75"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.5 5.25L3.75 12L10.5 18.75"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1057,9 +1057,9 @@ export function DollarSignSvg() {
       <path
         d="M10.375 3.875C10.375 3.46462 10.2942 3.05826 10.1371 2.67911C9.98008 2.29997 9.74989 1.95547 9.45971 1.66529C9.16953 1.37511 8.82503 1.14492 8.44589 0.987876C8.06674 0.830831 7.66038 0.75 7.25 0.75H4.4375C3.6087 0.75 2.81384 1.07924 2.22779 1.66529C1.64174 2.25134 1.3125 3.0462 1.3125 3.875C1.3125 4.7038 1.64174 5.49866 2.22779 6.08471C2.81384 6.67076 3.6087 7 4.4375 7H7.875C8.7038 7 9.49866 7.32924 10.0847 7.91529C10.6708 8.50134 11 9.2962 11 10.125C11 10.9538 10.6708 11.7487 10.0847 12.3347C9.49866 12.9208 8.7038 13.25 7.875 13.25H4.125C3.2962 13.25 2.50134 12.9208 1.91529 12.3347C1.32924 11.7487 1 10.9538 1 10.125"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1078,30 +1078,30 @@ export function CreditCardSvg({ className, stroke = "#23BD33" }: Props) {
       <path
         d="M17.5 4.375H2.5C2.15482 4.375 1.875 4.65482 1.875 5V15C1.875 15.3452 2.15482 15.625 2.5 15.625H17.5C17.8452 15.625 18.125 15.3452 18.125 15V5C18.125 4.65482 17.8452 4.375 17.5 4.375Z"
         stroke={stroke}
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.125 13.125H15.625"
         stroke={stroke}
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.375 13.125H10.625"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M1.875 7.56641H18.125"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1123,9 +1123,9 @@ export function PaperPlaneSvg() {
       <path
         d="M6.75 12H12.75"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1143,23 +1143,23 @@ export function PencilLine() {
       <path
         d="M9 20.2518H4.5C4.30109 20.2518 4.11032 20.1728 3.96967 20.0322C3.82902 19.8915 3.75 19.7008 3.75 19.5018V15.3125C3.75 15.214 3.7694 15.1165 3.80709 15.0255C3.84478 14.9345 3.90003 14.8518 3.96967 14.7822L15.2197 3.53217C15.3603 3.39152 15.5511 3.3125 15.75 3.3125C15.9489 3.3125 16.1397 3.39152 16.2803 3.53217L20.4697 7.72151C20.6103 7.86216 20.6893 8.05293 20.6893 8.25184C20.6893 8.45075 20.6103 8.64152 20.4697 8.78217L9 20.2518Z"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12.75 6L18 11.25"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M20.2492 20.2492H8.99916L3.79688 15.0469"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1205,7 +1205,7 @@ export function CompletedSvg() {
         d="M92 1.5C82.9002 1.5 75.5 8.90024 75.5 18C75.5 27.0998 82.9002 34.5 92 34.5C101.1 34.5 108.5 27.0998 108.5 18C108.5 8.90024 101.1 1.5 92 1.5Z"
         fill="#E29A13"
         stroke="white"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <path
         d="M99.6028 14.8216L91.4778 22.9464C91.234 23.1902 90.914 23.3129 90.5941 23.3129C90.2741 23.3129 89.9541 23.1902 89.7103 22.9464L85.6479 18.884C85.159 18.3954 85.159 17.6053 85.6479 17.1166C86.1366 16.6277 86.9265 16.6277 87.4153 17.1166L90.5941 20.2953L97.8354 13.0542C98.3241 12.5653 99.114 12.5653 99.6028 13.0542C100.092 13.5428 100.092 14.3327 99.6028 14.8216Z"
@@ -1228,16 +1228,16 @@ export function CancelSvg({ className, stroke = "#8C94A3" }: Props) {
       <path
         d="M14.0625 3.9375L3.9375 14.0625"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M14.0625 14.0625L3.9375 3.9375"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1255,16 +1255,16 @@ export function FolderSvg() {
       <path
         d="M2.5 16.25V5C2.5 4.83424 2.56585 4.67527 2.68306 4.55806C2.80027 4.44085 2.95924 4.375 3.125 4.375H7.29167C7.4269 4.375 7.55848 4.41886 7.66667 4.5L9.83333 6.125C9.94152 6.20614 10.0731 6.25 10.2083 6.25H15.625C15.7908 6.25 15.9497 6.31585 16.0669 6.43306C16.1842 6.55027 16.25 6.70924 16.25 6.875V8.75"
         stroke="#E29A13"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2.5 16.25L4.84285 10.3929C4.88924 10.2769 4.96932 10.1775 5.07275 10.1075C5.17619 10.0374 5.29823 10 5.42315 10H9.18576C9.30916 10 9.42979 9.96348 9.53245 9.89503L11.0925 8.85497C11.1952 8.78652 11.3158 8.75 11.4392 8.75H17.8829C17.9819 8.75 18.0795 8.77353 18.1677 8.81866C18.2558 8.86379 18.332 8.92922 18.3899 9.00956C18.4478 9.0899 18.4858 9.18284 18.5007 9.28074C18.5156 9.37864 18.5071 9.47869 18.4758 9.57264L16.25 16.25H2.5Z"
         stroke="#E29A13"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1282,15 +1282,15 @@ export function ClockSvg({ stroke = "#FD8E1F" }: Props) {
       <path
         d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
         stroke={stroke}
-        stroke-width="1.3"
-        stroke-miterlimit="10"
+        strokeWidth="1.3"
+        strokeMiterlimit="10"
       />
       <path
         d="M10 5.625V10H14.375"
         stroke={stroke}
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1308,23 +1308,23 @@ export function NetworkSvg() {
       <path
         d="M12 20V10"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18 20V4"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6 20V16"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1342,29 +1342,29 @@ export function TwoUserCutOffSvg() {
       <path
         d="M8.25 15C10.9424 15 13.125 12.8174 13.125 10.125C13.125 7.43261 10.9424 5.25 8.25 5.25C5.55761 5.25 3.375 7.43261 3.375 10.125C3.375 12.8174 5.55761 15 8.25 15Z"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-miterlimit="10"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
       />
       <path
         d="M14.5703 5.43076C15.2408 5.24184 15.9441 5.1988 16.6326 5.30454C17.3212 5.41029 17.9791 5.66236 18.562 6.04377C19.1449 6.42519 19.6393 6.92709 20.012 7.51568C20.3846 8.10427 20.6268 8.76588 20.7221 9.45594C20.8175 10.146 20.764 10.8485 20.565 11.5161C20.366 12.1837 20.0263 12.8009 19.5687 13.3262C19.1111 13.8514 18.5463 14.2726 17.9123 14.5611C17.2782 14.8497 16.5897 14.9991 15.8931 14.9992"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M1.5 18.5059C2.26138 17.4229 3.27215 16.539 4.44698 15.9288C5.62182 15.3186 6.92623 15.0001 8.25008 15C9.57393 14.9999 10.8784 15.3184 12.0532 15.9285C13.2281 16.5386 14.239 17.4225 15.0004 18.5054"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.8906 15C17.2146 14.999 18.5193 15.3171 19.6943 15.9273C20.8693 16.5375 21.8799 17.4218 22.6407 18.5054"
         stroke="#A1A5B3"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1382,23 +1382,23 @@ export function StackSvg() {
       <path
         d="M3 16.5L12 21.75L21 16.5"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M3 12L12 17.25L21 12"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M3 7.5L12 12.75L21 7.5L12 2.25L3 7.5Z"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1416,44 +1416,44 @@ export function NotepadSvg() {
       <path
         d="M9 12H15"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 15H15"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M5.25 3.75H18.75C18.9489 3.75 19.1397 3.82902 19.2803 3.96967C19.421 4.11032 19.5 4.30109 19.5 4.5V18.75C19.5 19.3467 19.2629 19.919 18.841 20.341C18.419 20.7629 17.8467 21 17.25 21H6.75C6.15326 21 5.58097 20.7629 5.15901 20.341C4.73705 19.919 4.5 19.3467 4.5 18.75V4.5C4.5 4.30109 4.57902 4.11032 4.71967 3.96967C4.86032 3.82902 5.05109 3.75 5.25 3.75Z"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.5 2.25V5.25"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 2.25V5.25"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16.5 2.25V5.25"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1471,16 +1471,16 @@ export function TvSvg() {
       <path
         d="M4.5 18L19.5 18C20.3284 18 21 17.3284 21 16.5V6C21 5.17157 20.3284 4.5 19.5 4.5L4.5 4.5C3.67157 4.5 3 5.17157 3 6V16.5C3 17.3284 3.67157 18 4.5 18Z"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15 21H9"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1498,30 +1498,30 @@ export function NotebookSvg() {
       <path
         d="M10.5 10.5H16.5"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.5 13.5H16.5"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M19.5 3.75H4.5C4.08579 3.75 3.75 4.08579 3.75 4.5V19.5C3.75 19.9142 4.08579 20.25 4.5 20.25H19.5C19.9142 20.25 20.25 19.9142 20.25 19.5V4.5C20.25 4.08579 19.9142 3.75 19.5 3.75Z"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.5 3.75V20.25"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1566,22 +1566,22 @@ export function CircleCancel({ className, stroke = "#8C94A3" }: Props) {
       <path
         d="M12.5 21C17.4706 21 21.5 16.9706 21.5 12C21.5 7.02944 17.4706 3 12.5 3C7.52944 3 3.5 7.02944 3.5 12C3.5 16.9706 7.52944 21 12.5 21Z"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-miterlimit="10"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
       />
       <path
         d="M15.5 9L9.5 15"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.5 15L9.5 9"
         stroke={stroke}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1599,30 +1599,30 @@ export function Envelop() {
       <path
         d="M21 5.25L12 13.5L3 5.25"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M3 5.25H21V18C21 18.1989 20.921 18.3897 20.7803 18.5303C20.6397 18.671 20.4489 18.75 20.25 18.75H3.75C3.55109 18.75 3.36032 18.671 3.21967 18.5303C3.07902 18.3897 3 18.1989 3 18V5.25Z"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.3667 12L3.23438 18.538"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M20.7653 18.5381L13.6328 12"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1681,16 +1681,16 @@ export function Clipboard() {
       <path
         d="M15.75 15.75H20.25V3.75H8.25V8.25"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.75 8.25H3.75V20.25H15.75V8.25Z"
         stroke="#4E5566"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1709,65 +1709,65 @@ export function Spinner({ className }: Props) {
       <path
         d="M12 3V6"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.9"
         d="M18.3635 5.63672L16.2422 7.75804"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.8"
         d="M21 12H18"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.7"
         d="M18.3635 18.3635L16.2422 16.2422"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.6"
         d="M12 21V18"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.5"
         d="M5.63281 18.3635L7.75413 16.2422"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.4"
         d="M3 12H6"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.3"
         d="M5.63281 5.63672L7.75413 7.75804"
         stroke="#E29A13"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1786,16 +1786,16 @@ export function GreenCheckmarCircle() {
         d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
         fill="#23BD33"
         stroke="#23BD33"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M16.125 9.75L10.625 15L7.875 12.375"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1815,15 +1815,15 @@ export function File({ className }: Props) {
         d="M12.5 14H3.49998C3.36737 14 3.2402 13.9473 3.14643 13.8535C3.05267 13.7598 3 13.6326 3 13.5V2.5C3 2.3674 3.05267 2.24022 3.14643 2.14645C3.2402 2.05268 3.36737 2 3.49998 2H9.50017L13 5.5V13.5C13 13.6326 12.9473 13.7598 12.8536 13.8535C12.7598 13.9473 12.6326 14 12.5 14Z"
         fill="white"
         stroke="#1D2026"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path d="M9.5 2V5.5H13.0005" fill="#1D2026" />
       <path
         d="M9.5 2V5.5H13.0005"
         stroke="#1D2026"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -1841,16 +1841,16 @@ export function ChatCircles() {
       <path
         d="M2.66184 10.9952C1.96297 9.81705 1.71822 8.42432 1.97355 7.07852C2.22888 5.73271 2.96672 4.5264 4.04852 3.6861C5.13033 2.84581 6.48168 2.42934 7.84882 2.51489C9.21596 2.60044 10.5048 3.18213 11.4735 4.15074C12.4421 5.11934 13.0238 6.40822 13.1093 7.77536C13.1949 9.1425 12.7784 10.4939 11.9381 11.5757C11.0978 12.6575 9.89152 13.3953 8.54572 13.6507C7.19991 13.906 5.80718 13.6612 4.62905 12.9624L4.62907 12.9623L2.6863 13.5174C2.60592 13.5404 2.52086 13.5414 2.43994 13.5204C2.35902 13.4995 2.28518 13.4573 2.22607 13.3981C2.16696 13.339 2.12473 13.2652 2.10376 13.1843C2.08279 13.1033 2.08384 13.0183 2.10681 12.9379L2.66189 10.9951L2.66184 10.9952Z"
         stroke="#8C94A3"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.19531 13.7411C7.47183 14.5261 7.919 15.24 8.50462 15.8314C9.09023 16.4228 9.79972 16.877 10.582 17.1612C11.3642 17.4454 12.1998 17.5526 13.0284 17.4751C13.8571 17.3975 14.6582 17.1371 15.3742 16.7127L15.3741 16.7127L17.3169 17.2677C17.3973 17.2907 17.4823 17.2918 17.5633 17.2708C17.6442 17.2498 17.718 17.2076 17.7771 17.1485C17.8363 17.0894 17.8785 17.0155 17.8995 16.9346C17.9204 16.8537 17.9194 16.7686 17.8964 16.6883L17.3413 14.7455L17.3414 14.7455C17.8346 13.9138 18.1051 12.9689 18.1268 12.0022C18.1485 11.0354 17.9207 10.0794 17.4653 9.22635C17.01 8.37329 16.3425 7.65197 15.5272 7.132C14.7119 6.61202 13.7764 6.31095 12.8108 6.25781"
         stroke="#8C94A3"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

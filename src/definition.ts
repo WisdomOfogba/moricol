@@ -34,3 +34,9 @@ export interface SummaryCardProps {
   total: number;
   title: string;
 }
+
+export interface LoanHistoryItem {
+  title: string;
+  description: string;
+  status: string;
+}

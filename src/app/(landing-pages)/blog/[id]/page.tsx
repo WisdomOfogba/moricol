@@ -238,16 +238,16 @@ function ClockSVG({ fill }: { fill: string }) {
       <path
         d="M8.5625 13.6406C11.2808 13.6406 13.4844 11.437 13.4844 8.71875C13.4844 6.00047 11.2808 3.79688 8.5625 3.79688C5.84422 3.79688 3.64062 6.00047 3.64062 8.71875C3.64062 11.437 5.84422 13.6406 8.5625 13.6406Z"
         stroke={fill}
-        stroke-width="0.703125"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.703125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.5625 8.71875L6.92188 9.8125M8.5625 5.98438V8.71875"
         stroke={fill}
-        stroke-width="0.703125"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.703125"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
