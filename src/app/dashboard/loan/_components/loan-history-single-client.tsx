@@ -122,7 +122,6 @@ export default function LoanHistorySingleClient({
               PAY NOW
             </Button>
           </div>
-          ;
         </div>
       </div>
     </div>
