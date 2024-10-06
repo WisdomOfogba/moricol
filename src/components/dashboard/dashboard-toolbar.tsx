@@ -5,21 +5,40 @@ import Image from "next/image";
 import Button from "../button";
 import { MdNotifications } from "react-icons/md";
 import { EditSVG } from "../svgs";
+import { BiMenu } from "react-icons/bi";
+import DashboardPathsSectionName from "./dashboard-paths-section-name";
 
-export default function DashboardToolbar() {
+export default function DashboardToolbar({
+  toggleSidebar,
+}: {
+  toggleSidebar: () => boolean;
+}) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex h-[74px] items-center justify-end gap-x-9 bg-primary-500 px-10">
-      <MdNotifications className="text-3xl text-primary-50" />
-      <Image
-        src="/images/client.jpg"
-        alt=""
-        height={48}
-        width={48}
-        className="h-12 w-12 rounded-full hover:cursor-pointer"
-        onClick={() => setShowProfileMenu(!showProfileMenu)}
-      />
+    <header className="sticky top-0 z-50 flex h-[74px] items-center justify-between gap-x-9 bg-primary-500 px-4">
+      <div className="flex items-center gap-x-2">
+        <BiMenu
+          color="white"
+          size={35}
+          className="cursor-pointer hover:scale-[110%] md:hidden"
+          onClick={toggleSidebar}
+        />
+        <DashboardPathsSectionName />
+      </div>
+      <div className="flex items-center gap-x-4">
+        <MdNotifications className="text-3xl text-primary-50" />
+        <div className="h-10 w-10 md:h-12 md:w-12">
+          <Image
+            src="/images/client.jpg"
+            alt=""
+            height={30}
+            width={30}
+            className="h-full w-full rounded-full hover:cursor-pointer"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+          />
+        </div>
+      </div>
 
       {showProfileMenu && <ProfileDropdown />}
     </header>

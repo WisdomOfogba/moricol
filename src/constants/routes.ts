@@ -11,6 +11,9 @@ export const routes = {
   TELEMEDICINE: "/telemedicine",
   MASSAGE: "/massage",
 
+  //AUTH
+  LOGIN: "/login",
+
   // Massage dashboard links
   MASSAGEDASHBOARDHOME: "/dashboard/massage",
   MASSAGESPECIALISTS: "/dashboard/massage/specialists",
@@ -50,5 +53,17 @@ export const routes = {
   HOMECAREAPPOINTMENTS: "/dashboard/homecare/appointments",
   HOMECARECAREGIVERS: "/dashboard/homecare/care-givers",
 
-  // General dashboard pages links
+  // Loan dashboard pages links
+  LOANDASHBOARDHOME: "/dashboard/loan",
+  LOANFILTER: "/dashboard/loan/filter",
+  LOANPOLICY: "/dashboard/loan/policy",
+  LOANOFFER: "/dashboard/loan/offer",
+  LOANAPPLY: "/dashboard/loan/apply",
+  LOANVERIFICATION: "/dashboard/loan/verification",
+  LOANAPPROVED: "/dashboard/loan/approved",
+  LOANDECLINED: "/dashboard/loan/declined",
+  LOANACCOUNTS: "/dashboard/loan/accounts",
+  LOANACCOUNTSNEW: "/dashboard/loan/accounts/new",
+  LOANHISTORY: "/dashboard/loan/history",
+  LOANPAYBACK: "/dashboard/loan/payback",
 };

@@ -114,7 +114,7 @@ export function CircleFolderSVG({ fillColor }: Props) {
         rx="27.1439"
         stroke={fillColor}
         strokeWidth="1.17878"
-        stroke-dasharray="4.72 2.36"
+        strokeDasharray="4.72 2.36"
       />
     </svg>
   );
@@ -914,7 +914,7 @@ export function PlaySVG({ className, stroke, fill = '"#E29A13"' }: Props) {
         d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z"
         stroke={stroke}
         strokeWidth="2"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <path
         d="M20 16L14 12V20L20 16Z"
@@ -1283,7 +1283,7 @@ export function ClockSvg({ stroke = "#FD8E1F" }: Props) {
         d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
         stroke={stroke}
         strokeWidth="1.3"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <path
         d="M10 5.625V10H14.375"
@@ -1343,7 +1343,7 @@ export function TwoUserCutOffSvg() {
         d="M8.25 15C10.9424 15 13.125 12.8174 13.125 10.125C13.125 7.43261 10.9424 5.25 8.25 5.25C5.55761 5.25 3.375 7.43261 3.375 10.125C3.375 12.8174 5.55761 15 8.25 15Z"
         stroke="#A1A5B3"
         strokeWidth="1.5"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <path
         d="M14.5703 5.43076C15.2408 5.24184 15.9441 5.1988 16.6326 5.30454C17.3212 5.41029 17.9791 5.66236 18.562 6.04377C19.1449 6.42519 19.6393 6.92709 20.012 7.51568C20.3846 8.10427 20.6268 8.76588 20.7221 9.45594C20.8175 10.146 20.764 10.8485 20.565 11.5161C20.366 12.1837 20.0263 12.8009 19.5687 13.3262C19.1111 13.8514 18.5463 14.2726 17.9123 14.5611C17.2782 14.8497 16.5897 14.9991 15.8931 14.9992"
@@ -1567,7 +1567,7 @@ export function CircleCancel({ className, stroke = "#8C94A3" }: Props) {
         d="M12.5 21C17.4706 21 21.5 16.9706 21.5 12C21.5 7.02944 17.4706 3 12.5 3C7.52944 3 3.5 7.02944 3.5 12C3.5 16.9706 7.52944 21 12.5 21Z"
         stroke={stroke}
         strokeWidth="1.5"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <path
         d="M15.5 9L9.5 15"
