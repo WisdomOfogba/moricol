@@ -25,7 +25,7 @@ function LoanApproved() {
             </Link>
           </div>
         </div>
-        <h3 className="mb-4 text-xl font-semibold text-gray-800">
+        <h3 className="mb-4 text-center text-xl font-semibold text-gray-800">
           Yay! your loan has been approved
         </h3>
         <p className="mb-6 max-w-md text-center text-gray-600">
