@@ -1,10 +1,8 @@
 "use client";
 
-import { DashboardAsideLinksProps } from "@/definition";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
-import Navlink from "../navlink";
+import { ReactNode } from "react";
 import Button from "@/components/button";
 import { LogoutSvg } from "@/components/svgs";
 

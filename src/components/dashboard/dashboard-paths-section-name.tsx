@@ -13,11 +13,14 @@ function DashboardPathsSectionName() {
     if (currentPath.includes("/offer")) {
       return setSectionName("Loan Offer");
     }
+    if (currentPath.includes("loan/apply")) {
+      return setSectionName("Apply for a Loan");
+    }
     const foundRoute = routes_names.find((route) => route.path === currentPath);
     if (foundRoute) {
       setSectionName(foundRoute.name);
     }
-  }, [pathname, routes_names]);
+  }, [pathname]);
 
   return (
     <h1 className="text-md font-semibold text-white md:text-lg">

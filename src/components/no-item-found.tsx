@@ -24,7 +24,7 @@ export default function NoItemsFound() {
         No Items Found
       </h3>
       <p className="mb-6 max-w-sm text-center text-gray-600">
-        We couldn't find any items matching your search. Try adjusting your
+        We couldn&apos;t find any items matching your search. Try adjusting your
         filters or search terms.
       </p>
     </div>

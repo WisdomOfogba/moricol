@@ -9,9 +9,11 @@ interface FileAttachmentProps {
   onDownload?: () => void;
   downloadUrl?: string;
   acceptedFileTypes?: string;
+  id?: string;
 }
 
 const FileInput: React.FC<FileAttachmentProps> = ({
+  id,
   title,
   onUpload,
   acceptedFileTypes = "*",
@@ -32,6 +34,7 @@ const FileInput: React.FC<FileAttachmentProps> = ({
 
       <label className="flex h-[104px] cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-primary-500 bg-primary-50 text-sm text-gray-500">
         <input
+          id={id}
           type="file"
           className="hidden"
           onChange={handleFileChange}

@@ -3,10 +3,8 @@
 import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import { FilterBoldSVG } from "@/components/svgs/loan-svg";
-import Link from "next/link";
 import { BiSearch } from "react-icons/bi";
 import LoanFilterResults from "./filter-results";
-import { routes } from "@/constants/routes";
 import { useState } from "react";
 
 function LoanFilterClient({

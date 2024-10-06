@@ -11,19 +11,21 @@ import DashboardPathsSectionName from "./dashboard-paths-section-name";
 export default function DashboardToolbar({
   toggleSidebar,
 }: {
-  toggleSidebar: () => boolean;
+  toggleSidebar?: () => boolean;
 }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 flex h-[74px] items-center justify-between gap-x-9 bg-primary-500 px-4">
       <div className="flex items-center gap-x-2">
-        <BiMenu
-          color="white"
-          size={35}
-          className="cursor-pointer hover:scale-[110%] md:hidden"
-          onClick={toggleSidebar}
-        />
+        {toggleSidebar && (
+          <BiMenu
+            color="white"
+            size={35}
+            className="cursor-pointer hover:scale-[110%] md:hidden"
+            onClick={toggleSidebar}
+          />
+        )}
         <DashboardPathsSectionName />
       </div>
       <div className="flex items-center gap-x-4">

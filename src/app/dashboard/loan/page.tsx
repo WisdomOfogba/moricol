@@ -11,7 +11,11 @@ import { routes } from "@/constants/routes";
 
 export default function LoanDashboard() {
   const links = [
-    { title: "Payback", path: routes.LOANPAYBACK, icon: <StackOverflow /> },
+    {
+      title: "Payback",
+      path: routes.LOANHISTORY + "?v=active",
+      icon: <StackOverflow />,
+    },
     { title: "History", path: routes.LOANHISTORY, icon: <HistorySVG /> },
     { title: "Accounts", path: routes.LOANACCOUNTS, icon: <BankSVG /> },
   ];

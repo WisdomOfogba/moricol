@@ -8,8 +8,6 @@ export default function ReturnPolicy({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  console.log(searchParams);
-
   return (
     <section className="pb-5">
       <div className="border-b border-gray-300 px-4 py-2">
