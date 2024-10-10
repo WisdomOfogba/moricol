@@ -10,13 +10,17 @@ import DashboardPathsSectionName from "./dashboard-paths-section-name";
 
 export default function DashboardToolbar({
   toggleSidebar,
+  fromRecruitment,
 }: {
   toggleSidebar?: () => boolean;
+  fromRecruitment?: boolean;
 }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex h-[74px] items-center justify-between gap-x-9 bg-primary-500 px-4">
+    <header
+      className={`sticky top-0 z-50 flex h-[74px] items-center justify-between gap-x-9 bg-${!fromRecruitment ? "primary-500" : "[#27272a]"} px-4`}
+    >
       <div className="flex items-center gap-x-2">
         {toggleSidebar && (
           <BiMenu
