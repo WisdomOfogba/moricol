@@ -28,12 +28,17 @@ function SidebarLinks({
 export default function DashboardLayout({
   asideLinks,
   children,
+  fromRecruitment,
 }: {
   children: React.ReactNode;
   asideLinks: DashboardAsideLinksProps[];
+  fromRecruitment?: boolean;
 }) {
   return (
-    <DashboardLayoutClient slot={<SidebarLinks asideLinks={asideLinks} />}>
+    <DashboardLayoutClient
+      fromRecruitment={fromRecruitment}
+      slot={<SidebarLinks asideLinks={asideLinks} />}
+    >
       {children}
     </DashboardLayoutClient>
   );

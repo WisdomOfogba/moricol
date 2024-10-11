@@ -10,6 +10,7 @@ interface FileAttachmentProps {
   downloadUrl?: string;
   acceptedFileTypes?: string;
   id?: string;
+  caption?: string;
 }
 
 const FileInput: React.FC<FileAttachmentProps> = ({
@@ -17,6 +18,7 @@ const FileInput: React.FC<FileAttachmentProps> = ({
   title,
   onUpload,
   acceptedFileTypes = "*",
+  caption = "Upload all attachment",
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);
 
@@ -41,7 +43,7 @@ const FileInput: React.FC<FileAttachmentProps> = ({
           accept={acceptedFileTypes}
         />
         <BiUpload className="mr-2 inline text-primary-500" size={20} />
-        Upload all attachment
+        {caption}
         {fileName && (
           <p className="mt-2 text-sm text-gray-600">Uploaded: {fileName}</p>
         )}
