@@ -107,7 +107,7 @@ export default function Home() {
                 <p className="mb-5">Any Special Condition</p>
                 <ul className="mb-3 grid max-w-[612px] grid-cols-3 gap-2">
                   {conditions.map((condition, i) => (
-                    <li className="flex items-center gap-x-2">
+                    <li key={i} className="flex items-center gap-x-2">
                       <input
                         type="checkbox"
                         name=""
@@ -226,7 +226,7 @@ export default function Home() {
 
                 <div className="mb-5">
                   <p className="text-grey-800 mb-1 inline-block font-medium">
-                    Do you have trouble lifting?"
+                    Do you have trouble lifting?
                   </p>
                   <div className="flex items-center gap-x-9">
                     <div className="flex items-center gap-x-2.5">
@@ -649,7 +649,7 @@ export default function Home() {
         <section className="px-20 pb-9 pt-3">
           <div className="border-grey-300 border-b pb-5">
             <p className="text-grey-800 mb-1 inline-block font-medium">
-              Which of these best describes your situation?"
+              Which of these best describes your situation?
             </p>
 
             <div className="flex max-w-[767px] items-center gap-x-9">

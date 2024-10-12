@@ -3,7 +3,6 @@
 import { ChatCircles, File, StarSVG } from "@/components/svgs";
 import Image from "next/image";
 import CourseTimeLecturesSection from "../components/time-lecture-section";
-import Navlink from "@/components/dashboard/navlink";
 import CurriculumCard from "../components/curriculum-card";
 import { BiDownload } from "react-icons/bi";
 import PrevPageBtn from "./prev-page-btn";

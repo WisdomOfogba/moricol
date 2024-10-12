@@ -1,5 +1,4 @@
 import {
-  ArrowRightSvg,
   CreditCardSvg,
   GreenCheckmarCircle,
   PaypalSvg,
