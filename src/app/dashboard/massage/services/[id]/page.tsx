@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MassageServiceCard from "@/components/massage/massage-service-card";
 import { services } from "@/constants";
