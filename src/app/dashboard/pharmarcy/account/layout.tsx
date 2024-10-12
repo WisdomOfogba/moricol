@@ -65,16 +65,16 @@ function OrderSvg() {
       <path
         d="M2.5459 5.119L4.61561 2.35938H12.8945L14.9642 5.119M2.5459 5.119V14.7777C2.5459 15.1436 2.69127 15.4946 2.95004 15.7533C3.2088 16.0121 3.55976 16.1575 3.92571 16.1575H13.5844C13.9503 16.1575 14.3013 16.0121 14.5601 15.7533C14.8188 15.4946 14.9642 15.1436 14.9642 14.7777V5.119M2.5459 5.119H14.9642"
         stroke="#E29A13"
-        stroke-width="1.37981"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.37981"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M11.5144 7.87891C11.5144 8.6108 11.2236 9.31272 10.7061 9.83025C10.1886 10.3478 9.48663 10.6385 8.75474 10.6385C8.02284 10.6385 7.32092 10.3478 6.80339 9.83025C6.28586 9.31272 5.99512 8.6108 5.99512 7.87891"
         stroke="#E29A13"
-        stroke-width="1.37981"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.37981"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -92,23 +92,23 @@ function AddressBookSvg() {
       <path
         d="M2.20544 12.6776V15.6321H14.0237V0.859375H2.20544V3.81393M1.4668 10.4617H2.94407M1.4668 8.24576H2.94407M1.4668 6.02985H2.94407"
         stroke="#E29A13"
-        stroke-width="1.47728"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.47728"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.114 7.13815C8.92987 7.13815 9.59127 6.47675 9.59127 5.66087C9.59127 4.84499 8.92987 4.18359 8.114 4.18359C7.29812 4.18359 6.63672 4.84499 6.63672 5.66087C6.63672 6.47675 7.29812 7.13815 8.114 7.13815Z"
         stroke="#E29A13"
-        stroke-width="1.47728"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.47728"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M11.0693 12.31C11.0693 11.5264 10.758 10.7749 10.2039 10.2208C9.64981 9.66675 8.89831 9.35547 8.11471 9.35547C7.33111 9.35547 6.57961 9.66675 6.02553 10.2208C5.47144 10.7749 5.16016 11.5264 5.16016 12.31"
         stroke="#E29A13"
-        stroke-width="1.47728"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.47728"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
