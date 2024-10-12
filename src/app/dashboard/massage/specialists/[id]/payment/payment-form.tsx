@@ -44,11 +44,11 @@ export default function PaymentForm() {
           <div>
             <button className="flex h-11 items-center gap-x-3 rounded-full border border-[#D0D5DD] px-6">
               <PaypalSvg />
-              Pay
+              Paystack
             </button>
-            <p className="mt-2.5 text-center text-[#667085]">Paypal</p>
+            <p className="mt-2.5 text-center text-[#667085]">Paystack</p>
           </div>
-          <div>
+          {/* <div>
             <button className="flex h-11 items-center gap-x-3 rounded-full border border-[#D0D5DD] px-6">
               <GoogleSvg />
               Pay
@@ -61,7 +61,7 @@ export default function PaymentForm() {
               Pay
             </button>
             <p className="mt-2.5 text-center text-[#667085]">Apple Pay</p>
-          </div>
+          </div> */}
         </div>
       </div>
 

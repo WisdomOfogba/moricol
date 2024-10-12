@@ -2,6 +2,8 @@ import Button from "@/components/button";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MassageServiceCard from "@/components/massage/massage-service-card";
 import { services } from "@/constants";
+import { routes } from "@/constants/routes";
+import Link from "next/link";
 
 export default function ServiceDetail({ params }: { params: { id: string } }) {
   const data = services.find(({ id }) => +params.id === id);
@@ -48,7 +50,12 @@ export default function ServiceDetail({ params }: { params: { id: string } }) {
             </p>
           </div>
           <div>
-            <Button>GO TO MASSEUSE</Button>
+            <Link
+              href={routes.MASSAGESPECIALISTS}
+              className="hover:bg-primary-500-80 inline-block w-full rounded-lg bg-primary-500 py-3.5 text-center text-white"
+            >
+              GO TO MASSEUSE
+            </Link>
           </div>
         </div>
       </div>

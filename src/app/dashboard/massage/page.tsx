@@ -11,7 +11,10 @@ export default function Home() {
       </section>
       <section className="mb-7 border-y border-y-gray-300 py-6">
         <p className="mb-2 text-lg">Schedule a Massage Appointment</p>
-        <Link href={routes.MASSAGESPECIALISTS} className="max-w-[377px]">
+        <Link
+          href={routes.MASSAGESPECIALISTS}
+          className="inline-block w-full max-w-[377px] rounded-lg bg-primary-500 py-3.5 text-center text-white"
+        >
           Schedule a Massage Appointment
         </Link>
       </section>
@@ -35,16 +38,18 @@ export default function Home() {
 
 function MasseuseCard() {
   return (
-    <article className="w-[114px] overflow-hidden rounded-b rounded-t-lg border border-[#A0A2B333]">
-      <Image src="/images/client.jpg" alt="" width={114} height={143} />
-      <div className="py-1 text-center text-xs">
-        <p className="mb-1">
-          <span>⭐</span>
-          <span className="font-medium text-gray-500">4.5</span>
-        </p>
-        <h3 className="mb-1 text-sm font-medium">Dr. John Doe</h3>
-        <p className="text-gray-500">Heart Surgeon</p>
-      </div>
-    </article>
+    <Link href={routes.MASSAGESINGLESPECIALIST} className="block">
+      <article className="w-[114px] overflow-hidden rounded-b rounded-t-lg border border-[#A0A2B333]">
+        <Image src="/images/client.jpg" alt="" width={114} height={143} />
+        <div className="py-1 text-center text-xs">
+          <p className="mb-1">
+            <span>⭐</span>
+            <span className="font-medium text-gray-500">4.5</span>
+          </p>
+          <h3 className="mb-1 text-sm font-medium">Dr. John Doe</h3>
+          <p className="text-gray-500">Heart Surgeon</p>
+        </div>
+      </article>
+    </Link>
   );
 }

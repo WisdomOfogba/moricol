@@ -4,6 +4,7 @@ import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MassageServiceCard from "@/components/massage/massage-service-card";
 import { services } from "@/constants";
 import { UsersSVG } from "@/components/svgs";
+import { routes } from "@/constants/routes";
 
 export default function MassageServices() {
   return (
@@ -13,9 +14,12 @@ export default function MassageServices() {
       <div className="px-20 py-5">
         <section className="mb-12 border-b border-y-gray-300 pb-6">
           <p className="mb-2 text-xl">Schedule a Massage Appointment</p>
-          <Button className="max-w-[377px]">
+          <Link
+            href={routes.MASSAGESPECIALISTS}
+            className="inline-block w-full max-w-[377px] rounded-lg bg-primary-500 py-3.5 text-center text-white"
+          >
             Schedule a Massage Appointment
-          </Button>
+          </Link>
         </section>
         <section className="grid max-w-[768px] grid-cols-4 gap-x-4 gap-y-9">
           <Link href="specialists">
