@@ -22,8 +22,8 @@ export default function TrainingProfileLayout({
   );
 
   return (
-    <section>
-      <div className="bg-primary-100 relative px-14 pt-9">
+    <section className="no-scrollbar overflow-y-auto">
+      <div className="relative bg-primary-100 px-14 pt-9">
         <article className="relative -bottom-2 border border-primary-500 bg-white">
           <div className="flex items-center gap-x-6 border-b border-primary-500 p-10">
             <div className="relative h-[6.875rem] w-[6.875rem] overflow-hidden rounded-full">

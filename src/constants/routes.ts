@@ -23,6 +23,7 @@ export const routes = {
   MASSAGEREVIEW: "/dashboard/massage/appointments/1/review",
 
   // Training dashboard profile links
+  TRAININGDASHBOARD: "/dashboard/training",
   TRAININGPROFILEDASHBOARD: "/dashboard/training/profile",
   TRAININGPROFILECOURSES: "/dashboard/training/profile/courses",
   TRAININGPROFILETEACHERS: "/dashboard/training/profile/teachers",
@@ -31,6 +32,9 @@ export const routes = {
   TRAININGPROFILEPURCHASEHISTORY:
     "/dashboard/training/profile/purchase-history",
   TRAININGPROFILESETTINGS: "/dashboard/training/profile/settings",
+  TRAININGSHOPPINGCART: "/dashboard/training/shopping-cart",
+  TRAININGCHECKOUT: "/dashboard/training/checkout",
+  TRAININGVIEWCOURSE: "/dashboard/training/view-course",
 
   // Pharmarcy dashboard profile links
   PHARMARCYDASHBOARD: "/dashboard/pharmarcy",

@@ -6,15 +6,14 @@ import {
 } from "@/components/svgs";
 import CourseTimeLecturesSection from "../components/time-lecture-section";
 import Image from "next/image";
+import PrevPageBtn from "../view-course/prev-page-btn";
 
 export default function BuyCourse() {
   return (
     <main>
       <section className="mb-6 flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
         <div className="flex gap-x-4">
-          <button className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-white">
-            <ArrowRightSvg stroke="#1D2026" />
-          </button>
+          <PrevPageBtn />
           <div>
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
               Complete Website Responsive Design: from Figma to Webflow to

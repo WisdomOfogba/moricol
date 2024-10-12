@@ -87,6 +87,13 @@ export default function CourseCategories() {
           </FilterContainer>
         </ul> */}
         <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
       </div>
     </section>
   );

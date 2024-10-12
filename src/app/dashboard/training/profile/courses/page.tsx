@@ -43,6 +43,12 @@ export default function TrainingProfileCourses() {
 
       <section className="grid grid-cols-5 gap-6">
         <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
       </section>
     </main>
   );

@@ -7,6 +7,8 @@ import {
   TrophySvg,
 } from "@/components/svgs";
 import { SummaryCardProps } from "@/definition";
+import { routes } from "@/constants/routes";
+import Link from "next/link";
 
 export default function TrainingProfile() {
   return (
@@ -45,10 +47,10 @@ export default function TrainingProfile() {
           </h2>
 
           <div className="flex gap-x-2">
-            <button className="bg-primary-100 flex h-10 w-10 items-center justify-center">
+            <button className="flex h-10 w-10 items-center justify-center bg-primary-100">
               <ArrowRightSvg />
             </button>
-            <button className="bg-primary-100 flex h-10 w-10 items-center justify-center">
+            <button className="flex h-10 w-10 items-center justify-center bg-primary-100">
               <ArrowRightSvg className="-rotate-180" />
             </button>
           </div>
@@ -104,11 +106,12 @@ function MyCourseCard({ startedCourse }: { startedCourse?: boolean }) {
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-t-[#E9EAF0] p-4 text-sm text-[#4E5566]">
-        <Button
-          className={`bg-primary-100 rounded-none border-none px-4 font-semibold text-primary-500 hover:bg-primary-500 ${startedCourse ? "w-fit" : "w-full"}`}
+        <Link
+          href={routes.TRAININGVIEWCOURSE}
+          className={`inline-block rounded-none border-none bg-primary-100 px-4 py-3 text-center font-semibold text-primary-500 hover:bg-primary-500 hover:text-white ${startedCourse ? "w-fit" : "w-full"}`}
         >
           Watch Lecture
-        </Button>
+        </Link>
         {startedCourse && (
           <p className="font-medium text-[#23BD33]">61% Completed</p>
         )}

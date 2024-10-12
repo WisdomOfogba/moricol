@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CourseCategories from "./components/course-categories";
+import { routes } from "@/constants/routes";
 
 export default function Home() {
   return (
@@ -12,7 +13,10 @@ export default function Home() {
           </p>
         </div>
         <div>
-          <Link href="" className="font-semibold text-primary-500">
+          <Link
+            href={routes.TRAININGPROFILECOURSES}
+            className="font-semibold text-primary-500"
+          >
             My Enrolled Courses
           </Link>
         </div>

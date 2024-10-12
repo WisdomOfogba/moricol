@@ -1,5 +1,7 @@
 import { HeartSVG } from "@/components/svgs";
 import WishlistCourseCard from "../../components/wishlist-course-card";
+import Link from "next/link";
+import { routes } from "@/constants/routes";
 
 export default function TrainingProfileWishlists() {
   return (
@@ -18,6 +20,9 @@ export default function TrainingProfileWishlists() {
             <h3>ACTION</h3>
           </div>
           <Wishlists />
+          <Wishlists />
+          <Wishlists />
+          <Wishlists />
         </div>
       </section>
     </main>
@@ -30,11 +35,14 @@ function Wishlists() {
       <WishlistCourseCard />
       <div className="text-lg font-medium text-primary-500">₦37.00</div>
       <div className="flex gap-x-3">
-        <button className="h-12 w-[176px] bg-[#F5F7FA] font-semibold text-[#1D2026]">
+        <Link
+          href={routes.TRAININGCHECKOUT}
+          className="flex h-12 w-[176px] items-center justify-center bg-[#F5F7FA] text-center font-semibold text-[#1D2026]"
+        >
           Buy Now
-        </button>
+        </Link>
         <button className="h-12 w-[176px] bg-primary-500 font-semibold text-white">
-          Buy Now
+          Add To Cart
         </button>
         <button className="h-12 bg-primary-100 px-3 font-semibold text-white">
           <HeartSVG fill="#E29A13" className="h-6 w-6" />

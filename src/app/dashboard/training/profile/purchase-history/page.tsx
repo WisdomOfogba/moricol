@@ -8,7 +8,16 @@ export default function TrainingProfilePurchaseHistory() {
           Purchase History
         </h2>
 
-        <ul>
+        <ul className="space-y-6">
+          <li>
+            <PurchaseHistoryCard />
+          </li>
+          <li>
+            <PurchaseHistoryCard />
+          </li>
+          <li>
+            <PurchaseHistoryCard />
+          </li>
           <li>
             <PurchaseHistoryCard />
           </li>

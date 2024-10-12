@@ -1,31 +1,36 @@
-import { ArrowRightSvg, ChatCircles, File, StarSVG } from "@/components/svgs";
+"use client";
+
+import { ChatCircles, File, StarSVG } from "@/components/svgs";
 import Image from "next/image";
 import CourseTimeLecturesSection from "../components/time-lecture-section";
 import Navlink from "@/components/dashboard/navlink";
 import CurriculumCard from "../components/curriculum-card";
 import { BiDownload } from "react-icons/bi";
+import PrevPageBtn from "./prev-page-btn";
+import { useState } from "react";
 
 const courseDescriptionDetailLink = [
   {
     name: "Overview",
-    link: "/dashboard/training/course/1",
+    link: "overview",
   },
   {
     name: "Lectures Notes",
-    link: "",
+    link: "notes",
   },
   {
     name: "Attach File",
-    link: "",
+    link: "files",
   },
   {
     name: "Comments",
-    link: "",
+    link: "comments",
   },
 ];
 
 export default function CourseDetail({ params }: { params: { id: string } }) {
   console.log(params);
+  const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
@@ -43,9 +48,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
     <main className="pb-20">
       <section className="flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
         <div className="flex gap-x-4">
-          <button className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-white">
-            <ArrowRightSvg stroke="#1D2026" />
-          </button>
+          <PrevPageBtn />
           <div>
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
               Complete Website Responsive Design: from Figma to Webflow to
@@ -117,90 +120,97 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
             <ul className="flex gap-x-6 border-b border-b-[#E9EAF0]">
               {courseDescriptionDetailLink.map(({ name, link }, i) => (
                 <li key={i} className="w-full">
-                  <Navlink
-                    href={link}
-                    className="inline-block w-full border-b-2 border-b-transparent pb-5 text-center"
-                    active="border-b-[#FF6636]"
+                  <button
+                    className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
+                    onClick={() => setActiveLink(link)}
                   >
                     {name}
-                  </Navlink>
+                  </button>
                 </li>
               ))}
             </ul>
           </section>
 
           {/* Description */}
-          <section>
-            <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-              Lectures Description
-            </h3>
-            <div className="grid gap-y-5 text-sm text-[#4E5566]">
-              <p>
-                We cover everything you need to build your first website. From
-                creating your first page through to uploading your website to
-                the internet. We’ll use the world’s most popular (and Level 2)
-                web design tool called Visual Studio Code. There are exercise
-                files you can download and then work along with me. At the end
-                of each video I have a downloadable version of where we are in
-                the process so that you can compare your project with mine. This
-                will enable you to see easily where you might have a problem. We
-                will delve into all the good stuff such as how to create your
-                very own mobile burger menu from scratch learning some basic
-                JavaScript and jQuery.
-              </p>
-              <p>
-                If that all sounds a little too fancy - don’t worry, this course
-                is aimed at people new to web design and who have never coded
-                before. We’ll start right at the beginning and work our way
-                through step by step.
-              </p>
-            </div>
-          </section>
+          {activeLink === "overview" && (
+            <section>
+              <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                Lectures Description
+              </h3>
+              <div className="grid gap-y-5 text-sm text-[#4E5566]">
+                <p>
+                  We cover everything you need to build your first website. From
+                  creating your first page through to uploading your website to
+                  the internet. We’ll use the world’s most popular (and Level 2)
+                  web design tool called Visual Studio Code. There are exercise
+                  files you can download and then work along with me. At the end
+                  of each video I have a downloadable version of where we are in
+                  the process so that you can compare your project with mine.
+                  This will enable you to see easily where you might have a
+                  problem. We will delve into all the good stuff such as how to
+                  create your very own mobile burger menu from scratch learning
+                  some basic JavaScript and jQuery.
+                </p>
+                <p>
+                  If that all sounds a little too fancy - don’t worry, this
+                  course is aimed at people new to web design and who have never
+                  coded before. We’ll start right at the beginning and work our
+                  way through step by step.
+                </p>
+              </div>
+            </section>
+          )}
 
           {/* Lecture Notes */}
-          <section>
-            <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-2xl font-semibold text-[#1D2026]">
-                Lectures Note
-              </h3>
-              <button className="flex items-center gap-x-2 bg-primary-100 px-4 py-3 font-medium text-primary-500">
-                <BiDownload /> Download Notes
-              </button>
-            </div>
-            <div className="grid gap-y-5 text-sm text-[#4E5566]">
-              <p>
-                We cover everything you need to build your first website. From
-                creating your first page through to uploading your website to
-                the internet. We’ll use the world’s most popular (and Level 2)
-                web design tool called Visual Studio Code. There are exercise
-                files you can download and then work along with me. At the end
-                of each video I have a downloadable version of where we are in
-                the process so that you can compare your project with mine. This
-                will enable you to see easily where you might have a problem. We
-                will delve into all the good stuff such as how to create your
-                very own mobile burger menu from scratch learning some basic
-                JavaScript and jQuery.
-              </p>
-              <p>
-                If that all sounds a little too fancy - don’t worry, this course
-                is aimed at people new to web design and who have never coded
-                before. We’ll start right at the beginning and work our way
-                through step by step.
-              </p>
-            </div>
-          </section>
+          {activeLink === "notes" && (
+            <section>
+              <div className="mb-5 flex items-center justify-between">
+                <h3 className="text-2xl font-semibold text-[#1D2026]">
+                  Lectures Note
+                </h3>
+                <button className="flex items-center gap-x-2 bg-primary-100 px-4 py-3 font-medium text-primary-500">
+                  <BiDownload /> Download Notes
+                </button>
+              </div>
+              <div className="grid gap-y-5 text-sm text-[#4E5566]">
+                <p>
+                  We cover everything you need to build your first website. From
+                  creating your first page through to uploading your website to
+                  the internet. We’ll use the world’s most popular (and Level 2)
+                  web design tool called Visual Studio Code. There are exercise
+                  files you can download and then work along with me. At the end
+                  of each video I have a downloadable version of where we are in
+                  the process so that you can compare your project with mine.
+                  This will enable you to see easily where you might have a
+                  problem. We will delve into all the good stuff such as how to
+                  create your very own mobile burger menu from scratch learning
+                  some basic JavaScript and jQuery.
+                </p>
+                <p>
+                  If that all sounds a little too fancy - don’t worry, this
+                  course is aimed at people new to web design and who have never
+                  coded before. We’ll start right at the beginning and work our
+                  way through step by step.
+                </p>
+              </div>
+            </section>
+          )}
 
           {/* Attach Files (01) */}
-          <section>
-            <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-              Attach Files <span className="font-normal">(01)</span>
-            </h3>
-            <AttachementCard />
-          </section>
+          {activeLink === "files" && (
+            <section>
+              <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                Attach Files <span className="font-normal">(01)</span>
+              </h3>
+              <AttachementCard />
+            </section>
+          )}
 
-          <section>
-            <CommentSection />
-          </section>
+          {activeLink === "comments" && (
+            <section>
+              <CommentSection />
+            </section>
+          )}
         </div>
 
         <section className="w-full max-w-[524px] shrink-0">

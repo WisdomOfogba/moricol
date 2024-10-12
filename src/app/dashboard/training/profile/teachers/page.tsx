@@ -53,7 +53,7 @@ function InstructorCard() {
         </div>
 
         <Button
-          className={`bg-primary-100 rounded-none border-none px-4 font-semibold text-primary-500 hover:bg-primary-500`}
+          className={`rounded-none border-none bg-primary-100 px-4 font-semibold text-primary-500 hover:bg-primary-500 hover:text-white`}
         >
           Send Message
         </Button>

@@ -1,5 +1,7 @@
 import { ArrowRightSvg, CircleCancel } from "@/components/svgs";
 import WishlistCourseCard from "../components/wishlist-course-card";
+import Link from "next/link";
+import { routes } from "@/constants/routes";
 
 export default function ShoppingCard() {
   return (
@@ -71,10 +73,13 @@ export default function ShoppingCard() {
                 Total:{" "}
                 <span className="text-2xl font-semibold">₦75.00 NAIRA</span>
               </p>
-              <button className="flex w-full items-center justify-center gap-x-3 bg-primary-500 py-3 font-semibold text-white">
+              <Link
+                href={routes.TRAININGCHECKOUT}
+                className="flex w-full items-center justify-center gap-x-3 bg-primary-500 py-3 font-semibold text-white"
+              >
                 Proceed to Checkout{" "}
                 <ArrowRightSvg stroke="#ffffff" className="-rotate-180" />
-              </button>
+              </Link>
               <hr className="my-2" />
               <div>
                 <h3 className="mb-4 text-sm font-medium text-[#1D2026]">

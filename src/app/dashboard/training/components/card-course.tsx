@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function CourseCard() {
   return (
     <Link href={"training/course/1"} className="block">
-      <article className="bg-white">
+      <article className="border bg-white">
         {/* Image */}
         <div className="relative h-[11.7rem]">
           <Image

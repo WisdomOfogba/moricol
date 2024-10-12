@@ -7,6 +7,7 @@ import {
   SearchSvg,
 } from "@/components/svgs";
 import Link from "next/link";
+import { routes } from "@/constants/routes";
 
 export default function TrainingLayout({
   children,
@@ -50,10 +51,10 @@ function ToolBar() {
           <NotificationSvg />
           <div className="absolute right-[1.4px] top-[1px] h-2 w-2 rounded-full border border-white bg-primary-500" />
         </button>
-        <button>
+        <Link href={routes.TRAININGPROFILEWISHLIST}>
           <HeartSVG className="h-6 w-6" fill="#1D2026" />
-        </button>
-        <Link href="shopping-cart" className="relative">
+        </Link>
+        <Link href={routes.TRAININGSHOPPINGCART} className="relative">
           <CartSvg />
           <div className="absolute -top-[3px] left-[11px] flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-medium leading-none text-white">
             1
