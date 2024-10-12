@@ -11,7 +11,7 @@ const links = [
   },
   {
     name: "Shopping cart",
-    link: "",
+    link: routes.PHARMARCYCART,
     SVGComponent: MenuSVG,
   },
   {

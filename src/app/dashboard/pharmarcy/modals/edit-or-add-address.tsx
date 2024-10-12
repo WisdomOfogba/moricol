@@ -5,7 +5,11 @@ import ModalLayout from "@/components/layouts/modal-layout";
 import { CancelSvg } from "@/components/svgs";
 import { useState } from "react";
 
-export default function EditOrAddAddress({ title }: { title: "Edit" | "New" }) {
+export default function EditOrAddAddress({
+  title,
+}: {
+  title: "Edit" | "New" | "Add";
+}) {
   const [isAddressModalOpen, setAddressModal] = useState(false);
 
   const closeEditModal = () => {

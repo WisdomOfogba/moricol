@@ -4,6 +4,7 @@ import { LocationSVG, OneUserSvg, PhoneSVG } from "@/components/svgs";
 import { routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import EditOrAddAddress from "../modals/edit-or-add-address";
 
 export default function Checkout() {
   return (
@@ -46,9 +47,10 @@ export default function Checkout() {
               </Button>
             </div>
 
-            <article className="max-w-[320px] rounded border border-gray-300 p-5 text-xs">
+            <article className="max-w-[320px] rounded border border-gray-300 p-5 text-xs space-y-3">
               <p>Click on Add Address to add a new address</p>
-              <Button className="mt-3 w-fit">Add Address</Button>
+              {/* <Button className="mt-3 w-fit">Add Address</Button> */}
+              <EditOrAddAddress title="Add" />
             </article>
           </section>
           <section className="mb-9">

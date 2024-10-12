@@ -6,7 +6,10 @@ import { cn } from "@/util/cn";
 import Button from "@/components/button";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import ProductCard from "@/components/dashboard/pharmacy-product-card";
-import { SliderNextButton, SliderPrevButton } from "@/components/dashboard/slider";
+import {
+  SliderNextButton,
+  SliderPrevButton,
+} from "@/components/dashboard/slider";
 
 export default function HomePage() {
   const [bestSellingProducts, setBestSellingProducts] = useState(false);
@@ -41,7 +44,12 @@ export default function HomePage() {
               </Button>
             </div>
 
-            <div className="relative py-3">
+            <div className="relative grid justify-between gap-x-5 py-3 lg:grid-cols-6">
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
               <ProductCard />
               <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 opacity-30" />
               <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 opacity-30" />
@@ -62,7 +70,12 @@ export default function HomePage() {
               </Button>
             </div>
 
-            <div className="relative py-3">
+            <div className="relative grid w-full justify-between gap-x-5 py-3 lg:grid-cols-6">
+              <ProductCard bestSelling />
+              <ProductCard bestSelling />
+              <ProductCard bestSelling />
+              <ProductCard bestSelling />
+              <ProductCard bestSelling />
               <ProductCard bestSelling />
               <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 opacity-30" />
               <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 opacity-30" />
@@ -146,7 +159,6 @@ function SliderIndicator({ className }: { className?: string }) {
   );
 }
 
-
 function BulletPoint() {
   return <div className="h-1 w-6 bg-white" />;
 }
@@ -194,7 +206,37 @@ function AllNewProducts({
           Back
         </Button>
       </div>
-      <ul className="py-3">
+      <ul className="grid gap-5 py-3 lg:grid-cols-6">
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
+        <li>
+          <ProductCard />
+        </li>
         <li>
           <ProductCard />
         </li>
@@ -222,7 +264,37 @@ function AllBestSellingProducts({
           Back
         </Button>
       </div>
-      <ul className="py-3">
+      <ul className="grid justify-between gap-5 py-3 lg:grid-cols-6">
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
+        <li>
+          <ProductCard bestSelling />
+        </li>
         <li>
           <ProductCard bestSelling />
         </li>
