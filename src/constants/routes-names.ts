@@ -43,6 +43,22 @@ const routes_names = [
   { path: routes.RECRUITMENT_PREVIEW_FOREIGN_RESUME, name: "Preview Resume" },
   { path: routes.RECRUITMENT_FOREIGN_RESUME, name: " Resume" },
   { path: routes.RECRUITMENT_FOREIGN_BIO, name: "Bio" },
+
+  { path: routes.TELEMEDICINE_DASHBOARD, name: "Telemedicine Dashboard" },
+  { path: routes.TELEMEDICINE_PRACTITIONERS, name: "Practitioners" },
+  { path: routes.TELEMEDICINE_APPOINTMENTS, name: "Appointments" },
+  { path: routes.TELEMEDICINE_FAQ, name: "FAQ" },
+  { path: routes.TELEMEDICINE_PROFILE, name: "Profile" },
+  { path: routes.TELEMEDICINE_CONTACT, name: "Contact" },
+  { path: routes.TELEMEDICINE_SPECIALISTS, name: "Specialists" },
+  {
+    path: routes.TELEMEDICINE_PRACTITIONERS_REVIEWS,
+    name: "Practitioners Reviews",
+  },
+  {
+    path: routes.TELEMEDICINE_PRACTITIONERS_FAVORITES,
+    name: "Favorites Doctors",
+  },
 ];
 
 export default routes_names;
