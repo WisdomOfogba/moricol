@@ -118,4 +118,16 @@ export const routes = {
   RECRUITMENT_EMPLOYER_PERSONAL: "/dashboard/recruitment/employer/personal",
   RECRUITMENT_EMPLOYER_COMPANY_SETUP: "/dashboard/recruitment/employer/company",
   RECRUITMENT_EMPLOYER_PREVIEW: "/dashboard/recruitment/employer/preview",
+
+  TELEMEDICINE_DASHBOARD: "/dashboard/telemedicine",
+  TELEMEDICINE_PRACTITIONERS: "/dashboard/telemedicine/practitioners",
+  TELEMEDICINE_APPOINTMENTS: "/dashboard/telemedicine/appointments",
+  TELEMEDICINE_FAQ: "/dashboard/telemedicine/faq",
+  TELEMEDICINE_PROFILE: "/dashboard/telemedicine/profile",
+  TELEMEDICINE_CONTACT: "/dashboard/telemedicine/contact",
+  TELEMEDICINE_SPECIALISTS: "/dashboard/telemedicine/specialists",
+  TELEMEDICINE_PRACTITIONERS_REVIEWS:
+    "/dashboard/telemedicine/practitioners/reviews",
+  TELEMEDICINE_PRACTITIONERS_FAVORITES:
+    "/dashboard/telemedicine/practitioners/favorites",
 };
