@@ -47,11 +47,5 @@ export default function TelemedicineLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <DashboardLayout asideLinks={links}>
-      <div className="min-h-[90vh] bg-gray-50 p-5 md:p-8 lg:p-8">
-        {children}
-      </div>
-    </DashboardLayout>
-  );
+  return <DashboardLayout asideLinks={links}>{children}</DashboardLayout>;
 }

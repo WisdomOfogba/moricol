@@ -118,6 +118,7 @@ export const routes = {
   TELEMEDICINE_PRACTITIONERS: "/dashboard/telemedicine/practitioners",
   TELEMEDICINE_APPOINTMENTS: "/dashboard/telemedicine/appointments",
   TELEMEDICINE_FAQ: "/dashboard/telemedicine/faq",
+  TELEMEDICINE_TERMS: "/dashboard/telemedicine/terms",
   TELEMEDICINE_PROFILE: "/dashboard/telemedicine/profile",
   TELEMEDICINE_CONTACT: "/dashboard/telemedicine/contact",
   TELEMEDICINE_SPECIALISTS: "/dashboard/telemedicine/specialists",

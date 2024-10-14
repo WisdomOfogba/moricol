@@ -1,3 +1,5 @@
+import { routes } from "@/constants/routes";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 function SpecialistCard({
@@ -5,18 +7,23 @@ function SpecialistCard({
   icon,
   title,
   description,
+  id,
 }: {
   color: string;
   title: string;
   description: string;
+  id?: string;
   icon: ReactNode;
 }) {
   return (
-    <div className={`${color} rounded-lg p-4`}>
+    <Link
+      href={routes.TELEMEDICINE_PRACTITIONERS + "?type=" + id}
+      className={`${color} rounded-lg p-4`}
+    >
       <div className="mb-2 text-3xl">{icon}</div>
       <h3 className="md:text-md mb-1 text-sm font-semibold">{title}</h3>
       <p className="text-sm text-gray-600">{description}</p>
-    </div>
+    </Link>
   );
 }
 
