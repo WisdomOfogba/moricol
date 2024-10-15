@@ -48,6 +48,7 @@ const routes_names = [
   { path: routes.TELEMEDICINE_PRACTITIONERS, name: "Practitioners" },
   { path: routes.TELEMEDICINE_APPOINTMENTS, name: "Appointments" },
   { path: routes.TELEMEDICINE_FAQ, name: "FAQ" },
+  { path: routes.TELEMEDICINE_TERMS, name: "Terms" },
   { path: routes.TELEMEDICINE_PROFILE, name: "Profile" },
   { path: routes.TELEMEDICINE_CONTACT, name: "Contact" },
   { path: routes.TELEMEDICINE_SPECIALISTS, name: "Specialists" },
