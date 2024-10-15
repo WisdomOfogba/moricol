@@ -59,11 +59,39 @@ export default function MasseuseProfile() {
             <h3 className="mb-3 text-lg font-medium">Speciaties</h3>
             <ul className="grid gap-y-2 text-gray-500">
               <li>Hot Stone Massage (3000/hr)</li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
               <li>Swedish Massage (1000/hr)</li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
               <li>Hot Stone Massage (3000/hr)</li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
+              <li>
+                <input type="radio" />
+                <label htmlFor="">1:00PM - 3:00PM</label>
+              </li>
             </ul>
           </article>
-          <div className="mt-20 text-center">
+          <div className="mt-10 text-center">
             <Link
               href="1/set-appointment"
               className="transition-color inline-block w-full max-w-[640px] rounded-lg border border-primary-500 bg-primary-500 px-4 py-3 text-center text-white duration-300 hover:border-primary-500/80 hover:bg-primary-500/80"
