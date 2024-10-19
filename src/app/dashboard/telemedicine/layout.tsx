@@ -35,6 +35,11 @@ const links = [
     link: routes.TELEMEDICINE_PROFILE,
     SVGComponent: FaUser,
   },
+   {
+    name: "Organisations",
+    link: routes.TELEMEDICINE_ORGANIZATION,
+    SVGComponent: FaUser,
+  },
   {
     name: "Contact Us",
     link: routes.TELEMEDICINE_CONTACT,
