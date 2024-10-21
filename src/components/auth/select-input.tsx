@@ -6,6 +6,9 @@ type SelectInputProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   icon?: React.ReactNode;
   name: string;
   children: React.ReactNode;
+  errors?: Record<string, string[]>;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export default function SelectInput({
@@ -13,8 +16,13 @@ export default function SelectInput({
   icon,
   name,
   children,
+  errors,
+  value,
+  onChange,
   ...props
 }: SelectInputProps) {
+  const hasError = errors && errors[name] && errors[name].length > 0;
+
   return (
     <div className="">
       <label
@@ -27,10 +35,15 @@ export default function SelectInput({
       <div className="text-grey-500 relative">
         <div className="absolute left-3.5 top-1/2 -translate-y-1/2">{icon}</div>
         <select
-          className={`w-full appearance-none py-2.5 pl-11 placeholder:font-light focus:outline-none ${
+          className={`w-full appearance-none py-2.5 focus:py-2.5 focus:pl-11 pl-11 placeholder:font-light focus:outline-none ${
             icon === undefined && "pl-3.5"
-          } border-grey-400 rounded-lg border pr-3.5`}
+          } border-grey-400 rounded-lg border pr-3.5 ${
+            hasError ? "border-red-500" : ""
+          }`}
           id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
           {...props}
         >
           {children}
@@ -39,6 +52,9 @@ export default function SelectInput({
           <Image src={chevronDown} alt="Chevron down icon" />
         </div>
       </div>
+      {hasError && (
+        <p className="mt-1 text-sm text-red-500">{errors[name][0]}</p>
+      )}
     </div>
   );
 }

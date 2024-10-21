@@ -3,7 +3,13 @@ import AuthSidebar from "@/components/auth/sidebar";
 import OtpForm from "./otp-form";
 import { Suspense } from "react";
 
-export default function OtpVerification() {
+export default function OtpVerification({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const email = searchParams.email as string | undefined;
+
   return (
     <main className="flex h-screen min-h-screen overflow-hidden">
       <AuthSidebar imgUrl="/images/auth/jar-vitamins.png" />
@@ -20,7 +26,7 @@ export default function OtpVerification() {
         </div>
 
         <Suspense>
-          <OtpForm />
+          <OtpForm email={email} />
         </Suspense>
       </section>
     </main>

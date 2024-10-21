@@ -40,3 +40,34 @@ export interface LoanHistoryItem {
   description: string;
   status: string;
 }
+
+
+export type UserDetails = {
+  auth: Record<string, unknown>;
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  dob: string;
+  gender: string;
+  religion: string;
+  occupation: string;
+  maritalstatus: string;
+  country: string;
+  status: string;
+  state: string;
+  language: string;
+  user_blocked: boolean;
+  createdAt: string;
+  __v: number;
+};
+
+export type LoginResponse = {
+  status_code: number;
+  status: boolean;
+  message: string;
+  data: {
+    token: string;
+    userDetails: UserDetails;
+  };
+};

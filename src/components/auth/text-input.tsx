@@ -2,6 +2,7 @@
 
 import { useTogglePassword } from "@/hooks/useTogglePassword";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { Input } from "../input";
 
 type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -37,11 +38,11 @@ export default function TextInput({
 
       <div className="text-grey-500 relative">
         <div className="absolute left-3.5 top-1/2 -translate-y-1/2">{icon}</div>
-        <input
+        <Input
           type={type === "password" && isVisible ? "text" : type}
           id={name}
           name={name}
-          className={`w-full py-2.5 pl-11 placeholder:font-light focus:outline-none ${
+          className={`w-full py-2.5 pl-11 focus:pl-11 placeholder:font-light focus:outline-none ${
             icon === undefined && "pl-3.5"
           } border-grey-400 rounded-lg border pr-3.5`}
           {...props}
