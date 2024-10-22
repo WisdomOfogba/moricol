@@ -7,7 +7,8 @@ import TextInput from "@/components/auth/text-input";
 import Link from "next/link";
 import Button from "@/components/button";
 import { useRouter } from "next/navigation";
-export default function LoginForm() {
+
+export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +29,7 @@ export default function LoginForm() {
         enqueueSnackbar(result.error, { variant: "error" });
       } else {
         enqueueSnackbar("Logged in successfully!", { variant: "success" });
-        // redirect to home
-        router.push("/");
+        router.push(callbackUrl ?? "/");
       }
     } catch (error) {
       enqueueSnackbar("An unexpected error occurred. Please try again.", {

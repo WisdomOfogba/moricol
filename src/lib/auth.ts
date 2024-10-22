@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import { AuthApi } from "@/api";
@@ -42,20 +42,28 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: any }) {
+     
       if (user) {
         token.id = user._id;
         token.email = user.email;
+        token.firstname = user.firstname;
+        token.lastname = user.lastname;
+        token.language = user.language;
         token.token = user.token;
-        // Add any other user properties you want to include in the token
       }
+      
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token }: { session: any; token: JWT; user: any }) {
       if (token) {
         session.user.id = token.id;
         session.user.email = token.email;
         session.user.token = token.token;
-        // Add any other token properties you want to include in the session
+        session.user.firstname = token.firstname;
+        session.user.lastname = token.lastname;
+        session.user.language = token.language; 
+      return session;
+
       }
       return session;
     },
@@ -64,3 +72,9 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signin",
   },
 };
+
+
+
+export const getUserSession = async () => {
+  return await getServerSession(authOptions);
+}

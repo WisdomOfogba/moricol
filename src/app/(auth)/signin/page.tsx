@@ -3,7 +3,13 @@ import LoginForm from "./login-form";
 import AuthFooter from "@/components/auth/footer";
 import AuthSidebar from "@/components/auth/sidebar";
 
-export default function Login() {
+export default function Login(
+  {
+    searchParams
+  }: {
+    searchParams: { callbackUrl: string }
+  }
+) {
   return (
     <main className="flex h-screen min-h-screen overflow-hidden">
       <AuthSidebar imgUrl="/images/auth/mental-health.png" />
@@ -19,7 +25,7 @@ export default function Login() {
           />
         </div>
 
-        <LoginForm />
+        <LoginForm callbackUrl={searchParams.callbackUrl} />
 
         <AuthFooter />
       </section>

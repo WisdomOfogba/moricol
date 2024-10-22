@@ -2,8 +2,30 @@ import React from "react";
 import { BiPencil } from "react-icons/bi";
 import { BsTrash2 } from "react-icons/bs";
 import { ProgressBar } from "../../../_components/progress-bar";
+import resumeApi from "@/api/local-resume";
+import { getUserSession } from "@/lib/auth";
 
-function ProfilePictureClient() {
+
+
+ async function getResume() {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const resume = await resumeApi.retrieveResume({ userId: session.user.id as string });
+    
+    return resume;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+
+ async function PreviewResume() {
+  const resume = await getResume();
+  console.log('resume', resume);
+
   return (
     <div className="p-0 py-5 md:px-4">
       <ProgressBar progress={10} />
@@ -141,7 +163,11 @@ function ProfilePictureClient() {
   );
 }
 
-export default ProfilePictureClient;
+export default PreviewResume;
+
+
+
+
 interface SectionProps {
   title: string;
   children: React.ReactNode;
