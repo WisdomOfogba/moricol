@@ -6,7 +6,7 @@ import { BsFileText } from "react-icons/bs";
 export default function Recruitment() {
   const jobSeekerLinks = [
     {
-      href: routes.RECRUITMENTRESUME,
+      href: routes.RECRUITMENT_PREVIEW_RESUME,
       title: "Resume",
       description: "Create and manage your professional resume",
       icon: BsFileText,

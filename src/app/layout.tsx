@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { NotistackProvider } from "./notistack";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} text-gray-700 antialiased`}>
-         <NotistackProvider autoHideDuration={3000} maxSnack={3} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}   >
+
+         <Providers>
           {children}
-        </NotistackProvider>
+        </Providers>
       </body>
     </html>
   );
