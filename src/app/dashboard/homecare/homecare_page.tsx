@@ -81,7 +81,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-b border-gray-300 pb-10 pt-5">
-            <SelectInput name="" label="Who Requires this service">
+            <SelectInput  name="" label="Who Requires this service">
               <option value="">Select</option>
               <option value="">Myself</option>
               <option value="">Spouse</option>

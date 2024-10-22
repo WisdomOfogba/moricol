@@ -3,10 +3,12 @@
 import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@/components/button";
+import { confirmVerificationCode } from "@/api/auth";
+import { useSnackbar } from 'notistack';
 
 const OTP_LENGTH = 4;
 
-export default function OtpForm() {
+export default function OtpForm({ email }: { email: string | undefined }) {
   const router = useRouter();
   const search = useSearchParams();
   const emailVerificationType = search.get("type");
@@ -14,6 +16,8 @@ export default function OtpForm() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>(
     Array(OTP_LENGTH).fill(null),
   );
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(false);
 
   const focusNextInput = (idx: number) => {
     if (idx < inputRefs.current.length - 1) {
@@ -73,18 +77,30 @@ export default function OtpForm() {
     inputRefs.current.forEach((input) => input?.blur());
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    const code = otp.join("");
+    if (code.trim() === "") {
+      return;
+    }
+    setIsLoading(true);
+    try {
+       await confirmVerificationCode(code);
+      enqueueSnackbar("Verification successful", { variant: "success" });
 
-    // Handle form submission logic here
-
-    router.push("/signin");
-
-    if (emailVerificationType === "signup")
-      router.push("/verify-email-success");
-
-    if (emailVerificationType === "password-reset")
-      router.push("/change-password");
+      if (emailVerificationType === "signup") {
+        router.push("/verify-email-success");
+      } else if (emailVerificationType === "password-reset") {
+        router.push("/change-password");
+      } else {
+        router.push("/signin");
+      }
+    } catch (error) {
+      enqueueSnackbar("Verification failed. Please try again.", { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -95,7 +111,7 @@ export default function OtpForm() {
           Reset Password
         </h2>
         <p className="text-[#686868]">
-          Please enter the code we sent to johndoe@gmail.com
+          Please enter the code we sent to {email??'your email.'}
         </p>
       </div>
 
@@ -118,8 +134,8 @@ export default function OtpForm() {
           ))}
         </div>
 
-        <Button disabled={false} className="max-w-[580px]">
-          Activate
+        <Button disabled={isLoading} className="max-w-[580px] disabled:bg-primary-500/50">
+          {isLoading ? 'Activating...' : 'Activate'}
         </Button>
 
         <p className="justify-left flex items-center gap-x-1 font-medium leading-6">
