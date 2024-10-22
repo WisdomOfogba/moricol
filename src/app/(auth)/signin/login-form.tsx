@@ -32,7 +32,9 @@ export default function LoginForm() {
         router.push("/");
       }
     } catch (error) {
-      enqueueSnackbar("An unexpected error occurred. Please try again.", { variant: "error" });
+      enqueueSnackbar("An unexpected error occurred. Please try again.", {
+        variant: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +75,11 @@ export default function LoginForm() {
           </div>
         </div>
       </section>
-      <Button disabled={isLoading} type="submit" className="disabled:cursor-not-allowed">
+      <Button
+        disabled={isLoading}
+        type="submit"
+        className="disabled:cursor-not-allowed"
+      >
         {isLoading ? "Signing In..." : "Sign In"}
       </Button>
     </form>
