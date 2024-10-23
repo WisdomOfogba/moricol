@@ -1,8 +1,11 @@
+import { Session } from 'next-auth';
+import { createServerAxios,  createClientAxios } from './axios-client';
 import { axiosClient, handleAxiosError } from './index';
 
 interface UpdateBioParams {
   userId: string;
   bio: string;
+  session: Session; 
 }
 
 interface UpdateContactDetailsParams {
@@ -30,9 +33,11 @@ const resumeApi = {
   /**
    * Update user bio
    */
-  updateBio: async ({ userId, bio }: UpdateBioParams) => {
+  updateBio: async ({ userId, bio, session }: UpdateBioParams) => {
+    const axios = createClientAxios({session: session});
+
     try {
-      const response = await axiosClient.post(resumeUrl + '/update/bio', {
+      const response = await axios.post(resumeUrl + '/update/bio', {
         userid: userId,
         bio
       });
@@ -79,6 +84,8 @@ const resumeApi = {
    * Update grade
    */
   updateGrade: async ({ userId, grade }: UpdateGradeParams) => {
+
+
     try {
       const response = await axiosClient.post(resumeUrl + '/update/grade', {
         userid: userId,
@@ -95,15 +102,16 @@ const resumeApi = {
    * Retrieve resume
    */
   retrieveResume: async ({ userId }: RetrieveResumeParams) => {
+    const serverAxios = await createServerAxios();
     try {
-      const response = await axiosClient.post('user/recruitment/retrieve/localresume', {
+      const response = await serverAxios.post('user/recruitment/retrieve/localresume', {
         userid: userId
       });
       
       return response.data;
       
     } catch (error) {
-      
+     
       const errorMessage = handleAxiosError(error, 'Error retrieving resume');
       throw new Error(errorMessage);
       

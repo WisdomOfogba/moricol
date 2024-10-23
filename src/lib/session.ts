@@ -1,11 +1,6 @@
-import { getServerSession, Session } from "next-auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export const getUserDetails = async (): Promise<Session["user"] | null> => {
-  const session = await getServerSession();
-  
-  if (session) {
-    return session.user;  
-  } else {
-    return null; 
-  }
-};
+export const getUserSession = async () => {
+  return await getServerSession(authOptions);
+}

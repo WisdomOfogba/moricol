@@ -17,6 +17,7 @@ import { getUserSession } from "@/lib/auth";
     
     return resume;
   } catch (error) {
+    
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
