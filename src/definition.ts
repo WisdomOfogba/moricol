@@ -71,3 +71,43 @@ export type LoginResponse = {
     userDetails: UserDetails;
   };
 };
+
+
+
+export type UserResumeResponse = {
+  reference: { name: string; email: string; phone: string };
+  contact_details: { name: string; phone: string; socials: string[] };
+  upload: { cv: string; picture: string };
+  others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
+  job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
+  _id: string;
+  userid: string;
+  bio: string;
+  grade: string;
+  work_experience: {
+    _id: string;
+    title: string;
+    company: string;
+    start_date: string;
+    end_date: string;
+    previous_employer: string;
+    leaving_reason: string;
+    inview: boolean;
+  }[];
+  education: any[];
+  certification: any[];
+  createdAt: string;
+  __v: number;
+}
+
+
+export type Education = {
+  _id: string;
+  school: string;
+  degree: string;
+  start_date: string;
+  end_date: string;
+  course_description: string;
+  what_you_learnt: string;
+  inview: boolean;
+};

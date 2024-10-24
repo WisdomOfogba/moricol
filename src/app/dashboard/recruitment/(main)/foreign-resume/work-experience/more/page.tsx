@@ -5,6 +5,7 @@ import MoreWorkExperienceClient from "../../../resume/work-experience/more/_comp
 function MoreWorkExperience() {
   return (
     <MoreWorkExperienceClient
+      work_experience={[]}
       next_route={routes.RECRUITMENT_FOREIGN_EDUCATION}
       more_route={routes.RECRUITMENT_FOREIGN_WORK_EXPERIENCE}
     />
