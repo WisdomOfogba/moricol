@@ -4,6 +4,11 @@ import { BsTrash2 } from "react-icons/bs";
 import { ProgressBar } from "../../../_components/progress-bar";
 import resumeApi from "@/api/local-resume";
 import { getUserSession } from "@/lib/auth";
+import Link from "next/link";
+import { routes } from "@/constants/routes";
+import { UserResumeResponse, UserDetails } from "@/definition";
+
+
 
 
 
@@ -13,121 +18,138 @@ import { getUserSession } from "@/lib/auth";
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const resume = await resumeApi.retrieveResume({ userId: session.user.id as string });
+    const resume  = await resumeApi.retrieveResume({ userId: session.user.id as string });
     
-    return resume;
+    return {...resume, user: session.user};
   } catch (error) {
+    
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
 
  async function PreviewResume() {
-  const resume = await getResume();
-  console.log('resume', resume);
+  const {data, user} : {data: UserResumeResponse, user: UserDetails} = await getResume();
+  
 
   return (
     <div className="p-0 py-5 md:px-4">
       <ProgressBar progress={10} />
-      <div className="">
+      {!data &&   <div>
+        <h2 className="mb-4 text-2xl text-secondary-500 font-bold">NO RESUME FOUND!</h2>
+        <div className="flex w-full justify-end gap-4 md:gap-8">
+          <div className="space-x-4">
+            <Link href={routes.RECRUITMENTRESUME} className="rounded bg-yellow-500 px-4 py-3 font-bold text-white hover:bg-yellow-600">
+              CREATE ONE NOW
+            </Link>
+           
+          </div>
+        </div>
+        </div>
+        }
+    {data&&  <div className="">
         <h2 className="mb-4 text-2xl font-bold">Preview Resume</h2>
         <div className="flex w-full justify-end gap-4 md:gap-8">
           <div className="space-x-4">
             <button className="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600">
               PUBLISH NOW
             </button>
-            <button className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
+            <Link href={routes.RECRUITMENTRESUME} className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
               EDIT RESUME
-            </button>
+            </Link>
           </div>
         </div>
 
         <div className="mt-5 bg-gray-50 px-5 py-5">
-          <div className="mb-6 flex items-center rounded-lg bg-white p-2 shadow">
+          <div className="mb-6 flex items-start rounded-lg bg-white p-2 shadow">
             <img
               src="/placeholder.svg?height=80&width=80"
-              alt="Mike George"
+              alt={user.firstname}
               className="mr-4 rounded-full"
             />
             <div>
-              <h1 className="text-2xl font-bold">Mike George</h1>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet consectetur. Facilisis egestas senean
-                est volutpat tristique nisi morbi amet dictum. Massa morbi eget
-                et donec non risus ipsum vitae. Vitae integer mattis.
+              <h1 className="text-2xl font-bold">{user.firstname} {user.lastname}</h1>
+              <p className="text-gray-600" 
+              style={{
+                wordBreak: 'break-word'
+              }}
+              >
+                {data.bio}
               </p>
             </div>
           </div>
 
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
             <div className="">
-              <Section title="EXPERIENCE" editable>
+              <Section title="EXPERIENCE" editable={true} editLink={routes.RECRUITMENT_WORK_EXPERIENCE}>
+               
+                {data.work_experience.map((exp)=>(
                 <ExperienceItem
-                  title="Product Designer | Flpex, Nigeria"
-                  date="September 2023 - Present"
-                  description="Lorem ipsum dolor sit amet consectetur. Quam curabitor purus scelerisque ut mollis morbi vitae amet amet. Bibendum sapien odio sodales sed mattis nunc. Cursus at sapien."
-                />
-                <ExperienceItem
-                  title="Product Designer | Chiva, Nigeria"
-                  date="March 2023 - Present"
-                  description="Lorem ipsum dolor sit amet consectetur. Rhoncus arcu tristique in morbi tellus nulla condimentum posuere. Nec in nunc viverra pretium ultrices. Libero massa congue magna."
-                />
-                <ExperienceItem
-                  title="Product Designer | NFTNotif, Netherland"
-                  date="February 2023 - Present"
-                  description="Lorem ipsum dolor sit amet consectetur. Turpis odio odio ultricies amet risus commodo. Dictum ac tellus turpis ullamcorper cursus proin non. Orci purus purus urna tincidunt volutpat augue."
-                />
-                <ExperienceItem
-                  title="Brand Designer | Debrend Travels, Nigeria"
-                  date="December 2020 - March 2023"
-                  description="Lorem ipsum dolor sit amet consectetur. Velit nam imperdiet laoreet tincidunt. Lacus gravida blandit mi dignissim aliquam quam consequat elit. At nec dictumst pharetra sagittis odio."
-                />
+                key={exp._id}
+                  title={exp.title}
+                  date={exp.start_date + ' - ' + (exp.end_date === ''?'Present':exp.end_date)}
+                  description={''}
+                /> 
+                ))}
+
+                {data.work_experience.length === 0 && (
+                  <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+                    <p className="text-lg text-secondary-500">No work experience added yet</p>
+                    <Link href={routes.RECRUITMENT_WORK_EXPERIENCE} className=" hover:underline">Click edit/here to add your work experience</Link>
+                  </div>
+                )}
+               
               </Section>
-              <Section title="CERTIFICATION" editable>
+              <Section title="CERTIFICATION" editable={true} editLink={routes.RECRUITMENT_CERTIFICATIONS}>
+                {data.certification.map((cert)=>(
                 <CertificationItem
-                  title="Udemy"
-                  subtitle="Introduction to Nursing"
-                  date="2015 - 2019"
-                />
-                <CertificationItem
-                  title="Cousera"
-                  subtitle="Introduction to Nursing"
-                  date="2015 - 2019"
-                />
+                key={cert._id}
+                    title="Udemy"
+                    subtitle="Introduction to Nursing"
+                    date="2015 - 2019"
+                  />
+                ))}
+                
+                 {data.certification.length === 0 && (
+                  <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+                    <p className="text-lg text-secondary-500">No certifications added yet</p>
+                    <Link href={routes.RECRUITMENT_CERTIFICATIONS} className=" hover:underline">Click edit/here to add certifications</Link>
+                  </div>
+                )}
               </Section>
             </div>
 
             <div className="">
-              <Section title="PORTFOLIO & CONTACT" editable>
+              <Section title="PORTFOLIO & CONTACT" editable={true} editLink={routes.RECRUITMENT_CONTACT}>
                 <ContactItem icon="📧" text="devowhite@gmail.com" />
                 <ContactItem icon="🔗" text="Portfolio/Social" />
                 <ContactItem icon="🔗" text="Social" />
                 <ContactItem icon="🔗" text="Portfolio" />
                 <ContactItem icon="📞" text="+234 (0) 8173397806" />
               </Section>
-              <Section title="SKILLS" editable>
+              <Section title="SKILLS" editable={true} editLink={routes.RECRUITMENT_OTHERS}>
                 <SkillItem text="Product design (Figma)" />
                 <SkillItem text="Branding (Illustrator & Photoshop)" />
                 <SkillItem text="Illustrations (Adobe Illustrator)" />
                 <SkillItem text="Proper Presentation" />
                 <SkillItem text="Leadership & Product Management" />
               </Section>
-              <Section title="EDUCATION" editable>
+              <Section title="EDUCATION" editable={true} editLink={routes.RECRUITMENT_EDUCATION}>
                 <EducationItem
                   degree="B.Sc in Computer Science (3.9 CGPA)"
                   school="National Open University of Nigeria"
                   date="2015 - 2019"
                 />
               </Section>
-              <Section title="LANGUAGE" editable>
+              <Section title="LANGUAGE" editable={true} editLink={routes.RECRUITMENT_OTHERS}>
                 <LanguageItem text="Product Design" />
                 <LanguageItem text="Logo Design: From..." />
               </Section>
-              <Section title="HOBBIES" editable>
+              <Section title="HOBBIES" editable={true} editLink={routes.RECRUITMENT_OTHERS}>
                 <HobbyItem text="Reading" />
                 <HobbyItem text="Swimming" />
               </Section>
-              <Section title="REFERENCE" editable>
+              <Section title="REFERENCE" editable={true} editLink={routes.RECRUITMENT_REF}>
                 <ReferenceItem
                   name="Mr. John Akpa"
                   email="johnakpa@gmail.com"
@@ -136,7 +158,7 @@ import { getUserSession } from "@/lib/auth";
               </Section>
             </div>
           </div>
-          <Section title="COVER LETTER" editable>
+          <Section title="COVER LETTER" editable={true} editLink={routes.RECRUITMENT_COVER_LETTER}>
             <p className="text-gray-600">
               Lorem ipsum dolor sit amet consectetur. Ipsum rutrum enim aliquam
               molestie libero. Praesent neque nulla sapien urna viverra bibendum
@@ -154,11 +176,11 @@ import { getUserSession } from "@/lib/auth";
               lectus et suspendisse. At tristique.
             </p>
           </Section>
-          <Section title="CV" editable>
+          <Section title="CV" editable={true} editLink={routes.RECRUITMENT_CV}>
             <div className="rounded bg-red-100 p-4">CV</div>
           </Section>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
@@ -172,17 +194,20 @@ interface SectionProps {
   title: string;
   children: React.ReactNode;
   editable?: boolean;
+  editLink?: string;
 }
 
-function Section({ title, children, editable = false }: SectionProps) {
+function Section({ title, children, editable = false, editLink }: SectionProps) {
   return (
     <div className="mb-6 rounded-lg bg-white p-2">
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-xl font-bold">{title}</h2>
         {editable && (
           <div className="flex space-x-2">
-            <BiPencil className="h-4 w-4 text-yellow-500" />
-            <BsTrash2 className="h-4 w-4 text-red-500" />
+            <Link href={editLink??'null'} className="cursor-pointer">
+              <BiPencil className="h-6 w-6 text-yellow-500" />
+            </Link>
+            <BsTrash2 className="h-5 w-5 text-red-500" />
           </div>
         )}
       </div>

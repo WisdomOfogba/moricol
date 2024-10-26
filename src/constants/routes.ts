@@ -83,6 +83,8 @@ export const routes = {
   RECRUITMENT_REF: "/dashboard/recruitment/resume/reference",
   RECRUITMENT_CONTACT: "/dashboard/recruitment/resume/contact",
   RECRUITMENT_OTHERS: "/dashboard/recruitment/resume/others",
+  RECRUITMENT_CERTIFICATIONS: "/dashboard/recruitment/resume/certifications",
+
   RECRUITMENT_PROFILE_PICTURE: "/dashboard/recruitment/resume/profile_picture",
   RECRUITMENT_CV: "/dashboard/recruitment/resume/cv",
   RECRUITMENT_PREVIEW_RESUME: "/dashboard/recruitment/resume/preview",
@@ -97,6 +99,7 @@ export const routes = {
   RECRUITMENT_FOREIGN_REF: "/dashboard/recruitment/foreign-resume/reference",
   RECRUITMENT_FOREIG_CONTACT: "/dashboard/recruitment/foreign-resume/contact",
   RECRUITMENT_FOREIGN_OTHERS: "/dashboard/recruitment/foreign-resume/others",
+  RECRUITMENT_FOREIGN_CERTIFICATIONS: "/dashboard/recruitment/foreign-resume/certifications",
   RECRUITMENT_FOREIGN_PROFILE_PICTURE:
     "/dashboard/recruitment/foreign-resume/profile_picture",
   RECRUITMENT_FOREIGN_CV: "/dashboard/recruitment/foreign-resume/cv",

@@ -5,6 +5,7 @@ import { routes } from "@/constants/routes";
 function MoreEducation() {
   return (
     <MoreEducationClient
+      education={[]}
       next_route={routes.RECRUITMENT_FOREIGN_OTHER_CERTS}
       more_route={routes.RECRUITMENT_FOREIGN_EDUCATION}
     />

@@ -1,12 +1,14 @@
 import { API_BASE_URL } from '@/constants/config';
-import { getUserSession } from '@/lib/auth';
 import axios from 'axios';
-import { Session } from 'next-auth';
-
+import { getServerSession, Session } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { signOut } from 'next-auth/react';
 const BASE_URL = API_BASE_URL;
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json'
 };
+
+// Create the base axios client
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   headers: DEFAULT_HEADERS,
@@ -15,13 +17,6 @@ const axiosClient = axios.create({
 
 // Request interceptor for adding auth token
 axiosClient.interceptors.request.use(
-  async (config) => {
-     const session: Session | null = await getUserSession();
-    if (session?.user && 'token' in session.user) {
-      config.headers.Authorization = `Bearer ${session.user.token}`;
-    }
-    return config;
-  },
   (error) => Promise.reject(error)
 );
 
@@ -33,6 +28,11 @@ axiosClient.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           console.error('Unauthorized access');
+          signOut();
+          break;
+        case 401:
+          console.error('Unauthorized access');
+          signOut();
           break;
         case 404:
           console.error('Resource not found');
@@ -50,4 +50,56 @@ axiosClient.interceptors.response.use(
   }
 );
 
+// Server-side axios instance factory
+export async function createServerAxios() {
+  const session = await getServerSession(authOptions);
+//   console.log(session);
+  
+  
+  const serverConfig = {
+    ...axiosClient.defaults,
+    headers: {
+      ...DEFAULT_HEADERS,
+      ...(session?.user.token && {
+        Authorization: `Bearer ${session.user.token}`
+      }),
+    },
+  };
+
+  return axios.create(serverConfig);
+}
+
 export default axiosClient;
+
+// Export a hook for components that need fresh session data
+export function createClientAxios({session}: {session: Session}) {
+
+  const config = {
+    ...axiosClient.defaults,
+    headers: {
+      ...DEFAULT_HEADERS,
+      ...(session?.user.token && {
+        Authorization: `Bearer ${session.user.token}`
+      }),
+    },
+  };
+  
+  return axios.create(config);
+}
+
+
+
+/*
+
+in server component
+import { createServerAxios } from '@/lib/axios';
+
+export default async function ServerComponent() {
+  const serverAxios = await createServerAxios();
+  const response = await serverAxios.get('/api/endpoint');
+}
+
+
+
+
+*/
