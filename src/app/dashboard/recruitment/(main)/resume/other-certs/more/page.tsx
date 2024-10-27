@@ -1,9 +1,9 @@
 import React from "react";
+import MoreOtherCertClient from "./_component/more-client";
 import { routes } from "@/constants/routes";
 import { getUserSession } from "@/lib/auth";
-
-import MoreOtherCertClient from "../../../resume/other-certs/more/_component/more-client";
 import resumeApi from "@/api/local-resume";
+import { UserResumeResponse } from "@/definition";
 
 async function getCertifications() {
   const session = await getUserSession();
@@ -11,8 +11,8 @@ async function getCertifications() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const { data } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
-    return data.certification;
+      const { data } : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
+      return data.certification;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
@@ -27,10 +27,10 @@ async function MoreOtherCert() {
   const certifications = await getCertifications();
   return (
     <MoreOtherCertClient
-      type="foreign"
+      type="local"
       next_route={routes.RECRUITMENT_FOREIGN_REF}
       more_route={routes.RECRUITMENT_FOREIGN_OTHER_CERTS}
-      otherCerts={certifications}
+      otherCerts={certifications ?? []}
     />
   );
 }

@@ -76,7 +76,7 @@ export type LoginResponse = {
 
 export type UserResumeResponse = {
   reference: { name: string; email: string; phone: string };
-  contact_details: { name: string; phone: string; socials: string[] };
+  contact_details: { name: string; phone: string; socials: { option: string; optionUrl: string }[] };
   upload: { cv: string; picture: string };
   others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
   job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
@@ -94,9 +94,10 @@ export type UserResumeResponse = {
     leaving_reason: string;
     inview: boolean;
   }[];
-  education: any[];
-  certification: any[];
+  education: Education[];
+  certification: Certification[];
   createdAt: string;
+  coverletter: string;
   __v: number;
 }
 
@@ -109,5 +110,20 @@ export type Education = {
   end_date: string;
   course_description: string;
   what_you_learnt: string;
+  inview: boolean;
+};
+
+
+export type ResumeType = 'local' | 'foreign'
+
+
+export type Certification = {
+  _id: string;
+  training_type: string;
+  course_learnt: string;
+  start_date: string;
+  end_date: string;
+  course_description: string;
+  grade: string;
   inview: boolean;
 };

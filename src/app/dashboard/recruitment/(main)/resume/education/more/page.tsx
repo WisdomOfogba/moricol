@@ -10,7 +10,7 @@ async function getResume() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data}  = await resumeApi.retrieveResume({ userId: session.user.id as string });
+    const {data}  = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
     
     return data.education;
   } catch (error) {
@@ -18,10 +18,16 @@ async function getResume() {
   }
 }
 
+export const metadata = {
+  title: 'More Education',
+  description: 'Add or edit your more education'
+};
+
 async function MoreEducation() {
   const education = await getResume();
   return (
     <MoreEducationClient
+      type="local"
       next_route={routes.RECRUITMENT_REF}
       more_route={routes.RECRUITMENT_EDUCATION}
       education={education}

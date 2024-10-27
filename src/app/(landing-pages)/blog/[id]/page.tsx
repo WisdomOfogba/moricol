@@ -1,5 +1,4 @@
 export default function Blog({ params }: { params: { id: string } }) {
-  console.log(params.id);
 
   return (
     <>

@@ -9,17 +9,22 @@ import { useSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Session } from "next-auth";
-import { UserResumeResponse } from "@/definition";
+import { ResumeType, UserResumeResponse } from "@/definition";
+
 
 type WorkExperience = UserResumeResponse["work_experience"][number];
 
 export default function WorkExperienceClient({
   next_route,
-  work_experience
+  work_experience,
+  type
 }: {
   next_route: string;
   work_experience: WorkExperience[]
+  type: ResumeType
 }) {
+
+  console.log(work_experience);
   const [currentlyWork, setCurrentlyWork] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -92,11 +97,14 @@ export default function WorkExperienceClient({
       }else{
         WorkExperience = [formData];
       }
-      await resumeApi.updateWorkExperience({
-        userId: data?.user?.id as string,
+      // based on type
+        await resumeApi.updateWorkExperience({
+          userId: data?.user?.id as string,
+          type: type,
         workExperience: WorkExperience,
         session: data as Session
-      });
+        });
+      
       enqueueSnackbar("Work experience added successfully", { variant: 'success' });
       router.push(next_route);
     } catch (error) {

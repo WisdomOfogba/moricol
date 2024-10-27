@@ -1,20 +1,27 @@
 import { Session } from 'next-auth';
 import { createServerAxios, createClientAxios } from './axios-client';
 import { axiosClient, handleAxiosError } from './index';
-import { Education } from '@/definition';
+import { Certification, Education, ResumeType } from '@/definition';
 
-interface UpdateBioParams {
+export interface UpdateBioParams {
   userId: string;
   bio: string;
   session: Session;
+  type: ResumeType;
 }
 
-interface UpdateContactDetailsParams {
+export interface UpdateContactDetailsParams {
   userId: string;
-  contactDetails: string;
+  contactDetails: {
+    name: string;
+    phone: string;
+    socials: { option: string, optionUrl: string }[];
+  };
+  session: Session;
+  type: ResumeType;
 }
 
-interface UpdateReferenceParams {
+export interface UpdateReferenceParams {
   userId: string;
   reference: {
     name: string;
@@ -22,24 +29,28 @@ interface UpdateReferenceParams {
     phone: string;
   }
   session: Session;
+  type: ResumeType;
 }
 
-interface UpdateGradeParams {
+export interface UpdateGradeParams {
   userId: string;
   grade: string;
+  type: ResumeType;
 }
 
-interface RetrieveResumeParams {
+export interface RetrieveResumeParams {
   userId: string;
+  type: ResumeType;
 }
 
-interface UpdateEducationParams {
+export interface UpdateEducationParams {
   userId: string;
   education: Education[];
   session: Session;
+  type: ResumeType;
 }
 
-interface WorkExperience {
+export interface WorkExperience {
   title: string;
   company: string;
   start_date: string;
@@ -49,23 +60,71 @@ interface WorkExperience {
   inview: boolean;
 }
 
-interface UpdateWorkExperienceParams {
+export interface UpdateWorkExperienceParams {
   userId: string;
   workExperience: WorkExperience[];
   session: Session;
+  type: ResumeType;
 }
 
-const resumeUrl = 'user/recruitment/localresume'
+export interface UpdateCoverLetterParams {
+  userId: string;
+  coverLetter: string;
+  session: Session;
+  type: ResumeType;
+}
+
+export interface DeleteWorkExperienceParams {
+  userId: string;
+  dataId: string;
+  session: Session;
+  type: ResumeType;
+}
+
+export interface DeleteEducationParams extends DeleteWorkExperienceParams { }
+
+export interface DeleteCertificationParams extends DeleteWorkExperienceParams { }
+
+export interface UpdateOthersParams {
+  userId: string;
+  skills: string[];
+  languages: string[];
+  hobby: string[];
+  noticePeriod: string | Date;
+  session: Session;
+  type: ResumeType;
+}
+
+export interface UpdateCertificationParams {
+  userId: string;
+  certification: Omit<Certification, '_id'>[];
+  session: Session;
+  type: ResumeType;
+}
+
+export interface UpdateUploadsParams {
+  userId: string;
+  picture: string;
+  cv: string;
+  session: Session;
+  type: ResumeType;
+}
+
+const resumeUrls = {
+  local: 'user/recruitment/localresume',
+  foreign: 'user/recruitment/foreignresume'
+}
 
 const resumeApi = {
   /**
    * Update user bio
    */
-  updateBio: async ({ userId, bio, session }: UpdateBioParams) => {
+  updateBio: async ({ userId, bio, session, type = 'local' }: UpdateBioParams) => {
     const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
 
     try {
-      const response = await axios.post(resumeUrl + '/update/bio', {
+      const response = await axios.post(url + '/update/bio', {
         userid: userId,
         bio
       });
@@ -79,11 +138,15 @@ const resumeApi = {
   /**
    * Update contact details
    */
-  updateContactDetails: async ({ userId, contactDetails }: UpdateContactDetailsParams) => {
+  updateContactDetails: async ({ userId, contactDetails, session, type = 'local' }: UpdateContactDetailsParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
+
     try {
-      const response = await axiosClient.post(resumeUrl + '/update/contact/detail', {
+      const response = await axios.post(url + '/update/contact/detail', {
         userid: userId,
         contact_details: contactDetails
+
       });
       return response.data;
     } catch (error) {
@@ -95,11 +158,12 @@ const resumeApi = {
   /**
    * Update reference
    */
-  updateReference: async ({ userId, reference, session }: UpdateReferenceParams) => {
+  updateReference: async ({ userId, reference, session, type = 'local' }: UpdateReferenceParams) => {
     const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
 
     try {
-      const response = await axios.post(resumeUrl + '/update/reference', {
+      const response = await axios.post(url + '/update/reference', {
         userid: userId,
         reference
       });
@@ -113,9 +177,10 @@ const resumeApi = {
   /**
    * Update grade
    */
-  updateGrade: async ({ userId, grade }: UpdateGradeParams) => {
+  updateGrade: async ({ userId, grade, type = 'local' }: UpdateGradeParams) => {
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
     try {
-      const response = await axiosClient.post(resumeUrl + '/update/grade', {
+      const response = await axiosClient.post(url + '/update/grade', {
         userid: userId,
         grade
       });
@@ -129,10 +194,11 @@ const resumeApi = {
   /**
    * Update work experience
    */
-  updateWorkExperience: async ({ userId, workExperience, session }: UpdateWorkExperienceParams) => {
+  updateWorkExperience: async ({ userId, workExperience, session, type = 'local' }: UpdateWorkExperienceParams) => {
     const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
     try {
-      const response = await axios.post(resumeUrl + '/update/work/experience', {
+      const response = await axios.post(url + '/update/work/experience', {
         userid: userId,
         work_experience: workExperience
       });
@@ -146,10 +212,11 @@ const resumeApi = {
   /**
    * Update education
    */
-  updateEducation: async ({ userId, education, session }: UpdateEducationParams) => {
+  updateEducation: async ({ userId, education, session, type = 'local' }: UpdateEducationParams) => {
     const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
     try {
-      const response = await axios.post(resumeUrl + '/update/education', {
+      const response = await axios.post(url + '/update/education', {
         userid: userId,
         education
       });
@@ -163,10 +230,11 @@ const resumeApi = {
   /**
    * Retrieve resume
    */
-  retrieveResume: async ({ userId }: RetrieveResumeParams) => {
+  retrieveResume: async ({ userId, type = 'local' }: RetrieveResumeParams) => {
     const serverAxios = await createServerAxios();
+    const url = type === 'local' ? 'user/recruitment/retrieve/localresume' : 'user/recruitment/retrieve/foreignresume';
     try {
-      const response = await serverAxios.post('user/recruitment/retrieve/localresume', {
+      const response = await serverAxios.post(url, {
         userid: userId
       });
 
@@ -178,7 +246,145 @@ const resumeApi = {
       throw new Error(errorMessage);
 
     }
-  }
+  },
+
+  /**
+   * Update cover letter
+   */
+  updateCoverLetter: async ({ userId, coverLetter, session, type = 'local' }: UpdateCoverLetterParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
+    try {
+      const response = await axios.post(url + '/update/coverletter', {
+        userid: userId,
+        coverletter: coverLetter
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error updating cover letter');
+      throw new Error(errorMessage);
+    }
+  },
+
+  /**
+   * Update certification
+   */
+  updateCertification: async ({ userId, certification, session, type = 'local' }: UpdateCertificationParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
+    try {
+      const response = await axios.post(url + '/update/certification', {
+        userid: userId,
+        certification
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error updating certification');
+      throw new Error(errorMessage);
+    }
+  },
+
+
+  /**
+   * Delete work experience
+   */
+  deleteWorkExperience: async ({ userId, dataId, session, type = 'local' }: DeleteWorkExperienceParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? 'user/recruitment/local/resume' : 'user/recruitment/foreign/resume';
+    try {
+      const response = await axios.post(url + '/delete/work_experience', {
+        userid: userId,
+        dataid: dataId
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error deleting work experience');
+      throw new Error(errorMessage);
+    }
+  },
+
+
+  /**
+   * Delete education
+   */
+  deleteEducation: async ({ userId, dataId, session, type = 'local' }: DeleteEducationParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? 'user/recruitment/local/resume' : 'user/recruitment/foreign/resume';
+    try {
+      const response = await axios.post(url + '/delete/education', {
+        userid: userId,
+        dataid: dataId
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error deleting education');
+      throw new Error(errorMessage);
+    }
+  },
+
+
+  /**
+   * Delete certification
+   */
+  deleteCertification: async ({ userId, dataId, session, type = 'local' }: DeleteCertificationParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? 'user/recruitment/local/resume' : 'user/recruitment/foreign/resume';
+    try {
+      const response = await axios.post(url + '/delete/certification', {
+        userid: userId,
+        dataid: dataId
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error deleting certification');
+      throw new Error(errorMessage);
+    }
+  },
+
+
+  /**
+   * Update other information
+   */
+  updateOthers: async ({ userId, skills, languages, hobby, noticePeriod, session, type = 'local' }: UpdateOthersParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
+    try {
+      const response = await axios.post(url + '/update/others', {
+        userid: userId,
+        others: {
+          skills: skills,
+          languages: languages,
+          hobby: hobby,
+          notice_period: noticePeriod
+        }
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error updating other information');
+      throw new Error(errorMessage);
+    }
+  },
+  /**
+   * Update profile picture and CV uploads
+   */
+  updateUploads: async ({ userId, picture, cv, session, type = 'local' }: UpdateUploadsParams) => {
+    const axios = createClientAxios({ session: session });
+    const url = type === 'local' ? resumeUrls.local : resumeUrls.foreign;
+    try {
+      const response = await axios.post(url + '/update/upload', {
+        userid: userId,
+        upload: {
+          picture: picture,
+          cv: cv
+        }
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error updating uploads');
+      throw new Error(errorMessage);
+    }
+  },
+
 };
 
 export default resumeApi;

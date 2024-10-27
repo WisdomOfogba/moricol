@@ -1,64 +1,33 @@
 import { routes } from "@/constants/routes";
-import { Label } from "@radix-ui/react-label";
-import { Input } from "@/components/input";
-import ContentLayout from "../../../_components/content-layout";
+import ReferenceClient from "../../resume/reference/_components/reference-client";
+import { getUserSession } from "@/lib/auth";
+import { UserResumeResponse } from "@/definition";
+import resumeApi from "@/api/local-resume";
 
-export default function Reference() {
+
+async function getResume() {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const {data} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
+    
+    return data.reference
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+export const metadata = {
+  title: 'Add or edit your reference',
+  description: 'Add or edit your reference'
+};
+
+export default async function Reference() {
+  const reference = await getResume();
+  
   return (
-    <ContentLayout
-      next_route={routes.RECRUITMENT_FOREIGN_COVER_LETTER}
-      pageTitle="Provide Reference"
-      step={4}
-    >
-      <form className="space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div>
-            <Label
-              htmlFor="name"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Name of Referee
-            </Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              className="w-full rounded border border-gray-300 p-2"
-              placeholder="John Doe"
-            />
-          </div>
-          <div>
-            <Label
-              htmlFor="email"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Email address of Referee
-            </Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              className="w-full rounded border border-gray-300 p-2"
-              placeholder="Enter email"
-            />
-          </div>
-        </div>
-        <div>
-          <Label
-            htmlFor="phone"
-            className="mb-1 block text-sm font-medium text-gray-700"
-          >
-            Phone number of Referee
-          </Label>
-          <Input
-            type="tel"
-            id="phone"
-            name="phone"
-            className="w-full rounded border border-gray-300 p-2"
-            placeholder="Enter email"
-          />
-        </div>
-      </form>
-    </ContentLayout>
+  <ReferenceClient type="foreign" next_route={routes.RECRUITMENT_FOREIGN_COVER_LETTER} reference={reference?? []} />
   );
 }

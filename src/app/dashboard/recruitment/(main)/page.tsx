@@ -18,7 +18,7 @@ export default function Recruitment() {
       icon: BiBriefcase,
     },
     {
-      href: routes.RECRUITMENTRESUME_FOREIGN,
+      href: routes.RECRUITMENT_PREVIEW_FOREIGN_RESUME,
       title: "Foreign Resume",
       description: "Tailor your resume for international opportunities",
       icon: BiGlobe,

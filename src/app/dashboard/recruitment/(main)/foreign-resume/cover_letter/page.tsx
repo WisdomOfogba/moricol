@@ -1,34 +1,37 @@
 import React from "react";
-import { Label } from "@radix-ui/react-label";
-import { Textarea } from "@/components/textarea";
 import { routes } from "@/constants/routes";
-import ContentLayout from "../../../_components/content-layout";
+import CoverLetterClient from "../../resume/cover_letter/_components/cover-letter-client";
+import { getUserSession } from "@/lib/auth";
 
-function CoverLetter() {
+import { UserResumeResponse } from "@/definition";
+import resumeApi from "@/api/local-resume";
+
+async function getResume() {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const {data}: {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
+    
+    return data.coverletter;
+  } catch (error) {
+
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+
+export const metadata = {
+  title: 'Cover Letter',
+  description: 'Add or edit your cover letter'
+};
+
+
+async function CoverLetter() {
+  const cover_letter = await getResume();
   return (
-    <ContentLayout
-      next_route={routes.RECRUITMENT_FOREIGN_OTHERS}
-      pageTitle="Cover Letter"
-      step={5}
-    >
-      <div className="max-w-2xl">
-        <div>
-          <Label
-            htmlFor="reasonForLeaving"
-            className="mb-1 block text-sm font-medium text-gray-700"
-          >
-            Write a cover letter.
-          </Label>
-          <Textarea
-            rows={12}
-            id="reasonForLeaving"
-            name="reasonForLeaving"
-            placeholder="Lorem ipsum dolor sit amet consectetur. Faucibus rutrum eget vel viverra eget etiam sit. Dictum vivamus amet diam sit nulla ut mattis pulvinar. Turpis in purus dui gravida risus massa. Sed tortor non diam non aenean gravida turpis."
-          />
-          <p className="mt-1 text-sm text-gray-500">Minimum 70 characters</p>
-        </div>
-      </div>
-    </ContentLayout>
+   <CoverLetterClient type="foreign" next_route={routes.RECRUITMENT_FOREIGN_OTHERS} cover_letter={cover_letter??''} />
   );
 }
 
