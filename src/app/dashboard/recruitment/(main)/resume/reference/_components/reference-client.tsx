@@ -70,7 +70,7 @@ export default function ReferenceClient({
     <ContentLayout
       next_route={next_route}
       pageTitle="Provide Reference"
-      step={4}
+      step={5}
       isLoading={isLoading}
       nextFunction={handleSubmit}
     >

@@ -6,9 +6,10 @@ interface ContentLayoutProps {
   step: number;
   pageTitle: string;
   children: React.ReactNode;
-  next_route: string;
+  next_route?: string;
   noButtons?: boolean;
   nextFunction?: () => void;
+  backFunction?: () => void;
   isLoading?: boolean;
 }
 
@@ -16,9 +17,9 @@ function ContentLayout({
   step,
   pageTitle,
   children,
-  next_route,
   noButtons,
   nextFunction,
+  backFunction,
   isLoading,
 }: ContentLayoutProps) {
   return (
@@ -27,7 +28,7 @@ function ContentLayout({
       <div className="max-w-2xl">
         <h2 className="mb-4 text-2xl font-bold">{pageTitle}</h2>
         {children}
-        {!noButtons && <NextBackButtons next_route={next_route} nextFunction={nextFunction} isLoading={isLoading} />}
+        {!noButtons && <NextBackButtons nextFunction={nextFunction} backFunction={backFunction} isLoading={isLoading} />}
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ async function MoreEducation() {
   return (
     <MoreEducationClient
       type="local"
-      next_route={routes.RECRUITMENT_REF}
+      next_route={routes.RECRUITMENT_RESUME_OTHER_CERTS}
       more_route={routes.RECRUITMENT_EDUCATION}
       education={education}
     />

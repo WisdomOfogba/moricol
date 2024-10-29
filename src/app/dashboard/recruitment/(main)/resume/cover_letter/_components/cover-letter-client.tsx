@@ -50,7 +50,7 @@ function CoverLetterClient({
     <ContentLayout
       next_route={next_route}
       pageTitle="Cover Letter"
-      step={5}
+      step={6}
       isLoading={loading}
       nextFunction={handleSubmit}
     >

@@ -71,7 +71,7 @@ export default function MoreEducationClient({
     >
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
         {education_entries.map((education_entry) => (
-         <MoreEducationClientItem education_entry={education_entry} deleteEducation={deleteEducation}/>
+         <MoreEducationClientItem key={education_entry._id} education_entry={education_entry} deleteEducation={deleteEducation}/>
         ))}
        
       </div>

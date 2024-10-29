@@ -7,7 +7,7 @@ import { routes } from "@/constants/routes";
 import { UserResumeResponse, UserDetails } from "@/definition";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, EducationItem, LanguageItem, HobbyItem, ReferenceItem } from "./_components";
-
+import Image from "next/image";
 
 
 
@@ -81,7 +81,7 @@ import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, Edu
 
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
             <div className="">
-              <Section title="EXPERIENCE" editable={true} editLink={routes.RECRUITMENT_WORK_EXPERIENCE}>
+              <Section title="EXPERIENCE" editable={true} editLink={routes.RECRUITMENT_WORK_EXPERIENCE +'/more'}>
                
                 {data.work_experience.map((exp)=>(
                 <ExperienceItem
@@ -100,7 +100,7 @@ import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, Edu
                 )}
                
               </Section>
-              <Section title="CERTIFICATION" editable={true} editLink={routes.RECRUITMENT_RESUME_OTHER_CERTS}>
+              <Section title="CERTIFICATION" editable={true} editLink={routes.RECRUITMENT_RESUME_OTHER_CERTS +'/more'}>
                 {data.certification.map((cert)=>(
                 <CertificationItem
                 key={cert._id}
@@ -152,7 +152,7 @@ import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, Edu
                   </div>
                 )}
               </Section>
-              <Section title="EDUCATION" editable={true} editLink={routes.RECRUITMENT_EDUCATION}>
+              <Section title="EDUCATION" editable={true} editLink={routes.RECRUITMENT_EDUCATION +'/more'}>
                 {data.education.map((education)=>(
                   <EducationItem
                     key={education._id}
@@ -219,7 +219,9 @@ import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, Edu
             )}
           </Section>
           <Section title="CV" editable={true} editLink={routes.RECRUITMENT_PROFILE_PICTURE}>
-            <div className="rounded bg-red-100 p-4">CV</div>
+            <div className="rounded bg-red-100 p-4">
+              <Image src={data.upload.cv} alt="CV" width={400} height={400} />
+            </div>
             {!data.upload.cv && (
               <span className="flex w-full flex-col items-center justify-center py-8 text-gray-500">
                 <p className="text-lg text-secondary-500">No CV added yet</p>

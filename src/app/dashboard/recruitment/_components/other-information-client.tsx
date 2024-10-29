@@ -128,7 +128,7 @@ export default function OtherInformationClient({
     <ContentLayout
       next_route={next_route}
       pageTitle="Other Information"
-      step={6}
+      step={7}
       isLoading={loading}
       nextFunction={handleSubmit}
     >

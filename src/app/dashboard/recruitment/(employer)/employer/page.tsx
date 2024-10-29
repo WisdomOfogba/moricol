@@ -1,11 +1,13 @@
-import React from "react";
-import JobDetailsForm from "../../_components/employer/job-details-form";
+import EmployerJobClient from "./_components/employer-job-client";
+
+export const metadata = {
+  title: "Post a job | Employer",
+};
 
 function Employer() {
+  
   return (
-    <div>
-      <JobDetailsForm />
-    </div>
+    <EmployerJobClient />
   );
 }
 

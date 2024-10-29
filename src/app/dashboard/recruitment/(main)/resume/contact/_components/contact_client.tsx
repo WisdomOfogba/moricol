@@ -79,7 +79,7 @@ export default function ContactClient({ type, next_route, contact }: { type: Res
     <ContentLayout
       next_route={routes.RECRUITMENT_PROFILE_PICTURE}
       pageTitle="How can we contact you? "
-      step={7}
+      step={8}
       isLoading={isLoading}
       nextFunction={handleSubmit}
 

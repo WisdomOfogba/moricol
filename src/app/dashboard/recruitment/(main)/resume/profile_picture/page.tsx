@@ -29,7 +29,7 @@ export const metadata = {
 
 async function ProfilePicture() {
   const upload = await getResume();
-  return <ProfilePictureClient type="local" next_route={routes.RECRUITMENT_CV} upload={upload} />;
+  return <ProfilePictureClient type="local" next_route={routes.RECRUITMENT_PREVIEW_RESUME} upload={upload} />;
 }
 
 export default ProfilePicture;

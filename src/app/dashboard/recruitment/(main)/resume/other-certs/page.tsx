@@ -26,7 +26,7 @@ async function OtherCerts() {
       next_route={routes.RECRUITMENT_RESUME_OTHER_CERTS + "/more"}
       otherCerts={otherCerts ?? []}
       type="local"
-      order={9}
+      order={4}
     />
   );
 }

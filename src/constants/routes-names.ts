@@ -60,7 +60,7 @@ const routes_names = [
     path: routes.TELEMEDICINE_PRACTITIONERS_FAVORITES,
     name: "Favorites Doctors",
   },
-    {
+  {
     path: routes.TELEMEDICINE_ORGANIZATION,
     name: "Organizations",
   },

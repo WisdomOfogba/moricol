@@ -9,6 +9,7 @@ import { ResumeType } from "@/definition";
 import resumeApi from "@/api/local-resume";
 import { Session } from "next-auth";
 import { CLOUDINARY_PRESET, CLOUDINARY_URL } from "@/constants/config";
+import { useSnackbar } from "notistack";
 
 interface FileUploadProps {
   title: string;
@@ -129,17 +130,18 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession()
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (upload.picture) {
-      setPictureFile(new File([upload.picture], 'profile_picture.png', { type: 'image/png' }));
+      setPictureFile(new File([upload.picture], 'profile_picture image', { type: 'image/png' }));
     }
     if (upload.cv) {
-      setCvFile(new File([upload.cv], 'cv.pdf', { type: 'application/pdf' }));
+      setCvFile(new File([upload.cv], 'cv image', { type: 'application/pdf' }));
     }
   }, [upload]);
 
-  const uploadToCloudinary = async (file: File) => {
+  const uploadToCloudinary = async (file: File) => { 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_PRESET!);
@@ -149,7 +151,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
       body: formData
     });
     const data = await response.json();
-    return data.secure_url;
+    return data.url;
   };
 
   const uploadFiles = async () => {
@@ -169,7 +171,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
           session: session as Session,
           type: type
         });
-
+        enqueueSnackbar('Files uploaded successfully', { variant: 'success' });
         router.push(next_route);
        
       } catch (error) {
@@ -186,7 +188,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
     <ContentLayout 
       next_route={next_route} 
       pageTitle="Profile Picture & CV Upload" 
-      step={8} 
+      step={9} 
       isLoading={isLoading}
       nextFunction={uploadFiles}
     >

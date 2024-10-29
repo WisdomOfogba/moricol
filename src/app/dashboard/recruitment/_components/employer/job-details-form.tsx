@@ -7,32 +7,82 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/select";
-import { BiX } from "react-icons/bi";
 import ContentLayout from "../content-layout";
-import { routes } from "@/constants/routes";
+import { useSnackbar } from "notistack";
+import { CreateJobParams } from "@/api/jobs";
 
-export default function JobDetailsForm() {
+interface JobDetailsFormProps {
+  nextStep: () => void;
+  setFormData: (formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">) => void;
+  formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">;
+}
+
+export default function JobDetailsForm({ nextStep, setFormData, formData }: JobDetailsFormProps) {
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const isValid = () => {
+    const validations = [
+      formData.candidate_title.trim() !== '',
+      formData.country.trim() !== '',
+      formData.state.trim() !== '',
+      formData.working_condition.trim() !== '',
+      formData.job_level.trim() !== '',
+      formData.min_salary !== 0,
+      formData.max_salary !== 0,
+      formData.min_experience !== 0,
+      formData.slot !== 0
+    ];
+
+    const allValid = validations.every(Boolean);
+
+    if (!allValid) {
+      const invalidFields = [
+        !validations[0] && "Candidate Title",
+        !validations[1] && "Job Type",
+        !validations[2] && "Country",
+        !validations[3] && "State",
+        !validations[4] && "Working Condition",
+        !validations[5] && "Job Level",
+        !validations[6] && "Min Salary",
+        !validations[7] && "Max Salary",
+        !validations[8] && "Min Experience",
+        !validations[9] && "Slot"
+      ].filter(Boolean);
+
+      enqueueSnackbar(`The following fields are required: ${invalidFields.join(', ')}.`, { variant: 'error' });
+    }
+
+    return allValid;
+  };
+
+  const handleNextStep = () => {
+    if (isValid()) {
+      nextStep();
+    }
+  };
+
   return (
     <ContentLayout
-      step={1}
-      next_route={routes.RECRUITMENT_EMPLOYER_JOB_DESC}
+      step={2}
       pageTitle="Job Details"
+      nextFunction={handleNextStep}
     >
       <form className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="candidateTitle">Candidate Title</Label>
-            <Input id="candidateTitle" placeholder="Payable accountant" />
+            <Input value={formData.candidate_title} onChange={(e) => setFormData({ ...formData, candidate_title: e.target.value })} id="candidateTitle" className="w-full p-2 focus:p-2" placeholder="Payable accountant" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="jobType">Job type</Label>
-            <Select>
+            <Select value={formData.job_type} onValueChange={(value) => setFormData({ ...formData, job_type: value as "fulltime" | "parttime" | "contract" })}  >
               <SelectTrigger id="jobType" className="w-full">
                 <SelectValue placeholder="Full time" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="fullTime">Full time</SelectItem>
-                <SelectItem value="partTime">Part time</SelectItem>
+                <SelectItem value="fulltime">Full time</SelectItem>
+                <SelectItem value="parttime">Part time</SelectItem>
                 <SelectItem value="contract">Contract</SelectItem>
               </SelectContent>
             </Select>
@@ -40,15 +90,13 @@ export default function JobDetailsForm() {
           <div className="space-y-2">
             <Label htmlFor="country">Country</Label>
             <div className="relative">
-              <Input id="country" value="Nigeria" readOnly className="pr-8" />
-              <BiX className="absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-500" />
+              <Input id="country" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} className="p-2 focus:p-2" />
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="state">State</Label>
             <div className="relative">
-              <Input id="state" value="Abuja" readOnly className="pr-8" />
-              <BiX className="absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-500" />
+              <Input id="state" value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} className="p-2 focus:p-2" />
             </div>
           </div>
           <div className="space-y-2">
@@ -56,11 +104,10 @@ export default function JobDetailsForm() {
             <div className="relative">
               <Input
                 id="jobLevel"
-                value="Top Manager"
-                readOnly
-                className="pr-8"
+                value={formData.job_level}
+                onChange={(e) => setFormData({ ...formData, job_level: e.target.value })}
+                className="p-2 focus:p-2"
               />
-              <BiX className="absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-500" />
             </div>
           </div>
           <div className="space-y-2">
@@ -68,24 +115,23 @@ export default function JobDetailsForm() {
             <div className="relative">
               <Input
                 id="workingCondition"
-                value="Remote"
-                readOnly
-                className="pr-8"
+                value={formData.working_condition}
+                onChange={(e) => setFormData({ ...formData, working_condition: e.target.value })}
+                className="p-2 focus:p-2"
               />
-              <BiX className="absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-500" />
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="minSalary">Min. Monthly Net Salary</Label>
-            <Input id="minSalary" placeholder="₦ 250,000" />
+            <Input type="number" min={0} value={formData.min_salary} onChange={(e) => setFormData({ ...formData, min_salary: Number(e.target.value) })} id="minSalary" placeholder="₦ 250,000" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="maxSalary">Max. Monthly Net Salary</Label>
-            <Input id="maxSalary" placeholder="₦ 450,000" />
+            <Input type="number" min={0} value={formData.max_salary} onChange={(e) => setFormData({ ...formData, max_salary: Number(e.target.value) })} id="maxSalary" placeholder="₦ 450,000" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="minExperience">Min. Experience required</Label>
-            <Input id="minExperience" placeholder="0 years" />
+            <Input type="number" min={0} value={formData.min_experience} onChange={(e) => setFormData({ ...formData, min_experience: Number(e.target.value)  })} id="minExperience" placeholder="0 years" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="candidatesWanted">
@@ -93,6 +139,10 @@ export default function JobDetailsForm() {
             </Label>
             <Input
               id="candidatesWanted"
+              value={formData.slot}
+              type="number"
+              min={0}
+              onChange={(e) => setFormData({ ...formData, slot: Number(e.target.value) })}
               placeholder="Enter number of candidates"
             />
           </div>

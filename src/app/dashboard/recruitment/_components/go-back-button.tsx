@@ -3,13 +3,13 @@ import Button from "@/components/button";
 import React from "react";
 import { useRouter } from "next/navigation";
 
-function GoBackButton() {
+function GoBackButton({ onClick }: { onClick?: () => void }) {
   const router = useRouter();
 
   return (
     <Button
       type="button"
-      onClick={() => router.back()}
+      onClick={onClick || (() => router.back())}
       variant="outline"
       className="border border-primary-500"
     >

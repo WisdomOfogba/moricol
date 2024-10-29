@@ -82,7 +82,7 @@ import resumeApi from "@/api/local-resume";
 
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
             <div className="">
-              <Section title="EXPERIENCE" editable={true} editLink={routes.RECRUITMENT_FOREIGN_WORK_EXPERIENCE}>
+              <Section title="EXPERIENCE" editable={true} editLink={routes.RECRUITMENT_FOREIGN_WORK_EXPERIENCE +'/more'}>
                
                 {data.work_experience.map((exp)=>(
                 <ExperienceItem
@@ -101,7 +101,7 @@ import resumeApi from "@/api/local-resume";
                 )}
                
               </Section>
-              <Section title="CERTIFICATION" editable={true} editLink={routes.RECRUITMENT_FOREIGN_OTHER_CERTS}>
+              <Section title="CERTIFICATION" editable={true} editLink={routes.RECRUITMENT_FOREIGN_OTHER_CERTS +'/more'}>
                 {data.certification.map((cert)=>(
                 <CertificationItem
                 key={cert._id}
@@ -153,7 +153,7 @@ import resumeApi from "@/api/local-resume";
                   </div>
                 )}
               </Section>
-              <Section title="EDUCATION" editable={true} editLink={routes.RECRUITMENT_FOREIGN_EDUCATION}>
+              <Section title="EDUCATION" editable={true} editLink={routes.RECRUITMENT_FOREIGN_EDUCATION +'/more'}>
                 {data.education.map((education)=>(
                   <EducationItem
                     key={education._id}
@@ -169,7 +169,7 @@ import resumeApi from "@/api/local-resume";
                   </div>
                 )}
               </Section>
-              <Section title="LANGUAGE" editable={true} editLink={routes.RECRUITMENT_OTHERS}>
+              <Section title="LANGUAGE" editable={true} editLink={routes.RECRUITMENT_FOREIGN_OTHERS}>
                 {data.others.languages.map((language)=>(
                   <LanguageItem key={language} text={language} />
                 ))}
@@ -180,7 +180,7 @@ import resumeApi from "@/api/local-resume";
                   </div>
                 )}  
               </Section>
-              <Section title="HOBBIES" editable={true} editLink={routes.RECRUITMENT_OTHERS}>
+              <Section title="HOBBIES" editable={true} editLink={routes.RECRUITMENT_FOREIGN_OTHERS}>
                 {data.others.hobby.map((hobby)=>(
                   <HobbyItem key={hobby} text={hobby} />
                 ))}
