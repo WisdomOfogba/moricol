@@ -19,88 +19,29 @@ import {
 } from "@/components/table";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
+import { JobPostResponse } from "@/definition";
 
-const jobData = [
-  {
-    id: 1,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-22",
-    jobPostEnds: "2023-08-22",
-    status: "PAY",
-    hired: false,
-  },
-  {
-    id: 2,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-23",
-    jobPostEnds: "2023-08-23",
-    status: "PENDING",
-    hired: false,
-  },
-  {
-    id: 3,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-24",
-    jobPostEnds: "2023-08-24",
-    status: "DENIED",
-    hired: false,
-  },
-  {
-    id: 4,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-25",
-    jobPostEnds: "2023-08-25",
-    status: "PAY",
-    hired: false,
-  },
-  {
-    id: 5,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-26",
-    jobPostEnds: "2023-08-26",
-    status: "PAY",
-    hired: false,
-  },
-  {
-    id: 6,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-27",
-    jobPostEnds: "2023-08-27",
-    status: "HIRED",
-    hired: true,
-  },
-  {
-    id: 7,
-    companyName: "Uninform Technologies",
-    jobTitle: "Professional Developer",
-    datePosted: "2023-06-28",
-    jobPostEnds: "2023-08-28",
-    status: "HIRED",
-    hired: true,
-  },
-];
 
-export default function JobsPostedClient() {
-  const [activeTab, setActiveTab] = useState("ongoing");
+
+export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: { unhired_jobposts: JobPostResponse[], hired_jobposts: JobPostResponse[] }  ) {
+
+  const [jobPosts] = useState<Record<string, JobPostResponse[]>>({unhired: unhired_jobposts, hired: hired_jobposts});
+
+  const [activeTab, setActiveTab] = useState<"unhired" | "hired">("unhired");
   const [sortOrder, setSortOrder] = useState("newest");
 
+ 
+
   const filteredAndSortedJobs = useMemo(() => {
-    return jobData
-      .filter((job) => (activeTab === "ongoing" ? !job.hired : job.hired))
+    return jobPosts[activeTab]
       .sort((a, b) => {
         if (sortOrder === "newest") {
           return (
-            new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
         } else {
           return (
-            new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime()
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
           );
         }
       });
@@ -119,8 +60,8 @@ export default function JobsPostedClient() {
       <div className="overflow-hidden rounded-lg bg-white shadow">
         <div className="flex border-b">
           <button
-            className={`flex-1 px-4 py-2 ${activeTab === "ongoing" ? "bg-primary-500 text-white" : "bg-gray-100"}`}
-            onClick={() => setActiveTab("ongoing")}
+            className={`flex-1 px-4 py-2 ${activeTab === "unhired" ? "bg-primary-500 text-white" : "bg-gray-100"}`}
+            onClick={() => setActiveTab("unhired")}
           >
             Ongoing Jobs
           </button>
@@ -160,14 +101,18 @@ export default function JobsPostedClient() {
             </TableHeader>
             <TableBody>
               {filteredAndSortedJobs.map((job) => (
-                <TableRow key={job.id}>
-                  <TableCell>{job.companyName}</TableCell>
-                  <TableCell>{job.jobTitle}</TableCell>
+                <TableRow key={job._id}>
+                  <TableCell>{job.company_name}</TableCell>
                   <TableCell>
-                    {new Date(job.datePosted).toLocaleDateString()}
+                    <Link className="underline" href={`${routes.RECRUITMENT_JOBS +'/details'}/${job._id}`}>
+                      {job.candidate_title}
+                    </Link>
                   </TableCell>
                   <TableCell>
-                    {new Date(job.jobPostEnds).toLocaleDateString()}
+                    {new Date(job.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    {new Date(job.end_date).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
                     <span

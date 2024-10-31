@@ -67,8 +67,8 @@ interface RetrieveAllJobPostsParams {
     state?: string;
     job_type?: string[];
     job_level?: string[];
-    min_salary?: string[];
-    max_salary?: number;
+    min_salary?: [];
+    max_salary?: [];
     page?: number;
     moricol_job?: boolean;
     session: Session;
@@ -82,7 +82,7 @@ const endpoints = {
     retrieveSingleJobPost: jobsUrl + '/retrieve/singlejob',
     makePayment: "/user/training/make/jobpost/payment",
     saveJobPost: jobsUrl + "/save/jobpost",
-    retrieveSavedJobPost: jobsUrl + "retrieve/save/jobpost",
+    retrieveSavedJobPost: jobsUrl + "/retrieve/save/jobpost",
     myJobPost: jobsUrl + "/retrieve/myjobpost",
     updateMyJobPostPayment: jobsUrl + "/update/jobpost/payment",
     applyForJob: jobsUrl + "/apply/jobpost",
@@ -251,7 +251,8 @@ const jobsApi = {
         const axios = createClientAxios({ session: params.session });
 
         try {
-            const response = await axios.post(endpoints.retrieveAllJobPost, params);
+            const { session, ...paramsWithoutSession } = params;
+            const response = await axios.post(endpoints.retrieveAllJobPost, { ...paramsWithoutSession });
             return response.data;
         } catch (error) {
             const errorMessage = handleAxiosError(error, 'Error retrieving all job posts');

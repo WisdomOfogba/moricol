@@ -1,51 +1,35 @@
+import jobsApi from "@/api/jobs";
 import { routes } from "@/constants/routes";
+import { JobPostResponse } from "@/definition";
+import { getUserSession } from "@/lib/auth";
 import Link from "next/link";
-import { FiBookmark } from "react-icons/fi";
+import SaveJobButton from "../../../_component/save-job-button";
 
-interface JobData {
-  id: string;
-  title: string;
-  location: string;
-  type: string;
-  details: {
-    experience: string;
-    jobLevel: string;
-    monthGrossSalary: string;
-    monthNetSalary: string;
-    qualification: string;
-    gender: string;
-    maritalStatus: string;
-    religion: string;
-  };
-  description: string;
-  requirements: string[];
-}
 
-const jobData: JobData = {
-  id: "dgshdfg",
-  title: "Senior Nurse",
-  location: "Abuja",
-  type: "(Full Time) (Onsite)",
-  details: {
-    experience: "2-4 Years",
-    jobLevel: "Top Manager",
-    monthGrossSalary: "₦350-400",
-    monthNetSalary: "₦350-400",
-    qualification: "BSC, MSC",
-    gender: "All Gender",
-    maritalStatus: "₦350-400",
-    religion: "Christian",
-  },
-  description:
-    "Collaborate with product management and engineering to define and implement innovative solutions for the product direction, visuals and experience. Execute all visual design stages from concept to final hand-off to engineering. Conceptualize original ideas that bring simplicity and user friendliness to complex design roadblocks. Create wireframes, storyboards, user flows, process flows and site maps to effectively communicate interaction and design ideas. Present and defend designs and key milestone deliverables to peers and executive level stakeholders. Conduct user research and evaluate user feedback.",
-  requirements: [
-    "Identify problems based on the product vision / requirements and come up with delightful design solutions & deliverables.",
-    "Conduct design process best practices across projects such as gathering insights, validating problems & solutions, delivering multiple fidelity levels of design, and ensure the final design is implemented properly on production.",
-    "Collaborate with Interaction Designers (Design System team) to ensure the implementation of proper design components and patterns and/or improving existing design libraries.",
-  ],
+
+
+export const metadata = {
+  title: "My Posted Jobs | Moricol",
+  description: "Jobs you have posted on Moricol",
 };
 
-export default function JobDetails() {
+async function getJobPost(job_id: string) {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const { data: jobpost } : { data: JobPostResponse } = await jobsApi.retrieveSingleJobPost(session.user.id as string, job_id, session);
+
+    return jobpost;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+export default async function JobDetails({ params }: { params: { job_id: string } }) {
+  const jobpost = await getJobPost(params.job_id);
+
   return (
     <>
       <div className="min-h-screen">
@@ -53,17 +37,17 @@ export default function JobDetails() {
           <div className="rounded-lg bg-white p-6">
             <div className="mb-6 flex flex-col items-start justify-between md:flex-row md:items-center">
               <div>
-                <h1 className="mb-2 text-2xl font-bold">{jobData.title}</h1>
-                <p className="text-gray-600">
-                  {jobData.location} {jobData.type}
+                <h1 className="mb-2 text-2xl capitalize font-bold">{jobpost.candidate_title}</h1>
+                <p className="text-gray-600 capitalize">
+                  {jobpost.state}, {jobpost.country}
+                  <span className="mx-2">•</span>
+                  ({jobpost.job_type})
                 </p>
               </div>
               <div className="mt-4 flex items-center md:mt-0">
-                <button className="mr-4">
-                  <FiBookmark className="h-6 w-6 text-gray-400" />
-                </button>
+                <SaveJobButton job_id={jobpost._id} />  
                 <Link
-                  href={routes.RECRUITMENT_JOBS + "/apply/" + jobData.id}
+                  href={routes.RECRUITMENT_JOBS + "/apply/" + jobpost._id}
                   className="rounded-lg bg-yellow-500 px-6 py-2 text-white transition duration-300 hover:bg-yellow-600"
                 >
                   Apply Now
@@ -74,44 +58,45 @@ export default function JobDetails() {
             <div className="mb-8 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4">
               <JobDetail
                 title="Experience"
-                value={jobData.details.experience}
+                value={jobpost.min_experience + " years"}
               />
-              <JobDetail title="Job Level" value={jobData.details.jobLevel} />
+              <JobDetail title="Job Level" value={jobpost.job_level} />
               <JobDetail
                 title="Month Gross Salary"
-                value={jobData.details.monthGrossSalary}
+                value={jobpost.max_salary.toLocaleString()}
               />
               <JobDetail
                 title="Month Net Salary"
-                value={jobData.details.monthNetSalary}
+                value={jobpost.min_salary.toLocaleString()}
               />
             </div>
             <div className="mb-8 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4">
               <JobDetail
                 title="Qualification"
-                value={jobData.details.qualification}
+                value={jobpost.academic_qualification.join(", ")}
               />
-              <JobDetail title="Gender" value={jobData.details.gender} />
+              <JobDetail title="Gender" value={jobpost.gender.join(", ")} />
               <JobDetail
                 title="Marital Status"
-                value={jobData.details.maritalStatus}
+                value={jobpost.marital_status.join(", ")}
               />
-              <JobDetail title="Religion" value={jobData.details.religion} />
+              <JobDetail title="Religion" value={jobpost.religion.join(", ")} />
             </div>
           </div>
 
           <div className="rounded-lg border-t bg-white p-6">
             <h2 className="mb-4 text-xl font-semibold">Description</h2>
-            <p className="text-gray-700">{jobData.description}</p>
+            <p className="text-gray-700">{jobpost.description}</p>
           </div>
 
           <div className="mb-8 rounded-lg border-t bg-white p-6">
             <h2 className="mb-4 text-xl font-semibold">Requirements</h2>
-            <ul className="list-inside list-disc space-y-2 text-gray-700">
-              {jobData.requirements.map((requirement, index) => (
+            {/* <ul className="list-inside list-disc space-y-2 text-gray-700">
+                {jobpost.requirement.map((requirement, index) => (
                 <li key={index}>{requirement}</li>
               ))}
-            </ul>
+            </ul> */}
+            <p className="text-gray-700">{jobpost.requirement}</p>
           </div>
         </div>
       </div>

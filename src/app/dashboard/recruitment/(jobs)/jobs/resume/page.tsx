@@ -31,7 +31,7 @@ async function Resume() {
 
   return (
     <div className="min-h-screen">
-      <ResumeClient />
+      <ResumeClient resume={resume} />
     </div>
   );
 }

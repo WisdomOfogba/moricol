@@ -1,9 +1,33 @@
-import { ResumeView } from "@/app/dashboard/recruitment/(main)/preview/page";
+import resumeApi from "@/api/local-resume";
 import ApplySuccessModal from "@/app/dashboard/recruitment/_components/jobs/apply-success-modal";
 import FileInput from "@/components/file-input";
+import { routes } from "@/constants/routes";
+import { UserResumeResponse } from "@/definition";
+import { getUserSession } from "@/lib/auth";
+import Link from "next/link";
 import React from "react";
 
-function ApplyJob() {
+export const metadata = {
+  title: "Apply for Job",
+  description: "Apply for a job with your credentials",
+};
+
+async function getResume() {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const {data: local} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
+    const {data: foreign} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
+    
+    return {local, foreign}
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+async function ApplyJob() {
+  const {local, foreign} = await getResume();
   return (
     <div className="relative min-h-screen">
       <h1 className="font-semibold">APPLY WITH YOUR CREDENTIALS</h1>
@@ -18,19 +42,27 @@ function ApplyJob() {
         <div className="w-full border-t border-black/20" />
       </div>
 
-      <div className="flex w-full justify-end gap-4 md:gap-8">
-        <div className="space-x-4">
-          <button className="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600">
-            CREATE CV/APPLY MANUALLY
-          </button>
-          <button className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
-            EDIT RESUME
-          </button>
+      <div>
+        <h1 className="font-semibold">APPLY WITH YOUR MORICOL RESUME</h1>
+        <p>Select which resume you have created to be used to apply for this job</p>
+      </div>
+
+  
+      <div className="flex w-full justify-start gap-4 lg:gap-8 items-center py-5">
+        
+       {local &&   <button className="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600">
+            APPLY WITH LOCAL RESUME
+          </button>}
+      {local && foreign &&  <span className="text-gray-500">|</span>}
+       {foreign &&   <button className="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600">
+            APPLY WITH FOREIGN RESUME
+          </button>}
         </div>
-      </div>
-      <div className="rounded-lg bg-white p-2">
-        <ResumeView />
-      </div>
+
+     <Link href={routes.RECRUITMENT_JOBS_RESUME} className="px-4 text-md hover:text-yellow-500 py-2 underline font-semibold text-gray-700 hover:bg-gray-50">
+            VIEW YOUR SAVED RESUME
+          </Link>
+    
     </div>
   );
 }
