@@ -5,22 +5,25 @@ import Button from "@/components/button";
 import { BiChevronLeft, BiChevronRight, BiInfoCircle } from "react-icons/bi";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
+import { LoanDetails } from "@/definition";
 
 export default function LoanOfferClient({
-  loan_category,
+  loanDetails,
 }: {
-  loan_category: string;
+  loanDetails: LoanDetails;
 }) {
-  const [loanAmountIndex, setLoanAmountIndex] = useState(1); // Start with the second option (₦50,000)
-  const loanOptions = [25000, 40000, 50000];
-  const loanAmount = loanOptions[loanAmountIndex]; // Get the current loan amount based on the index
-  const [loanDuration, setLoanDuration] = useState(50);
 
-  const durationOptions = [
-    { days: 25, rate: 0.7 },
-    { days: 40, rate: 0.8 },
-    { days: 50, rate: 0.9 },
-  ];
+  const sortedRangeArray = Object.values(loanDetails.range).sort((a, b) => {
+    return a - b
+  });
+  const [loanAmountIndex, setLoanAmountIndex] = useState(sortedRangeArray.length - 1);
+  const loanOptions = sortedRangeArray;
+  const loanAmount = loanOptions[loanAmountIndex]; // Get the current loan amount based on the index
+  const [loanDuration, setLoanDuration] = useState(loanDetails.durations[0].days);
+  const [loanInterest, setLoanInterest] = useState(loanDetails.durations[0].interest);
+  // const loanDurationOption = loanDetails.durations.find((option) => option.days === loanDuration);
+
+
 
   const handleLeftChevronClick = () => {
     setLoanAmountIndex((prevIndex) =>
@@ -33,6 +36,7 @@ export default function LoanOfferClient({
       prevIndex < loanOptions.length - 1 ? prevIndex + 1 : prevIndex,
     );
   };
+
 
   return (
     <div className="min-h-screen">
@@ -67,77 +71,126 @@ export default function LoanOfferClient({
             </div>
 
             <p className="mb-6 text-sm text-gray-600">
-              Your loan amount range is ₦25,000 to ₦50,000
+              Your loan amount range is ₦{loanOptions[0].toLocaleString()} to ₦{loanOptions[loanOptions.length - 1].toLocaleString()}
             </p>
 
-            <div className="mb-6 grid grid-cols-3 gap-4">
-              {durationOptions.map((option) => (
-                <Button
-                  key={option.days}
-                  variant={option.days === loanDuration ? "primary" : "outline"}
-                  onClick={() => setLoanDuration(option.days)}
-                  className={`flex h-24 flex-col items-center justify-center ${
-                    option.days === loanDuration
+            {loanDetails.durations.map((option) => (
+              <>
+                <div key={option._id} className="mb-6 grid grid-cols-3 gap-4">
+
+                  <Button
+                    variant={option.days === loanDuration ? "primary" : "outline"}
+                    onClick={() => {
+                      setLoanDuration(option.days);
+                      setLoanInterest(option.interest);
+                    }}
+                    className={`flex h-24 flex-col items-center justify-center ${option.days === loanDuration
                       ? "border-red-500 bg-red-200"
                       : "bg-red-100"
-                  }`}
-                >
-                  <span className="text-lg font-semibold">
-                    {option.days} Days
-                  </span>
-                  <span className="text-sm">
-                    {option.rate.toFixed(2)}% Daily
-                  </span>
-                </Button>
-              ))}
-            </div>
+                      }`}
+                  >
+                    <span className="text-lg font-semibold">
+                      {option.days} Days
+                    </span>
+                    <span className="text-sm">
+                      {option.interest.toFixed(2)}% Daily
+                    </span>
+                  </Button>
+                  <Button
+                    variant={option.days === loanDuration ? "primary" : "outline"}
+                    onClick={() => {
+                      setLoanDuration(option.days);
+                      setLoanInterest(option.late_interest);
+                    }}
+                    className={`flex h-24 flex-col items-center justify-center ${option.days === loanDuration
+                      ? "border-red-500 bg-red-200"
+                      : "bg-red-100"
+                      }`}
+                  >
+                    <span className="text-lg font-semibold">
+                      {option.days} Days
+                    </span>
+                    <span className="text-sm">
+                      {option.late_interest.toFixed(2)}% Daily
+                    </span>
+                  </Button>
 
-            <div className="mb-6 space-y-4">
-              <div className="flex justify-between">
-                <span>How to pay back</span>
-                <span>2 Installment for 50 days</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Interest Daily</span>
-                <span>0.8%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Charges</span>
-                <span>₦2,000</span>
-              </div>
-            </div>
+                </div>
+                <div className="mb-6 space-y-4">
+                  <div className="flex justify-between">
+                    <span>How to pay back</span>
+                    <span>{option.installment_days.length} Installment for {option.days} days</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Interest Daily</span>
+                    <span>{option.interest.toFixed(2)}% / {option.late_interest.toFixed(2)}% </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Charges</span>
+                    <span>₦{option.interest * loanAmount} / ₦{option.late_interest * loanAmount}</span>
+                  </div>
+                </div>
+                <div className="mb-6 flex items-start rounded-lg bg-primary-100 p-4">
+                  <BiInfoCircle className="mr-2 mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
+                  <p className="text-sm">
+                    You need to pay back{" "}
+                    <span className="font-semibold">₦{Math.round((loanInterest * loanAmount + loanAmount) / option.installment_days.length)}</span> each installment
+                    in the next <span className="font-semibold">
+                      {loanDuration}Days</span>
+                  </p>
+                </div>
+                <div className="mb-6">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="">
+                        <th className="py-2 text-left">Installments</th>
+                        <th className="py-2 text-left">Total Amount</th>
+                        <th className="py-2 text-left">Interest</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="">
+                        <td>{option.installment_days.length}</td>
+                        <td>₦{Math.round(loanInterest * loanAmount + loanAmount)}</td>
+                        <td>₦{Math.round(loanInterest * loanAmount)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-            <div className="mb-6 flex items-start rounded-lg bg-primary-100 p-4">
-              <BiInfoCircle className="mr-2 mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
-              <p className="text-sm">
-                You need to pay back{" "}
-                <span className="font-semibold">₦27,750</span> each installment
-                in the next <span className="font-semibold">50Days</span>
-              </p>
-            </div>
+                <br />
 
-            <div className="mb-6">
-              <table className="w-full">
-                <thead>
-                  <tr className="">
-                    <th className="py-2 text-left">Installments</th>
-                    <th className="py-2 text-left">Total Amount</th>
-                    <th className="py-2 text-left">Interest</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="">
-                    <td>2</td>
-                    <td>₦60,000</td>
-                    <td>₦10,500</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                <div className="mb-6 space-y-4">
+                  {option.installment_days.map((installment, index) => (
+                    <div className="mb-4">
+                      <h3 className="mb-2 font-semibold">{index + 1 === 1 ? "First" : index + 1 === 2 ? "Second" : "Third"} Installment </h3>
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr>
+                            <th className="py-2 text-left">Due Date</th>
+                            <th className="py-2 text-left">Repay Amount</th>
+                            <th className="py-2 text-left">Principal</th>
+                            <th className="py-2 text-left">Interest</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{installment.period * installment.days} days</td>
+                            <td>₦{Math.round((loanInterest * loanAmount + loanAmount) / option.installment_days.length)}</td>
+                            <td>₦{Math.round(loanAmount)}</td>
+                            <td>₦{Math.round(loanInterest * loanAmount)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+
+                </div>
+              </>))}
           </section>
 
           <section className="xl:col-span-2">
-            <div className="mb-6 space-y-4">
+            {/* <div className="mb-6 space-y-4">
               <div className="mb-4">
                 <h3 className="mb-2 font-semibold">First Installment</h3>
                 <table className="w-full text-sm">
@@ -180,9 +233,9 @@ export default function LoanOfferClient({
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> */}
 
-            <Link href={`${routes.LOANAPPLY}/${loan_category}`}>
+            <Link href={`${routes.LOANAPPLY}/${loanDetails._id}`}>
               <Button className="w-full rounded-lg bg-primary-500 py-3 text-white hover:bg-primary-600">
                 APPLY FOR THIS LOAN
               </Button>

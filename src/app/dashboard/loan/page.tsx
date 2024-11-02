@@ -8,8 +8,33 @@ import {
 import Link from "next/link";
 import LoanHistory from "./_components/loan-history";
 import { routes } from "@/constants/routes";
+import { getUserSession } from "@/lib/auth";
+import loanApi from "@/api/loan";
+import { Session } from "next-auth";
 
-export default function LoanDashboard() {
+export const metadata = {
+  title: "Loan Dashboard | Moricol",
+  description: "View your loan history and manage your loan accounts",
+};
+
+async function getLoanData() {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const loanData = await loanApi.homepage({ userid: session.user.id, session });
+    return loanData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get loan data');
+  }
+}
+
+
+export default async function LoanDashboard() {
+  const loanData = await getLoanData();
+  console.log(loanData);
+
   const links = [
     {
       title: "Payback",

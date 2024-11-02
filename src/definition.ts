@@ -180,3 +180,33 @@ export type FilterValues = {
   state: string;
   [key: string]: string[] | number[] | string;
 };
+
+export type LoanCategory = {
+  _id: string;
+  name: string;
+}
+
+export type LoanDetails = {
+  range: {
+    amount1: number;
+    amount2: number;
+    amount3: number;
+  };
+  _id: string;
+  name: string;
+  image: string;
+  durations: Array<{
+    days: number;
+    interest: number;
+    late_interest: number;
+    installment_days: {
+      days: number;
+      period: number;
+      _id: string;
+    }[];
+    _id: string;
+  }>;
+  client: number;
+  createdAt: string;
+  __v: number;
+}
