@@ -18,6 +18,10 @@ const routes_names = [
   { path: routes.RECRUITMENTRESUME_FOREIGN, name: "Foreign Resume" },
   { path: routes.RECRUITMENT_EMPLOYER, name: "Employer | Post Jobs" },
   { path: routes.RECRUITMENT_JOBS, name: "All Jobs" },
+  { path: routes.RECRUITMENT_JOBS_SAVED, name: "Saved Jobs" },
+  { path: routes.RECRUITMENT_JOBS_POSTED, name: "Jobs I Posted" },
+  { path: routes.RECRUITMENT_JOBS_APPLICATIONS, name: "My Job Applications" },
+
   { path: routes.RECRUITMENT_COVER_LETTER, name: "Cover Letter" },
   { path: routes.RECRUITMENT_REF, name: "Provide Reference" },
   { path: routes.RECRUITMENT_CONTACT, name: "Contact Information" },

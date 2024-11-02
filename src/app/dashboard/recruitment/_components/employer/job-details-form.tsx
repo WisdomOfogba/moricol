@@ -123,15 +123,15 @@ export default function JobDetailsForm({ nextStep, setFormData, formData }: JobD
           </div>
           <div className="space-y-2">
             <Label htmlFor="minSalary">Min. Monthly Net Salary</Label>
-            <Input type="number" min={0} value={formData.min_salary} onChange={(e) => setFormData({ ...formData, min_salary: Number(e.target.value) })} id="minSalary" placeholder="₦ 250,000" />
+            <Input type="number" min={1} value={formData.min_salary.toString()} onChange={(e) => setFormData({ ...formData, min_salary: Number(e.target.value) })} id="minSalary" placeholder="₦ 250,000" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="maxSalary">Max. Monthly Net Salary</Label>
-            <Input type="number" min={0} value={formData.max_salary} onChange={(e) => setFormData({ ...formData, max_salary: Number(e.target.value) })} id="maxSalary" placeholder="₦ 450,000" />
+            <Input type="number" min={1} value={formData.max_salary.toString()} onChange={(e) => setFormData({ ...formData, max_salary: Number(e.target.value) })} id="maxSalary" placeholder="₦ 450,000" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="minExperience">Min. Experience required</Label>
-            <Input type="number" min={0} value={formData.min_experience} onChange={(e) => setFormData({ ...formData, min_experience: Number(e.target.value)  })} id="minExperience" placeholder="0 years" />
+            <Input type="number" min={1} value={formData.min_experience.toString()} onChange={(e) => setFormData({ ...formData, min_experience: Number(e.target.value) })} id="minExperience" placeholder="0 years" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="candidatesWanted">
@@ -139,10 +139,10 @@ export default function JobDetailsForm({ nextStep, setFormData, formData }: JobD
             </Label>
             <Input
               id="candidatesWanted"
-              value={formData.slot}
+              value={formData.slot.toString()}
               type="number"
-              min={0}
-              onChange={(e) => setFormData({ ...formData, slot: Number(e.target.value) })}
+              min={1}
+              onChange={(e) => setFormData({ ...formData, slot: parseInt(e.target.value) })}
               placeholder="Enter number of candidates"
             />
           </div>

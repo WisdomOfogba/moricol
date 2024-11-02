@@ -17,7 +17,7 @@ interface CompanySetupFormProps {
   formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">;
 }
 
- 
+
 
 export default function CompanySetupClient({ goBack, nextStep, setFormData, formData }: CompanySetupFormProps) {
   const [logo, setLogo] = useState<string | null>(null);
@@ -26,12 +26,14 @@ export default function CompanySetupClient({ goBack, nextStep, setFormData, form
 
 
   const updateImg = (file: File) => {
- if (file) {
+    if (file && typeof file === 'object') {
       const reader = new FileReader();
       reader.onloadend = () => {
         setLogo(reader.result as string);
       };
       reader.readAsDataURL(file);
+    } else {
+      setLogo(file as unknown as string);
     }
   }
 
@@ -155,7 +157,7 @@ export default function CompanySetupClient({ goBack, nextStep, setFormData, form
             value={formData.company_bio}
             onChange={(e) => setFormData({ ...formData, company_bio: e.target.value })}
             placeholder="Little introduction about the company"
-            
+
             rows={4}
 
 

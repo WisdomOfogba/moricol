@@ -24,7 +24,6 @@ export default function WorkExperienceClient({
   type: ResumeType
 }) {
 
-  console.log(work_experience);
   const [currentlyWork, setCurrentlyWork] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -85,26 +84,26 @@ export default function WorkExperienceClient({
     if (formData.leaving_reason === "") {
       formData.leaving_reason = "nil";
     }
-    
+
 
     try {
       setIsLoading(true);
       let WorkExperience;
       if (work_experience instanceof Array) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        WorkExperience = [...work_experience.map(({_id, ...rest}) => rest), formData];
-        
-      }else{
+        WorkExperience = [...work_experience.map(({ _id, ...rest }) => rest), formData];
+
+      } else {
         WorkExperience = [formData];
       }
       // based on type
-        await resumeApi.updateWorkExperience({
-          userId: data?.user?.id as string,
-          type: type,
+      await resumeApi.updateWorkExperience({
+        userId: data?.user?.id as string,
+        type: type,
         workExperience: WorkExperience,
         session: data as Session
-        });
-      
+      });
+
       enqueueSnackbar("Work experience added successfully", { variant: 'success' });
       router.push(next_route);
     } catch (error) {

@@ -20,17 +20,19 @@ import {
 import { routes } from "@/constants/routes";
 import Link from "next/link";
 import { JobPostResponse } from "@/definition";
+import { ShadButton } from "@/components/shadcn-button";
+import MakePaymentButton from "./make-payment-button";
 
 
 
-export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: { unhired_jobposts: JobPostResponse[], hired_jobposts: JobPostResponse[] }  ) {
+export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: { unhired_jobposts: JobPostResponse[], hired_jobposts: JobPostResponse[] }) {
 
-  const [jobPosts] = useState<Record<string, JobPostResponse[]>>({unhired: unhired_jobposts, hired: hired_jobposts});
+  const [jobPosts] = useState<Record<string, JobPostResponse[]>>({ unhired: unhired_jobposts, hired: hired_jobposts });
 
   const [activeTab, setActiveTab] = useState<"unhired" | "hired">("unhired");
   const [sortOrder, setSortOrder] = useState("newest");
 
- 
+
 
   const filteredAndSortedJobs = useMemo(() => {
     return jobPosts[activeTab]
@@ -46,6 +48,8 @@ export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: {
         }
       });
   }, [activeTab, sortOrder]);
+
+
 
   return (
     <div className="min-h-screen">
@@ -73,7 +77,7 @@ export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: {
           </button>
         </div>
 
-        <div className="p-4">
+        <div className="p-4 capitalize">
           <div className="mb-4 flex justify-between">
             <h1 className="font-bold md:text-2xl">My Posted Job List</h1>
 
@@ -104,7 +108,7 @@ export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: {
                 <TableRow key={job._id}>
                   <TableCell>{job.company_name}</TableCell>
                   <TableCell>
-                    <Link className="underline" href={`${routes.RECRUITMENT_JOBS +'/details'}/${job._id}`}>
+                    <Link className="underline" href={`${routes.RECRUITMENT_JOBS + '/details'}/${job._id}`}>
                       {job.candidate_title}
                     </Link>
                   </TableCell>
@@ -115,19 +119,21 @@ export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: {
                     {new Date(job.end_date).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs font-semibold ${
-                        job.status === "PAY"
-                          ? "bg-green-500 text-white"
-                          : job.status === "PENDING"
-                            ? "bg-yellow-500 text-white"
-                            : job.status === "HIRED"
-                              ? "bg-blue-500 text-white"
-                              : "bg-red-500 text-white"
-                      }`}
+                    {job.status.toUpperCase() !== 'PAY' && <ShadButton
+                      className={`w-full px-5 py-1 text-lgfont-semibold uppercase ${job.status === "PAY"
+                        ? "bg-green-500 text-white"
+                        : job.status.toUpperCase() === "PENDING"
+                          ? "bg-primary-500 text-white"
+                          : job.status.toUpperCase() === "DENIED"
+                            ? "bg-red-500 text-white"
+                            : "bg-primary-500 text-white"
+                        }`}
                     >
-                      {job.status}
-                    </span>
+                      {job.status.toUpperCase()}
+                    </ShadButton>}
+                    {job.status.toUpperCase() === 'PAY' &&
+                      <MakePaymentButton salary={job.min_salary} status={job.status} />
+                    }
                   </TableCell>
                 </TableRow>
               ))}

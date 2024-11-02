@@ -4,15 +4,14 @@ import { getUserSession } from "@/lib/auth";
 import resumeApi from "@/api/local-resume";
 import { UserResumeResponse } from "@/definition";
 
- async function getResume() {
+async function getResume() {
   const session = await getUserSession();
   if (!session || !session.user || !('id' in session.user)) {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
-    console.log(data);
-    
+    const { data }: { data: UserResumeResponse } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
+
     return data.coverletter;
   } catch (error) {
 
@@ -26,10 +25,10 @@ export const metadata = {
   description: 'Add or edit your cover letter'
 };
 
-async   function CoverLetter() {
+async function CoverLetter() {
   const cover_letter = await getResume();
   return (
-      <CoverLetterClient type="local" cover_letter={cover_letter} next_route={routes.RECRUITMENT_OTHERS} />
+    <CoverLetterClient type="local" cover_letter={cover_letter} next_route={routes.RECRUITMENT_OTHERS} />
   );
 }
 

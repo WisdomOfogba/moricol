@@ -2,7 +2,7 @@
 import { useState } from "react";
 import SearchAndFilter from "./jobs/search-filter";
 import JobListings from "./jobs/jobs-listing";
-import { Filters } from "./jobs/all-jobs-client";
+import { FilterValues } from "@/definition";
 import { JobPostResponse } from "@/definition";
 
 
@@ -13,84 +13,55 @@ export interface Job {
   company: string;
   location: string;
   postedDate: string;
-  jobType: "Full Time" | "Part Time";
-  jobLevel: "Senior Level" | "Junior Level";
+  job_type: "fulltime" | "parttime" | "contract";
+  job_level: "senior" | "junior";
   logo: string;
   starred: boolean;
 }
 
-const jobs: Job[] = [
-  {
-    id: 1,
-    title: "Professional Nurse",
-    company: "Company A",
-    location: "Abuja, Nigeria",
-    postedDate: "2 days ago",
-    jobType: "Full Time",
-    jobLevel: "Senior Level",
-    logo: "https://api.dicebear.com/6.x/initials/svg?seed=CompanyA",
-    starred: true,
-  },
-  {
-    id: 2,
-    title: "Professional Nurse",
-    company: "Company B",
-    location: "Abuja, Nigeria",
-    postedDate: "2 days ago",
-    jobType: "Part Time",
-    jobLevel: "Junior Level",
-    logo: "https://api.dicebear.com/6.x/initials/svg?seed=CompanyB",
-    starred: true,
-  },
-  // Add more job listings as needed
-];
 
-export default function SavedJobsClient({ savedPosts }: { savedPosts: JobPostResponse[] }) {
-    console.log(savedPosts);
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState<Filters>({
-    jobType: [],
-    jobLevel: [],
-    salaryRange: [],
-  });
-  const [jobList, setJobList] = useState(jobs);
 
-  const toggleFilter = (category: keyof Filters, value: string) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [category]: prevFilters[category].includes(value)
-        ? prevFilters[category].filter((item) => item !== value)
-        : [...prevFilters[category], value],
-    }));
+export default function SavedJobsClient({ savedPosts }: { savedPosts: { jobpostid: JobPostResponse }[] }) {
+
+  const [jobList, setJobList] = useState(savedPosts);
+
+
+
+  const filterApplications = (filters: FilterValues) => {
+
+    if (filters.job_types.length === 0 &&
+      filters.job_level.length === 0 &&
+      filters.job_titles.length === 0 &&
+      filters.state === '' &&
+      filters.max_salaries.length === 0 &&
+      filters.min_salaries.length === 0) {
+      setJobList(savedPosts);
+      return;
+    }
+
+    const filteredList = savedPosts.filter(({ jobpostid: job }) => {
+      return (
+        filters.job_types.includes(job.job_type as never) ||
+        filters.job_level.includes(job.job_level as never) ||
+        filters.job_titles.includes(job.candidate_title as never) ||
+        filters.state.includes(job.state as never) ||
+        filters.max_salaries.includes(job.max_salary as never) ||
+        filters.min_salaries.includes(job.min_salary as never)
+      );
+    });
+    setJobList(filteredList);
   };
 
-  const toggleStar = (id: number) => {
-    setJobList((prevJobs) =>
-      prevJobs.map((job) =>
-        job.id === id ? { ...job, starred: !job.starred } : job,
-      ),
-    );
-  };
-
-  const filteredJobs = jobList.filter((job) => {
-    return (
-      (filters.jobType.length === 0 || filters.jobType.includes(job.jobType)) &&
-      (filters.jobLevel.length === 0 || filters.jobLevel.includes(job.jobLevel))
-    );
-  });
 
   return (
     <div className="flex min-h-screen">
       {/* Main Content */}
       <div className="flex-1">
         <SearchAndFilter
-          filters={filters}
-          showFilters={showFilters}
-          toggleFilter={toggleFilter}
-          setShowFilters={setShowFilters}
+          handleFilterJobs={filterApplications}
         />
 
-        <JobListings jobs={filteredJobs} toggleStar={toggleStar} />
+        <JobListings malformedJobs={jobList} />
       </div>
     </div>
   );

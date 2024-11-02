@@ -4,6 +4,9 @@ import { getUserSession } from "@/lib/auth";
 import jobsApi from "@/api/jobs";
 import { JobPostResponse } from "@/definition";
 
+
+export const revalidate = 10
+
 export const metadata = {
   title: "My Posted Jobs | Moricol",
   description: "Jobs you have posted on Moricol",
@@ -15,8 +18,8 @@ async function getJobPosts() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const { data: unhired_jobposts } : { data: JobPostResponse[] } = await jobsApi.myJobPost(session.user.id as string, false, session);
-    const { data: hired_jobposts } : { data: JobPostResponse[] } = await jobsApi.myJobPost(session.user.id as string, true, session);
+    const { data: unhired_jobposts }: { data: JobPostResponse[] } = await jobsApi.myJobPost(session.user.id as string, false, session);
+    const { data: hired_jobposts }: { data: JobPostResponse[] } = await jobsApi.myJobPost(session.user.id as string, true, session);
 
     return { unhired_jobposts, hired_jobposts };
   } catch (error) {
@@ -26,7 +29,6 @@ async function getJobPosts() {
 
 const JobsPosted = async () => {
   const jobposts = await getJobPosts();
-  
 
   return <JobsPostedClient unhired_jobposts={jobposts.unhired_jobposts} hired_jobposts={jobposts.hired_jobposts} />;
 }

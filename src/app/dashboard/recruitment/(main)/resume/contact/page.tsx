@@ -11,8 +11,8 @@ async function getResume() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
-    
+    const { data }: { data: UserResumeResponse } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
+
     return data.contact_details;
   } catch (error) {
 

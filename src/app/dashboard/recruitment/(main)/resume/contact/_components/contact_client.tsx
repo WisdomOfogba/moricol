@@ -3,7 +3,7 @@
 import { routes } from "@/constants/routes";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/input";
-import { ResumeType, UserResumeResponse } from "@/definition";
+import { UserResumeResponse } from "@/definition";
 import ContentLayout from "@/app/dashboard/recruitment/_components/content-layout";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -13,9 +13,9 @@ import { Plus, Trash2 } from "lucide-react";
 import { ShadButton } from "@/components/shadcn-button";
 import resumeApi from "@/api/local-resume";
 import { Session } from "next-auth";
+import { ResumeType } from "@/definition";
 
-
-export default function ContactClient({ type, next_route, contact }: { type: ResumeType, next_route: string, contact: UserResumeResponse['contact_details'] }) {
+export default function ContactClient({ next_route, contact, type }: { type: ResumeType, next_route: string, contact: UserResumeResponse['contact_details'] }) {
   const router = useRouter();
   const snackbar = useSnackbar();
   const { data: session } = useSession();
@@ -58,13 +58,13 @@ export default function ContactClient({ type, next_route, contact }: { type: Res
     }
 
     try {
-        await resumeApi.updateContactDetails({
-          userId: session?.user.id as string,
-          type: 'local',
+      await resumeApi.updateContactDetails({
+        userId: session?.user.id as string,
+        type,
         contactDetails: contactState,
         session: session as Session
-        });
-      
+      });
+
       snackbar.enqueueSnackbar('Contact details updated successfully', { variant: 'success' });
       setIsLoading(false);
       router.push(next_route);

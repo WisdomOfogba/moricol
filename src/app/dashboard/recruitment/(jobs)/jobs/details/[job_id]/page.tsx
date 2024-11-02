@@ -6,6 +6,7 @@ import Link from "next/link";
 import SaveJobButton from "../../../_component/save-job-button";
 
 
+export const revalidate = 10;
 
 
 export const metadata = {
@@ -19,7 +20,7 @@ async function getJobPost(job_id: string) {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const { data: jobpost } : { data: JobPostResponse } = await jobsApi.retrieveSingleJobPost(session.user.id as string, job_id, session);
+    const { data: jobpost }: { data: JobPostResponse } = await jobsApi.retrieveSingleJobPost(session.user.id as string, job_id, session);
 
     return jobpost;
   } catch (error) {
@@ -29,6 +30,9 @@ async function getJobPost(job_id: string) {
 
 export default async function JobDetails({ params }: { params: { job_id: string } }) {
   const jobpost = await getJobPost(params.job_id);
+  const session = await getUserSession();
+  const postIsMine = jobpost.userid === session?.user?.id;
+
 
   return (
     <>
@@ -45,13 +49,19 @@ export default async function JobDetails({ params }: { params: { job_id: string 
                 </p>
               </div>
               <div className="mt-4 flex items-center md:mt-0">
-                <SaveJobButton job_id={jobpost._id} />  
-                <Link
+                {!postIsMine && <SaveJobButton job_id={jobpost._id} />}
+                {!postIsMine && <Link
                   href={routes.RECRUITMENT_JOBS + "/apply/" + jobpost._id}
                   className="rounded-lg bg-yellow-500 px-6 py-2 text-white transition duration-300 hover:bg-yellow-600"
                 >
                   Apply Now
-                </Link>
+                </Link>}
+                {postIsMine && <Link
+                  href={routes.RECRUITMENT_EMPLOYER + '?job=' + jobpost._id}
+                  className="rounded-lg bg-yellow-500 px-6 py-2 text-white transition duration-300 hover:bg-yellow-600"
+                >
+                  Edit
+                </Link>}
               </div>
             </div>
 
@@ -86,7 +96,7 @@ export default async function JobDetails({ params }: { params: { job_id: string 
 
           <div className="rounded-lg border-t bg-white p-6">
             <h2 className="mb-4 text-xl font-semibold">Description</h2>
-            <p className="text-gray-700">{jobpost.description}</p>
+            <p className="text-gray-700 break-all">{jobpost.description}</p>
           </div>
 
           <div className="mb-8 rounded-lg border-t bg-white p-6">
@@ -96,7 +106,7 @@ export default async function JobDetails({ params }: { params: { job_id: string 
                 <li key={index}>{requirement}</li>
               ))}
             </ul> */}
-            <p className="text-gray-700">{jobpost.requirement}</p>
+            <p className="text-gray-700 break-all">{jobpost.requirement}</p>
           </div>
         </div>
       </div>

@@ -10,16 +10,17 @@ export const metadata = {
 };
 
 
+
 async function getResume() {
   const session = await getUserSession();
   if (!session || !session.user || !('id' in session.user)) {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data: local} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
-    const {data: foreign} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
-    
-    return {local, foreign}
+    const { data: local }: { data: UserResumeResponse } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'local' });
+    const { data: foreign }: { data: UserResumeResponse } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
+
+    return { local, foreign }
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }

@@ -2,6 +2,8 @@ import React from "react";
 import JobApplicationsClient from "../../_component/job-applications-client";
 import { getUserSession } from "@/lib/auth";
 import jobsApi from "@/api/jobs";
+export const revalidate = 10;
+
 
 export const metadata = {
   title: "Job Applications | Moricol",
@@ -14,8 +16,8 @@ async function getJobApplications() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const { data: applications } = await jobsApi.retrieveMyJobApplication(    session.user.id as string, session);
-    
+    const { data: applications } = await jobsApi.retrieveMyJobApplication(session.user.id as string, session);
+
     return applications;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));

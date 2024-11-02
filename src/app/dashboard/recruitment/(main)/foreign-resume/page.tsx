@@ -5,6 +5,7 @@ import { getUserSession } from "@/lib/auth";
 import { UserResumeResponse } from "@/definition";
 import resumeApi from "@/api/local-resume";
 
+
 // import FPersonalInformation from "../../_components/f-personal-info";
 
 // function ForeignResume() {
@@ -18,10 +19,10 @@ async function getForeignResume() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data} : {data: UserResumeResponse} = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
-    
+    const { data }: { data: UserResumeResponse } = await resumeApi.retrieveResume({ userId: session.user.id as string, type: 'foreign' });
+
     return data?.bio ?? null
-  } catch (error) {    
+  } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }

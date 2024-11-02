@@ -169,3 +169,14 @@ export interface JobPostResponse {
   createdAt: string;
   __v: number;
 }
+
+
+export type FilterValues = {
+  job_titles: string[];
+  job_types: ("fulltime" | "parttime" | "contract")[];
+  max_salaries: number[];
+  min_salaries: number[];
+  job_level: string[];
+  state: string;
+  [key: string]: string[] | number[] | string;
+};

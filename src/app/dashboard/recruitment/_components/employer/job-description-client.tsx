@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import { Textarea } from "@/components/textarea";
-import { Input } from "@/components/input";
 import ContentLayout from "../content-layout";
 import { useSnackbar } from "notistack";
 import { CreateJobParams } from "@/api/jobs";
@@ -19,15 +17,14 @@ export default function JobRoleDescriptionForm({ goBack, nextStep, setFormData, 
   const { enqueueSnackbar } = useSnackbar();
 
   const isValid = () => {
-    console.log(formData);
-      const validations = [
+    const validations = [
       formData.description.length > 70,
       formData.requirement.length > 70
     ];
 
     const allValid = validations.every(Boolean);
 
- if (!allValid) {
+    if (!allValid) {
       const invalidFields = [
         !validations[0] && "Description",
         !validations[1] && "Requirement",
@@ -91,7 +88,7 @@ export default function JobRoleDescriptionForm({ goBack, nextStep, setFormData, 
               name="requirement"
               onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
             />
-          
+
           </div>
         </div>
       </form>

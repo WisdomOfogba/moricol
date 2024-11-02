@@ -8,7 +8,7 @@ import GoBackButton from "../go-back-button";
 import { useSnackbar } from "notistack";
 import { routes } from "@/constants/routes";
 
-function CreateJobSuccessModal({ goBack, createFunction }: { goBack: () => void, createFunction: () => Promise<void> }) {
+function CreateJobSuccessModal({ goBack, createFunction, isEdit }: { goBack: () => void, createFunction: () => Promise<void>, isEdit: string | null }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -30,13 +30,15 @@ function CreateJobSuccessModal({ goBack, createFunction }: { goBack: () => void,
     <>
       <div className="flex items-center gap-4 w-full">
 
-       <Button
-        type="button"
-        variant="primary"
-        onClick={handleCreateJob}
-        disabled={isLoading}
+        <Button
+          type="button"
+          variant="primary"
+          onClick={handleCreateJob}
+          disabled={isLoading}
         >
-          {isLoading ? 'CREATING...' : 'CREATE JOB'}
+          {!isLoading && (isEdit ? 'UPDATE JOB' : 'CREATE JOB')}
+          {isLoading && (isEdit ? 'UPDATING ...' : 'CREATING ...')}
+
         </Button>
         {goBack && <GoBackButton onClick={goBack} />}
       </div>
@@ -54,12 +56,12 @@ function CreateJobSuccessModal({ goBack, createFunction }: { goBack: () => void,
               />
             </div>
             <h3 className="mb-8 max-w-[635px] text-center text-2xl font-medium">
-              JOB CREATED
+              {isEdit ? 'JOB UPDATED' : 'JOB CREATED'}
             </h3>
 
             <div className="mb-7 space-y-3.5 text-center font-medium text-[#667085]">
-              You have successfully added a job post for job seeker to apply
-              for.Our Teams will review your application and reach out to you
+              {isEdit ? 'You have successfully updated a job post for job seeker to apply for.' : 'You have successfully added a job post for job seeker to apply for.'}
+              Our Teams will review your application and reach out to you
               Via Email
             </div>
             <Link href={routes.RECRUITMENTDASHBOARD} className="w-full">

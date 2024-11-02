@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import CreateJobSuccessModal from "./create-job-success-modal";
 import jobsApi, { CreateJobParams } from "@/api/jobs";
 import { useSession } from "next-auth/react";
@@ -9,30 +8,33 @@ import { CLOUDINARY_PRESET, CLOUDINARY_URL } from "@/constants/config";
 interface PreviewJobClientProps {
   goBack: () => void;
   formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">;
+  job_id: string | null;
 }
 
-  const uploadToCloudinary = async (file: File) => { 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_PRESET!);
+const uploadToCloudinary = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET!);
 
-    const response = await fetch(CLOUDINARY_URL!, {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json();
-    return data.url;
-  };
+  const response = await fetch(CLOUDINARY_URL!, {
+    method: 'POST',
+    body: formData
+  });
+  const data = await response.json();
+  return data.url;
+};
 
 
-export default function PreviewJobClient({ goBack, formData }: PreviewJobClientProps) {
+export default function PreviewJobClient({ goBack, formData, job_id }: PreviewJobClientProps) {
   const { data: session } = useSession();
   const handleCreateJob = async () => {
-    const logoUrl = await uploadToCloudinary(formData.company_logo as unknown as File); 
-
-    await jobsApi.createJobPost({...formData, userid: session?.user?.id as string, session: session as Session, company_logo: logoUrl});
+    const logoUrl = await uploadToCloudinary(formData.company_logo as unknown as File);
+    if (job_id) {
+      await jobsApi.updateJobPost({ ...formData, userid: session?.user?.id as string, session: session as Session, company_logo: logoUrl, jobpostid: job_id });
+    } else {
+      await jobsApi.createJobPost({ ...formData, userid: session?.user?.id as string, session: session as Session, company_logo: logoUrl });
+    }
   }
-console.log(formData);
 
   return (
     <>
@@ -46,11 +48,7 @@ console.log(formData);
                   {formData.state} {', '} {formData.country} <span className="text-gray-400">|</span> {formData.job_type}
                 </p>
               </div>
-              <div className="mt-4 flex items-center md:mt-0">
-                <Button className="rounded-lg bg-yellow-500 px-6 py-2 text-white transition duration-300 hover:bg-yellow-600">
-                  Edit
-                </Button>
-              </div>
+
             </div>
 
             <div className="mb-8 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-4">
@@ -58,7 +56,7 @@ console.log(formData);
                 title="Experience (Years)"
                 value={formData.min_experience.toString()}
               />
-                <JobDetail title="Job Level" value={formData.job_level} />
+              <JobDetail title="Job Level" value={formData.job_level} />
               <JobDetail
                 title="Month Max Salary"
                 value={formData.max_salary.toString()}
@@ -90,12 +88,12 @@ console.log(formData);
           <div className="mb-8 rounded-lg border-t bg-white py-6 whitespace-pre-wrap">
             <h2 className="mb-4 text-xl font-semibold">Requirements</h2>
             <ul className="list-inside list-disc whitespace-pre-wrap break-words space-y-2 text-gray-700">
-                <li>{formData.requirement}</li>
+              <li>{formData.requirement}</li>
             </ul>
-          </div>        
+          </div>
 
           <div className="mt-4 flex items-center py-6 md:mt-0">
-            <CreateJobSuccessModal createFunction={handleCreateJob} goBack={goBack} />
+            <CreateJobSuccessModal isEdit={job_id} createFunction={handleCreateJob} goBack={goBack} />
           </div>
         </div>
       </div>

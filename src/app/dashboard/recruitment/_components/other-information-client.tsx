@@ -31,7 +31,7 @@ export default function OtherInformationClient({
   const [skills, setSkills] = useState<Tag[]>(others.skills.map((skill) => ({ id: Date.now(), text: skill })));
   const [languages, setLanguages] = useState<Tag[]>(others.languages.map((language) => ({ id: Date.now(), text: language })));
   const [hobbies, setHobbies] = useState<Tag[]>(others.hobby.map((hobby) => ({ id: Date.now(), text: hobby })));
-  const [noticePeriod, setNoticePeriod] = useState(others.notice_period && others.notice_period ===''  ? 'Immediately' : others.notice_period);
+  const [noticePeriod, setNoticePeriod] = useState(others.notice_period && others.notice_period === '' ? 'Immediately' : others.notice_period);
 
   const addTag = (
     section: "skills" | "languages" | "hobbies",
@@ -85,27 +85,27 @@ export default function OtherInformationClient({
 
   const handleSubmit = async () => {
     // check that at least one skill, language or hobby is added
-    if(skills.length === 0 && languages.length === 0 && hobbies.length === 0) {
+    if (skills.length === 0 && languages.length === 0 && hobbies.length === 0) {
       enqueueSnackbar("Please add at least one skill, language or hobby", {
         variant: "error",
       });
       return;
     }
-    
+
     try {
       setLoading(true);
       const userId = session?.user?.id as string;
 
-        await resumeApi.updateOthers({
-          userId: userId,
-      skills: skills.map((skill) => skill.text),
-      languages: languages.map((language) => language.text),
-      hobby: hobbies.map((hobby) => hobby.text),
-      noticePeriod: noticePeriod,
+      await resumeApi.updateOthers({
+        userId: userId,
+        skills: skills.map((skill) => skill.text),
+        languages: languages.map((language) => language.text),
+        hobby: hobbies.map((hobby) => hobby.text),
+        noticePeriod: noticePeriod,
         session: session as Session,
         type: type
-        });
-    
+      });
+
       enqueueSnackbar("Other information updated successfully", {
         variant: "success",
       });
@@ -156,7 +156,7 @@ export default function OtherInformationClient({
                 </button>
               </span>
             ))}
-            
+
             <div className="flex w-full items-center gap-2">
               <Input
                 type="text"
@@ -273,21 +273,21 @@ const AddTagButton = forwardRef<HTMLButtonElement, {
   section: "skills" | "languages" | "hobbies",
   addTag: (section: "skills" | "languages" | "hobbies", text: string) => void,
   inputRef: React.RefObject<HTMLInputElement>
-}>(({ section, addTag, inputRef }, ref) => {
+}>(({ section, addTag, inputRef }) => {
   return (
-    <Button 
-      
+    <Button
+
       type="button"
       size="fit"
       onClick={() => {
-        if(inputRef.current?.value) {
+        if (inputRef.current?.value) {
           addTag(section, inputRef.current.value)
-          inputRef.current.value = ""  
+          inputRef.current.value = ""
         }
       }}
       className="w-fit px-2 py-3 bg-green-500 hover:bg-green-600 text-white flex items-center gap-1"
     >
-      <BiPlus size={14} /> 
+      <BiPlus size={14} />
       <span className="text-xs">ADD </span>
     </Button>
   )

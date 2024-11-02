@@ -14,10 +14,10 @@ import { CreateJobParams } from "@/api/jobs";
 import { useSnackbar } from "notistack";
 
 export default function PersonalDetailsClient({ goBack, nextStep, setFormData, formData }: { goBack: () => void, nextStep: () => void, setFormData: (formData: CreateJobParams) => void, formData: CreateJobParams }) {
-  const [qualifications, setQualifications] = useState<string[]>([]);
-  const [genders, setGenders] = useState<string[]>([]);
-  const [maritalStatuses, setMaritalStatuses] = useState<string[]>([]);
-  const [religions, setReligions] = useState<string[]>([]);
+  const [qualifications, setQualifications] = useState<string[]>(formData.academic_qualification);
+  const [genders, setGenders] = useState<string[]>(formData.gender);
+  const [maritalStatuses, setMaritalStatuses] = useState<string[]>(formData.marital_status);
+  const [religions, setReligions] = useState<string[]>(formData.religion);
 
   const handleItem = (type: 'qualification' | 'gender' | 'maritalStatus' | 'religion', action: 'add' | 'remove', value: string) => {
     const stateMap: Record<string, [string[], React.Dispatch<React.SetStateAction<string[]>>, keyof CreateJobParams]> = {
@@ -74,13 +74,13 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
               Academic Qualification
             </label>
             <div className="relative">
-              <Select  onValueChange={(value) => handleItem('qualification', 'add', value)}>
-                <SelectTrigger  id="academicQualification" className="w-full">
-                  <SelectValue  placeholder="Select qualifications" />
+              <Select onValueChange={(value) => handleItem('qualification', 'add', value)}>
+                <SelectTrigger id="academicQualification" className="w-full">
+                  <SelectValue placeholder="Select qualifications" />
                 </SelectTrigger>
                 <SelectContent >
                   <SelectItem value="any">Any</SelectItem>
-                  <SelectItem  value="BSC">BSC</SelectItem>
+                  <SelectItem value="BSC">BSC</SelectItem>
                   <SelectItem value="MSC">MSC</SelectItem>
                   <SelectItem value="PHD">PHD</SelectItem>
                   <SelectItem value="HND">HND</SelectItem>
@@ -126,7 +126,7 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
               Candidate Gender
             </label>
             <Select onValueChange={(value) => handleItem('gender', 'add', value)}>
-              <SelectTrigger  id="candidateGender" className="w-full">
+              <SelectTrigger id="candidateGender" className="w-full">
                 <SelectValue placeholder="Male" />
               </SelectTrigger>
               <SelectContent>
@@ -136,23 +136,23 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
-             <div className="mt-2 flex flex-wrap gap-2">
-                {genders.map((gender) => (
-                  <Badge
-                    key={gender}
-                    variant="secondary"
-                    className="bg-yellow-100 text-yellow-800"
+            <div className="mt-2 flex flex-wrap gap-2">
+              {genders.map((gender) => (
+                <Badge
+                  key={gender}
+                  variant="secondary"
+                  className="bg-yellow-100 text-yellow-800"
+                >
+                  {gender}
+                  <button
+                    onClick={() => handleItem('gender', 'remove', gender)}
+                    className="ml-1 hover:text-yellow-900"
                   >
-                    {gender}
-                    <button
-                      onClick={() => handleItem('gender', 'remove', gender)}
-                      className="ml-1 hover:text-yellow-900"
-                    >
-                      <BiX className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
+                    <BiX className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
           </div>
           <div className="space-y-2">
             <label
@@ -173,23 +173,23 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
                 <SelectItem value="widowed">Widowed</SelectItem>
               </SelectContent>
             </Select>
-             <div className="mt-2 flex flex-wrap gap-2">
-                {maritalStatuses.map((maritalStatus) => (
-                  <Badge
-                    key={maritalStatus}
-                    variant="secondary"
-                    className="bg-yellow-100 text-yellow-800"
+            <div className="mt-2 flex flex-wrap gap-2">
+              {maritalStatuses.map((maritalStatus) => (
+                <Badge
+                  key={maritalStatus}
+                  variant="secondary"
+                  className="bg-yellow-100 text-yellow-800"
+                >
+                  {maritalStatus}
+                  <button
+                    onClick={() => handleItem('maritalStatus', 'remove', maritalStatus)}
+                    className="ml-1 hover:text-yellow-900"
                   >
-                    {maritalStatus}
-                    <button
-                      onClick={() => handleItem('maritalStatus', 'remove', maritalStatus)}
-                      className="ml-1 hover:text-yellow-900"
-                    >
-                      <BiX className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
+                    <BiX className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
           </div>
           <div className="space-y-2">
             <label
@@ -211,23 +211,23 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
-             <div className="mt-2 flex flex-wrap gap-2">
-                {religions.map((religion) => (
-                  <Badge
-                    key={religion}
-                    variant="secondary"
-                    className="bg-yellow-100 text-yellow-800"
+            <div className="mt-2 flex flex-wrap gap-2">
+              {religions.map((religion) => (
+                <Badge
+                  key={religion}
+                  variant="secondary"
+                  className="bg-yellow-100 text-yellow-800"
+                >
+                  {religion}
+                  <button
+                    onClick={() => handleItem('religion', 'remove', religion)}
+                    className="ml-1 hover:text-yellow-900"
                   >
-                    {religion}
-                    <button
-                      onClick={() => handleItem('religion', 'remove', religion)}
-                      className="ml-1 hover:text-yellow-900"
-                    >
-                      <BiX className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
+                    <BiX className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
           </div>
           <div className="space-y-2">
             <label
@@ -236,13 +236,13 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
             >
               Timeframe for Posting (From)
             </label>
-            <input 
-              type="date" 
-              id="startDate" 
-              className="w-full" 
-              value={formData.start_date} 
-              onChange={(e) => setFormData({ ...formData, start_date: e.target.value })} 
-              placeholder="DEC, 22, 2023" 
+            <input
+              type="date"
+              id="startDate"
+              className="w-full"
+              value={formData.start_date}
+              onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+              placeholder="DEC, 22, 2023"
             />
           </div>
           <div className="space-y-2">
@@ -252,13 +252,13 @@ export default function PersonalDetailsClient({ goBack, nextStep, setFormData, f
             >
               Timeframe for Posting (To)
             </label>
-            <input 
-              type="date" 
-              id="timeframeTo" 
-              className="w-full" 
-              value={formData.end_date} 
-              onChange={(e) => setFormData({ ...formData, end_date: e.target.value })} 
-              placeholder="DEC, 31, 2023" 
+            <input
+              type="date"
+              id="timeframeTo"
+              className="w-full"
+              value={formData.end_date}
+              onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+              placeholder="DEC, 31, 2023"
             />
           </div>
         </div>

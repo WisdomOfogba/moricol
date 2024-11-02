@@ -67,8 +67,8 @@ interface RetrieveAllJobPostsParams {
     state?: string;
     job_type?: string[];
     job_level?: string[];
-    min_salary?: [];
-    max_salary?: [];
+    min_salary?: number[];
+    max_salary?: number[];
     page?: number;
     moricol_job?: boolean;
     session: Session;
@@ -93,10 +93,10 @@ const endpoints = {
 
 const jobsApi = {
     createJobPost: async (params: CreateJobParams) => {
-        const axios = createClientAxios({ session: params.session });
+        const { session, ...paramsWithoutSession } = params;
+        const axios = createClientAxios({ session });
 
         try {
-            const { session, ...paramsWithoutSession } = params;
             const response = await axios.post(endpoints.createJobPost, { ...paramsWithoutSession });
             return response.data;
         } catch (error) {
@@ -106,10 +106,11 @@ const jobsApi = {
     },
 
     updateJobPost: async (params: UpdateJobPostParams) => {
-        const axios = createClientAxios({ session: params.session });
+        const { session, ...paramsWithoutSession } = params;
+        const axios = createClientAxios({ session });
 
         try {
-            const response = await axios.post(endpoints.updateJobPost, params);
+            const response = await axios.post(endpoints.updateJobPost, { ...paramsWithoutSession });
             return response.data;
         } catch (error) {
             const errorMessage = handleAxiosError(error, 'Error updating job post');
@@ -248,10 +249,10 @@ const jobsApi = {
     },
 
     retrieveAllJobPosts: async (params: RetrieveAllJobPostsParams) => {
-        const axios = createClientAxios({ session: params.session });
+        const { session, ...paramsWithoutSession } = params;
+        const axios = createClientAxios({ session });
 
         try {
-            const { session, ...paramsWithoutSession } = params;
             const response = await axios.post(endpoints.retrieveAllJobPost, { ...paramsWithoutSession });
             return response.data;
         } catch (error) {

@@ -29,20 +29,17 @@ const SetReminderModal = ({
   };
 
   const handleSetReminder = () => {
-    console.log("Reminder set for:", selectedOptions);
     onClose();
   };
 
   return (
     <div
-      className={`fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-50 transition-opacity ${
-        show ? "opacity-100" : "pointer-events-none opacity-0"
-      }`}
+      className={`fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-50 transition-opacity ${show ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
     >
       <div
-        className={`m-auto w-[90%] max-w-[600px] transform rounded-lg bg-white shadow-lg transition-transform ${
-          show ? "scale-100" : "scale-95"
-        }`}
+        className={`m-auto w-[90%] max-w-[600px] transform rounded-lg bg-white shadow-lg transition-transform ${show ? "scale-100" : "scale-95"
+          }`}
       >
         <Card className="relative w-full overflow-hidden rounded-lg bg-white">
           <button className="absolute right-2 top-2" onClick={onClose}>
