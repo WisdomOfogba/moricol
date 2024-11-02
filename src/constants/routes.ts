@@ -89,6 +89,8 @@ export const routes = {
   RECRUITMENT_CV: "/dashboard/recruitment/resume/cv",
   RECRUITMENT_PREVIEW_RESUME: "/dashboard/recruitment/resume/preview",
   RECRUITMENTRESUME: "/dashboard/recruitment/resume",
+  RECRUITMENT_RESUME_OTHER_CERTS:
+    "/dashboard/recruitment/resume/other-certs",
   RECRUITMENT_FOREIGN_EDUCATION:
     "/dashboard/recruitment/foreign-resume/education",
   RECRUITMENT_FOREIGN_BIO: "/dashboard/recruitment/foreign-resume/bio",
@@ -134,5 +136,5 @@ export const routes = {
     "/dashboard/telemedicine/practitioners/reviews",
   TELEMEDICINE_PRACTITIONERS_FAVORITES:
     "/dashboard/telemedicine/practitioners/favorites",
-     TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization'
+  TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization'
 };

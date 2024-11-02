@@ -37,7 +37,6 @@ export default function Home() {
     setStep(step + 1);
   };
 
-  console.log(step);
 
   return (
     <main>

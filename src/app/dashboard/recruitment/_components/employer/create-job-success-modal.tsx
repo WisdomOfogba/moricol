@@ -4,18 +4,44 @@ import ModalLayout from "@/components/layouts/modal-layout";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import GoBackButton from "../go-back-button";
+import { useSnackbar } from "notistack";
+import { routes } from "@/constants/routes";
 
-function CreateJobSuccessModal() {
+function CreateJobSuccessModal({ goBack, createFunction, isEdit }: { goBack: () => void, createFunction: () => Promise<void>, isEdit: string | null }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
+
+  const handleCreateJob = async () => {
+    try {
+      setIsLoading(true);
+      await createFunction();
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('Error creating job', { variant: 'error' });
+    } finally {
+      setIsLoading(false);
+    }
+  }
   return (
     <>
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        className="rounded-lg bg-yellow-500 px-6 py-2 text-white transition duration-300 hover:bg-yellow-600"
-      >
-        CREATE JOB
-      </Button>
+      <div className="flex items-center gap-4 w-full">
+
+        <Button
+          type="button"
+          variant="primary"
+          onClick={handleCreateJob}
+          disabled={isLoading}
+        >
+          {!isLoading && (isEdit ? 'UPDATE JOB' : 'CREATE JOB')}
+          {isLoading && (isEdit ? 'UPDATING ...' : 'CREATING ...')}
+
+        </Button>
+        {goBack && <GoBackButton onClick={goBack} />}
+      </div>
 
       {isModalOpen && (
         <ModalLayout>
@@ -30,16 +56,17 @@ function CreateJobSuccessModal() {
               />
             </div>
             <h3 className="mb-8 max-w-[635px] text-center text-2xl font-medium">
-              JOB CREATED
+              {isEdit ? 'JOB UPDATED' : 'JOB CREATED'}
             </h3>
 
             <div className="mb-7 space-y-3.5 text-center font-medium text-[#667085]">
-              You have successfully added a job post for job seeker to apply
-              for.Our Teams will review your application and reach out to you
+              {isEdit ? 'You have successfully updated a job post for job seeker to apply for.' : 'You have successfully added a job post for job seeker to apply for.'}
+              Our Teams will review your application and reach out to you
               Via Email
             </div>
-
-            <Button onClick={() => setIsModalOpen(false)}>OKAY</Button>
+            <Link href={routes.RECRUITMENTDASHBOARD} className="w-full">
+              <Button>OKAY</Button>
+            </Link>
             <Link href="#" className="primary-color pt-5">
               Set a Notification for when they apply
             </Link>

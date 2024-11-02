@@ -1,74 +1,134 @@
 import { Input } from "@/components/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/select";
-import { BiFilter, BiSearch } from "react-icons/bi";
+
+import { BiFilter, BiLocationPlus } from "react-icons/bi";
 import FilterDrawer from "./filter-drawer";
-import { Filters } from "./all-jobs-client";
+import Link from "next/link";
+import { routes } from "@/constants/routes";
+import jobsApi from "@/api/jobs";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { FilterValues } from "@/definition";
 
-interface SearchAndFilterProps {
-  setShowFilters: (t: boolean) => void;
-  toggleFilter: (category: keyof Filters, value: string) => void;
-  showFilters: boolean;
-  filters: Filters;
-}
 
-const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
-  setShowFilters,
-  toggleFilter,
-  filters,
-  showFilters,
-}) => {
+const SearchAndFilter = ({ handleFilterJobs }: { handleFilterJobs: (filterSelected: FilterValues) => void }) => {
+
+  const { data: session } = useSession();
+  const [filterValues, setFilterValues] = useState<FilterValues | null>(null);
+  const [loadingFilterValues, setLoadingFilterValues] = useState(false);
+
+
+
+  const getFilterValues = async () => {
+    try {
+      setLoadingFilterValues(true);
+      const { data: response } = await jobsApi.jobPostFilterData({ session: session as Session });
+      setFilterValues(response as FilterValues);
+    } catch (error) {
+      console.error("Error fetching filter values:", error);
+    } finally {
+      setLoadingFilterValues(false);
+    }
+  };
+
+  useEffect(() => {
+    getFilterValues();
+  }, [getFilterValues]);
+
+  const [showFilterPanel, setShowFilterPanel] = useState(false);
+
+  const [filterParams, setFilterParams] = useState<FilterValues>({
+    job_types: [],
+    job_titles: [],
+    min_salaries: [],
+    max_salaries: [],
+    state: '',
+    job_level: []
+  });
+
+  const updateSelectedFilters = (category: keyof FilterValues, value: number | string) => {
+
+    const isNewValue = !filterParams[category].includes(value as never);
+    if (category === 'state') {
+      setFilterParams((prevFilters) => ({
+        ...prevFilters,
+        state: value as string
+      }));
+    }
+
+    if (isNewValue && category !== 'state') {
+      const categoryArray = filterParams[category] as string[] | number[];
+      categoryArray.push(value as never);
+      setFilterParams((prevFilters) => ({
+        ...prevFilters,
+        [category]: categoryArray
+      }));
+    }
+
+    if (!isNewValue && category !== 'state') {
+      const categoryArray = filterParams[category] as string[] | number[];
+      const filteredArray = categoryArray.filter(item => item !== value);
+      setFilterParams((prevFilters) => ({
+        ...prevFilters,
+        [category]: filteredArray as string[] | number[]
+      }));
+    }
+
+  };
+
+  const handleSubmitFilters = () => {
+    return handleFilterJobs(filterParams);
+  }
+
+
   return (
     <div className="mb-4 flex flex-col space-y-2 rounded bg-white p-2 shadow lg:mb-6 lg:flex-row lg:space-x-4 lg:space-y-0">
-      <div className="flex flex-1 items-center rounded-lg">
+      {/* <div className="flex flex-1 items-center rounded-lg">
         <div className="relative flex-1">
           <BiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <Input
             type="text"
             placeholder="Job Title"
-            className="w-full rounded-lg py-2 pl-10 pr-3 focus:outline-none"
+            className="w-full rounded-lg py-2 pl-10 pr-3  focus:pl-10 focus:outline-none"
           />
         </div>
-      </div>
-      <div className="flex flex-1 items-center rounded-lg">
-        <Select>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Location" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="abuja">Abuja, Nigeria</SelectItem>
-            <SelectItem value="lagos">Lagos, Nigeria</SelectItem>
-            <SelectItem value="port-harcourt">
-              Port Harcourt, Nigeria
-            </SelectItem>
-          </SelectContent>
-        </Select>
+      </div> */}
+      <div className="flex flex-1 relative items-center rounded-lg">
+        <BiLocationPlus className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Input
+          type="text"
+          placeholder="State/Location"
+          className="w-full rounded-lg py-2 pl-10 pr-3  focus:pl-10 focus:outline-none"
+          onChange={(e) => updateSelectedFilters("state", e.target.value)}
+        />
         <button
           className="ml-2 flex h-[36px] items-center justify-center rounded p-4 text-primary-500 transition duration-300 hover:bg-gray-200"
-          onClick={() => setShowFilters(true)}
+          onClick={() => setShowFilterPanel(true)}
         >
-          <BiFilter size={24} />
+          <BiFilter size={25} />
         </button>
       </div>
 
       <div className="flex space-x-2">
-        <button className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 text-white transition duration-300 hover:bg-yellow-600 md:flex-none">
-          FOREIGN JOB ROLE
-        </button>
-        <button className="flex-1 rounded-lg bg-yellow-500 px-4 py-3 text-white transition duration-300 hover:bg-yellow-600 md:flex-none">
-          POST A JOB
-        </button>
+        <Link href={routes.RECRUITMENT_PREVIEW_FOREIGN_RESUME} className="flex-1 w-full">
+          <button className="w-full rounded-lg bg-yellow-500 px-4 py-3 text-white transition duration-300 hover:bg-yellow-600 md:flex-none">
+            FOREIGN JOB ROLE
+          </button>
+        </Link>
+        <Link href={routes.RECRUITMENT_EMPLOYER} className="flex-1 w-full">
+          <button className="w-full rounded-lg bg-yellow-500 px-4 py-3 text-white transition duration-300 hover:bg-yellow-600 md:flex-none">
+            POST A JOB
+          </button>
+        </Link>
       </div>
       <FilterDrawer
-        showFilters={showFilters}
-        setShowFilters={setShowFilters}
-        filters={filters}
-        toggleFilter={toggleFilter}
+        showFilterPanel={showFilterPanel}
+        setShowFilterPanel={setShowFilterPanel}
+        filterValues={filterValues}
+        filtersSelected={filterParams}
+        loadingFilterValues={loadingFilterValues}
+        updateSelectedFilters={updateSelectedFilters}
+        handleSubmitFilters={handleSubmitFilters}
       />
     </div>
   );

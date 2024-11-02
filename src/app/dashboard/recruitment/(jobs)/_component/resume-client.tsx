@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { ResumeView } from "../../(main)/preview/page";
+import { UserResumeResponse } from "@/definition";
+import ResumeView from "../../_components/resume-view";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 interface CollapsibleSectionProps {
   title: string;
   number: number;
   children: React.ReactNode;
 }
+
 
 function CollapsibleSection({
   title,
@@ -48,15 +52,18 @@ function CollapsibleSection({
   );
 }
 
-export default function ResumeClient() {
+export default function ResumeClient( {resume}: {resume: {local: UserResumeResponse, foreign: UserResumeResponse}} ) {
+  const {data} = useSession();
   return (
-    <div className="animate-fadeIn mx-auto max-w-4xl rounded-xl bg-white p-4">
+    <div className="animate-fadeIn mx-auto max-w-4xl rounded-xl bg-white py-4">
       <CollapsibleSection title="Resume (Locally)" number={1}>
-        <ResumeView />
+      
+        <ResumeView resume={resume.local} session={data as Session} />  
       </CollapsibleSection>
 
       <CollapsibleSection title="Resume (Foreign)" number={2}>
-        <ResumeView />
+      
+      <ResumeView resume={resume.foreign} session={data as Session} />
       </CollapsibleSection>
     </div>
   );

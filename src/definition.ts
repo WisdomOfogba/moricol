@@ -76,7 +76,7 @@ export type LoginResponse = {
 
 export type UserResumeResponse = {
   reference: { name: string; email: string; phone: string };
-  contact_details: { name: string; phone: string; socials: string[] };
+  contact_details: { name: string; phone: string; socials: { option: string; optionUrl: string }[] };
   upload: { cv: string; picture: string };
   others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
   job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
@@ -94,9 +94,10 @@ export type UserResumeResponse = {
     leaving_reason: string;
     inview: boolean;
   }[];
-  education: any[];
-  certification: any[];
+  education: Education[];
+  certification: Certification[];
   createdAt: string;
+  coverletter: string;
   __v: number;
 }
 
@@ -110,4 +111,72 @@ export type Education = {
   course_description: string;
   what_you_learnt: string;
   inview: boolean;
+};
+
+
+export type ResumeType = 'local' | 'foreign'
+
+
+export type Certification = {
+  _id: string;
+  training_type: string;
+  course_learnt: string;
+  start_date: string;
+  end_date: string;
+  course_description: string;
+  grade: string;
+  inview: boolean;
+};
+
+
+
+export interface JobPostResponse {
+  _id: string;
+  candidate_title: string;
+  job_type: string;
+  job_level: string;
+  working_condition: string;
+  state: string;
+  max_salary: number;
+  min_salary: number;
+  min_experience: number;
+  slot: number;
+  country: string;
+  description: string;
+  gender: string[];
+  marital_status: string[];
+  religion: string[];
+  start_date: string;
+  end_date: string;
+  company_logo: string;
+  company_name: string;
+  company_email: string;
+  company_phone: string;
+  company_address: string;
+  company_bio: string;
+  status: string;
+  date_approved: string;
+  job_acrhive: boolean;
+  job_paid: boolean;
+  job_publish: boolean;
+  job_approved: boolean;
+  moricol_job: boolean;
+  price: number;
+  applicants: number;
+  academic_qualification: string[];
+  requirement: string;
+  userid: string;
+  createdAt: string;
+  __v: number;
+}
+
+
+export type FilterValues = {
+  job_titles: string[];
+  job_types: ("fulltime" | "parttime" | "contract")[];
+  max_salaries: number[];
+  min_salaries: number[];
+  job_level: string[];
+  state: string;
+  [key: string]: string[] | number[] | string;
 };

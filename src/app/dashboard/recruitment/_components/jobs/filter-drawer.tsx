@@ -1,98 +1,104 @@
 import { Label } from "@radix-ui/react-label";
-import { Filters } from "./all-jobs-client";
 import { BiX } from "react-icons/bi";
+import { FilterValues } from "@/definition";
+import { Loader2 } from "lucide-react";
 
 interface FilterDrawerProps {
-  showFilters: boolean;
-  setShowFilters: (show: boolean) => void;
-  filters: Filters;
-  toggleFilter: (category: keyof Filters, value: string) => void;
+  showFilterPanel: boolean;
+  setShowFilterPanel: (show: boolean) => void;
+  filterValues: FilterValues | null;
+  loadingFilterValues: boolean;
+  filtersSelected: FilterValues;
+  updateSelectedFilters: (category: keyof FilterValues, value: number | string) => void;
+  handleSubmitFilters: () => void;
 }
 
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
-  showFilters,
-  setShowFilters,
-  filters,
-  toggleFilter,
+  showFilterPanel,
+  setShowFilterPanel,
+  filterValues,
+  loadingFilterValues,
+  filtersSelected,
+  updateSelectedFilters,
+  handleSubmitFilters
 }) => {
-  if (!showFilters) return null;
+  if (!showFilterPanel) return null;
+
+
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50">
       <div className="absolute bottom-0 right-0 top-0 w-full overflow-y-auto bg-white p-4 md:w-80">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Filters</h3>
-          <button onClick={() => setShowFilters(false)}>
+          <button onClick={() => setShowFilterPanel(false)}>
             <BiX size={24} />
           </button>
         </div>
-        <div className="mb-4">
-          <Label className="mb-2 font-medium">Job Type</Label>
-          {[
-            "Full Time Jobs",
-            "Part Time Jobs",
-            "Remote Jobs",
-            "Internship Jobs",
-            "Contract",
-            "Training Jobs",
-          ].map((type) => (
+        {loadingFilterValues && <div className="flex justify-center items-center h-[50vh]"><Loader2 className="animate-spin" /></div>}
+        {!loadingFilterValues && filterValues && <div className="mb-4">
+          <Label className="mb-2 font-medium">Job Types</Label>
+          {filterValues?.job_types.map((type: string) => (
             <label key={type} className="mb-2 flex items-center">
               <input
                 type="checkbox"
-                className="mr-2"
-                checked={filters.jobType.includes(type)}
-                onChange={() => toggleFilter("jobType", type)}
+                className="mr-2 capitalize"
+                checked={filtersSelected.job_types.includes(type as "fulltime" | "parttime" | "contract")}
+                onChange={() => updateSelectedFilters("job_types", type)}
               />
               {type}
             </label>
           ))}
-        </div>
-        <div className="mb-4">
-          <Label className="mb-2 font-medium">Job Level</Label>
-          {[
-            "Low Level Manager",
-            "Mid Level Manager",
-            "Top Level Manager",
-            "Senior Level",
-            "Directors",
-            "VIP or Above",
-          ].map((level) => (
-            <label key={level} className="mb-2 flex items-center">
+        </div>}
+        {!loadingFilterValues && filterValues && <div className="mb-4">
+          <Label className="mb-2 font-medium">Job Titles</Label>
+          {filterValues?.job_titles.map((title: string) => (
+            <label key={title} className="mb-2 flex items-center">
               <input
                 type="checkbox"
-                className="mr-2"
-                checked={filters.jobLevel.includes(level)}
-                onChange={() => toggleFilter("jobLevel", level)}
+                className="mr-2 capitalize"
+                checked={filtersSelected.job_titles.includes(title)}
+                onChange={() => updateSelectedFilters("job_titles", title)}
               />
-              {level}
+              {title}
             </label>
           ))}
-        </div>
-        <div>
-          <Label className="mb-2 font-medium">Salary Range</Label>
-          {[
-            "N10k - N50k",
-            "N100k - N200k",
-            "N200k - N500k",
-            "N500k - N1million",
-            "N1million - N2million",
-            "N2million and above",
-          ].map((range) => (
+        </div>}
+        {!loadingFilterValues && filterValues && <div>
+          <Label className="mb-2 font-medium">Min Salary</Label>
+          {filterValues?.min_salaries.map((range: number) => (
             <label key={range} className="mb-2 flex items-center">
               <input
                 type="checkbox"
                 className="mr-2"
-                checked={filters.salaryRange.includes(range)}
-                onChange={() => toggleFilter("salaryRange", range)}
+                checked={filtersSelected.min_salaries.includes(range)}
+                onChange={() => updateSelectedFilters("min_salaries", range)}
               />
               {range}
             </label>
           ))}
-        </div>
+        </div>}
+        {!loadingFilterValues && filterValues && <div>
+          <Label className="mb-2 font-medium">Max Salary</Label>
+          {filterValues?.max_salaries.map((range: number) => (
+            <label key={range} className="mb-2 flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={filtersSelected.max_salaries.includes(range)}
+                onChange={() => updateSelectedFilters("max_salaries", range)}
+              />
+              {range}
+            </label>
+          ))}
+        </div>}
         <div className="mt-4 flex justify-between">
           <button
             className="rounded-lg bg-yellow-500 px-4 py-2 text-white transition duration-300 hover:bg-yellow-600"
-            onClick={() => setShowFilters(false)}
+            onClick={() => {
+              setShowFilterPanel(false);
+              handleSubmitFilters();
+            }}
           >
             Done
           </button>

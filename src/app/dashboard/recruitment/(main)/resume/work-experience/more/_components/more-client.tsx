@@ -1,11 +1,15 @@
 "use client";
 import ContentLayout from "@/app/dashboard/recruitment/_components/content-layout";
-import { UserResumeResponse } from "@/definition";
+import { ResumeType, UserResumeResponse } from "@/definition";
 import Link from "next/link";
 import { useState } from "react";
 import { BiBriefcase, BiChevronRight } from "react-icons/bi";
 import { BsFillPlusSquareFill, BsTrash2 } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
+import resumeApi from "@/api/local-resume";
+
 
 type WorkExperience = UserResumeResponse["work_experience"][number];
 
@@ -13,18 +17,43 @@ export default function MoreWorkExperienceClient({
   next_route,
   more_route,
   work_experience,
+  type
 }: {
   next_route: string;
   more_route: string;
   work_experience: WorkExperience[];
+  type: ResumeType
 }) {
+  const {data} = useSession();
+  const {enqueueSnackbar} = useSnackbar();
   const router = useRouter();
-    const [experiences, setExperiences] = useState<WorkExperience[]>(work_experience);  
+    const [experiences, setExperiences] = useState<WorkExperience[]>(work_experience); 
+    
+ 
 
-  
+  const deleteExperience = async(id: string, setLoading: (loading: boolean) => void) => {
 
-  const deleteExperience = (id: string) => {
-    setExperiences(experiences.filter((exp) => exp._id !== id));
+    try {
+      const userId = data?.user?.id;
+      if (!userId) {
+        enqueueSnackbar("User session not found", { variant: "error" });
+        return;
+      }
+      await resumeApi.deleteWorkExperience({
+        userId,
+        type: type,
+        dataId: id,
+        session: data
+      });
+      
+      setExperiences(experiences.filter(exp => exp._id !== id));
+      enqueueSnackbar("Work experience deleted successfully", { variant: "success" });
+    } catch (error) {
+      console.error("Error deleting work experience:", error);
+      enqueueSnackbar("Failed to delete work experience", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNext = () => {
@@ -40,29 +69,7 @@ export default function MoreWorkExperienceClient({
     >
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
         {experiences.map((experience) => (
-          <div key={experience._id}>
-            <div className="rounded-lg bg-[#FFF8E7] p-4 shadow">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <BiBriefcase className="text-3xl text-gray-500" />
-                  <div>
-                    <h3 className="font-semibold">{experience.title}</h3>
-                    <p className="text-sm text-gray-600">
-                      {experience.company}
-                    </p>
-                    <p className="text-sm text-gray-500">{`${experience.start_date} - ${experience.end_date}`}</p>
-                  </div>
-                </div>
-                <BiChevronRight className="text-3xl text-gray-400" />
-              </div>
-            </div>
-            <button
-              onClick={() => deleteExperience(experience._id)}
-              className="mt-2 flex items-center text-sm text-red-500"
-            >
-              Delete <BsTrash2 className="ml-1 h-4 w-4" />
-            </button>
-          </div>
+          <MoreWorkExperienceClientItem key={experience._id} experience={experience} deleteExperience={deleteExperience} />
         ))}
 
       
@@ -83,4 +90,43 @@ export default function MoreWorkExperienceClient({
       </Link>
     </ContentLayout>
   );
+}
+
+
+
+
+  function MoreWorkExperienceClientItem({experience, deleteExperience}: {experience: WorkExperience, deleteExperience: (id: string, setLoading: (loading: boolean) => void) => void}) {
+
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async() => {
+    setLoading(true);
+    deleteExperience(experience._id, setLoading);
+  }
+
+  return  <div key={experience._id}>
+            <div className="rounded-lg bg-[#FFF8E7] p-4 shadow">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <BiBriefcase className="text-3xl text-gray-500" />
+                  <div>
+                    <h3 className="font-semibold">{experience.title}</h3>
+                    <p className="text-sm text-gray-600">
+                      {experience.company}
+                    </p>
+                    <p className="text-sm text-gray-500">{`${experience.start_date} - ${experience.end_date}`}</p>
+                  </div>
+                </div>
+                <BiChevronRight className="text-3xl text-gray-400" />
+              </div>
+            </div>
+            <button
+              disabled={loading}
+              onClick={handleDelete}
+              className="mt-2 flex items-center text-sm text-red-500"
+            >
+              {loading ? "Deleting..." : "Delete"}
+              <BsTrash2 className="ml-1 h-4 w-4" />
+            </button>
+          </div>
 }

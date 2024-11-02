@@ -9,11 +9,17 @@ import resumeApi from "@/api/local-resume";
 import { useSnackbar } from "notistack";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { ResumeType, UserResumeResponse } from "@/definition";
+
 
 export default function ReferenceClient({
   next_route,
+  reference: referenceState,
+  type,
 }: {
   next_route: string;
+  reference: UserResumeResponse['reference'];
+  type: ResumeType;
 }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -22,9 +28,9 @@ export default function ReferenceClient({
 
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: referenceState.name,
+    email: referenceState.email,
+    phone: referenceState.phone,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +50,11 @@ export default function ReferenceClient({
 
       await resumeApi.updateReference({
         userId: data?.user?.id as string,
+        type: type,
         reference: formData,
         session: data as Session
-      });
+        });
+      
 
       enqueueSnackbar("Reference added successfully", { variant: "success" });
 
@@ -62,7 +70,7 @@ export default function ReferenceClient({
     <ContentLayout
       next_route={next_route}
       pageTitle="Provide Reference"
-      step={4}
+      step={5}
       isLoading={isLoading}
       nextFunction={handleSubmit}
     >

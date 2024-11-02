@@ -4,19 +4,22 @@ import { Label } from "@/components/label";
 import { Input } from "@/components/input";
 import { Textarea } from "@/components/textarea";
 import ContentLayout from "./content-layout";
-import { Education } from "@/definition";
+import { Education, ResumeType } from "@/definition";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import resumeApi from "@/api/local-resume";
 
+
 export default function EducationClient({
   education,
   next_route,
+  type
 }: {
   education: Education[];
   next_route: string;
+  type: ResumeType;
 }) {
   const [inView, setInView] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -81,9 +84,13 @@ export default function EducationClient({
       
       await resumeApi.updateEducation({
         userId: data?.user?.id as string,
+        type: type,
         education: educationData as Education[],
-        session: data as Session
-      });
+          session: data as Session
+        });
+      
+
+
       enqueueSnackbar("Education added successfully", { variant: 'success' });
       router.push(next_route);
     } catch (error) {

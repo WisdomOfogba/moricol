@@ -9,8 +9,10 @@ import { useSnackbar } from 'notistack';
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 
-export default function Bio({ next_route }: { next_route: string }) {
-  const [bio, setBio] = useState("");
+import { ResumeType } from "@/definition";
+
+export default function Bio({ next_route, bio: bioState, type }: { next_route: string, bio: string, type : ResumeType }) {
+  const [bio, setBio] = useState(bioState);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -25,7 +27,8 @@ export default function Bio({ next_route }: { next_route: string }) {
     }
     try {
       setIsLoading(true);
-      await resumeApi.updateBio({ userId: data?.user?.id as string, bio, session: data as Session });
+        await resumeApi.updateBio({ userId: data?.user?.id as string, bio, session: data as Session, type: type });
+      
       enqueueSnackbar("Bio updated successfully", { variant: 'success' });
       router.push(next_route);
     } catch (error) {

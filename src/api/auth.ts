@@ -1,4 +1,4 @@
-import {  API_BASE_URL } from '@/constants/config';
+import { API_BASE_URL } from '@/constants/config';
 import axios from 'axios';
 
 // Base URL of the external API
@@ -24,8 +24,7 @@ export interface SignupData {
  * @param userData - Object containing user details for signup.
  */
 export const signup = async (userData: SignupData) => {
-  console.log(API_BASE_URL);
-  
+
   try {
     const response = await axios.post(`${API_BASE_URL}/user/signup`, userData, {
       headers: {

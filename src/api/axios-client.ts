@@ -53,9 +53,8 @@ axiosClient.interceptors.response.use(
 // Server-side axios instance factory
 export async function createServerAxios() {
   const session = await getServerSession(authOptions);
-//   console.log(session);
-  
-  
+
+
   const serverConfig = {
     ...axiosClient.defaults,
     headers: {
@@ -72,7 +71,7 @@ export async function createServerAxios() {
 export default axiosClient;
 
 // Export a hook for components that need fresh session data
-export function createClientAxios({session}: {session: Session}) {
+export function createClientAxios({ session }: { session: Session }) {
 
   const config = {
     ...axiosClient.defaults,
@@ -83,7 +82,7 @@ export function createClientAxios({session}: {session: Session}) {
       }),
     },
   };
-  
+
   return axios.create(config);
 }
 

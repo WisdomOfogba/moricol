@@ -37,7 +37,6 @@ export default function SignupForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    console.log(e.target.name, e.target.value);
     
     setFormData(prevData => ({
       ...prevData,

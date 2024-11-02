@@ -107,6 +107,7 @@ const socialLinks = [
 
 export default function CourseDetail({ params }: { params: { id: string } }) {
   console.log(params);
+
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (

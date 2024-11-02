@@ -2,8 +2,7 @@ import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import ReviewCard from "@/components/dashboard/review-card";
 
 export default function MasseuseReview({ params }: { params: { id: string } }) {
-  const { id } = params;
-  console.log(id);
+  console.log(params);
 
   return (
     <main>

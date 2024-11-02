@@ -1,6 +1,5 @@
 export default function Blog({ params }: { params: { id: string } }) {
-  console.log(params.id);
-
+  console.log(params);
   return (
     <>
       <header className="relative h-[562.5px] bg-black/40 bg-[url('/images/blog-bg-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay">

@@ -1,19 +1,54 @@
 "use client";
 
-import { useState } from "react";
 import { Textarea } from "@/components/textarea";
-import { Input } from "@/components/input";
 import ContentLayout from "../content-layout";
-import { routes } from "@/constants/routes";
+import { useSnackbar } from "notistack";
+import { CreateJobParams } from "@/api/jobs";
 
-export default function JobRoleDescriptionForm() {
-  const [description, setDescription] = useState("");
+interface JobRoleDescriptionFormProps {
+  goBack: () => void;
+  nextStep: () => void;
+  setFormData: (formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">) => void;
+  formData: Omit<CreateJobParams, "userid" | "jobpostid" | "session">;
+}
+
+export default function JobRoleDescriptionForm({ goBack, nextStep, setFormData, formData }: JobRoleDescriptionFormProps) {
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const isValid = () => {
+    const validations = [
+      formData.description.length > 70,
+      formData.requirement.length > 70
+    ];
+
+    const allValid = validations.every(Boolean);
+
+    if (!allValid) {
+      const invalidFields = [
+        !validations[0] && "Description",
+        !validations[1] && "Requirement",
+      ].filter(Boolean);
+
+      enqueueSnackbar(`The following fields must have a minimum length of 70 characters: ${invalidFields.join(', ')}.`, { variant: 'error' });
+    }
+
+    return allValid;
+  }
+  const handleNextStep = () => {
+    if (isValid()) {
+      nextStep();
+    }
+  };
+
+
 
   return (
     <ContentLayout
       pageTitle="Job role description"
-      next_route={routes.RECRUITMENT_EMPLOYER_PERSONAL}
-      step={2}
+      nextFunction={handleNextStep}
+      backFunction={goBack}
+      step={4}
     >
       <h2 className="mb-6 text-2xl font-bold"></h2>
       <form className="space-y-6">
@@ -27,12 +62,11 @@ export default function JobRoleDescriptionForm() {
           <div className="relative mt-1">
             <Textarea
               id="jobDescription"
-              name="jobDescription"
-              rows={6}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+              name="description"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 p-2 focus:p-2"
               placeholder="Keep records of each medical records ..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
             <div className="absolute bottom-2 right-2 text-sm text-gray-500">
               Minimum 70 characters
@@ -47,21 +81,14 @@ export default function JobRoleDescriptionForm() {
             Requirements
           </label>
           <div className="space-y-2">
-            <Input
-              type="text"
+            <Textarea
               placeholder="Created [accounting rule], which resulted in [percentage improvement]"
-              className="w-full"
+              className="w-full p-2 focus:p-2"
+              value={formData.requirement}
+              name="requirement"
+              onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
             />
-            <Input
-              type="text"
-              placeholder="Built/designd [project] using [skills/technologies]"
-              className="w-full"
-            />
-            <Input
-              type="text"
-              placeholder="Lead [initiative], generating a [numerical impact]"
-              className="w-full"
-            />
+
           </div>
         </div>
       </form>
