@@ -1,10 +1,22 @@
+'use client'
+
 import Button from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import NavigationBackBtn from "@/components/nav-back-btn";
-import React from "react";
+import React, { useState } from "react";
 
 function LoanAccountsNew() {
+  const [accountDetails, setAccountDetails] = useState<{
+    accountNumber: string;
+    bankName: string;
+    accountName: string;
+  }>({
+    accountNumber: '',
+    bankName: '',
+    accountName: '',
+  });
+
   return (
     <div>
       <div className="border-b border-gray-300 px-4 py-2">

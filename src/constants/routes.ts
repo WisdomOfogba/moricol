@@ -71,6 +71,7 @@ export const routes = {
   LOANACCOUNTSNEW: "/dashboard/loan/accounts/new",
   LOANHISTORY: "/dashboard/loan/history",
   LOANPAYBACK: "/dashboard/loan/payback",
+  LOANSTATUS: "/dashboard/loan/status",
 
   // Recruitment dashboard pages links
 

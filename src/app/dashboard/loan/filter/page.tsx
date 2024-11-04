@@ -24,6 +24,5 @@ async function getLoanCategories() {
 
 export default async function Loanfilter() {
   const loanCategories = await getLoanCategories();
-  console.log(loanCategories);
   return <LoanFilterClient categories={loanCategories} />;
 }

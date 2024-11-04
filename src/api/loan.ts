@@ -9,7 +9,18 @@ const endpoints = {
     retrieveCategory: loanUrl + '/retrieve/category',
     retrieveSingleCategory: loanUrl + '/retrieve/single/category',
     createOffer: loanUrl + '/create/offer',
-    retrievePending: loanUrl + '/retrieve/pending'
+    retrievePending: loanUrl + '/retrieve/pending',
+    retrieveSingleLoan: loanUrl + '/retrieve/single',
+    retrievePendingLoan: loanUrl + '/retrieve/pending',
+    retrieveActiveLoan: loanUrl + '/retrieve/active',
+    retrieveProcessedLoan: loanUrl + '/retrieve/processed',
+    checkApprovedLoan: loanUrl + '/check/approve',
+    createAccount: loanUrl + '/create/account',
+    retrieveAllAccounts: loanUrl + '/retrieve/all/account',
+    retrieveSingleAccount: loanUrl + '/retrieve/single/account',
+    deleteAccount: loanUrl + '/delete/account',
+
+
 }
 
 interface HomepageParams {
@@ -29,7 +40,7 @@ interface RetrieveSingleCategoryParams {
     session: Session;
 }
 
-interface CreateOfferParams {
+export interface CreateOfferParams {
     userid: string;
     category: string;
     amount: number;
@@ -67,6 +78,8 @@ interface CreateOfferParams {
         utility: string;
         residential_address: string;
         relationship: string;
+        workstatus: string;
+        phone: string;
     };
     guarantor_two: {
         name: string;
@@ -74,6 +87,8 @@ interface CreateOfferParams {
         utility: string;
         residential_address: string;
         relationship: string;
+        workstatus: string;
+        phone: string;
     };
     outstanding: {
         owe: boolean;
@@ -147,7 +162,104 @@ const loanApi = {
             const errorMessage = handleAxiosError(error, 'Error retrieving pending loans');
             throw new Error(errorMessage);
         }
-    }
+    },
+
+    retrieveSingleLoan: async ({ userid, loanid, session }: { userid: string; loanid: string; session: any }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.retrieveSingleLoan, { userid, loanid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving loan details');
+            throw new Error(errorMessage);
+        }
+    },
+
+    retrievePendingOrActiveOrProcessedLoan: async ({ userid, session, type }: { userid: string; session: Session, type: 'pending' | 'active' | 'processed' }) => {
+        const axios = createClientAxios({ session });
+
+        const endpoint = type === 'processed' ? endpoints.retrieveProcessedLoan : type === 'active' ? endpoints.retrieveActiveLoan : endpoints.retrievePendingLoan;
+
+        try {
+            const response = await axios.post(endpoint, { userid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving pending loan');
+            throw new Error(errorMessage);
+        }
+    },
+
+    checkApprovedLoan: async ({ userid, loanid, session }: { userid: string; loanid: string; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.checkApprovedLoan, { userid, loanid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving approved loan');
+            throw new Error(errorMessage);
+        }
+    },
+
+    createAccount: async ({ userid, cvv, cardexpiry, cardnumber, session }: {
+        userid: string;
+        cvv: string;
+        cardexpiry: string;
+        cardnumber: string;
+        session: Session
+    }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.createAccount, {
+                userid,
+                cvv,
+                cardexpiry,
+                cardnumber
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error creating loan account');
+            throw new Error(errorMessage);
+        }
+    },
+
+    retrieveAllAccounts: async ({ userid, session }: { userid: string; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.retrieveAllAccounts, { userid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving loan accounts');
+            throw new Error(errorMessage);
+        }
+    },
+
+    retrieveSingleAccount: async ({ userid, accountid, session }: { userid: string; accountid: string; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.retrieveSingleAccount, { userid, accountid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving loan account');
+            throw new Error(errorMessage);
+        }
+    },
+
+    deleteAccount: async ({ userid, accountid, session }: { userid: string; accountid: string; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.deleteAccount, { userid, accountid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error deleting loan account');
+            throw new Error(errorMessage);
+        }
+    },
 }
 
 export default loanApi;

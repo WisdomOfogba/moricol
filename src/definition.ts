@@ -184,6 +184,7 @@ export type FilterValues = {
 export type LoanCategory = {
   _id: string;
   name: string;
+  image: string;
 }
 
 export type LoanDetails = {

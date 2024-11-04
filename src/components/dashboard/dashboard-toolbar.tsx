@@ -7,6 +7,7 @@ import { MdNotifications } from "react-icons/md";
 import { EditSVG } from "../svgs";
 import { BiMenu } from "react-icons/bi";
 import DashboardPathsSectionName from "./dashboard-paths-section-name";
+import { useSession } from "next-auth/react";
 
 export default function DashboardToolbar({
   toggleSidebar,
@@ -52,6 +53,8 @@ export default function DashboardToolbar({
 }
 
 function ProfileDropdown() {
+  const { data } = useSession();
+
   return (
     <article className="absolute right-2 top-[74px] w-full max-w-[320px] rounded-b-xl bg-white shadow-xl">
       <div className="flex flex-col items-center justify-center gap-y-2 py-2">
@@ -60,7 +63,7 @@ function ProfileDropdown() {
             <EditSVG />
           </div>
         </div>
-        <p>Jane Doe</p>
+        <p>{data?.user?.firstname} {data?.user?.lastname}</p>
       </div>
       <div className="border-t border-t-primary-500 px-5 py-4">
         <p className="mb-1 text-sm text-primary-500">Switch Profile</p>

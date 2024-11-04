@@ -1,23 +1,53 @@
 import Button from "@/components/button";
 import { ArrowRightSvg } from "@/components/svgs";
 import { routes } from "@/constants/routes";
-import Link from "next/link";
+import loanApi, { CreateOfferParams } from "@/api/loan";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa6";
 
 export default function LoanConfirmDetails({
   prevPage,
+  applyData,
+  category,
 }: {
   prevPage: () => void;
+  applyData: Omit<CreateOfferParams, "userid" | "session">;
+  category: string;
 }) {
   const loanDetails = [
-    { label: "Medical Category", value: "Dental" },
-    { label: "Loan Amount", value: "₦25,000" },
-    { label: "Total Repayment Amount", value: "₦35,000" },
-    { label: "First Repay Date", value: "5/December/2023" },
-    { label: "Due Date", value: "22/Febuary.2024" },
-    { label: "Account Name", value: "John Doe" },
-    { label: "Bank Name", value: "First Bank" },
-    { label: "Account Number", value: "****90765" },
+    { label: "Loan Category", value: category },
+    { label: "Loan Amount", value: `₦${applyData.amount.toLocaleString()}` },
+    { label: "Total Repayment Amount", value: `₦${applyData.totalamount.toLocaleString()}` },
+    { label: "Total Days", value: applyData.total_days },
+    { label: "Daily Interest", value: `${applyData.daily_interest}%` },
+    { label: "Late Interest", value: `${applyData.late_interest}%` },
+    { label: "Account Name", value: applyData.bank_details.accountname },
+    { label: "Bank Name", value: applyData.bank_details.bankname },
+    { label: "Account Number", value: applyData.bank_details.accountnumber },
   ];
+
+  const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleApplyForLoan = async () => {
+    try {
+      setLoading(true);
+      await loanApi.createOffer({ ...applyData, userid: session?.user.id as string, session: session as Session });
+      enqueueSnackbar("Loan application submitted successfully", { variant: "success" });
+      router.push(routes.LOANVERIFICATION);
+    } catch (error) {
+      setLoading(false);
+      enqueueSnackbar("An error occurred while applying for loan", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="min-h-[60vh] bg-gray-100">
@@ -37,15 +67,13 @@ export default function LoanConfirmDetails({
             {loanDetails.map((detail, index) => (
               <div key={index} className="flex justify-between">
                 <span className="text-gray-600">{detail.label}</span>
-                <span className="font-medium">{detail.value}</span>
+                <span className="font-medium capitalize">{detail.value}</span>
               </div>
             ))}
           </div>
-          <Link href={routes.LOANVERIFICATION}>
-            <Button className="mt-6 w-full rounded-lg bg-primary-500 py-3 text-white hover:bg-primary-600">
-              APPLY FOR LOAN
-            </Button>
-          </Link>
+          <Button onClick={handleApplyForLoan} className="mt-6 flex items-center justify-center w-full rounded-lg bg-primary-500 py-3 text-white hover:bg-primary-600">
+            {loading ? <FaSpinner className="animate-spin" /> : "APPLY FOR LOAN"}
+          </Button>
         </div>
       </div>
     </div>

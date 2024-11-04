@@ -8,6 +8,17 @@ import React from "react";
 function LoanDeclined() {
   return (
     <>
+      <DeclinedLoanComponent />
+    </>
+  );
+}
+
+export default LoanDeclined;
+
+
+export function DeclinedLoanComponent() {
+  return (
+    <>
       <div className="border-b border-gray-300 px-4 py-2">
         <NavigationBackBtn />
       </div>
@@ -39,5 +50,3 @@ function LoanDeclined() {
     </>
   );
 }
-
-export default LoanDeclined;

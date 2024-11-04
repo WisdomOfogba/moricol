@@ -1,5 +1,4 @@
 import Button from "@/components/button";
-import NavigationBackBtn from "@/components/nav-back-btn";
 import { routes } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,9 +7,7 @@ import React from "react";
 function LoanVerification() {
   return (
     <>
-      <div className="border-b border-gray-300 px-4 py-2">
-        <NavigationBackBtn />
-      </div>
+
       <div className="flex h-[80vh] flex-col items-center justify-center rounded-lg p-8">
         <div className="relative mb-8 h-[150px] w-[150px]">
           <Image

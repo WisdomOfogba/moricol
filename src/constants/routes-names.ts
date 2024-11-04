@@ -21,6 +21,8 @@ const routes_names = [
   { path: routes.RECRUITMENT_JOBS_SAVED, name: "Saved Jobs" },
   { path: routes.RECRUITMENT_JOBS_POSTED, name: "Jobs I Posted" },
   { path: routes.RECRUITMENT_JOBS_APPLICATIONS, name: "My Job Applications" },
+  { path: routes.LOANSTATUS, name: "Loan Status" },
+  { path: routes.LOANHISTORY, name: "Loan History" },
 
   { path: routes.RECRUITMENT_COVER_LETTER, name: "Cover Letter" },
   { path: routes.RECRUITMENT_REF, name: "Provide Reference" },

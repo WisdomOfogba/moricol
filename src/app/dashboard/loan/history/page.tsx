@@ -1,56 +1,45 @@
 import NavigationBackBtn from "@/components/nav-back-btn";
 import React from "react";
 import LoanHistoryClient from "../_components/loan-history-client";
+import { getUserSession } from "@/lib/auth";
+import loanApi from "@/api/loan";
 
-function LoanHistory({
+export const metadata = {
+  title: "Loan History",
+  description: "view your loan history",
+}
+
+export type LoanHistoryType = {
+  _id: string;
+  amount: number;
+  total_days: number;
+  createdAt: string;
+  loan_approved?: boolean;
+}
+
+async function getLoanData(type: 'pending' | 'active' | 'processed') {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: loanData }: { data: LoanHistoryType[] } = await loanApi.retrievePendingOrActiveOrProcessedLoan({ userid: session.user.id, type, session });
+    return loanData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get loan data');
+  }
+}
+
+
+async function LoanHistory({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const loanData = [
-    {
-      id: "A1B2",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Active",
-    },
-    {
-      id: "C3D4",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Pending",
-    },
-    {
-      id: "E5F6",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Pending",
-    },
-    {
-      id: "G7H8",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Approved",
-    },
-    {
-      id: "I9J0",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Approved",
-    },
-    {
-      id: "K1L2",
-      amount: 30000,
-      duration: 5,
-      initiatedOn: "Feb 1, 2023",
-      status: "Approved",
-    },
-  ];
+
+  const loans = await getLoanData(searchParams.v as 'pending' | 'active' | 'processed');
+  console.log(loans);
+
 
   return (
     <div>
@@ -58,7 +47,7 @@ function LoanHistory({
         <NavigationBackBtn />
       </div>
       <LoanHistoryClient
-        loanData={loanData}
+        loanData={loans}
         view={(searchParams.v as string) ?? "pending"}
       />
     </div>
