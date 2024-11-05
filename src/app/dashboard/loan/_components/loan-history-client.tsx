@@ -48,10 +48,16 @@ const LoanCard: React.FC<LoanCardProps> = ({ loan, view }) => (
           </Link>
         </span>)}
 
-
+        {view === "active" && (<span
+          className={"font-bold " + (loan.status === "approved" ? "text-green-500" : "text-red-500")}
+        >
+          <Link href={`${routes.LOANHISTORY}/${loan._id}`}>
+            View Details
+          </Link>
+        </span>)}
       </div>
       <p className="mt-2 text-right text-sm text-gray-600">
-        {!loan.loan_approved && "Initiated on:"}
+        {loan.status !== "approved" && "Initiated on:"}
         {dayjs(loan.createdAt).format("MMM D, YYYY")}
       </p>
     </CardContent>

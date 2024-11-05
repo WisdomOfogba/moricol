@@ -52,7 +52,7 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
       </div>
       {filteredLoans.map((item, index) => (
         <Link
-          href={routes.LOANDASHBOARDHOME + `/status/${item._id}`}
+          href={routes.LOANDASHBOARDHOME + `/status/${item.loanoffer}`}
           key={index}
           className="group flex items-center rounded-lg bg-gray-50 bg-white p-4 shadow"
         >

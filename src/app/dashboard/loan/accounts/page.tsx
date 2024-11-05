@@ -4,15 +4,22 @@ import { routes } from "@/constants/routes";
 import { getUserSession } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
-import { LoanHistoryType } from "../history/page";
 import loanApi from "@/api/loan";
-import NoItemsFound from "@/components/no-item-found";
+import DeleteCardButton from "../_components/delete-card-button";
+
+export const revalidate = 0;
+
+type CardType = {
+  _id: string;
+  cardnumber: string;
+  cardexpiry: string;
+  createdAt: string;
+}
 
 export const metadata = {
   title: "Accounts | Moricol Loans",
   description: "view your loan accounts",
 }
-
 
 async function getAccountsData() {
   try {
@@ -27,37 +34,9 @@ async function getAccountsData() {
   }
 }
 
-
-const bankAccounts = [
-  {
-    id: 1,
-    accountNumber: "1234567890",
-    bankName: "Bank A",
-    accountName: "John Dont",
-  },
-  {
-    id: 2,
-    accountNumber: "0987654321",
-    bankName: "Bank B",
-    accountName: "John Doe",
-  },
-  {
-    id: 3,
-    accountNumber: "1122334455",
-    bankName: "Bank C",
-    accountName: "John DOe",
-  },
-  {
-    id: 4,
-    accountNumber: "5566778899",
-    bankName: "Bank D",
-    accountName: "John Doe",
-  },
-];
-
 async function LoanAccounts() {
   const accountsData = await getAccountsData();
-  console.log(accountsData);
+
   return (
     <div className="pb-10">
       <div className="border-b border-gray-300 px-4 py-2">
@@ -65,20 +44,38 @@ async function LoanAccounts() {
       </div>
       <div className="px-4">
         <div className="md: grid grid-cols-1 grid-cols-2 gap-4 py-4 lg:grid-cols-3">
-          {bankAccounts.map((account) => (
+          {accountsData.map((account: CardType) => (
             <div
-              key={account.id}
-              className="transform rounded-lg border bg-white p-6 shadow-sm transition-transform"
+              key={account._id}
+              className="transform rounded-lg border bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg transition-transform hover:scale-105"
             >
-              <p className="text-gray-600">{account.accountNumber}</p>
-              <h2 className="text-lg font-bold">{account.bankName}</h2>
-              <br />
-              <p className="text-gray-600"> {account.accountName}</p>
+              <div className="mb-4 flex justify-between">
+                <div className="h-12 w-12">
+                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M44 12H4V36H44V12Z" fill="#FFC107" />
+                    <path d="M24 29C26.2091 29 28 27.2091 28 25C28 22.7909 26.2091 21 24 21C21.7909 21 20 22.7909 20 25C20 27.2091 21.7909 29 24 29Z" fill="#FFA000" />
+                  </svg>
+                </div>
+                <span className="text-lg font-bold text-white">CARD</span>
+              </div>
+
+              <div className="mb-6">
+                <p className="font-mono text-xl text-white">
+                  **** **** **** {account.cardnumber.slice(-4)}
+                </p>
+              </div>
+
+              <div className="flex justify-between">
+                <div>
+                  <p className="text-xs text-gray-200">Valid Thru</p>
+                  <p className="font-mono text-white">{account.cardexpiry}</p>
+                </div>
+                <DeleteCardButton id={account._id} />
+              </div>
             </div>
           ))}
-
         </div>
-        {/* not found */}
+
         {accountsData.length === 0 && (
           <div className="flex flex-col items-center justify-center">
             <div className="mb-8 h-32 w-32">

@@ -15,6 +15,7 @@ export type LoanHistoryType = {
   total_days: number;
   createdAt: string;
   loan_approved?: boolean;
+  status: string;
 }
 
 async function getLoanData(type: 'pending' | 'active' | 'processed') {
@@ -38,7 +39,6 @@ async function LoanHistory({
 }) {
 
   const loans = await getLoanData(searchParams.v as 'pending' | 'active' | 'processed');
-  console.log(loans);
 
 
   return (
