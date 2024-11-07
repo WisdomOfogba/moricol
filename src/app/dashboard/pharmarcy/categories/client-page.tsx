@@ -5,11 +5,21 @@ import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import { categories } from "@/constants";
 import RangeSlider from "@/components/dashboard/range-slider";
 import ProductCard from "@/components/dashboard/pharmacy-product-card";
+// import useFetch from "@/hooks/useFetch";
+// import { useSession } from "next-auth/react";
+// import onlinePharmacyApi from "@/api/online-pharmacy";
 
 export default function CategoryPage() {
   const [category, setCategory] = useState<string>("medication");
   const [subCategory, setSubCategory] = useState<string | null>(null);
   const [subSubCategory, setSubSubCategory] = useState<string | null>(null);
+
+  // const { data: session } = useSession();
+  // const {
+  //   data: category,
+
+  // } = useFetch<string[]>(onlinePharmacyApi.getAllCategories(session!));
+  // console.log(category);
   const [displayProducts, setDisplayProducts] = useState(false);
 
   const resetSubCategories = () => {
@@ -203,7 +213,7 @@ function CategoryProducts({
         </div>
 
         {/* Review */}
-        {/* <div className="bg-gray-100 p-5">
+        <div className="bg-gray-100 p-5">
           <h2 className="mb-5">BY REVIEW</h2>
 
           <ul className="grid gap-y-1.5">
@@ -218,7 +228,7 @@ function CategoryProducts({
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
 
         {/* Color */}
         <div className="bg-gray-100 p-5">
@@ -237,14 +247,14 @@ function CategoryProducts({
       </aside>
       <section className="grow px-6">
         <h2 className="mb-5 text-2xl font-semibold">Beauty and Cosmetics</h2>
-        <div className="grid grid-cols-4 justify-center gap-7">
+        {/* <div className="grid grid-cols-4 justify-center gap-7">
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
-        </div>
+        </div> */}
       </section>
     </div>
   );

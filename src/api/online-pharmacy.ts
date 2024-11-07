@@ -27,12 +27,21 @@ export interface CreateAddressParams {
   longitude: string;
   session: Session;
 }
+export interface AllProductsParams {
+  category: string;
+  subcategory: string;
+  innercategory: string;
+  brand: string;
+  color: string;
+  price: Number;
+  rating: Number;
+}
 const onlinePharmacyUrl = "/user/pharmacy";
 // endpoints to receive data from the server
 const apiEndpoints = {
   productCategory: {
     retrieveBestProduct: onlinePharmacyUrl + "/best/selling/product",
-    retrieveNewProduct: onlinePharmacyUrl + "/best/new/product",
+    retrieveNewProduct: onlinePharmacyUrl + "/new/product",
     retrieveSingleProduct: onlinePharmacyUrl + "/retrieve/single/product",
     retrieveAllProduct: onlinePharmacyUrl + "/retrieve/all/product",
     retrieveAllCategory: onlinePharmacyUrl + "/category",
@@ -72,20 +81,108 @@ const onlinePharmacyApi = {
       throw new Error(errorMessage);
     }
   },
-  getAllCategories: async (session: Session) => {
+
+  getAllCategories: async (session: Session): Promise<string[]> => {
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveAllCategory,
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching categories");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getSubCategories: async (session: Session): Promise<string[]> => {
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveSubCategory,
+
+        {
+          category: "66df402da60f3b195520d0f3",
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching categories");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getInnerCategories: async (session: Session): Promise<string[]> => {
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveInnerCategory,
+
+        {
+          category: "66df402da60f3b195520d0f3",
+          subcategory: "66df6407a60f3b195520d136",
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching categories");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getAllProducts: async (
+    session: Session,
+    params: Object,
+  ): Promise<string[]> => {
+    const axios = createClientAxios({ session: session });
+    const data = JSON.stringify(params);
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveAllProduct,
+
+        data,
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching Products");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getNewProducts: async (session: Session): Promise<string[]> => {
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveNewProduct,
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching Products");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getBestProducts: async (session: Session): Promise<string[]> => {
     const axios = createClientAxios({ session: session });
 
     try {
       console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveAllCategory,
-
-        "",
+          apiEndpoints.productCategory.retrieveBestProduct,
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Error fetching categories");
+      const errorMessage = handleAxiosError(error, "Error fetching Products");
       console.log(errorMessage);
       throw new Error(errorMessage);
     }
