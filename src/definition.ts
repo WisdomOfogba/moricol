@@ -211,3 +211,44 @@ export type LoanDetails = {
   createdAt: string;
   __v: number;
 }
+
+
+export type Plan = {
+  title: string
+  plan_type: string
+  min_members: number
+  max_members: number
+  subtitle: string
+  durations: { label: string, price: string }[]
+  highlighted?: boolean
+}
+
+export type Organization = {
+  _id: string;
+  userid: string;
+  plan_type: string;
+  duration: string;
+  name: string;
+  user_limit: number;
+  amount: number;
+  total_member: number;
+  balance_amount: number;
+  active: boolean;
+  createdAt: string;
+  __v: number;
+}
+
+
+export type OrganizationMember = {
+  _id: string;
+  userid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+  },
+  organizationid: string;
+  createdAt: string;
+  __v: number;
+}

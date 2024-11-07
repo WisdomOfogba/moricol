@@ -137,5 +137,6 @@ export const routes = {
     "/dashboard/telemedicine/practitioners/reviews",
   TELEMEDICINE_PRACTITIONERS_FAVORITES:
     "/dashboard/telemedicine/practitioners/favorites",
-  TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization'
+  TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization',
+  TELEMEDICINE_ORGANIZATION_CREATE: '/dashboard/telemedicine/organization/create'
 };

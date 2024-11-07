@@ -13,7 +13,7 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
   const filteredLoans = loans.filter(
-    (loan) => filterStatus === "All" || loan.title.includes(filterStatus),
+    (loan) => filterStatus === "All" || loan.title.includes(filterStatus.toLowerCase()),
   );
 
   return (
@@ -37,13 +37,13 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
             </button>
             <button
               className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              onClick={() => setFilterStatus("Approved")}
+              onClick={() => setFilterStatus("Approve")}
             >
               Approved
             </button>
             <button
               className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              onClick={() => setFilterStatus("Declined")}
+              onClick={() => setFilterStatus("Decline")}
             >
               Declined
             </button>

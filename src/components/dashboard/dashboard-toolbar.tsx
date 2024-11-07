@@ -8,6 +8,20 @@ import { EditSVG } from "../svgs";
 import { BiMenu } from "react-icons/bi";
 import DashboardPathsSectionName from "./dashboard-paths-section-name";
 import { useSession } from "next-auth/react";
+import { routes } from "@/constants/routes";
+import Link from "next/link";
+import { SelectContent, Select, SelectItem, SelectTrigger, SelectValue } from "../select";
+import { useRouter } from "next/navigation";
+
+const services = [
+  { name: 'Telemedicine', path: routes.TELEMEDICINE_DASHBOARD },
+  { name: 'Pharmacy', path: routes.PHARMARCYDASHBOARD },
+  { name: 'Massage', path: routes.MASSAGEDASHBOARDHOME },
+  { name: 'Home Care', path: routes.HOMECAREDASHBOARDHOME },
+  { name: 'Training', path: routes.TRAININGDASHBOARD },
+  { name: 'Recruitment', path: routes.RECRUITMENTDASHBOARD },
+  { name: 'Loan', path: routes.LOANDASHBOARDHOME }
+]
 
 export default function DashboardToolbar({
   toggleSidebar,
@@ -54,6 +68,12 @@ export default function DashboardToolbar({
 
 function ProfileDropdown() {
   const { data } = useSession();
+  const router = useRouter();
+
+
+  const handleProfileChange = (path: string) => {
+    router.push(path);
+  }
 
   return (
     <article className="absolute right-2 top-[74px] w-full max-w-[320px] rounded-b-xl bg-white shadow-xl">
@@ -67,13 +87,24 @@ function ProfileDropdown() {
       </div>
       <div className="border-t border-t-primary-500 px-5 py-4">
         <p className="mb-1 text-sm text-primary-500">Switch Profile</p>
-        <Button
-          variant="outline"
-          className="mb-7 flex items-center justify-between border-[#6D7280]"
-        >
-          Telemedicine
-          <Image src="/icons/chevron.svg" alt="" width={16} height={9} />
-        </Button>
+
+        <Select onValueChange={handleProfileChange}>
+          <SelectTrigger className="w-full mb-7 border-[#6D7280]">
+            <SelectValue placeholder="Select profile" />
+          </SelectTrigger>
+          <SelectContent>
+            {services.map((service) => (
+              <SelectItem
+                key={service.path}
+                value={service.path}
+                className="py-3 px-4 cursor-pointer hover:bg-primary-50"
+              >
+                {service.name}
+
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Button variant="text" className="text-lg font-bold text-primary-500">
           Sign Out
         </Button>

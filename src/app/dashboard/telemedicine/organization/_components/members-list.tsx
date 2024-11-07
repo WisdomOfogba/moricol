@@ -1,41 +1,69 @@
 'use client'
 import { useState } from 'react'
-import {  X, Plus } from 'lucide-react'
+import { X, Plus, Loader2 } from 'lucide-react'
 import FailedModal from './failed-modal'
 import { Input } from '@/components/input'
-interface Member {
-  email: string
-  phoneNumber: string
-}
-const initialMembers: Member[] = [
-  { email: 'john.doe@example.com', phoneNumber: '1234567890' },
-  { email: 'jane.smith@example.com', phoneNumber: '9876543210' },
-  { email: 'alice.johnson@example.com', phoneNumber: '5551234567' },
-]
-export default function MembersList() {
+import telemedicineApi from '@/api/telemedicine'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
+import { useSnackbar } from 'notistack'
+import { OrganizationMember } from '@/definition'
+import RemoveMemberButton from './remove-member-button'
+
+export default function MembersList({ members, org_id }: { members: OrganizationMember[], org_id: string }) {
   const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [members, setMembers] = useState<Member[]>(initialMembers)
+  // const [phoneNumber, setPhoneNumber] = useState('') 
   const [showForm, setShowForm] = useState(false)
   const [showExistsModal, setShowExistsModal] = useState(false)
-  const addMember = () => {
-    if (email && phoneNumber) {
+  const [isLoading, setIsLoading] = useState(false)
+  const { enqueueSnackbar } = useSnackbar()
+
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  const [title, setTitle] = useState<string | null>(null)
+  const [description, setDescription] = useState<string | null>(null)
+
+
+
+  const addMember = async () => {
+    if (email) {
       const memberExists = members.some(
-        (member) => member.email === email || member.phoneNumber === phoneNumber
+        (member) => member.userid.email === email
       )
       if (memberExists) {
+        setTitle('Member already exists')
+        setDescription('User already exists in this organization')
         setShowExistsModal(true)
       } else {
-        setMembers([...members, { email, phoneNumber }])
-        setEmail('')
-        setPhoneNumber('')
-        setShowForm(false)
+        setIsLoading(true)
+        try {
+          await telemedicineApi.organization.addMember({
+            email,
+            organizationid: org_id,
+            userid: session?.user.id as string,
+            session: session as Session
+          })
+          router.refresh()
+          enqueueSnackbar('Member added successfully', { variant: 'success' })
+          setEmail('')
+          setShowForm(false)
+        } catch (error) {
+          if (error instanceof Error && error.message.includes('found')) {
+            setTitle(null)
+            setDescription(null)
+            setShowExistsModal(true)
+          } else {
+            enqueueSnackbar('Error adding member', { variant: 'error' })
+          }
+        } finally {
+          setIsLoading(false)
+        }
       }
     }
   }
-  const removeMember = (index: number) => {
-    setMembers(members.filter((_, i) => i !== index))
-  }
+
   const handleSaveInformation = () => {
     addMember()
   }
@@ -43,11 +71,11 @@ export default function MembersList() {
     setShowExistsModal(false)
   }
   return (
-    <div className="min-h-screen">
-      <div className="container max-w-5xl mx-auto p-4">
-        <div className="bg-white p-6 rounded-lg shadow-md">
+    <div>
+      <div className="">
+        <div className="bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Organization Members</h2>
-          
+
           {showForm ? (
             <>
               <div className="mb-4">
@@ -63,7 +91,7 @@ export default function MembersList() {
                   placeholder="Enter email"
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                   Phone Number
                 </label>
@@ -74,14 +102,16 @@ export default function MembersList() {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="w-full px-4 focus:px-4 border border-gray-300 rounded"
                   placeholder="Enter phone number"
-                />
+                /> 
+                
               </div>
+                */}
               <div className="flex justify-between items-center mb-4">
                 <button
                   onClick={handleSaveInformation}
-                  className="bg-[#F2A900] text-white py-2 px-4 rounded hover:bg-[#D99200] transition-colors"
+                  className="bg-[#F2A900] text-white py-2 px-4 flex items-center gap-2 justify-center rounded hover:bg-[#D99200] transition-colors"
                 >
-                  SAVE INFORMATION
+                  {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'SAVE INFORMATION'}
                 </button>
                 <button
                   onClick={() => setShowForm(false)}
@@ -103,17 +133,15 @@ export default function MembersList() {
           {members.map((member, index) => (
             <div key={index} className="bg-gray-600 text-white p-4 rounded mb-2 flex justify-between items-center">
               <div>
-                <p>Email: {member.email}</p>
-                <p>Phone Number: {member.phoneNumber}</p>
+                <p>Email: {member.userid.email}</p>
+                <p>Phone Number: {member.userid.phone}</p>
               </div>
-              <button onClick={() => removeMember(index)} className="text-white">
-                <X className="w-5 h-5" />
-              </button>
+              <RemoveMemberButton memberId={member._id} organizationid={org_id} />
             </div>
           ))}
         </div>
       </div>
-    {showExistsModal &&  <FailedModal showExistsModal={showExistsModal} closeExistsModal={closeExistsModal}/>}
+      {showExistsModal && <FailedModal title={title} description={description} showExistsModal={showExistsModal} closeExistsModal={closeExistsModal} />}
     </div>
   )
 }

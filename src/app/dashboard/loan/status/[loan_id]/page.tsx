@@ -1,8 +1,8 @@
 import React from "react";
 import { getUserSession } from "@/lib/auth";
 import loanApi from "@/api/loan";
-import { DeclinedLoanComponent } from "../../history/[loan_id]/declined/page";
-import { LoanApprovedComponent } from "../../history/[loan_id]/approved/page";
+import { DeclinedLoanComponent } from "../../_components/declined/page";
+import { LoanApprovedComponent } from "../../_components/approved/page";
 
 
 async function getLoanData(loanid: string) {
@@ -25,12 +25,11 @@ export const metadata = {
 
 async function LoanHistorySingle({ params }: { params: { loan_id: string } }) {
     const loanData = await getLoanData(params.loan_id);
-    console.log(loanData);
 
     return (
         <>
             {!loanData && <DeclinedLoanComponent />}
-            {loanData && <LoanApprovedComponent />}
+            {loanData && <LoanApprovedComponent slip={loanData.approval_slip} />}
         </>
     );
 }

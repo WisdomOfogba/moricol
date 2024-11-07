@@ -18,11 +18,12 @@ function SpecialistCard({
   return (
     <Link
       href={routes.TELEMEDICINE_PRACTITIONERS + "?type=" + id}
-      className={`${color} rounded-lg p-4`}
+      className={`${color} rounded-lg p-4 `}
     >
       <div className="mb-2 text-3xl">{icon}</div>
-      <h3 className="md:text-md mb-1 text-sm font-semibold">{title}</h3>
-      <p className="text-sm text-gray-600">{description}</p>
+
+      <h3 className="md:text-md mb-1 text-sm font-semibold capitalize">{title}</h3>
+      <p className="text-sm text-gray-600 ">{description}</p>
     </Link>
   );
 }

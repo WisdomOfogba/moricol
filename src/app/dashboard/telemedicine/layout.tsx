@@ -2,7 +2,7 @@ import DashboardLayout from "@/components/dashboard/dashboard-layout";
 import { routes } from "@/constants/routes";
 import { BiHome } from "react-icons/bi";
 import {
-  FaUserMd,
+  // FaUserMd,
   FaCalendarAlt,
   FaQuestionCircle,
   FaUser,
@@ -15,11 +15,11 @@ const links = [
     link: routes.TELEMEDICINE_DASHBOARD,
     SVGComponent: BiHome,
   },
-  {
-    name: "All Practitioners",
-    link: routes.TELEMEDICINE_PRACTITIONERS,
-    SVGComponent: FaUserMd,
-  },
+  // {
+  //   name: "All Practitioners",
+  //   link: routes.TELEMEDICINE_PRACTITIONERS,
+  //   SVGComponent: FaUserMd,
+  // },
   {
     name: "Healthcare Appointment",
     link: routes.TELEMEDICINE_APPOINTMENTS,
@@ -35,7 +35,7 @@ const links = [
     link: routes.TELEMEDICINE_PROFILE,
     SVGComponent: FaUser,
   },
-   {
+  {
     name: "Organisations",
     link: routes.TELEMEDICINE_ORGANIZATION,
     SVGComponent: FaUser,
@@ -52,5 +52,7 @@ export default function TelemedicineLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardLayout asideLinks={links}>{children}</DashboardLayout>;
+  return <DashboardLayout asideLinks={links}>
+    <div>{children}</div>
+  </DashboardLayout>;
 }

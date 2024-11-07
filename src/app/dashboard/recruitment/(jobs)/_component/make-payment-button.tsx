@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
 
-const MakePaymentButton = ({ salary, status }: { salary: number, status: string }) => {
+const MakePaymentButton = ({ price, status }: { price: number, status: string }) => {
     const { enqueueSnackbar } = useSnackbar();
     const { data: session } = useSession();
     const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const MakePaymentButton = ({ salary, status }: { salary: number, status: string 
     const handlePay = async () => {
         try {
             setIsLoading(true);
-            const response = await jobsApi.makePayment(session?.user.id as string, session?.user.email as string, salary, session as Session);
+            const response = await jobsApi.makePayment(session?.user.id as string, session?.user.email as string, price, session as Session);
             window.open(response.data, '_blank');
         } catch (error) {
             console.error(error);

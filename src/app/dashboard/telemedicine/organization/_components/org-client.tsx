@@ -2,7 +2,8 @@
 import { useState } from "react"
 import SelectPlan from "./select-plan"
 import MembersList from "./members-list"
-export default function Organization() {
+
+export default function NewOrgClient() {
   const [showMembersList, setShowMembersList] = useState(false)
   const toggleMembersList = () => {
     setShowMembersList(!showMembersList)

@@ -6,8 +6,10 @@ import React from "react";
 interface FailedModalProps {
   closeExistsModal: () => void;
   showExistsModal: boolean;
+  title?: string | null;
+  description?: string | null;
 }
-function FailedModal({ closeExistsModal, showExistsModal }: FailedModalProps) {
+function FailedModal({ closeExistsModal, showExistsModal, title, description }: FailedModalProps) {
   return (
     <>
       {showExistsModal && (
@@ -23,10 +25,10 @@ function FailedModal({ closeExistsModal, showExistsModal }: FailedModalProps) {
               />
             </div>
             <h3 className="mb-8 max-w-[635px] text-center text-2xl text-secondary-500 font-medium">
-              This user is not found.
+              {title || 'This user is not found.'}
             </h3>
             <div className="mb-7 space-y-3.5 text-center font-medium text-[#667085]">
-              <p>A User needs to be registered on Moricol for them to be able to be added in as a Member.</p>
+              <p>{description || 'A User needs to be registered on Moricol for them to be able to be added in as a Member.'}</p>
             </div>
             <Button onClick={closeExistsModal}>DONE</Button>
           </article>
