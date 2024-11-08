@@ -2,17 +2,34 @@
 import { useState, useEffect } from "react";
 import type { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-interface FetchState<T> {
-  data: T | null;
+
+export interface productCategoryParams {
+  data: [
+    {
+      product: {
+        _id: string;
+        prescription: boolean;
+        name: string;
+        coverimage: string;
+        price: Number;
+      };
+      _id: string;
+      category: string;
+    },
+  ];
+}
+
+interface FetchState<productCategoryParams> {
+  data: productCategoryParams | null;
   loading: boolean;
   error: string | null;
 }
 
 function useFetch<T = unknown>(
-  fetchFunction: (session: Session) => Promise<T>,
-): FetchState<T> {
+  fetchFunction: (session: Session) => Promise<productCategoryParams>,
+): FetchState<productCategoryParams> {
   const { data: session } = useSession();
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<productCategoryParams | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

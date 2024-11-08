@@ -1,7 +1,12 @@
 import { Session } from "next-auth";
 import { createClientAxios } from "./axios-client";
 import { handleAxiosError } from "./index";
+import { productCategoryParams } from "@/hooks/useFetch";
+import { SingleProduct } from "@/app/dashboard/pharmarcy/product/[id]/page";
 
+export interface SingProductParams {
+  data: SingleProduct;
+}
 export interface CreateDrugOrderRequestParams {
   userId: string;
   patientName: string;
@@ -23,18 +28,17 @@ export interface CreateAddressParams {
   postalcode: Number;
   state: string;
   city: string;
-  latitude: string;
-  longitude: string;
+  latitude?: string;
+  longitude?: string;
   session: Session;
 }
-export interface AllProductsParams {
-  category: string;
-  subcategory: string;
-  innercategory: string;
-  brand: string;
-  color: string;
-  price: Number;
-  rating: Number;
+export interface SubCategoryParams {
+  data: [
+    {
+      category: string;
+      subcategory: string;
+    },
+  ];
 }
 const onlinePharmacyUrl = "/user/pharmacy";
 // endpoints to receive data from the server
@@ -82,7 +86,9 @@ const onlinePharmacyApi = {
     }
   },
 
-  getAllCategories: async (session: Session): Promise<string[]> => {
+  getAllCategories: async (
+    session: Session,
+  ): Promise<productCategoryParams> => {
     const axios = createClientAxios({ session: session });
 
     try {
@@ -97,7 +103,12 @@ const onlinePharmacyApi = {
       throw new Error(errorMessage);
     }
   },
-  getSubCategories: async (session: Session): Promise<string[]> => {
+
+  getSubCategories: async (
+    session: Session,
+    category: string,
+  ): Promise<SubCategoryParams> => {
+    console.log(category);
     const axios = createClientAxios({ session: session });
 
     try {
@@ -106,7 +117,7 @@ const onlinePharmacyApi = {
           apiEndpoints.productCategory.retrieveSubCategory,
 
         {
-          category: "66df402da60f3b195520d0f3",
+          category,
         },
       );
       return response.data;
@@ -116,7 +127,9 @@ const onlinePharmacyApi = {
       throw new Error(errorMessage);
     }
   },
-  getInnerCategories: async (session: Session): Promise<string[]> => {
+  getInnerCategories: async (
+    session: Session,
+  ): Promise<productCategoryParams> => {
     const axios = createClientAxios({ session: session });
 
     try {
@@ -156,7 +169,7 @@ const onlinePharmacyApi = {
       throw new Error(errorMessage);
     }
   },
-  getNewProducts: async (session: Session): Promise<string[]> => {
+  getNewProducts: async (session: Session): Promise<productCategoryParams> => {
     const axios = createClientAxios({ session: session });
 
     try {
@@ -171,7 +184,7 @@ const onlinePharmacyApi = {
       throw new Error(errorMessage);
     }
   },
-  getBestProducts: async (session: Session): Promise<string[]> => {
+  getBestProducts: async (session: Session): Promise<productCategoryParams> => {
     const axios = createClientAxios({ session: session });
 
     try {
@@ -183,6 +196,29 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
+      console.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+  },
+  getSingleProduct: async (
+    session: Session,
+    productid: string | string[],
+  ): Promise<SingProductParams> => {
+    console.log(productid);
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL +
+          apiEndpoints.productCategory.retrieveSingleProduct,
+
+        {
+          productid,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error fetching categories");
       console.log(errorMessage);
       throw new Error(errorMessage);
     }

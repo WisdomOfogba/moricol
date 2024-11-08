@@ -7,17 +7,19 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/constants/routes";
 
 export default function ProductCard({
+  id,
   drugName,
   imageUrl,
   price,
   bestSelling,
-  prescription = true,
+  prescription,
 }: {
+  id: string;
   drugName: string;
   price: Number;
   imageUrl: string;
   bestSelling?: boolean;
-  prescription?: true;
+  prescription: boolean;
 }) {
   const router = useRouter();
 
@@ -25,7 +27,7 @@ export default function ProductCard({
     if (prescription) {
       router.push(routes.PHARMARCYPRESCRIPTION);
     } else {
-      router.push(routes.PHARMARCYPRODUCT);
+      router.push(routes.PHARMARCYPRODUCT + `/${id}`);
     }
   };
 

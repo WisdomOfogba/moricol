@@ -8,9 +8,11 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 export interface Product {
   product: {
+    _id: string;
     coverimage: string;
     name: string;
     price: Number;
+    prescription: boolean;
   };
 }
 
@@ -83,6 +85,8 @@ const SliderUtil = ({ data }: { data: Array<Product> }) => {
           if (drug?.product) {
             return (
               <ProductCard
+                id={drug.product?._id}
+                prescription={drug.product?.prescription}
                 drugName={drug.product?.name}
                 imageUrl={drug.product?.coverimage}
                 price={drug.product?.price}

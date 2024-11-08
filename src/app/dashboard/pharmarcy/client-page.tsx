@@ -17,18 +17,10 @@ import SliderUtil from "@/components/dashboard/SliderUtil";
 export default function HomePage() {
   const { data: bestProducts } = useFetch(onlinePharmacyApi.getBestProducts);
   const { data: newProducts } = useFetch(onlinePharmacyApi.getNewProducts);
-  // const { data: allProducts } = useFetch(onlinePharmacyApi.getAllProducts, {
-  //   category: "66df402da60f3b195520d0f3",
-  //   subcategory: "67053e9dddd5aefbba1cd4db",
-  //   innercategory: "67055802f0d05276249e822c",
-  //   brand: "",
-  //   color: "",
-  //   price: 0,
-  //   rating: 0,
-  // });
+
   const [showbestSellingProducts, setBestSellingProducts] = useState(false);
   const [shownewProducts, setNewProducts] = useState(false);
-  // console.log(allProducts);
+
   const displayNewProducts = () => setNewProducts(true);
   const displayBestSellingProducts = () => setBestSellingProducts(true);
   const navigateBackToHomePage = () => {
@@ -147,8 +139,11 @@ export default function HomePage() {
         <div className="grid gap-5 py-3 lg:grid-cols-6">
           {newProducts?.data.map((drug, index) => {
             if (drug?.product) {
+              console.log(drug.product);
               return (
                 <ProductCard
+                  id={drug.product?._id}
+                  prescription={drug.product?.prescription}
                   drugName={drug.product?.name}
                   imageUrl={drug.product?.coverimage}
                   price={drug.product?.price}
@@ -185,6 +180,8 @@ export default function HomePage() {
             if (drug?.product) {
               return (
                 <ProductCard
+                  id={drug.product?._id}
+                  prescription={drug.product?.prescription}
                   drugName={drug.product?.name}
                   imageUrl={drug.product?.coverimage}
                   price={drug.product?.price}

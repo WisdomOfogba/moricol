@@ -1,38 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import { categories } from "@/constants";
 import RangeSlider from "@/components/dashboard/range-slider";
 import ProductCard from "@/components/dashboard/pharmacy-product-card";
-// import useFetch from "@/hooks/useFetch";
-// import { useSession } from "next-auth/react";
-// import onlinePharmacyApi from "@/api/online-pharmacy";
+import onlinePharmacyApi from "@/api/online-pharmacy";
+import useFetch from "@/hooks/useFetch";
+import { useSession } from "next-auth/react";
+// interface Category {
 
+//     [{category: string,
+//     _id: string]
+
+// }
 export default function CategoryPage() {
-  const [category, setCategory] = useState<string>("medication");
-  const [subCategory, setSubCategory] = useState<string | null>(null);
-  const [subSubCategory, setSubSubCategory] = useState<string | null>(null);
-
-  // const { data: session } = useSession();
-  // const {
-  //   data: category,
-
-  // } = useFetch<string[]>(onlinePharmacyApi.getAllCategories(session!));
-  // console.log(category);
+  const { data: session } = useSession();
+  const { data: cats } = useFetch(onlinePharmacyApi.getAllCategories);
+  const [category, setCategory] = useState<string | null>(null);
+  const [subCategory, setSubCategory] = useState<string[] | null>(null);
+  const [subSubCategory, setSubSubCategory] = useState<string[] | null>([]);
   const [displayProducts, setDisplayProducts] = useState(false);
-
+  useEffect(() => {
+    if (cats?.data) setCategory(cats?.data[0].category);
+  }, [cats]);
   const resetSubCategories = () => {
     setSubCategory(null);
     setSubSubCategory(null);
   };
+  const getSubCategories = async (category: string) => {
+    const subcat = await onlinePharmacyApi.getSubCategories(session!, category);
+    const c = subcat.data.map((d) => d.subcategory);
+    setSubCategory(c);
+  };
 
   const navigateToLevel = (
     level: "category" | "subCategory" | "subSubCategory",
+    id?: string,
   ) => {
     switch (level) {
       case "category":
         resetSubCategories();
+        getSubCategories(id!);
         break;
       case "subCategory":
         setSubSubCategory(null);
@@ -77,40 +86,41 @@ export default function CategoryPage() {
         )}
       </h2>
     );
-  };
+    // };
 
-  const renderContent = () => {
-    if (subSubCategory !== null) {
-      return categories[category][subCategory!][subSubCategory].map((drug) => (
-        <li key={drug} className="capitalize">
-          <button
-            onClick={() => setDisplayProducts(true)}
-            className="capitalize"
-          >
-            {drug}
-          </button>
-        </li>
-      ));
-    } else if (subCategory !== null) {
-      return Object.keys(categories[category][subCategory]).map((subSubCat) => (
-        <li key={subSubCat} className="capitalize">
-          <button
-            onClick={() => setSubSubCategory(subSubCat)}
-            className="capitalize"
-          >
-            {subSubCat}
-          </button>
-        </li>
-      ));
-    } else {
-      return Object.keys(categories[category]).map((subCat) => (
-        <li key={subCat} className="capitalize">
-          <button onClick={() => setSubCategory(subCat)} className="capitalize">
-            {subCat}
-          </button>
-        </li>
-      ));
-    }
+    // const renderContent = () => {
+    //   if (subSubCategory !== null) {
+    //     return categories[category][subCategory!][subSubCategory].map((drug) => (
+    //       <li key={drug} className="capitalize">
+    //         <button
+    //           onClick={() => setDisplayProducts(true)}
+    //           className="capitalize"
+    //         >
+    //           {drug}
+    //         </button>
+    //       </li>
+    //     ));
+    //   } else if (subCategory !== null) {
+    //     return (subCategory).map((subSubCat) => (
+    //       <li key={subSubCat} className="capitalize">
+    //         <button
+    //           onClick={() => setSubSubCategory(subSubCat)}
+    //           className="capitalize"
+    //         >
+    //           {subSubCat}
+    //         </button>
+    //       </li>
+    //     ));
+    //   }
+    // else {
+    //   return Object.keys(categories[category]).map((subCat) => (
+    //     <li key={subCat} className="capitalize">
+    //       <button onClick={() => setSubCategory(subCat)} className="capitalize">
+    //         {subCat}
+    //       </button>
+    //     </li>
+    //   ));
+    // }
   };
 
   return (
@@ -124,16 +134,17 @@ export default function CategoryPage() {
             <div className="bg-gray-100 p-5">
               <h2 className="mb-3 text-primary-500">CATEGORIES</h2>
               <ul className="grid gap-y-5">
-                {Object.keys(categories).map((cat) => (
-                  <li key={cat}>
+                {cats?.data.map((cat, index) => (
+                  <li key={index}>
                     <button
                       onClick={() => {
-                        setCategory(cat);
+                        // getSubCategories(cat._id);
+                        setCategory(cat.category);
                         resetSubCategories();
                       }}
                       className="capitalize"
                     >
-                      {cat}
+                      {cat.category}
                     </button>
                   </li>
                 ))}
@@ -144,7 +155,7 @@ export default function CategoryPage() {
           <section className="grow border border-gray-300 px-8 py-6">
             {renderHeader()}
             <ul className="grid grid-cols-2 text-gray-500">
-              {renderContent()}
+              {/* {renderContent()} */}
             </ul>
           </section>
         </div>
