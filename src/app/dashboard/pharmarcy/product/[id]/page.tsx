@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
-interface ColorSize {
+interface Attributes {
   value: string;
   price: Number;
 }
@@ -22,9 +22,9 @@ interface Images {
 export interface SingleProduct {
   product: {
     attribute: {
-      brand: string[];
-      color: ColorSize[];
-      size: ColorSize[];
+      brand: Attributes[];
+      color: Attributes[];
+      size: Attributes[];
     };
 
     category: string;
@@ -99,9 +99,9 @@ export default function ProductPage() {
             {/* Brand | Rating | Availability */}
             <p className="mb-1.5">
               Brand:{" "}
-              <span className="text-primary-500">
-                {drug?.product.attribute.brand}
-              </span>
+              {drug?.product.attribute.brand.map((b, i) => (
+                <span className="text-primary-500">{b.value}</span>
+              ))}
             </p>
             <div className="mb-2 mt-0.5 flex items-center gap-x-1">
               <StarSVG fill="#E7A542" />
@@ -133,7 +133,7 @@ export default function ProductPage() {
                 <h3 className="mb-1 text-gray-700">Color</h3>
                 <div className="flex flex-wrap gap-x-1.5">
                   {drug?.product.attribute.color.map((col, index) => (
-                    <button className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white">
+                    <button className="flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2">
                       {col.value}
                     </button>
                   ))}
