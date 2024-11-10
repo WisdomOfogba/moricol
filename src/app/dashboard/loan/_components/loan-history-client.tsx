@@ -100,10 +100,10 @@ export default function LoanHistoryClient({
       <div className="max-w-2xl">
         <div className="p-4 md:p-6">
           <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value) => tabChange(value)}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="pending">Pending Loans {loading && activeTab === "pending" && <Spinner />}</TabsTrigger>
-              <TabsTrigger value="processed">Processed Loans {loading && activeTab === "processed" && <Spinner />}</TabsTrigger>
-              <TabsTrigger value="active">Active Loans {loading && activeTab === "active" && <Spinner />}</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 gap-4 ">
+              <TabsTrigger className="text-xs" value="pending">Pending Loans {loading && activeTab === "pending" && <Spinner />}</TabsTrigger>
+              <TabsTrigger className="text-xs" value="processed">Processed Loans {loading && activeTab === "processed" && <Spinner />}</TabsTrigger>
+              <TabsTrigger className="text-xs" value="active">Active Loans {loading && activeTab === "active" && <Spinner />}</TabsTrigger>
             </TabsList>
             <TabsContent value={activeTab} className="mt-4 space-y-4">
               {loanData.map((loan: LoanHistoryType, index: number) => (

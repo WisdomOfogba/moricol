@@ -6,7 +6,7 @@ export default function Recruitment() {
   return (
     <section className="relative overflow-hidden bg-[#0093AD] p-20 text-center text-white">
       <div className="relative z-10 mx-auto mb-20 flex max-w-[1120px] flex-col items-center">
-        <h1 className="mb-9 text-7xl font-extrabold">
+        <h1 className="mb-9 text-5xl font-extrabold lg:text-7xl">
           Making candidates become the best version of themselves
         </h1>
         <p className="mb-11 text-2xl">

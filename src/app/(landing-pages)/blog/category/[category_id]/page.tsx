@@ -1,7 +1,9 @@
 import { Input } from "@/components/input";
 import React from "react";
-import { blogApi, BlogPost } from "@/api/blog";
+import { blogApi, BlogCategory, BlogPost } from "@/api/blog";
 import BlogCard from "../../_component/blogcard";
+import FilterByCategory from "../../_component/filter-by-category";
+import UpdateMeta from "../../_component/update-meta";
 
 
 // export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -15,21 +17,25 @@ import BlogCard from "../../_component/blogcard";
 
 async function getBlogData(categoryId: string) {
     try {
-        const { data: blogData } = await blogApi.getBlogsByCategory({ category: categoryId });
-        const categories = await blogApi.getCategories();
+        const res = await blogApi.getAllBlogs({ page: 1, category: categoryId });
+        const blogData = res.data;
+        const { data: categories } = await blogApi.getCategories();
         return { blogData, categories };
     } catch (error) {
         throw new Error(error instanceof Error ? error.message : 'Failed to get blog data');
     }
 }
 export default async function Category({ params }: { params: { category_id: string } }) {
-    const { blogData, categories }: { blogData: BlogPost[], categories: { data: string[] } } = await getBlogData(params.category_id);
-    console.log(categories);
+    const { blogData, categories }: { blogData: BlogPost[], categories: BlogCategory[] } = await getBlogData(params.category_id);
     return <main>
+        <UpdateMeta
+            title={categories.find((c) => c._id === params.category_id)?.name}
+            description={categories.find((c) => c._id === params.category_id)?.name}
+        />
         <section className="p-4 sm:p-8 md:p-12 lg:p-20 text-[#0F172A]">
             <div className="mb-6">
                 <h1 className="mb-3 text-2xl sm:text-3xl font-semibold">
-                    Get Informed about the latest happenings
+                    {categories.find((c) => c._id === params.category_id)?.name}
                 </h1>
                 <p className="text-sm sm:text-base">
                     We keep you informed about everything and anything you need to know
@@ -48,7 +54,7 @@ export default async function Category({ params }: { params: { category_id: stri
                         className="w-full rounded-lg border border-gray-500 bg-white py-3 px-4"
                     />
                 </form>
-                {/* <FilterByCategory categories={categories.data} /> */}
+                <FilterByCategory categories={categories} />
 
             </div>
             {blogData && (

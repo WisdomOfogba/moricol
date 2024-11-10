@@ -24,7 +24,7 @@ interface HomepageParams {
 }
 
 interface RetrieveCategoryParams {
-    category?: string;
+    categoryid?: string;
     session: Session;
 }
 
@@ -110,11 +110,11 @@ const telemedicineApi = {
         }
     },
 
-    retrieveSingleCategory: async ({ category = '', session }: RetrieveCategoryParams) => {
+    retrieveSingleCategory: async ({ categoryid, session }: RetrieveCategoryParams) => {
         const axios = createClientAxios({ session });
 
         try {
-            const response = await axios.post(endpoints.retrieveCategory, { category });
+            const response = await axios.post(endpoints.retrieveCategory, { categoryid });
             return response.data;
         } catch (error) {
             const errorMessage = handleAxiosError(error, 'Error retrieving telemedicine category');

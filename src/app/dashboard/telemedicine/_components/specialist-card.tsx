@@ -17,7 +17,7 @@ function SpecialistCard({
 }) {
   return (
     <Link
-      href={routes.TELEMEDICINE_PRACTITIONERS + "?type=" + id}
+      href={routes.TELEMEDICINE_DASHBOARD + "/" + id}
       className={`${color} rounded-lg p-4 `}
     >
       <div className="mb-2 text-3xl">{icon}</div>

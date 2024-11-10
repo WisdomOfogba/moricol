@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/card";
 import { BiBell, BiCheckCircle } from "react-icons/bi";
 import { GiAlarmClock } from "react-icons/gi";
+import TelemedPageWrap from "../../_components/telemed-page-wrap";
 
 interface Notification {
   id: number;
@@ -76,43 +77,45 @@ const NotificationIcon = ({ type }: { type: Notification["type"] }) => {
 
 export default function NotificationPage() {
   return (
-    <div className="mx-auto max-w-xl">
-      <div className="space-y-4">
-        {Object.entries(
-          notifications.reduce(
-            (acc, notification) => {
-              if (!acc[notification.date]) {
-                acc[notification.date] = [];
-              }
-              acc[notification.date].push(notification);
-              return acc;
-            },
-            {} as Record<string, Notification[]>,
-          ),
-        ).map(([date, groupedNotifications]) => (
-          <div key={date} className="divide-y rounded-xl bg-white p-2">
-            <h2 className="mb-2 px-2 text-sm text-gray-500">{date}</h2>
-            {groupedNotifications.map((notification) => (
-              <Card
-                key={notification.id}
-                className="mb-2 rounded-none border-0 shadow-none"
-              >
-                <CardContent className="flex items-start p-4">
-                  <div className="mr-4 mt-1">
-                    <NotificationIcon type={notification.type} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{notification.title}</h3>
-                    <p className="text-sm text-gray-600">
-                      {notification.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ))}
+    <TelemedPageWrap>
+      <div className="mx-auto max-w-xl">
+        <div className="space-y-4">
+          {Object.entries(
+            notifications.reduce(
+              (acc, notification) => {
+                if (!acc[notification.date]) {
+                  acc[notification.date] = [];
+                }
+                acc[notification.date].push(notification);
+                return acc;
+              },
+              {} as Record<string, Notification[]>,
+            ),
+          ).map(([date, groupedNotifications]) => (
+            <div key={date} className="divide-y rounded-xl bg-white p-2">
+              <h2 className="mb-2 px-2 text-sm text-gray-500">{date}</h2>
+              {groupedNotifications.map((notification) => (
+                <Card
+                  key={notification.id}
+                  className="mb-2 rounded-none border-0 shadow-none"
+                >
+                  <CardContent className="flex items-start p-4">
+                    <div className="mr-4 mt-1">
+                      <NotificationIcon type={notification.type} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{notification.title}</h3>
+                      <p className="text-sm text-gray-600">
+                        {notification.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </TelemedPageWrap>
   );
 }

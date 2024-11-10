@@ -1,8 +1,9 @@
-import { blogApi, BlogPost } from "@/api/blog";
+import { blogApi, BlogCategory, BlogPost } from "@/api/blog";
 import { Input } from "@/components/input";
 import BlogCard from "./_component/blogcard";
 
 // import FilterByCategory from "./_component/filter-by-category";
+import FilterByCategory from "./_component/filter-by-category";
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
@@ -13,7 +14,7 @@ export const metadata = {
 async function getBlogData() {
   try {
     const { data: blogData } = await blogApi.getAllBlogs({ page: 1, category: '' });
-    const categories = await blogApi.getCategories();
+    const { data: categories } = await blogApi.getCategories();
     return { blogData, categories };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get blog data');
@@ -23,8 +24,7 @@ async function getBlogData() {
 
 
 export default async function Blog() {
-  const { blogData, categories }: { blogData: BlogPost[], categories: { data: string[] } } = await getBlogData();
-  console.log(categories);
+  const { blogData, categories }: { blogData: BlogPost[], categories: BlogCategory[] } = await getBlogData();
   return (
     <main>
       <section className="p-4 sm:p-8 md:p-12 lg:p-20 text-[#0F172A]">
@@ -49,7 +49,7 @@ export default async function Blog() {
               className="w-full rounded-lg border border-gray-500 bg-white py-3 px-4"
             />
           </form>
-          {/* <FilterByCategory categories={categories.data} /> */}
+          <FilterByCategory categories={categories} />
 
         </div>
         {blogData && (

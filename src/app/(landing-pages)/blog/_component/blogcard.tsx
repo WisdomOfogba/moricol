@@ -38,7 +38,7 @@ function BlogCard({ title, id, blogPost }: { title: string, id: string, blogPost
                     <h3 className="text-sm text-gray-700">
                         {title}
                     </h3>
-                    <p className="text-xxs line-clamp-5 h-[80px]" dangerouslySetInnerHTML={{ __html: blogPost.blog }} />
+                    <div className="text-xxs line-clamp-5 h-[80px]" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: blogPost.blog }} />
 
                     <div className="my-4 h-[0.42px] bg-[#E5E5E5]" />
 
