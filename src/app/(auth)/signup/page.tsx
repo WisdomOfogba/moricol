@@ -2,6 +2,7 @@ import Image from "next/image";
 import SignupForm from "./signup-form";
 import AuthSidebar from "@/components/auth/sidebar";
 import AuthFooter from "@/components/auth/footer";
+import Link from "next/link";
 
 export default function SignUp() {
   return (
@@ -9,7 +10,7 @@ export default function SignUp() {
       <AuthSidebar imgUrl="/images/auth/health-tracking.png" />
 
       <section className="grow overflow-y-auto px-14 py-9">
-        <div className="relative mx-auto mb-6 h-[80.76px] w-[161px] shrink-0 lg:mb-9 lg:h-[111.36px] lg:w-[222px]">
+        <Link href="/" className="relative block mx-auto mb-6 h-[80.76px] w-[161px] shrink-0 lg:mb-9 lg:h-[111.36px] lg:w-[222px]">
           <Image
             alt="Moricol logo"
             src="/logo.svg"
@@ -17,11 +18,11 @@ export default function SignUp() {
             sizes="100vw"
             priority
           />
-        </div>
+        </Link>
 
         <SignupForm />
 
-        <AuthFooter />
+        <AuthFooter signin={false} />
       </section>
     </main>
   );

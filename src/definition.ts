@@ -180,3 +180,86 @@ export type FilterValues = {
   state: string;
   [key: string]: string[] | number[] | string;
 };
+
+export type LoanCategory = {
+  _id: string;
+  name: string;
+  image: string;
+}
+
+export type LoanDetails = {
+  range: {
+    amount1: number;
+    amount2: number;
+    amount3: number;
+  };
+  _id: string;
+  name: string;
+  image: string;
+  durations: Array<{
+    days: number;
+    interest: number;
+    late_interest: number;
+    installment_days: {
+      days: number;
+      period: number;
+      _id: string;
+    }[];
+    _id: string;
+  }>;
+  client: number;
+  createdAt: string;
+  __v: number;
+}
+
+
+export type Plan = {
+  title: string
+  plan_type: string
+  min_members: number
+  max_members: number
+  subtitle: string
+  durations: { label: string, price: string }[]
+  highlighted?: boolean
+}
+
+export type Organization = {
+  _id: string;
+  userid: string;
+  plan_type: string;
+  duration: string;
+  name: string;
+  user_limit: number;
+  amount: number;
+  total_member: number;
+  balance_amount: number;
+  active: boolean;
+  createdAt: string;
+  __v: number;
+}
+
+
+export type OrganizationMember = {
+  _id: string;
+  userid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+  },
+  organizationid: string;
+  createdAt: string;
+  __v: number;
+}
+
+
+export type LoanDataType = {
+  _id: string;
+  title: string;
+  content: string;
+  userid: string;
+  loanoffer: string;
+  createdAt: string;
+  __v: number;
+};

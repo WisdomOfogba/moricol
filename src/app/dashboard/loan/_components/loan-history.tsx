@@ -2,18 +2,18 @@
 
 import { SettingFilter } from "@/components/svgs/loan-svg";
 import { routes } from "@/constants/routes";
-import { LoanHistoryItem } from "@/definition";
+import { LoanDataType } from "@/definition";
 import Link from "next/link";
 import React, { useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 
-function LoanHistory({ loans }: { loans: LoanHistoryItem[] }) {
+function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const [filterStatus, setFilterStatus] = useState("All");
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
   const filteredLoans = loans.filter(
-    (loan) => filterStatus === "All" || loan.status === filterStatus,
+    (loan) => filterStatus === "All" || loan.title.includes(filterStatus.toLowerCase()),
   );
 
   return (
@@ -37,13 +37,13 @@ function LoanHistory({ loans }: { loans: LoanHistoryItem[] }) {
             </button>
             <button
               className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              onClick={() => setFilterStatus("Approved")}
+              onClick={() => setFilterStatus("Approve")}
             >
               Approved
             </button>
             <button
               className="block px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-              onClick={() => setFilterStatus("Declined")}
+              onClick={() => setFilterStatus("Decline")}
             >
               Declined
             </button>
@@ -52,20 +52,20 @@ function LoanHistory({ loans }: { loans: LoanHistoryItem[] }) {
       </div>
       {filteredLoans.map((item, index) => (
         <Link
-          href={routes.LOANDASHBOARDHOME + "/id"}
+          href={routes.LOANDASHBOARDHOME + `/status/${item.loanoffer}`}
           key={index}
           className="group flex items-center rounded-lg bg-gray-50 bg-white p-4 shadow"
         >
           <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100">
-            {item.status === "Approved" ? (
+            {!item.title.includes("declined") ? (
               <FaCheckCircle className="text-2xl text-green-500" />
             ) : (
               <FaExclamationCircle className="text-2xl text-red-500" />
             )}
           </div>
-          <div className="flex-grow">
+          <div className="flex-grow capitalize">
             <h3 className="font-semibold">{item.title}</h3>
-            <p className="text-sm text-gray-500">{item.description}</p>
+            <p className="text-sm text-gray-500">{item.content}</p>
           </div>
           <BiChevronRight className="h-10 w-10 text-gray-400 group-hover:text-primary-500" />
         </Link>

@@ -6,11 +6,12 @@ import { FilterBoldSVG } from "@/components/svgs/loan-svg";
 import { BiSearch } from "react-icons/bi";
 import LoanFilterResults from "./filter-results";
 import { useState } from "react";
+import { LoanCategory } from "@/definition";
 
 function LoanFilterClient({
   categories,
 }: {
-  categories: { title: string; image: string }[];
+  categories: LoanCategory[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   return (
@@ -29,7 +30,7 @@ function LoanFilterClient({
                 id="loan-search"
                 name="loan-search"
                 placeholder="Search for Loan"
-                className="w-full rounded-lg border py-2 pl-10 pr-4 text-lg outline-none focus:border-primary-500"
+                className="w-full rounded-lg border py-2 focus:pl-10 focus:py-2  pl-10 pr-4 text-lg outline-none  focus:border-primary-500"
               />
               <BiSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
             </div>

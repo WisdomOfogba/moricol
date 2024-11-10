@@ -1,13 +1,18 @@
+"use client";
 import Button from "@/components/button";
 import NavigationBackBtn from "@/components/nav-back-btn";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ReturnPolicy({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const [agree, setAgree] = useState(false);
+
+
   return (
     <section className="pb-5">
       <div className="border-b border-gray-300 px-4 py-2">
@@ -53,16 +58,16 @@ export default function ReturnPolicy({
         </div>
         <form className="mt-5">
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" id="agree" className="h-5 w-5" />
+            <input onChange={() => setAgree(!agree)} type="checkbox" id="agree" className="h-5 w-5" />
             <label htmlFor="agree" className="italics text-gray-500">
               {/* By continuing, you have agreed to this loan policy. */}
               You have agreed for us to have access to your guarantors and bank
               managers.
             </label>
           </div>
-          {searchParams.cb && (
+          {searchParams.cb && agree && (
             <Link href={(routes.LOANDASHBOARDHOME + searchParams.cb) as string}>
-              <Button className="mt-10 lg:max-w-[360px]">Continue</Button>
+              <Button className="mt-10 lg:max-w-[360px] ">Continue</Button>
             </Link>
           )}
         </form>

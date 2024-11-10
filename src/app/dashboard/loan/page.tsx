@@ -8,8 +8,37 @@ import {
 import Link from "next/link";
 import LoanHistory from "./_components/loan-history";
 import { routes } from "@/constants/routes";
+import { getUserSession } from "@/lib/auth";
+import loanApi from "@/api/loan";
+import { LoanDataType } from "@/definition";
 
-export default function LoanDashboard() {
+export const dynamic = 'force-dynamic';
+
+export const metadata = {
+  title: "Loan Dashboard | Moricol",
+  description: "View your loan history and manage your loan accounts",
+};
+
+
+
+
+async function getLoanData() {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: loanData }: { data: LoanDataType[] } = await loanApi.homepage({ userid: session.user.id, session });
+    return loanData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get loan data');
+  }
+}
+
+
+export default async function LoanDashboard() {
+  const loanData = await getLoanData();
+
   const links = [
     {
       title: "Payback",
@@ -20,38 +49,7 @@ export default function LoanDashboard() {
     { title: "Accounts", path: routes.LOANACCOUNTS, icon: <BankSVG /> },
   ];
 
-  const loanHistory = [
-    {
-      title: "Loan Received",
-      description: "Loan of N30,000 was received",
-      status: "Approved",
-    },
-    {
-      title: "Loan Disbursed",
-      description: "N30,000 was disbursed to your bank",
-      status: "Approved",
-    },
-    {
-      title: "Loan Approved",
-      description: "N30,000 was approved",
-      status: "Approved",
-    },
-    {
-      title: "Loan Received",
-      description: "Loan of N30,000 was received",
-      status: "Approved",
-    },
-    {
-      title: "Loan Declined",
-      description: "We're sorry! your loan was declined",
-      status: "Declined",
-    },
-    {
-      title: "Loan Declined",
-      description: "We're sorry! your loan was declined",
-      status: "Declined",
-    },
-  ];
+
 
   return (
     <div className="py-5">
@@ -71,7 +69,7 @@ export default function LoanDashboard() {
               </Button>
             </Link>
 
-            <div className="mb-6 flex justify-between rounded-xl bg-gray-100 p-4">
+            <div className="mb-6 flex justify-between rounded-xl bg-gray-100 p-4 ">
               {links.map((item, index) => (
                 <Link
                   href={item.path}
@@ -83,14 +81,16 @@ export default function LoanDashboard() {
                       {item.icon}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500">{item.title}</span>
+                  <span className="text-sm text-gray-500">
+                    {item.title}
+                  </span>
                 </Link>
               ))}
             </div>
           </div>
 
           <div className="lg:w-2/3">
-            <LoanHistory loans={loanHistory} />
+            <LoanHistory loans={loanData} />
           </div>
         </div>
       </div>

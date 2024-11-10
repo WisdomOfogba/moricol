@@ -1,105 +1,116 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
 import { Card, CardContent } from "@/components/card";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
+import dayjs from "dayjs";
+import { LoanHistoryType } from "../history/page";
+import { useRouter } from "next/navigation";
+import NoItemsFound from "@/components/no-item-found";
+import { Loader2 } from "lucide-react";
 
-interface LoanData {
-  amount: number;
-  duration: number;
-  initiatedOn: string;
-  status: string;
-  id: string | number;
-}
+
 
 interface LoanHistoryProps {
-  loanData: LoanData[];
+  loanData: LoanHistoryType[];
 }
 
 interface LoanCardProps {
-  loan: LoanData;
+  loan: LoanHistoryType;
+  view: string;
 }
 
-const LoanCard: React.FC<LoanCardProps> = ({ loan }) => (
+const LoanCard: React.FC<LoanCardProps> = ({ loan, view }) => (
+
   <Card className="bg-gray-50">
     <CardContent className="p-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="font-semibold">Loan Amount: {loan.amount}</p>
           <p className="text-sm text-gray-600">
-            Duration: {loan.duration} Months
+            Duration: {loan.total_days} Months
           </p>
         </div>
-        <Link
-          href={
-            loan.status === "Approved"
-              ? `${routes.LOANHISTORY}/${loan.id}/approved`
-              : loan.status === "Active"
-                ? `${routes.LOANHISTORY}/${loan.id}`
-                : "#"
+        {view === "pending" && (<span
+          className={"text-primary-500"
           }
         >
-          <span
-            className={
-              loan.status === "Approved"
-                ? "font-bold text-green-500"
-                : "text-primary-500"
-            }
-          >
-            {loan.status === "Approved"
-              ? "View Receipt"
-              : loan.status === "Active"
-                ? "View/Pay back"
-                : loan.status}
-          </span>
-        </Link>
+          Pending
+        </span>)}
+
+        {view === "processed" && (<span
+          className={"font-bold " + (loan.loan_approved ? "text-green-500" : "text-red-500")}
+        >
+          <Link href={`${routes.LOANSTATUS}/${loan._id}`}>
+            {loan.loan_approved ? "View Receipt" : "Declined"}
+          </Link>
+        </span>)}
+
+        {view === "active" && (<span
+          className={"font-bold " + (loan.status === "approved" ? "text-green-500" : "text-red-500")}
+        >
+          <Link href={`${routes.LOANHISTORY}/${loan._id}`}>
+            View Details
+          </Link>
+        </span>)}
       </div>
       <p className="mt-2 text-right text-sm text-gray-600">
-        {loan.status === "Pending" && "Initiated on:"}
-        {loan.initiatedOn}
+        {loan.status !== "approved" && "Initiated on:"}
+        {dayjs(loan.createdAt).format("MMM D, YYYY")}
       </p>
     </CardContent>
   </Card>
+);
+
+const Spinner = () => (
+  <div className="flex items-center justify-center">
+    <Loader2 className="w-4 h-4 animate-spin" />
+  </div>
 );
 
 export default function LoanHistoryClient({
   loanData,
   view = "pending",
 }: LoanHistoryProps & { view: string }) {
+
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(view);
+  const [loading, setLoading] = useState(true);
+  const tabChange = (value: string) => {
+    setLoading(true);
+    setActiveTab(value);
+    router.replace(`${routes.LOANHISTORY}?v=${value}`);
+  }
+
+  useEffect(() => {
+    setActiveTab(view);
+  }, [view]);
+
+  useEffect(() => {
+    setLoading(false);
+    return () => {
+      setLoading(false);
+    };
+  }, [loanData]);
 
   return (
     <div className="min-h-screen">
       <div className="max-w-2xl">
         <div className="p-4 md:p-6">
-          <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+          <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value) => tabChange(value)}>
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="pending">Pending Loans</TabsTrigger>
-              <TabsTrigger value="approved">Approved Loans</TabsTrigger>
-              <TabsTrigger value="active">Active Loans</TabsTrigger>
+              <TabsTrigger value="pending">Pending Loans {loading && activeTab === "pending" && <Spinner />}</TabsTrigger>
+              <TabsTrigger value="processed">Processed Loans {loading && activeTab === "processed" && <Spinner />}</TabsTrigger>
+              <TabsTrigger value="active">Active Loans {loading && activeTab === "active" && <Spinner />}</TabsTrigger>
             </TabsList>
-            <TabsContent value="pending" className="mt-4 space-y-4">
-              {loanData
-                .filter((loan) => loan.status === "Pending")
-                .map((loan, index) => (
-                  <LoanCard key={index} loan={loan} />
-                ))}
-            </TabsContent>
-            <TabsContent value="approved" className="mt-4 space-y-4">
-              {loanData
-                .filter((loan) => loan.status === "Approved")
-                .map((loan, index) => (
-                  <LoanCard key={index} loan={loan} />
-                ))}
-            </TabsContent>
-            <TabsContent value="active" className="mt-4 space-y-4">
-              {loanData
-                .filter((loan) => loan.status === "Active")
-                .map((loan, index) => (
-                  <LoanCard key={index} loan={loan} />
-                ))}
+            <TabsContent value={activeTab} className="mt-4 space-y-4">
+              {loanData.map((loan: LoanHistoryType, index: number) => (
+                <LoanCard view={activeTab} key={index} loan={loan} />
+              ))}
+
+              {loanData.length === 0 && <NoItemsFound />}
             </TabsContent>
           </Tabs>
         </div>

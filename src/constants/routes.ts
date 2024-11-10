@@ -14,6 +14,8 @@ export const routes = {
   //AUTH
   LOGIN: "/login",
 
+  PROFILE: "/dashboard/profile",
+
   // Massage dashboard links
   MASSAGEDASHBOARDHOME: "/dashboard/massage",
   MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists/1",
@@ -71,6 +73,7 @@ export const routes = {
   LOANACCOUNTSNEW: "/dashboard/loan/accounts/new",
   LOANHISTORY: "/dashboard/loan/history",
   LOANPAYBACK: "/dashboard/loan/payback",
+  LOANSTATUS: "/dashboard/loan/status",
 
   // Recruitment dashboard pages links
 
@@ -136,5 +139,6 @@ export const routes = {
     "/dashboard/telemedicine/practitioners/reviews",
   TELEMEDICINE_PRACTITIONERS_FAVORITES:
     "/dashboard/telemedicine/practitioners/favorites",
-  TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization'
+  TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization',
+  TELEMEDICINE_ORGANIZATION_CREATE: '/dashboard/telemedicine/organization/create'
 };

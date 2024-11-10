@@ -2,7 +2,13 @@ import Image from "next/image";
 import AuthSidebar from "@/components/auth/sidebar";
 import ResetPasswordForm from "./reset-password-form";
 
-export default function ResetPassword() {
+export default function ResetPassword({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const email = searchParams.email as string | undefined;
+
   return (
     <main className="flex h-screen min-h-screen overflow-hidden">
       <AuthSidebar imgUrl="/images/auth/doctor-online.png" />
@@ -18,7 +24,7 @@ export default function ResetPassword() {
           />
         </div>
 
-        <ResetPasswordForm />
+        <ResetPasswordForm email={email} />
       </section>
     </main>
   );

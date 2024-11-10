@@ -60,6 +60,25 @@ export const confirmVerificationCode = async (code: string) => {
   }
 };
 
+/**
+ * Function to confirm password reset verification code.
+ * 
+ * @param code - Verification code to confirm.
+ */
+export const confirmPasswordResetCode = async (code: string, email: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/confirm/forgotpassword/code`, { code, email }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Code verification error:', error);
+    throw error;
+  }
+};
+
 export interface ResetPasswordData {
   email: string;
   currentpassword: string;
@@ -108,6 +127,28 @@ export const forgotPassword = async (email: string) => {
     return response.data;
   } catch (error) {
     console.error("Forgot password error:", error);
+    throw error;
+  }
+};
+
+/**
+ * Function to change user password.
+ * 
+ * @param email - The user's email, new password and confirm password.
+ */
+export const changePassword = async (email: string, new_password: string, confirm_password: string) => {
+  if (new_password !== confirm_password) {
+    throw new Error("Passwords do not match");
+  }
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/reset/password`, { email, newpassword: new_password }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Change password error:', error);
     throw error;
   }
 };

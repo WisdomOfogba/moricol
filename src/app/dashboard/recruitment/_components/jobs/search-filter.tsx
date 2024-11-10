@@ -7,7 +7,7 @@ import { routes } from "@/constants/routes";
 import jobsApi from "@/api/jobs";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FilterValues } from "@/definition";
 
 
@@ -18,8 +18,7 @@ const SearchAndFilter = ({ handleFilterJobs }: { handleFilterJobs: (filterSelect
   const [loadingFilterValues, setLoadingFilterValues] = useState(false);
 
 
-
-  const getFilterValues = async () => {
+  const getFilterValues = useCallback(async () => {
     try {
       setLoadingFilterValues(true);
       const { data: response } = await jobsApi.jobPostFilterData({ session: session as Session });
@@ -29,7 +28,7 @@ const SearchAndFilter = ({ handleFilterJobs }: { handleFilterJobs: (filterSelect
     } finally {
       setLoadingFilterValues(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getFilterValues();

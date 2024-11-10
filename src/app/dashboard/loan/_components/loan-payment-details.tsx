@@ -1,21 +1,28 @@
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/select";
 import { Input } from "@/components/input";
 import Button from "@/components/button";
 import { ArrowRightSvg } from "@/components/svgs";
+import { Label } from "@/components/label";
+import { banksInNigeria } from "@/constants/banks";
+import { CreateOfferParams } from "@/api/loan";
+import { InstallmentPeriod } from "./loan-offer-client";
+
+export type BankDetails = {
+  accountnumber: string;
+  accountname: string;
+  bankname: string;
+}
 
 function LoanPaymentDetails({
   nextPage,
   prevPage,
+  applyData,
+  handleFieldChangeAndUpdate
 }: {
   nextPage: () => void;
   prevPage: () => void;
+  applyData: Omit<CreateOfferParams, "userid" | "session">;
+  handleFieldChangeAndUpdate: (field: keyof Omit<CreateOfferParams, "userid" | "session">, value: string | number | InstallmentPeriod[] | BankDetails) => void
 }) {
   return (
     <div className="min-h-[50vh] bg-white">
@@ -35,22 +42,25 @@ function LoanPaymentDetails({
 
         <form className="space-y-4">
           <div className="space-y-2">
-            <label
-              htmlFor="bank"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Choose bank
-            </label>
-            <Select>
-              <SelectTrigger id="bank" className="w-full bg-white">
-                <SelectValue placeholder="Select a bank" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="bank1">Bank 1</SelectItem>
-                <SelectItem value="bank2">Bank 2</SelectItem>
-                <SelectItem value="bank3">Bank 3</SelectItem>
-              </SelectContent>
-            </Select>
+            <Label className="block pb-2" htmlFor="bank-name">
+              Bank Name *
+            </Label>
+            <Input
+              id="bank-name"
+              value={applyData.bankname}
+              onChange={(e) => {
+                handleFieldChangeAndUpdate('bankname', e.target.value);
+                handleFieldChangeAndUpdate('bank_details', { ...applyData.bank_details, bankname: e.target.value });
+              }}
+              placeholder="Enter bank name"
+              list="bank-names"
+              className="w-full"
+            />
+            <datalist id="bank-names">
+              {banksInNigeria.map((bank) => (
+                <option key={bank} value={bank} />
+              ))}
+            </datalist>
           </div>
 
           <div className="space-y-2">
@@ -61,10 +71,28 @@ function LoanPaymentDetails({
               Bank account number
             </label>
             <Input
-              type="text"
+              type="number"
               id="account-number"
               placeholder="Enter your account number"
               className="w-full"
+              value={applyData.bank_details.accountnumber}
+              onChange={(e) => handleFieldChangeAndUpdate('bank_details', { ...applyData.bank_details, accountnumber: e.target.value })}
+            />
+          </div>
+          <div className="space-y-2">
+            <label
+              htmlFor="accountname"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Account Name
+            </label>
+            <Input
+              type="text"
+              id="account-name"
+              placeholder="Enter your account name"
+              className="w-full"
+              value={applyData.bank_details.accountname}
+              onChange={(e) => handleFieldChangeAndUpdate('bank_details', { ...applyData.bank_details, accountname: e.target.value })}
             />
           </div>
 

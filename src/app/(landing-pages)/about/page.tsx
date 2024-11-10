@@ -1,13 +1,15 @@
 import { about } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
+import ContactForm from "./_components/contact-forn";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 export default function AboutUs() {
   return (
     <div className="bg-gray-50">
-      <header className="mb-12 p-20 text-center">
-        <h1 className="mb-8 text-5xl font-extrabold">About us</h1>
-        <p className="text-lg">
+      <header className="mb-8 md:mb-12 p-6 md:p-20 text-center">
+        <h1 className="mb-4 md:mb-8 text-3xl md:text-5xl font-extrabold">About us</h1>
+        <p className="text-base md:text-lg">
           At MORICOL HEALTHCARE SERVICE we specialize in connecting exceptional
           healthcare talent with rewarding opportunities across Nigeria&apos;s
           vibrant healthcare sector. With our deep understanding of the
@@ -16,33 +18,38 @@ export default function AboutUs() {
           healthcare institutions in need of their expertise.
         </p>
       </header>
-      <main className="px-20">
-        <section className="mb-12">
-          <h2 className="mb-5 text-center text-2xl font-medium">
+      <main className="px-4 md:px-20">
+        <section className="mb-8 md:mb-12">
+          <h2 className="mb-4 md:mb-5 text-center text-xl md:text-2xl font-medium">
             Why work with us
           </h2>
-          <div className="flex flex-wrap justify-between gap-x-12 gap-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-12 mx-auto w-full">
             {about.map(({ title, desc }, i) => (
               <AboutCard key={i} data={{ title, desc }} />
             ))}
           </div>
         </section>
 
-        <section className="mb-28">
-          <h2 className="mb-9 text-center text-5xl font-bold">Our Team</h2>
-          <div className="grid grid-cols-4 gap-x-5">
-            {Array(4)
-              .fill("")
-              .map((_, i) => (
-                <TeamCard key={i} />
-              ))}
+        <section className="mb-16 md:mb-28">
+          <h2 className="mb-6 md:mb-9 text-center text-3xl md:text-5xl font-bold">Our Team</h2>
+
+          <div
+            className="overflow-x-auto [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary-500/40 [&::-webkit-scrollbar-thumb]:rounded-full"
+          >
+            <div className="flex gap-4 md:gap-5 pb-4 min-w-max mx-auto">
+              {Array(4)
+                .fill("")
+                .map((_, i) => (
+                  <TeamCard key={i} />
+                ))}
+            </div>
           </div>
         </section>
 
         <section>
-          <div className="flex gap-x-12">
-            <article className="z-20 w-1/2 rounded-t-3xl bg-white px-9 pb-20 pt-8 shadow-lg">
-              <div className="mb-7 flex items-center gap-x-6">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+            <article className="z-20 w-full lg:w-1/2 rounded-t-3xl bg-white px-4 md:px-9 pb-12 md:pb-20 pt-6 md:pt-8 shadow-lg">
+              <div className="mb-5 md:mb-7 flex items-center gap-x-4 md:gap-x-6">
                 <svg
                   width="36"
                   height="36"
@@ -66,175 +73,82 @@ export default function AboutUs() {
                   />
                 </svg>
                 <div className="grow">
-                  <h3 className="mb-2 text-3xl font-bold">Get In Touch</h3>
+                  <h3 className="mb-2 text-2xl md:text-3xl font-bold">Get In Touch</h3>
                   <ThreeYellowLines
                     lineOneMarginLeft="0px"
                     lineThreeMarginLeft="0px"
                   />
                 </div>
               </div>
-              <p className="mb-3 text-lg">
+              <p className="mb-3 text-base md:text-lg">
                 Lorem ipsum dolor sit amet consectetur. Turpis amet et elementum
                 in vestibulum leo. Tortor quisque malesuada sed nunc platea eget
                 habitasse.
               </p>
 
-              <div className="mb-9 flex items-center gap-x-6">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
-                <p className="text-lg">
+              <div className="mb-6 md:mb-9 flex items-center gap-x-4 md:gap-x-6">
+                <div className="h-12 w-12 md:h-14 md:w-14 rounded-full bg-primary-400"></div>
+                <p className="text-base md:text-lg w-[82%]">
                   Plot 3703 - 3704 Babangida Boulevard, Maitama Abuja, Nigeria
                 </p>
               </div>
-              <div className="mb-9 flex items-center gap-x-6">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
-                <p className="text-lg">+234 818 153 5915</p>
+              <div className="mb-6 md:mb-9 flex items-center gap-x-4 md:gap-x-6">
+                <div className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-primary-400"></div>
+                <p className="text-base md:text-lg">+234 818 153 5915</p>
               </div>
-              <div className="flex items-center gap-x-6">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-400"></div>
-                <p className="text-lg">info@moricolhealth.com</p>
+              <div className="flex items-center gap-x-4 md:gap-x-6">
+                <div className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-primary-400"></div>
+                <p className="text-base md:text-lg">info@moricolhealth.com</p>
               </div>
             </article>
-            <div className="relative z-20 w-1/2 bg-[url('/images/map.png')]">
+            <div className="relative z-20 w-full lg:w-1/2 min-h-[300px] lg:min-h-0 bg-[url('/images/map.png')] bg-cover bg-center">
               <Image
                 src="/images/map-attach.png"
                 alt=""
                 width={180}
                 height={154}
-                className="absolute -right-[40px] top-[162px]"
+                className="absolute -right-[40px] top-[162px] hidden lg:block"
               />
-              <p className="absolute -right-6 top-[198px] text-3xl font-bold text-white">
+              <p className="absolute -right-6 top-[198px] text-2xl md:text-3xl font-bold text-white hidden lg:block">
                 Go to Map
               </p>
             </div>
           </div>
-          <div className="relative z-10 -mx-20 -mt-32 h-[357px] rounded-t-[100px] bg-gray-800">
-            <div className="absolute bottom-[52px] left-1/2 flex -translate-x-1/2 items-center justify-center">
+
+          <div className="relative z-10 flex items-end justify-center -mx-4 md:-mx-20 -mt-16 md:-mt-32 h-[357px] rounded-t-[50px] md:rounded-t-[100px] bg-gray-800">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 max-w-3xl w-full pb-10">
               <Link
-                href=""
-                className="flex h-20 w-[264px] items-center justify-center gap-x-3 bg-gray-700 text-2xl text-[#E7F1E9]"
+                href="#"
+                className="flex items-center justify-center gap-2 bg-[#1E2732] p-4 text-white transition-opacity hover:opacity-90"
               >
-                <Image
-                  src="/icons/facebook.png"
-                  width={36}
-                  height={36}
-                  alt="facebook logo"
-                />
-                <span>Facebook</span>
+                <Facebook className="h-6 w-6" />
+                <span className="text-lg">Facebook</span>
               </Link>
               <Link
-                href=""
-                className="flex h-20 w-[264px] items-center justify-center gap-x-3 bg-gray-600 text-2xl text-[#E7F1E9]"
+                href="#"
+                className="flex items-center justify-center gap-2 bg-[#2C3440] p-4 text-white transition-opacity hover:opacity-90"
               >
-                <Image
-                  src="/icons/instagram.png"
-                  width={36}
-                  height={36}
-                  alt="instagram logo"
-                />
-                <span>Instagram</span>
+                <Instagram className="h-6 w-6" />
+                <span className="text-lg">Instagram</span>
               </Link>
               <Link
-                href=""
-                className="flex h-20 w-[264px] items-center justify-center gap-x-3 bg-gray-700 text-2xl text-[#E7F1E9]"
+                href="#"
+                className="flex items-center justify-center gap-2 bg-[#404B5A] p-4 text-white transition-opacity hover:opacity-90"
               >
-                <Image
-                  src="/icons/twitter.png"
-                  width={36}
-                  height={36}
-                  alt="twitter logo"
-                />
-                <span>Twitter</span>
+                <Twitter className="h-6 w-6" />
+                <span className="text-lg">Twitter</span>
               </Link>
               <Link
-                href=""
-                className="flex h-20 w-[264px] items-center justify-center gap-x-3 bg-gray-600 text-2xl text-[#E7F1E9]"
+                href="#"
+                className="flex items-center justify-center gap-2 bg-[#4F5B6B] p-4 text-white transition-opacity hover:opacity-90"
               >
-                <Image
-                  src="/icons/facebook.png"
-                  width={36}
-                  height={36}
-                  alt="linkedin logo"
-                />
-                <span>Linkedin</span>
+                <Linkedin className="h-6 w-6" />
+                <span className="text-lg">Linkedin</span>
               </Link>
             </div>
           </div>
         </section>
-        <section className="-mx-20 bg-primary-50 pb-16 pt-9">
-          <h2 className="mb-9 text-center text-5xl font-bold">Send Message</h2>
-
-          <form>
-            <section className="mx-auto mb-12 flex max-w-[910px] flex-wrap justify-center gap-x-32 gap-y-11 rounded-3xl bg-white px-[6.25rem] py-10">
-              <div className="max-w-[278px] grow">
-                <label htmlFor="fname" className="mb-3 block text-[#8D8D8D]">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  className="mb-3 w-full border-b border-b-[#8D8D8D] pb-1 focus:border-b-primary-500 focus:outline-none"
-                />
-              </div>
-              <div className="max-w-[278px] grow">
-                <label htmlFor="fname" className="mb-3 block text-[#8D8D8D]">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  className="mb-3 w-full border-b border-b-[#8D8D8D] pb-1 focus:border-b-primary-500 focus:outline-none"
-                />
-              </div>
-              <div className="max-w-[278px] grow">
-                <label htmlFor="fname" className="mb-3 block text-[#8D8D8D]">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  className="mb-3 w-full border-b border-b-[#8D8D8D] pb-1 focus:border-b-primary-500 focus:outline-none"
-                />
-              </div>
-              <div className="max-w-[278px] grow">
-                <label htmlFor="fname" className="mb-3 block text-[#8D8D8D]">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  className="mb-3 w-full border-b border-b-[#8D8D8D] pb-1 focus:border-b-primary-500 focus:outline-none"
-                />
-              </div>
-              <div className="w-full grow">
-                <p className="mb-3.5">Select Subject?</p>
-                <div className="flex gap-x-5">
-                  <div className="flex items-center gap-x-2.5">
-                    <input type="radio" className="" />
-                    <label htmlFor="fname" className="text-[#8D8D8D]">
-                      General Enquiry
-                    </label>
-                  </div>
-                  <div className="flex items-center gap-x-2.5">
-                    <input type="radio" />
-                    <label htmlFor="">Consultancy</label>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full grow">
-                <label htmlFor="fname" className="mb-3 block text-[#8D8D8D]">
-                  Message
-                </label>
-                <input
-                  type="text"
-                  className="mb-3 w-full border-b border-b-[#8D8D8D] pb-1 focus:border-b-primary-500 focus:outline-none"
-                  placeholder="Write your message..."
-                />
-              </div>
-            </section>
-            <div className="text-center">
-              <button className="w-[603px] rounded-lg bg-primary-500 py-3 text-primary-50">
-                SEND MESSAGE
-              </button>
-            </div>
-          </form>
-          <button></button>
-        </section>
+        <ContactForm />
       </main>
     </div>
   );
@@ -242,20 +156,20 @@ export default function AboutUs() {
 
 function AboutCard({ data }: { data: { title: string; desc: string } }) {
   return (
-    <article className="max-w-[411px] rounded-lg bg-white px-6 py-4 shadow-lg">
-      <h3 className="mb-4 text-xl font-medium text-black">{data.title}</h3>
-      <p>{data.desc}</p>
+    <article className="max-w-[511px] mx-auto rounded-lg bg-white px-4 md:px-6 py-4 shadow-lg">
+      <h3 className="mb-3 md:mb-4 text-lg md:text-xl font-medium text-black">{data.title}</h3>
+      <p className="text-sm md:text-base">{data.desc}</p>
     </article>
   );
 }
 
 function TeamCard() {
   return (
-    <article className="max-w-[314px] overflow-hidden rounded-lg">
-      <Image src="/images/partner.png" alt="" width={314} height={322} />
+    <article className="max-w-[314px] mx-auto overflow-hidden rounded-lg">
+      <Image src="/images/partner.png" alt="" width={314} height={322} className="w-full" />
       <div className="rounded-b-lg border border-t-0 border-gray-700 p-4 text-center">
-        <h3 className="mb-2 text-xl font-semibold">Partner/CEO</h3>
-        <p className="mb-4 text-2xl text-gray-400">Adnan Adeosun</p>
+        <h3 className="mb-2 text-lg md:text-xl font-semibold">Partner/CEO</h3>
+        <p className="mb-4 text-xl md:text-2xl text-gray-400">Adnan Adeosun</p>
         <ThreeYellowLines
           lineOneMarginLeft="100px"
           lineThreeMarginLeft="73px"

@@ -8,7 +8,7 @@ export default function Footer() {
     <footer>
       <section className="bg-primary-700 text-primary-50">
         {/* NavLinks */}
-        <ul className="flex items-center justify-center gap-x-16 border-b-2 border-b-[#CCEBF9] pb-10 pt-8">
+        <ul className="flex flex-wrap items-center justify-center gap-4 md:gap-x-16 border-b-2 border-b-[#CCEBF9] pb-10 pt-8 px-4">
           {footerLinks.map(({ name, href }) => (
             <li key={href}>
               <Link href={href}>{name}</Link>
@@ -16,9 +16,9 @@ export default function Footer() {
           ))}
         </ul>
 
-        <div className="flex items-center justify-between p-10">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between p-4 md:p-10 gap-8">
           {/* Left side */}
-          <div className="w-[679px]">
+          <div className="w-full lg:w-[679px] flex flex-col items-center lg:items-start">
             <Image
               src="/logo-transparent.png"
               alt="Moricon logo"
@@ -26,45 +26,44 @@ export default function Footer() {
               height={94}
               className="mb-6"
             />
-            <p className="mb-7 text-lg">
+            <p className="mb-7 text-base md:text-lg text-center lg:text-left">
               Our goal is to provide quality care and give you the best service
               in the process
             </p>
 
-            <address className="item-center mb-5 flex gap-x-3 not-italic">
+            <address className="item-center mb-5 flex gap-x-3 not-italic text-sm md:text-base text-center lg:text-left">
               <LocationSVG />
               House 2, Road 4 Abraham Adesanya Estate, Ajah Lekki, Lagos State
             </address>
-            <address className="item-center mb-5 flex gap-x-3 not-italic">
+            <address className="item-center mb-5 flex gap-x-3 not-italic text-sm md:text-base text-center lg:text-left">
               <LocationSVG />
               27 Rueben Agho Avenue off 2nd Ugbor Road, GRA, Benin City
             </address>
-            <p className="flex items-center gap-x-3">
+            <p className="flex md:flex-row items-center justify-center lg:justify-start gap-y-2 gap-x-3 text-sm md:text-base text-center lg:text-left">
               <SupportSVG />
-              <span>support@moricolhealth.com</span>
-              <span>infomoricolhealthcare@gmail.com</span>
+              <span>support@moricolhealth.com {" "}infomoricolhealthcare@gmail.com</span>
             </p>
           </div>
           {/* Right side */}
-          <article className="max-w-[498px]">
-            <h3 className="mb-2 text-2xl font-medium">
+          <article className="w-full lg:max-w-[498px] flex flex-col items-center lg:items-start">
+            <h3 className="mb-2 text-xl md:text-2xl font-medium text-center lg:text-left">
               Stay connected (Subscribe)
             </h3>
-            <p className="mb-5 text-lg">
+            <p className="mb-5 text-base md:text-lg text-center lg:text-left">
               The latest Moricol news, articles, and resources, sent straight to
               your inbox every month.
             </p>
 
-            <form>
+            <form className="w-full">
               <div className="mb-6">
-                <label htmlFor="email" className="mb-1 block">
+                <label htmlFor="email" className="mb-1 block text-center lg:text-left">
                   Email
                 </label>
                 <input
                   type="text"
                   id="email"
                   name="email"
-                  className="w-full rounded-lg py-3"
+                  className="w-full rounded-lg py-3 px-4"
                 />
               </div>
               <button className="font-seimi w-full rounded-lg bg-primary-500 py-3">
@@ -72,7 +71,7 @@ export default function Footer() {
               </button>
             </form>
 
-            <div className="mt-4 flex justify-end gap-x-9">
+            <div className="mt-4 flex justify-center gap-x-9">
               <Image
                 src="/icons/facebook.png"
                 width={20}
@@ -103,10 +102,10 @@ export default function Footer() {
       </section>
 
       {/* Copyright */}
-      <section className="flex items-center justify-between bg-primary-50 px-12 py-4">
-        <p>© 2023 Moricol Limited</p>
-        <p>Terms & Condition</p>
-        <p>Privacy Policy</p>
+      <section className="flex flex-col md:flex-row items-center justify-center md:justify-between bg-primary-50 px-4 md:px-12 py-4 gap-y-2 text-sm md:text-base">
+        <p className="text-center md:text-left">© 2023 Moricol Limited</p>
+        <p className="text-center md:text-left">Terms & Condition</p>
+        <p className="text-center md:text-left">Privacy Policy</p>
       </section>
     </footer>
   );

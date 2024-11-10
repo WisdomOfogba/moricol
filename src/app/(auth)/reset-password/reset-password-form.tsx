@@ -1,18 +1,35 @@
 "use client";
 
-import SubmitButton from "@/components/auth/form-button";
+import { changePassword } from "@/api/auth";
 import TextInput from "@/components/auth/text-input";
+import Button from "@/components/button";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 
-export default function ResetPasswordForm() {
+export default function ResetPasswordForm({ email }: { email: string | undefined }) {
   const router = useRouter();
-  //   const [state, formAction] = useFormState('', initialState);
+  const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    router.push("/success");
+    const { new_password, confirm_password } = Object.fromEntries(new FormData(e.target as HTMLFormElement));
+
+    if (!email) return;
+    if (!new_password || !confirm_password) return;
+    try {
+      setLoading(true);
+      await changePassword(email, new_password as string, confirm_password as string);
+      router.push("/success");
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -23,35 +40,45 @@ export default function ResetPasswordForm() {
         </h2>
         <p className="text-[#686868]">Choose a new password for your account</p>
       </div>
-      {/* {"message" in state && state.message?.length > 0 && (
-        <p aria-live="polite" className="mb-4 text-center text-sm text-red-500">
-          {state.message[0]}
-        </p>
-      )} */}
 
       <section className="mb-8 grid gap-y-6 lg:gap-x-9">
         <TextInput
-          name="password"
+          name="email"
+          type="email"
+          id="email"
+          placeholder="Email"
+          value={email}
+          readOnly
+          className={`${email ? "bg-green-200" : "bg-red-200"} cursor-not-allowed`}
+        />
+        <TextInput
+          name="new_password"
           type="password"
+          id="new_password"
           placeholder="Your new password"
-          // errors={state}
+          required
         />
 
         <TextInput
-          name="password"
+          name="confirm_password"
           type="password"
+          id="confirm_password"
           placeholder="Confirm your new password"
-          // errors={state}
+          required
         />
       </section>
       <div className="grid gap-y-6">
-        <SubmitButton pendingText="Submitting..." text="Reset Password" />
-        <Link
+        <Button disabled={loading || !email} className="disabled:cursor-not-allowed disabled:bg-primary-500/50 flex items-center justify-center">
+          {loading ? <Loader2 className="animate-spin" /> : "Submit"}
+        </Button>
+        {email && <Link
           href="/signin"
-          className="text-[#040308 rounded border border-[#040308] py-3.5 text-center font-semibold transition duration-300 hover:border-primary-500 hover:text-primary-500"
+          className="text-[#04030 8 rounded border border-[#040308] py-3.5 text-center font-semibold transition duration-300 hover:border-primary-500 hover:text-primary-500"
         >
           BACK TO LOGIN
-        </Link>
+        </Link>}
+
+        {!email && <Link href={`/forgot-password?email=${email}`} className="text-lg text-[#0799e7] underline">Try again</Link>}
       </div>
     </form>
   );

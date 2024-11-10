@@ -1,20 +1,62 @@
+'use client'
+
 import { navLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/sheet";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="flex items-center justify-between gap-x-11 bg-white px-9 py-2">
-      <div>
-        <Image src="/logo.svg" alt="Moricol logo" width={161} height={80.76} />
+    <nav className="bg-white px-4 py-2 md:px-9">
+      <div className="flex items-center justify-between">
+        <div className="transition-transform hover:scale-105">
+          <Image src="/logo.svg" alt="Moricol logo" width={121} height={80.76} />
+        </div>
+
+        {/* Mobile menu button */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger onClick={() => setIsOpen(!isOpen)} className="xl:hidden transition-colors hover:text-primary-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+            </svg>
+          </SheetTrigger>
+          <SheetContent side="right" className="bg-white px-0" onClick={(event) => {
+            if (event.target instanceof HTMLAnchorElement) {
+              event.preventDefault();
+              setIsOpen(false);
+            }
+          }}  >
+            <ul className="flex flex-col pt-4 pb-2  font-bold">
+              {navLinks.map(({ href, name }) => (
+                <li key={name}>
+                  <Link
+                    href={href}
+                    className="transition-colors hover:bg-primary-500/10 py-4 px-4 hover:text-primary-500 block"
+                  >
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </SheetContent>
+        </Sheet>
+
+        {/* Desktop menu */}
+        <ul className="hidden xl:flex gap-x-11 text-sm font-bold">
+          {navLinks.map(({ href, name }) => (
+            <li key={name}>
+              <Link
+                href={href}
+                className="transition-colors hover:text-primary-500 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all hover:after:w-full"
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="flex gap-x-11 text-sm font-bold">
-        {navLinks.map(({ href, name }) => (
-          <li key={name}>
-            <Link href={href}>{name}</Link>
-          </li>
-        ))}
-      </ul>
     </nav>
   );
 }

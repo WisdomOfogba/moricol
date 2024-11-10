@@ -5,7 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function LoanDeclined() {
+
+
+
+export function DeclinedLoanComponent() {
   return (
     <>
       <div className="border-b border-gray-300 px-4 py-2">
@@ -39,5 +42,3 @@ function LoanDeclined() {
     </>
   );
 }
-
-export default LoanDeclined;

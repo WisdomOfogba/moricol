@@ -73,7 +73,7 @@ export default function AllJobsClient({ type }: { type: string }) {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-[50vh]">
       {/* Main Content */}
       <div className="flex-1">
         <SearchAndFilter handleFilterJobs={handleFilterJobs} />
@@ -100,11 +100,11 @@ export default function AllJobsClient({ type }: { type: string }) {
         </div>
         {!loading && <JobListings jobs={jobposts} />}
         {loading && (
-          <div className="flex h-screen items-center justify-center">
+          <div className="flex h-[300px] items-center justify-center">
             <Loader2 className="animate-spin" />
           </div>
         )}
-        {jobposts.length === 0 && <NoJobsFound />}
+        {jobposts.length === 0 && !loading && <NoJobsFound />}
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import DashboardLayout from "@/components/dashboard/dashboard-layout";
 import { routes } from "@/constants/routes";
 import { CgSearchLoading } from "react-icons/cg";
 import { CiSaveDown1 } from "react-icons/ci";
-import { FaQ } from "react-icons/fa6";
 import { GrList, GrResume } from "react-icons/gr";
 import BackBTNonDetails from "./_component/back-btn-on-details-page";
 
@@ -32,7 +31,6 @@ const links = [
     link: routes.RECRUITMENT_JOBS_RESUME,
     SVGComponent: GrResume,
   },
-  { name: "FAQ", link: routes.RECRUITMENT_JOBS_FAQ, SVGComponent: FaQ },
 ];
 
 export default function RecruitmentLayout({

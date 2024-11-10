@@ -3,8 +3,10 @@
 import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "@/components/button";
-import { confirmVerificationCode } from "@/api/auth";
+import { confirmPasswordResetCode, confirmVerificationCode } from "@/api/auth";
 import { useSnackbar } from 'notistack';
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 const OTP_LENGTH = 4;
 
@@ -79,20 +81,25 @@ export default function OtpForm({ email }: { email: string | undefined }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const code = otp.join("");
     if (code.trim() === "") {
       return;
     }
     setIsLoading(true);
     try {
-       await confirmVerificationCode(code);
+      if (emailVerificationType === "password-reset" && email) {
+        await confirmPasswordResetCode(code, email);
+      } else {
+        await confirmVerificationCode(code);
+      }
+
       enqueueSnackbar("Verification successful", { variant: "success" });
 
       if (emailVerificationType === "signup") {
         router.push("/verify-email-success");
       } else if (emailVerificationType === "password-reset") {
-        router.push("/change-password");
+        router.push(`/reset-password?email=${email}`);
       } else {
         router.push("/signin");
       }
@@ -108,10 +115,10 @@ export default function OtpForm({ email }: { email: string | undefined }) {
       {/* {emailVerificationType === "signup" ? "Activate Email" : "Input code"} */}
       <div className="mb-5">
         <h2 className="mb-2 text-2xl font-bold leading-9 text-primary-700 lg:text-[1.875rem] lg:leading-[1.813rem]">
-          Reset Password
+          {emailVerificationType === "password-reset" ? "Reset Password" : "Activate Email"}
         </h2>
         <p className="text-[#686868]">
-          Please enter the code we sent to {email??'your email.'}
+          Please enter the code we sent to {email ?? 'your email.'}
         </p>
       </div>
 
@@ -134,13 +141,15 @@ export default function OtpForm({ email }: { email: string | undefined }) {
           ))}
         </div>
 
-        <Button disabled={isLoading} className="max-w-[580px] disabled:bg-primary-500/50">
-          {isLoading ? 'Activating...' : 'Activate'}
+        <Button disabled={isLoading} className="max-w-[580px] flex items-center justify-center disabled:bg-primary-500/50">
+          {isLoading ? <Loader2 className="animate-spin" /> : emailVerificationType === "password-reset" ? "Reset Password" : "Activate"}
         </Button>
 
         <p className="justify-left flex items-center gap-x-1 font-medium leading-6">
           <span>Didn&apos;t get the code?</span>{" "}
-          <button className="text-lg text-[#0799e7] underline">Resend</button>
+          {emailVerificationType === "password-reset" && <Link href={`/forgot-password?email=${email}`} className="text-lg text-[#0799e7] underline">Try again</Link>}
+
+          {emailVerificationType !== "password-reset" && <Link href={`/signup?email=${email}`} className="text-lg text-[#0799e7] underline">Try again</Link>}
         </p>
       </form>
     </article>

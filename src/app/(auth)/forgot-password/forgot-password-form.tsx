@@ -1,16 +1,38 @@
 "use client";
 
-import SubmitButton from "@/components/auth/form-button";
+import { forgotPassword } from "@/api/auth";
 import TextInput from "@/components/auth/text-input";
+import Button from "@/components/button";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
-  //   const [state, formAction] = useFormState('', initialState);
+  const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return router.push("/reset-password");
+    const form = e.currentTarget as HTMLFormElement;
+    const { email } = Object.fromEntries(new FormData(form));
+    if (!email) return;
+
+    try {
+      setLoading(true);
+      await forgotPassword(email as string);
+      enqueueSnackbar("Password reset email sent, check your email", { variant: "success", autoHideDuration: 10000 });
+      form.reset();
+      return router.push(`/otp-verification?type=password-reset&email=${email}`);
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Failed to send password reset email", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+
+
   };
 
   return (
@@ -23,22 +45,21 @@ export default function ForgotPasswordForm() {
           Please enter the email address associated with this account
         </p>
       </div>
-      {/* {"message" in state && state.message?.length > 0 && (
-        <p aria-live="polite" className="mb-4 text-center text-sm text-red-500">
-          {state.message[0]}
-        </p>
-      )} */}
+
 
       <section className="mb-10 grid gap-y-6 lg:gap-x-9">
         <TextInput
           label="Email"
           name="email"
-          type="text"
+          type="email"
           placeholder="Email"
-          // errors={state}
+          required
         />
       </section>
-      <SubmitButton pendingText="Submitting..." text="Submit" />
+      <Button disabled={loading} className="disabled:cursor-not-allowed flex items-center justify-center">
+        {loading ? <Loader2 className="animate-spin" /> : "Submit"}
+      </Button>
+
     </form>
   );
 }
