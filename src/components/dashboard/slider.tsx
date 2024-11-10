@@ -1,8 +1,15 @@
 import { cn } from "@/util/cn";
 
-export function SliderPrevButton({ className }: { className: string }) {
+export function SliderPrevButton({
+  className,
+  onClick,
+}: {
+  className: string;
+  onClick?: () => void;
+}) {
   return (
     <button
+      onClick={onClick}
       className={cn(
         "flex h-10 w-10 items-center justify-center rounded-full bg-[#0C0C0D]",
         className,
@@ -24,9 +31,16 @@ export function SliderPrevButton({ className }: { className: string }) {
   );
 }
 
-export function SliderNextButton({ className }: { className: string }) {
+export function SliderNextButton({
+  className,
+  onClick,
+}: {
+  className: string;
+  onClick?: () => void;
+}) {
   return (
     <button
+      onClick={onClick}
       className={cn(
         "flex h-10 w-10 items-center justify-center rounded-full bg-[#0C0C0D]",
         className,

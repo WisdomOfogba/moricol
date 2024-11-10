@@ -7,11 +7,19 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/constants/routes";
 
 export default function ProductCard({
+  id,
+  drugName,
+  imageUrl,
+  price,
   bestSelling,
-  prescription = true,
+  prescription,
 }: {
+  id: string;
+  drugName: string;
+  price: Number;
+  imageUrl: string;
   bestSelling?: boolean;
-  prescription?: true;
+  prescription: boolean;
 }) {
   const router = useRouter();
 
@@ -19,7 +27,7 @@ export default function ProductCard({
     if (prescription) {
       router.push(routes.PHARMARCYPRESCRIPTION);
     } else {
-      router.push(routes.PHARMARCYPRODUCT);
+      router.push(routes.PHARMARCYPRODUCT + `/${id}`);
     }
   };
 
@@ -30,7 +38,7 @@ export default function ProductCard({
     >
       <div className="relative h-[214.51px] w-[151.24px] overflow-hidden">
         <Image
-          src="/images/dashboard/drug.png"
+          src={imageUrl}
           alt="Doctor profile"
           fill
           sizes="151px"
@@ -39,7 +47,7 @@ export default function ProductCard({
         />
       </div>
       <div className="py-3">
-        <h3 className="mb-0.5 text-sm">Pepto-bismol</h3>
+        <h3 className="mb-0.5 text-sm">{drugName}</h3>
         {bestSelling && (
           <div className="mb-1 mt-0.5 flex justify-center gap-x-1">
             <StarSVG fill="#E7A542" />
@@ -49,7 +57,7 @@ export default function ProductCard({
             <StarSVG />
           </div>
         )}
-        <p className="font-bold text-primary-500">₦200.10</p>
+        <p className="font-bold text-primary-500">{String(price)}</p>
       </div>
 
       <DiscountBadge className="absolute -left-2 top-2" />

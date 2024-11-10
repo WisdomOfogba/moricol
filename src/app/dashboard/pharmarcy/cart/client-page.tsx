@@ -90,19 +90,6 @@ export default function CartPage() {
         </div>
 
         <div className="flex gap-x-9">
-          <form>
-            <input
-              type="text"
-              placeholder="Coupon Code"
-              className="mr-3 rounded border border-[#CECECE] bg-gray-100 px-5 py-3 text-sm"
-            />
-            <Button
-              className="w-fit border border-[#9F9FA0] text-xs font-bold"
-              variant="outline"
-            >
-              Apply Coupon
-            </Button>
-          </form>
           <form className="grow">
             <Link
               href={routes.PHARMARCYCHECKOUT}
