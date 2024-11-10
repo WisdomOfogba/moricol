@@ -59,6 +59,12 @@ const initialData: Omit<CreateOfferParams, "userid" | "session"> = {
     workstatus: "",
     phone: "",
   },
+  collaterals: [
+    {
+      item: "",
+      proof_of_item: "",
+    }
+  ],
   outstanding: {
     owe: false,
     amount: 0,
@@ -75,7 +81,6 @@ export default function LoanApplicationClient({
   amount: string;
 }) {
 
-  console.log(loanDetails, amount);
   const [page, setPage] = useState<"offer" | "form" | "banks" | "confirm">("offer");
 
   const [applyData, setApplyData] = useState<Omit<CreateOfferParams, "userid" | "session">>({
@@ -87,7 +92,7 @@ export default function LoanApplicationClient({
     late_interest: loanDetails.durations[0].late_interest,
     profit: 0,
     totalamount: 0,
-    installment_period: loanDetails.durations[0].installment_days.map((day) => ({
+    installment_period: loanDetails.durations[0].installment_days.map(() => ({
       due_date: '',
       interest: 0,
       principal: 0,
@@ -120,7 +125,6 @@ export default function LoanApplicationClient({
     }
   };
 
-  console.log(applyData);
 
   return (
     <>

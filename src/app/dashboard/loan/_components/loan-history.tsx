@@ -2,11 +2,11 @@
 
 import { SettingFilter } from "@/components/svgs/loan-svg";
 import { routes } from "@/constants/routes";
+import { LoanDataType } from "@/definition";
 import Link from "next/link";
 import React, { useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
-import { LoanDataType } from "../page";
 
 function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const [filterStatus, setFilterStatus] = useState("All");

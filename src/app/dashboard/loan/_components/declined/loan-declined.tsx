@@ -5,15 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function LoanDeclined() {
-  return (
-    <>
-      <DeclinedLoanComponent />
-    </>
-  );
-}
 
-export default LoanDeclined;
 
 
 export function DeclinedLoanComponent() {

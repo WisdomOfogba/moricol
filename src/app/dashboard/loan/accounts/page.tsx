@@ -101,7 +101,7 @@ async function LoanAccounts() {
               No Accounts Found
             </h3>
             <p className="mb-6 max-w-sm text-center text-gray-600">
-              You've not added any accounts yet
+              You&apos;ve not added any accounts yet
             </p>
           </div>
         )}

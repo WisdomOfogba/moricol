@@ -1,4 +1,3 @@
-import NewOrgClient from "./_components/org-client"
 import { Session } from "next-auth"
 import { Metadata } from "next"
 import telemedicineApi, { availablePlansList } from "@/api/telemedicine";

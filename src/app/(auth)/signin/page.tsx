@@ -2,6 +2,7 @@ import Image from "next/image";
 import LoginForm from "./login-form";
 import AuthFooter from "@/components/auth/footer";
 import AuthSidebar from "@/components/auth/sidebar";
+import Link from "next/link";
 
 export default function Login(
   {
@@ -15,7 +16,7 @@ export default function Login(
       <AuthSidebar imgUrl="/images/auth/mental-health.png" />
 
       <section className="grow overflow-y-auto px-14 py-9">
-        <div className="relative mx-auto h-[80.76px] w-[161px] lg:h-[111.36px] lg:w-[222px]">
+        <Link href="/" className="relative block mx-auto h-[80.76px] w-[161px] lg:h-[111.36px] lg:w-[222px]">
           <Image
             alt="Moricol logo"
             src="logo.svg"
@@ -23,7 +24,7 @@ export default function Login(
             sizes="100vw"
             priority
           />
-        </div>
+        </Link>
 
         <LoginForm callbackUrl={searchParams.callbackUrl} />
 

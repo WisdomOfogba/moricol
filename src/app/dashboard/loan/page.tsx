@@ -10,6 +10,9 @@ import LoanHistory from "./_components/loan-history";
 import { routes } from "@/constants/routes";
 import { getUserSession } from "@/lib/auth";
 import loanApi from "@/api/loan";
+import { LoanDataType } from "@/definition";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Loan Dashboard | Moricol",
@@ -17,15 +20,7 @@ export const metadata = {
 };
 
 
-export type LoanDataType = {
-  _id: string;
-  title: string;
-  content: string;
-  userid: string;
-  loanoffer: string;
-  createdAt: string;
-  __v: number;
-};
+
 
 async function getLoanData() {
   try {

@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { X, Plus, Loader2 } from 'lucide-react'
+import { Plus, Loader2 } from 'lucide-react'
 import FailedModal from './failed-modal'
 import { Input } from '@/components/input'
 import telemedicineApi from '@/api/telemedicine'

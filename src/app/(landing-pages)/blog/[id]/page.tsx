@@ -1,20 +1,44 @@
-export default function Blog({ params }: { params: { id: string } }) {
-  console.log(params);
+import { blogApi } from "@/api/blog";
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const blog = await blogApi.getSingleBlog({ blogId: params.id });
+  return {
+    title: blog.data.title,
+    description: blog.data.title,
+  };
+}
+
+async function getSingleBlogData(blogId: string) {
+  try {
+
+    const { data: blogData } = await blogApi.getSingleBlog({ blogId });
+    return blogData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get blog data');
+  }
+}
+
+
+
+export default async function Blog({ params }: { params: { id: string } }) {
+
+  const blogData = await getSingleBlogData(params.id);
+
   return (
     <>
-      <header className="relative h-[562.5px] bg-black/40 bg-[url('/images/blog-bg-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay">
-        <div className="absolute left-[95px] top-[272px] max-w-[762px] text-white">
-          <h1 className="mb-3 text-5xl uppercase tracking-[0.35px]">
-            5 Efficient Rules How to Organize Your Working Place
+      <header className="relative h-[300px] md:h-[400px] lg:h-[562.5px] bg-black/40 bg-[url('/images/blog-bg-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay flex items-end">
+        <div className="p-8 md:p-14 max-w-[90%] md:max-w-[80%] lg:max-w-[762px] text-white">
+          <h1 className="mb-3 text-2xl md:text-4xl lg:text-5xl uppercase tracking-[0.35px]">
+            {blogData.title}
           </h1>
-          <p className="mb-3.5 text-4xl">
-            Relationship tips couples therapists are giving all the time
+          <p className="mb-3.5 text-xl md:text-3xl lg:text-4xl">
+            {' '}
           </p>
-          <div className="flex items-center gap-x-2">
-            <p className="text-sm">by Joanna Wellick</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-xs md:text-sm">by {blogData.adminid.name}</p>
             <Separator color="white" />
             <p className="flex items-center gap-x-1.5 text-xs">
-              <ClockSVG fill={"white"} />2 minute read
+              <ClockSVG fill={"white"} />{Math.ceil(blogData.blog.split(' ').length / 200)} minute read
             </p>
             <Separator color="white" />
             <p className="flex items-center gap-x-1.5 text-xs">
@@ -25,116 +49,24 @@ export default function Blog({ params }: { params: { id: string } }) {
         </div>
       </header>
 
-      <main className="flex items-start gap-x-3 px-[6.25rem] py-9 text-sm leading-6">
-        <section className="flex items-start gap-x-11">
-          <div className="flex flex-col items-center justify-center text-[#121416]">
+      <main className="flex flex-col lg:flex-row items-start gap-6 px-4 md:px-8 lg:px-[6.25rem] py-6 lg:py-9 text-sm leading-6">
+        <section className="flex flex-col lg:flex-row items-start gap-6 lg:gap-x-11 w-full">
+          <div className="flex flex-row lg:flex-col items-center justify-center text-[#121416] gap-4 lg:gap-0">
             <ViewSVG fill={"#121416"} />
             <span>views</span>
             <span>1.6k</span>
           </div>
-          <div>
+          <div className="w-full">
             <section className="mb-14">
               <div className="mb-14">
-                <p className="mb-6">
-                  Structured gripped tape invisible moulded cups for sauppor
-                  firm hold strong powermesh front liner sport detail. Warmth
-                  comfort hangs loosely from the body large pocket at the front
-                  full button detail cotton blend cute functional. Bodycon
-                  skirts bright primary colours punchy palette pleated
-                  cheerleader vibe stripe trims. Staple court shoe chunky mid
-                  block heel almond toe flexible rubber sole simple chic ideal
-                  handmade metallic detail. Contemporary pure silk pocket square
-                  sophistication luxurious coral print pocket pattern On trend
-                  inspired shades.
-                </p>
-                <p>
-                  Striking pewter studded epaulettes silver zips inner
-                  drawstring waist channel urban edge single-breasted jacket.
-                  Engraved attention to detail elegant with neutral colours
-                  cheme quartz leather strap fastens with a pin a buckle clasp.
-                  Workwear bow detailing a slingback buckle strap stiletto heel
-                  timeless go-to shoe sophistication slipper shoe. Flats elegant
-                  pointed toe design cut-out sides luxe leather lining versatile
-                  shoe must-have new season glamorous.
-                </p>
+                <div className="mb-6" dangerouslySetInnerHTML={{ __html: blogData.blog }} />
               </div>
-              <div className="mb-7 flex items-start gap-x-6">
-                <svg
-                  width="30"
-                  height="28"
-                  viewBox="0 0 30 28"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20.972 27.375L18.5138 24.9155C19.7057 22.8287 20.7485 20.7419 21.6424 18.6551C22.5363 16.6428 23.0578 14.6678 23.2068 12.73L17.6199 11.5003L17.6199 0.65625H29.6875V8.48183C29.6875 13.1026 28.7936 16.8291 27.0058 19.6612C25.1435 22.5679 23.1323 25.1391 20.972 27.375ZM4.21148 27.375L1.75327 24.9155C2.94513 22.8287 3.98801 20.7419 4.8819 18.6551C5.7758 16.6428 6.29724 14.6678 6.44622 12.73L0.859375 11.5003V0.65625H12.927V8.48183C12.927 13.1026 12.0331 16.8291 10.2453 19.6612C8.38299 22.5679 6.37173 25.1391 4.21148 27.375Z"
-                    fill="#A9A9A9"
-                  />
-                </svg>
-                <blockquote className="text-4xl uppercase">
-                  Knicker lining concealed back zip fasten swing style high
-                  waisted double layer full pattern floral.
-                </blockquote>
-              </div>
-
-              <div>
-                <p className="mb-6">
-                  Foam padding in the insoles leather finest quality staple flat
-                  slip-on design pointed toe off-duty shoe. Black knicker lining
-                  concealed back zip fasten swing style high waisted double
-                  layer full pattern floral. Polished finish elegant court shoe
-                  work duty stretchy slingback strap mid kitten heel this
-                  ladylike design
-                </p>
-                <p>
-                  Eget aenean tellus venenatis. Donec odio tempus. Felis arcu
-                  pretium metus nullam quam aenean sociis quis sem neque vici
-                  libero. Venenatis nullam fringilla pretium magnis aliquam nunc
-                  vulputate integer augue ultricies cras. Eget viverra feugiat
-                  cras ut. Sit natoque montes tempus ligula eget vitae pede
-                  rhoncus maecenas consectetuer commodo condimentum aenean.
-                </p>
-              </div>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="mb-4 text-4xl uppercase">
-                Eu ridiculus fringilla aenean
-              </h2>
-              <p>
-                Sociis consequat adipiscing sit curabitur donec sem luctus cras
-                natoque vulputate dolor eget dapibus. Nec vitae eros ullamcorper
-                laoreet dapibus mus ac ante viverra. A aenean sit augue
-                curabitur et parturient nisi sed enim. Nulla nec quis sit
-                quisque sem commodo ultricies neque. Lorem eget venenatis dui
-                ante luctus ultricies tellus montes. Quis in sapien tempus.
-              </p>
-
-              <ul className="my-4 ml-12 list-disc">
-                <li>Crisp fresh iconic elegant timeless clean perfume</li>
-                <li>Neck straight sharp silhouette and dart detail</li>
-                <li>
-                  Machine wash cold slim fit premium stretch selvedge denim
-                  comfortable low waist
-                </li>
-              </ul>
-              <p>
-                See-through delicate embroidered organza blue lining luxury
-                acetate-mix stretch pleat detailing. Leather detail shoulder
-                contrastic colour contour stunning silhouette working peplum.
-                Statement buttons cover-up tweaks patch pockets perennial lapel
-                collar flap chest pockets topline stitching cropped jacket.
-                Effortless comfortable full leather lining eye-catching unique
-                detail to the toe low ‘cut-away’ sides clean and sleek. Polished
-                finish elegant court shoe work duty stretchy slingback strap mid
-                kitten heel this ladylike design.
-              </p>
             </section>
 
             <section>
-              <h2 className="mb-4 text-4xl uppercase">YOU MAY ALSO LIKE</h2>
+              <h2 className="mb-4 text-2xl md:text-3xl lg:text-4xl uppercase">YOU MAY ALSO LIKE</h2>
 
-              <div className="grid grid-cols-3 gap-x-7">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array(3)
                   .fill("")
                   .map((_, i) => (
@@ -144,10 +76,10 @@ export default function Blog({ params }: { params: { id: string } }) {
             </section>
           </div>
         </section>
-        <section className="w-[240px] shrink-0">
+        <section className="w-full lg:w-[240px] shrink-0">
           <form className="mb-4">
             <div className="mb-2">
-              <label htmlFor="email" className="mb-4 block text-base">
+              <label htmlFor="email" className="mb-4 block text-sm md:text-base">
                 Subscription Subscribe to our newsletter and receive a selection
                 of cool articles every weeks
               </label>
@@ -164,9 +96,9 @@ export default function Blog({ params }: { params: { id: string } }) {
             </button>
           </form>
           <form>
-            <div className="flex items-center gap-x-2">
-              <input type="checkbox" id="subscribe" className="" />
-              <label htmlFor="subscribe" className="leading-5 text-[#A9A9A9]">
+            <div className="flex items-start gap-x-2">
+              <input type="checkbox" id="subscribe" className="mt-1" />
+              <label htmlFor="subscribe" className="text-sm leading-5 text-[#A9A9A9]">
                 By checking this box, you confirm that you have read and are
                 agreeing to our terms of use regarding the storage of the data
                 submitted through this form.
@@ -174,7 +106,7 @@ export default function Blog({ params }: { params: { id: string } }) {
             </div>
           </form>
           <section className="mt-10">
-            <h2 className="mb-3.5 text-lg text-[#121416]">The Latest</h2>
+            <h2 className="mb-3.5 text-base md:text-lg text-[#121416]">The Latest</h2>
 
             <div className="grid gap-y-3.5">
               <article className="bg-[url('/images/latest-blog.jpg')] bg-cover bg-no-repeat px-3.5 py-3.5 text-xs text-white">
@@ -201,11 +133,11 @@ export default function Blog({ params }: { params: { id: string } }) {
 function FeaturedBlogCard() {
   return (
     <article className="relative">
-      <div className="h-[210px] w-[281px] bg-black/25 bg-[url('/images/feature-blog-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay" />
+      <div className="h-[210px] w-full bg-black/25 bg-[url('/images/feature-blog-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay" />
 
       <div className="py-3.5">
-        <h3 className="text-xl">Integer Maecenas Eget Viverra.</h3>
-        <p className="text-base">
+        <h3 className="text-lg md:text-xl">Integer Maecenas Eget Viverra.</h3>
+        <p className="text-sm md:text-base">
           Aenean eleifend ante maecenas pulvinar montes lorem et pede.
         </p>
         <div className="my-3 flex items-center gap-x-2 text-xs">
@@ -217,7 +149,7 @@ function FeaturedBlogCard() {
         </div>
       </div>
 
-      <div className="absolute left-3 top-3.5 flex items-center gap-x-0.5">
+      <div className="absolute left-3 top-3.5 flex flex-wrap items-center gap-1">
         <Badge text={"Aenean Eleifend"} />
         <Badge text={"Aliquam"} />
       </div>
@@ -276,7 +208,7 @@ function Separator({ color }: { color: string }) {
 function Badge({ text }: { text: string }) {
   return (
     <div
-      className="rounded bg-white/20 px-2 py-1 text-sm text-white"
+      className="rounded bg-white/20 px-2 py-1 text-xs md:text-sm text-white"
       style={{ backdropFilter: "blur(2px)" }}
     >
       {text}

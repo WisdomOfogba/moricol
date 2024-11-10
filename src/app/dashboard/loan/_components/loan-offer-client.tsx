@@ -30,7 +30,7 @@ export default function LoanOfferClient({
   const sortedRangeArray = Object.values(loanDetails.range).sort((a, b) => {
     return a - b
   });
-  const [loanAmountIndex, setLoanAmountIndex] = useState(sortedRangeArray.length - 1);
+  const [loanAmountIndex, setLoanAmountIndex] = useState(sortedRangeArray.length - 2);
   const loanOptions = sortedRangeArray;
   const loanAmount = loanOptions[loanAmountIndex];
   const [loanDurationIndex, setLoanDurationIndex] = useState(0);
@@ -39,9 +39,11 @@ export default function LoanOfferClient({
   const loanLateInterest = loanDuration.late_interest;
 
   const dailyInterest = (loanInterest / 100) * loanAmount;
-  const dailyLateInterest = (loanLateInterest / 100) * loanAmount;
   const totalDailyInterest = dailyInterest * loanDuration.days;
-  // const totalDailyLateInterest = dailyLateInterest * loanDuration.days;
+  const dailyLateInterest = (loanLateInterest / 100) * loanAmount;
+  const totalAmount = totalDailyInterest + loanAmount;
+
+
 
   const handleLeftChevronClick = () => {
     setLoanAmountIndex((prevIndex) =>
@@ -55,6 +57,27 @@ export default function LoanOfferClient({
     );
   };
 
+
+
+  const calculateInstallmentDaysValues = (installment_days: LoanDetails['durations'][0]['installment_days'][0]) => {
+    const { days, period } = installment_days;
+    const installmentIndex = loanDuration.installment_days.findIndex((installment) => installment.days === days && installment.period === period);
+    const previousInstallmentsArray = loanDuration.installment_days.slice(0, installmentIndex);
+    const sumOfPreviousInstallmentDays = previousInstallmentsArray.reduce((acc, installment) => acc + installment.days, 3);
+
+    const dueDate = dayjs().add(sumOfPreviousInstallmentDays + days, "days").format("ddd, DD MMM YYYY");
+
+    const installmentTotalAmount = (days / loanDuration.days) * totalAmount
+    const installmentLoanAmount = (days / loanDuration.days) * loanAmount
+    const installmentInterest = (days / loanDuration.days) * totalDailyInterest
+
+    const sumPrevInstallmentTotalAmount = previousInstallmentsArray.reduce((acc, installment) => acc + (installment.days / loanDuration.days) * totalAmount, 0)
+
+    const installmentBalance = Math.round((Math.round(totalAmount) - Math.round(sumPrevInstallmentTotalAmount)) - Math.round(installmentTotalAmount))
+
+    return { dueDate, installmentInterest, installmentLoanAmount, installmentTotalAmount, installmentBalance };
+  }
+
   const updateApplyData = () => {
     handleUpdateApplyDataField("amount", loanAmount);
     handleUpdateApplyDataField("total_days", loanDuration.days);
@@ -65,11 +88,11 @@ export default function LoanOfferClient({
     handleUpdateApplyDataField("totalamount", totalDailyInterest + loanAmount);
     handleUpdateApplyDataField("balance", totalDailyInterest + loanAmount);
     handleUpdateApplyDataField("installment_period", loanDuration.installment_days.map((installment) => ({
-      due_date: dayjs().add((installment.days + 3) * installment.period, "days").format("DD-MM-YYYY"),
-      interest: Math.round(totalDailyInterest / loanDuration.installment_days.length),
-      principal: Math.round(loanAmount / loanDuration.installment_days.length),
-      repay_amount: Math.round((totalDailyInterest + loanAmount) / loanDuration.installment_days.length),
-      balance: Math.round((totalDailyInterest + loanAmount) - ((totalDailyInterest + loanAmount) / loanDuration.installment_days.length) * (installment.period)),
+      due_date: calculateInstallmentDaysValues(installment).dueDate,
+      interest: calculateInstallmentDaysValues(installment).installmentInterest,
+      principal: calculateInstallmentDaysValues(installment).installmentLoanAmount,
+      repay_amount: calculateInstallmentDaysValues(installment).installmentTotalAmount,
+      balance: calculateInstallmentDaysValues(installment).installmentBalance,
     })));
 
   }
@@ -102,7 +125,7 @@ export default function LoanOfferClient({
             <div className="mb-6 flex justify-between">
               {loanOptions.map((amount, index) => (
                 <Button
-                  key={index + Math.random()}
+                  key={amount + 'ehbrd'}
                   variant={index === loanAmountIndex ? "primary" : "outline"}
                   onClick={() => setLoanAmountIndex(index)}
                   className={`w-24 ${index === loanAmountIndex ? "bg-primary-500 text-white" : "border-primary-500 text-primary-500"}`}
@@ -120,6 +143,7 @@ export default function LoanOfferClient({
                 {loanDetails.durations.map((option, index) => (
 
                   <Button
+                    key={option.days + 'ehbrrbev'}
                     variant={option.days === loanDuration.days ? "primary" : "outline"}
                     onClick={() => {
                       setLoanDurationIndex(index);
@@ -150,17 +174,17 @@ export default function LoanOfferClient({
                   <span>{loanDuration.interest.toFixed(2)}% / {loanDuration.late_interest.toFixed(2)}% </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Charges</span>
-                  <span>₦{Math.round(dailyInterest * loanDuration.days)} / ₦{Math.round(dailyLateInterest * loanDuration.days)}</span>
+                  <span>Charges Daily</span>
+                  <span>₦{Math.round(dailyInterest).toLocaleString()} / ₦{Math.round(dailyLateInterest).toLocaleString()}</span>
                 </div>
               </div>
               <div className="mb-6 flex items-start rounded-lg bg-primary-100 p-4">
                 <BiInfoCircle className="mr-2 mt-1 h-5 w-5 flex-shrink-0 text-primary-500" />
                 <p className="text-sm">
                   You need to pay back{" "}
-                  <span className="font-semibold">₦{Math.round((totalDailyInterest + loanAmount) / loanDuration.installment_days.length)}</span> each installment
+                  <span className="font-semibold">₦{Math.round(calculateInstallmentDaysValues(loanDuration.installment_days[0]).installmentTotalAmount).toLocaleString()}</span> in the first installment
                   in the next <span className="font-semibold">
-                    {loanDuration.days}Days</span>
+                    {loanDuration.installment_days[0].days} Days</span>
                 </p>
               </div>
               <div className="mb-6">
@@ -175,8 +199,8 @@ export default function LoanOfferClient({
                   <tbody>
                     <tr className="">
                       <td>{loanDuration.installment_days.length}</td>
-                      <td>₦{Math.round(totalDailyInterest + loanAmount)}</td>
-                      <td>₦{Math.round(totalDailyInterest)}</td>
+                      <td>₦{Math.round(totalAmount).toLocaleString()}</td>
+                      <td>₦{Math.round(totalDailyInterest).toLocaleString()}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -199,10 +223,10 @@ export default function LoanOfferClient({
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{dayjs().add((installment.days + 3) * installment.period, "days").format("DD-MM-YYYY")}</td>
-                          <td>₦{Math.round((totalDailyInterest + loanAmount) / loanDuration.installment_days.length)}</td>
-                          <td>₦{Math.round(loanAmount / loanDuration.installment_days.length)}</td>
-                          <td>₦{Math.round(totalDailyInterest / loanDuration.installment_days.length)}</td>
+                          <td>{calculateInstallmentDaysValues(installment).dueDate}</td>
+                          <td>₦{Math.round(calculateInstallmentDaysValues(installment).installmentTotalAmount).toLocaleString()}</td>
+                          <td>₦{Math.round(calculateInstallmentDaysValues(installment).installmentLoanAmount).toLocaleString()}</td>
+                          <td>₦{Math.round(calculateInstallmentDaysValues(installment).installmentInterest).toLocaleString()}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -211,7 +235,7 @@ export default function LoanOfferClient({
               </div>
             </section>
 
-            <div className="xl:col-span-2">
+            <div className="xl:col-span-2 pb-4">
               <Button onClick={nextPage} className="w-full rounded-lg bg-primary-500 py-3 text-white hover:bg-primary-600">
                 APPLY FOR THIS LOAN
               </Button>

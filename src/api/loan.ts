@@ -43,6 +43,7 @@ interface RetrieveSingleCategoryParams {
 export interface CreateOfferParams {
     userid: string;
     category: string;
+    paystackref?: string;
     amount: number;
     balance: number;
     total_installment: number;
@@ -94,6 +95,10 @@ export interface CreateOfferParams {
         owe: boolean;
         amount: number;
     };
+    collaterals: Array<{
+        item: string;
+        proof_of_item: string;
+    }>;
     session: Session;
 }
 
@@ -101,6 +106,9 @@ interface RetrievePendingParams {
     userid: string;
     session: Session;
 }
+
+export type Guarantor = Omit<CreateOfferParams, "userid" | "session">['guarantor_one'] | Omit<CreateOfferParams, "userid" | "session">['guarantor_two']
+export type Collateral = Omit<CreateOfferParams, "userid" | "session">['collaterals']
 
 const loanApi = {
     homepage: async ({ userid, session }: HomepageParams) => {

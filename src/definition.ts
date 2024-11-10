@@ -252,3 +252,14 @@ export type OrganizationMember = {
   createdAt: string;
   __v: number;
 }
+
+
+export type LoanDataType = {
+  _id: string;
+  title: string;
+  content: string;
+  userid: string;
+  loanoffer: string;
+  createdAt: string;
+  __v: number;
+};

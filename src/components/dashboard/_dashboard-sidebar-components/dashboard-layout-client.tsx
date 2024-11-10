@@ -27,13 +27,17 @@ function DashboardLayoutClient({
   };
 
   return (
-    <section className="flex h-screen overflow-y-hidden">
+    <section className="flex h-screen overflow-y-hidden" onClick={(e) => {
+      if (e.target instanceof HTMLAnchorElement) {
+        setIsSidebarOpen(false);
+      }
+    }}>
       {/* if from recruitment */}
       {fromRecruitment && (
         <aside
-          className={`no-scrollbar ease absolute z-[55] max-h-screen min-h-screen w-[328px] shrink-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transform bg-[#27272a] transition-all duration-300 md:relative md:translate-x-0`}
+          className={`no-scrollbar ease absolute z-[55] max-h-screen min-h-screen w-[85%] shrink-0 sm:w-[75%] md:w-[328px] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transform bg-[#27272a] transition-all duration-300 md:relative md:translate-x-0 max-w-[328px] shadow-xl`}
         >
-          <div className="absolute left-0 top-0 z-10 w-[85%]">
+          <div className="absolute left-0 top-0 z-10 w-[85%] sm:w-[75%] md:w-full">
             <Image
               src="/images/dashboard/recruit-side-pattern-u.png"
               alt=""
@@ -53,37 +57,37 @@ function DashboardLayoutClient({
           </div>
 
           {isSidebarOpen && (
-            <div className="circle absolute right-[-35px] top-2 z-[100] rounded-full bg-white text-4xl text-red-500 md:hidden">
+            <div className="circle absolute right-[-35px] top-2 z-[100] rounded-full bg-white text-3xl sm:text-4xl text-red-500 md:hidden">
               <MdCancel
                 onClick={toggleSidebar}
                 className="cursor-pointer hover:scale-[110%]"
               />
             </div>
           )}
-          <div className="flex h-screen flex-col justify-center p-4 text-white">
+          <div className="flex h-screen flex-col justify-center p-3 sm:p-4 text-white">
             {pathname === routes.RECRUITMENTDASHBOARD ? (
-              <h1 className="py-2 text-lg font-bold">
+              <h1 className="py-1 sm:py-2 text-base sm:text-lg font-bold">
                 Post or find jobs, and build your resume.
               </h1>
             ) : pathname.includes(routes.RECRUITMENT_EMPLOYER) ? (
-              <h1 className="py-2 text-lg font-bold">
+              <h1 className="py-1 sm:py-2 text-base sm:text-lg font-bold">
                 Get value from the Candidates You Want
               </h1>
             ) : (
-              <h1 className="py-2 text-lg font-bold">Build your resume</h1>
+              <h1 className="py-1 sm:py-2 text-base sm:text-lg font-bold">Build your resume</h1>
             )}
             {pathname === routes.RECRUITMENTDASHBOARD ? (
-              <p>
+              <p className="text-sm sm:text-base">
                 Complete Your Resume or sign up as an Employer and Unlock your
                 Moricol Job portal Account
               </p>
             ) : pathname.includes(routes.RECRUITMENT_EMPLOYER) ? (
-              <p>
+              <p className="text-sm sm:text-base">
                 Get access to countless potential candidates with proven skills
                 for your company
               </p>
             ) : (
-              <p>
+              <p className="text-sm sm:text-base">
                 Complete Your Resume and Unlock your Moricol Job portal Account
               </p>
             )}
@@ -95,10 +99,10 @@ function DashboardLayoutClient({
 
       {!fromRecruitment && (
         <aside
-          className={`no-scrollbar ease absolute z-[55] max-h-screen min-h-screen w-[328px] shrink-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transform bg-primary-500 transition-all duration-300 md:relative md:translate-x-0`}
+          className={`no-scrollbar ease absolute z-[55] max-h-screen min-h-screen w-[85%] shrink-0 sm:w-[75%] md:w-[328px] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transform bg-primary-500 transition-all duration-300 md:relative md:translate-x-0 max-w-[328px] shadow-xl`}
         >
           {isSidebarOpen && (
-            <div className="circle absolute right-[-35px] top-2 z-[100] rounded-full bg-white text-4xl text-red-500 md:hidden">
+            <div className="circle absolute right-[-35px] top-2 z-[100] rounded-full bg-white text-3xl sm:text-4xl text-red-500 md:hidden">
               <MdCancel
                 onClick={toggleSidebar}
                 className="cursor-pointer hover:scale-[110%]"
@@ -107,15 +111,21 @@ function DashboardLayoutClient({
           )}
           <Link
             href="/"
-            className="flex h-[74px] items-center justify-center bg-white"
+            className="flex h-[60px] sm:h-[68px] md:h-[74px] items-center justify-center bg-white"
           >
-            <Image src="/logo.svg" alt="" width={102} height={46.17} />
+            <Image
+              src="/logo.svg"
+              alt=""
+              width={102}
+              height={46.17}
+              className="w-[80px] sm:w-[90px] md:w-[102px]"
+            />
           </Link>
-          <ul className="py-4">
+          <ul className="py-3 sm:py-4">
             {slot}
-            <li className="mt-4 border-t border-t-white">
-              <Button className="flex items-center gap-x-2.5 px-14 py-5 text-base font-semibold">
-                <LogoutSvg /> Logout
+            <li className="mt-3 sm:mt-4 border-t border-t-white">
+              <Button className="flex w-full items-center gap-x-2 px-4 py-4 text-sm font-semibold sm:gap-x-2.5 sm:px-8 sm:py-4 sm:text-base md:px-8 md:py-5">
+                <LogoutSvg fill="white" /> Logout
               </Button>
             </li>
           </ul>

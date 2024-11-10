@@ -28,15 +28,14 @@ interface LoanHistoryProps {
 }
 
 export default function LoanHistorySingleClient({
-  paymentSchedule,
-  paymentHistory,
+  // paymentSchedule,
+  // paymentHistory,
   loanData
 }: LoanHistoryProps) {
 
-  console.log(loanData.loan);
 
   const { loan, loanhistory } = loanData;
-  const { total_days, amount, status, last_payment, approval_slip, total_amount_paid, total_days: totalDays, daily_interest, total_installment, profit, late_interest, installment_period, category, userid, loanrequirementid, createdAt, } = loan;
+  const { total_days, amount, status, daily_interest, installment_period } = loan;
 
   return (
     <div className="min-h-screen">

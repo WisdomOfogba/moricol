@@ -79,9 +79,9 @@ function ProfileDropdown() {
     <article className="absolute right-2 top-[74px] w-full max-w-[320px] rounded-b-xl bg-white shadow-xl">
       <div className="flex flex-col items-center justify-center gap-y-2 py-2">
         <div className="relative h-20 w-20 rounded-full bg-[url('/images/client.jpg')] bg-cover bg-no-repeat">
-          <div className="absolute left-[57px] top-[60px]">
+          <Link href={routes.PROFILE} className="absolute  left-[57px] top-[62px]" title="Edit profile">
             <EditSVG />
-          </div>
+          </Link>
         </div>
         <p>{data?.user?.firstname} {data?.user?.lastname}</p>
       </div>

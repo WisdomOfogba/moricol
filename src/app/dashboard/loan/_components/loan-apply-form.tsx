@@ -1,9 +1,8 @@
-import { CreateOfferParams } from "@/api/loan";
+import { CreateOfferParams, Guarantor } from "@/api/loan";
 import Button from "@/components/button";
 import FileInput from "@/components/file-input";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
-import { RadioGroup, RadioGroupItem } from "@/components/radio-group";
 import {
   Select,
   SelectContent,
@@ -13,10 +12,10 @@ import {
 } from "@/components/select";
 import { ArrowRightSvg } from "@/components/svgs";
 import { banksInNigeria } from "@/constants/banks";
-import { LoanDetails } from "@/definition";
 import uploadToCloudinary from "@/util/upload-to-cloudinary";
+import CollateralInput from "./collateral-input";
+import { ShadButton } from "@/components/shadcn-button";
 
-type Guarantor = Omit<CreateOfferParams, "userid" | "session">['guarantor_one'] | Omit<CreateOfferParams, "userid" | "session">['guarantor_two']
 
 interface GuarantorInfoProps {
   guarantor: 1 | 2,
@@ -30,7 +29,7 @@ interface GuarantorInfoProps {
 const GuarantorInfo: React.FC<GuarantorInfoProps> = ({ guarantor, fieldToUpdate, value, handleFieldChangeAndUpdate }) => {
 
   const handleFieldChange = (field: 'email' | 'phone' | 'workstatus' | 'name' | 'address' | 'relationship' | 'residential_address' | 'utility', v: string) => {
-    let updatedValue = {
+    const updatedValue = {
       ...value,
       [field]: v
     }
@@ -43,7 +42,7 @@ const GuarantorInfo: React.FC<GuarantorInfoProps> = ({ guarantor, fieldToUpdate,
     setLoading && setLoading(true);
     try {
       const url = await uploadToCloudinary(file);
-      let updatedValue = {
+      const updatedValue = {
         ...value,
         [field ?? 'utility']: url
       }
@@ -194,27 +193,6 @@ function LoanApplyForm({
               <span className="text-gray-200">({applyData.amount} for {applyData.total_days} days)</span>
             </h2>
 
-            {/* <div>
-              <Label className="block pb-2" htmlFor="amount">
-                Amount *
-              </Label>
-              <RadioGroup defaultValue={applyData.amount.toString()} onValueChange={(value) => handleFieldChangeAndUpdate('amount', value)}>
-                <div className="flex flex-col space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value={loanDetails.range.amount1.toString()} id="amount1" />
-                    <Label htmlFor="amount1">₦{loanDetails.range.amount1}</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value={loanDetails.range.amount2.toString()} id="amount2" />
-                    <Label htmlFor="amount2">₦{loanDetails.range.amount2}</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value={loanDetails.range.amount3.toString()} id="amount3" />
-                    <Label htmlFor="amount3">₦{loanDetails.range.amount3}</Label>
-                  </div>
-                </div>
-              </RadioGroup>
-            </div> */}
 
             <div>
               <Label className="block pb-2" htmlFor="bvn">
@@ -387,22 +365,18 @@ function LoanApplyForm({
               field="proof_of_income"
               onUpload={handleUpload}
             />
-            {/* 
-            <div>
-              <Label className="block pb-2" htmlFor="collateral">
-                Collateral *
-              </Label>
-              <Input id="collateral" value={applyData.collateral} onChange={(e) => handleFieldChangeAndUpdate('collateral', e.target.value)} placeholder="Enter collateral details" />
-            </div>
+            {applyData.collaterals.map((c, idx) =>
+              <CollateralInput
+                index={idx}
+                key={idx + 'jfdfmmb'}
+                value={c}
+                applyData={applyData}
+                handleFieldChangeAndUpdate={handleFieldChangeAndUpdate}
+              />
+            )}
 
-            <FileInput
-              id="collateral-proof-upload"
-              title="Proof of Collateral (Pictures, receipts, range of documents for collateral) *"
-              uploaded={!!applyData.collateral_proof}
-              acceptedFileTypes="image/*"
-              field="collateral_proof"
-              onUpload={handleUpload}
-            /> */}
+            <ShadButton variant="link" className="text-primary-500 p-0 py-0 hover:text-primary-600" onClick={() => handleFieldChangeAndUpdate('collaterals', [...applyData.collaterals, { item: "", proof_of_item: "" }])}>Add another collateral</ShadButton>
+
 
             {/* <FileInput id="doctors-report-upload" title="Doctor's Report *" /> */}
 

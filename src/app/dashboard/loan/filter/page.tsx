@@ -3,6 +3,8 @@ import LoanFilterClient from "../_components/loan-filter-client";
 import loanApi from "@/api/loan";
 import { LoanCategory } from "@/definition";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Loan Categories | Moricol",
   description: "Filter by loan categories",

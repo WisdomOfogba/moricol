@@ -14,6 +14,8 @@ export const routes = {
   //AUTH
   LOGIN: "/login",
 
+  PROFILE: "/dashboard/profile",
+
   // Massage dashboard links
   MASSAGEDASHBOARDHOME: "/dashboard/massage",
   MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists/1",

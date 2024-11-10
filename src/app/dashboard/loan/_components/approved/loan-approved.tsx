@@ -9,17 +9,6 @@ import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { BiDownload } from "react-icons/bi";
 
-function LoanApproved({ slip }: { slip: string }) {
-  return (
-    <>
-      <LoanApprovedComponent slip={slip} />
-    </>
-  );
-}
-
-export default LoanApproved;
-
-
 export function LoanApprovedComponent({ slip }: { slip: string }) {
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();

@@ -1,8 +1,8 @@
 import React from "react";
 import { getUserSession } from "@/lib/auth";
 import loanApi from "@/api/loan";
-import { DeclinedLoanComponent } from "../../_components/declined/page";
-import { LoanApprovedComponent } from "../../_components/approved/page";
+import { DeclinedLoanComponent } from "../../_components/declined/loan-declined";
+import { LoanApprovedComponent } from "../../_components/approved/loan-approved";
 
 
 async function getLoanData(loanid: string) {

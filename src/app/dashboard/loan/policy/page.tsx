@@ -3,7 +3,6 @@ import Button from "@/components/button";
 import NavigationBackBtn from "@/components/nav-back-btn";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ReturnPolicy({
@@ -12,7 +11,6 @@ export default function ReturnPolicy({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const [agree, setAgree] = useState(false);
-  const router = useRouter();
 
 
   return (
