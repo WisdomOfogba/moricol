@@ -11,7 +11,7 @@ export interface productCategoryParams {
         prescription: boolean;
         name: string;
         coverimage: string;
-        price: Number;
+        price: number;
       };
       _id: string;
       category: string;
@@ -24,8 +24,7 @@ interface FetchState<productCategoryParams> {
   loading: boolean;
   error: string | null;
 }
-
-function useFetch<T = unknown>(
+function useFetch(
   fetchFunction: (session: Session) => Promise<productCategoryParams>,
 ): FetchState<productCategoryParams> {
   const { data: session } = useSession();

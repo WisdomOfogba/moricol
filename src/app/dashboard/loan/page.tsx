@@ -19,9 +19,6 @@ export const metadata = {
   description: "View your loan history and manage your loan accounts",
 };
 
-
-
-
 async function getLoanData() {
   try {
     const session = await getUserSession();

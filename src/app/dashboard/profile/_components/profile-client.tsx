@@ -17,8 +17,9 @@ import { Card, CardContent } from "@/components/card";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
 import FileInput from "@/components/file-input";
+import { ProfileData } from "@/definition";
 
-export default function ProfileClient() {
+export default function ProfileClient({ profileData }: { profileData: ProfileData }) {
   const [isAcctEditable, setIsAcctEditable] = useState(false);
   const [isRecordEditable, setIsRecordEditable] = useState(false);
 
@@ -64,6 +65,7 @@ export default function ProfileClient() {
                     placeholder="Enter genotype"
                     className={!isRecordEditable ? readonlyClass : ""}
                     readOnly={!isRecordEditable}
+                    defaultValue={profileData.demographic.genotype}
                   />
                 </div>
                 <div>
@@ -73,6 +75,7 @@ export default function ProfileClient() {
                     placeholder="Enter blood group"
                     className={!isRecordEditable ? readonlyClass : ""}
                     readOnly={!isRecordEditable}
+                    defaultValue={profileData.demographic.bloodgroup}
                   />
                 </div>
               </div>
@@ -83,6 +86,7 @@ export default function ProfileClient() {
                   placeholder="List any allergies"
                   className={!isRecordEditable ? readonlyClass : ""}
                   readOnly={!isRecordEditable}
+                  defaultValue={profileData.demographic.allergy.join(', ')}
                 />
               </div>
               <div>
@@ -95,6 +99,7 @@ export default function ProfileClient() {
                       placeholder="Next of kin name"
                       className={!isRecordEditable ? readonlyClass : ""}
                       readOnly={!isRecordEditable}
+                      defaultValue={''}
                     />
                   </div>
                   <div>
@@ -104,6 +109,7 @@ export default function ProfileClient() {
                       placeholder="Next of kin phone number"
                       className={!isRecordEditable ? readonlyClass : ""}
                       readOnly={!isRecordEditable}
+                      defaultValue={''}
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -138,6 +144,7 @@ export default function ProfileClient() {
                       placeholder="Emergency contact phone"
                       className={!isRecordEditable ? readonlyClass : ""}
                       readOnly={!isRecordEditable}
+                      defaultValue={'0999999'}
                     />
                   </div>
                 </div>

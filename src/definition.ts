@@ -272,7 +272,7 @@ export interface Demographic {
   allergy: string[];
 }
 
-export interface Profile {
+export interface ProfileRequestType {
   userid: string;
   email: string;
   firstname: string;
@@ -287,4 +287,35 @@ export interface Profile {
   photo: string;
   language: string;
   demographic: Demographic;
+}
+
+
+export type ProfileData = {
+  demographic: {
+    bloodgroup: string;
+    genotype: string;
+    allergy: string[];
+    reports: string[];
+  };
+  mail_on: boolean;
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  dob: string;
+  gender: string;
+  religion: string;
+  occupation: string;
+  maritalstatus: string;
+  country: string;
+  status: string;
+  state: string;
+  language: string;
+  user_blocked: boolean;
+  createdAt: string;
+  __v: number;
+  phone: string;
+  photo: string;
+
 }

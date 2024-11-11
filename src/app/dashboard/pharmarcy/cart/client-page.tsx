@@ -1,5 +1,5 @@
 import Button from "@/components/button";
-import ProductCard from "@/components/dashboard/pharmacy-product-card";
+// import ProductCard from "@/components/dashboard/pharmacy-product-card";
 import {
   SliderNextButton,
   SliderPrevButton,
@@ -109,7 +109,7 @@ export default function CartPage() {
         </div>
 
         <div className="relative py-3">
-          <ProductCard />
+          {/* <ProductCard /> */}
           <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 opacity-30" />
           <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 opacity-30" />
         </div>
@@ -122,7 +122,7 @@ export default function CartPage() {
         </div>
 
         <div className="relative py-3">
-          <ProductCard />
+          {/* <ProductCard /> */}
           <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 opacity-30" />
           <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 opacity-30" />
         </div>
@@ -135,7 +135,7 @@ export default function CartPage() {
         </div>
 
         <div className="relative py-3">
-          <ProductCard />
+          {/* <ProductCard /> */}
           <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 opacity-30" />
           <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 opacity-30" />
         </div>

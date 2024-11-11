@@ -137,11 +137,12 @@ export default function HomePage() {
           </Button>
         </div>
         <div className="grid gap-5 py-3 lg:grid-cols-6">
-          {newProducts?.data.map((drug, index) => {
+          {newProducts?.data.map((drug) => {
             if (drug?.product) {
               console.log(drug.product);
               return (
                 <ProductCard
+                  key={drug.product?._id}
                   id={drug.product?._id}
                   prescription={drug.product?.prescription}
                   drugName={drug.product?.name}
@@ -176,10 +177,11 @@ export default function HomePage() {
           </Button>
         </div>
         <div className="grid justify-between gap-5 py-3 lg:grid-cols-6">
-          {bestProducts?.data.map((drug, index) => {
+          {bestProducts?.data.map((drug) => {
             if (drug?.product) {
               return (
                 <ProductCard
+                  key={drug.product?._id}
                   id={drug.product?._id}
                   prescription={drug.product?.prescription}
                   drugName={drug.product?.name}

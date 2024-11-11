@@ -12,7 +12,7 @@ import { useParams } from "next/navigation";
 
 interface Attributes {
   value: string;
-  price: Number;
+  price: number
 }
 interface Images {
   url: string;
@@ -32,11 +32,11 @@ export interface SingleProduct {
     description: string;
     images: Images[];
     name: string;
-    price: Number;
+    price: number
     status: string;
     specification: string;
-    sold: Number;
-    discount_price: Number;
+    sold: number
+    discount_price: number
     _id: string;
   };
   productreview: string[];
@@ -64,7 +64,8 @@ export default function ProductPage() {
           <div>
             <div className="relative mb-6 h-[537px] w-[537px] overflow-hidden">
               <Image
-                src={drug?.product.coverimage!}
+                key={drug?.product.coverimage}
+                src={drug?.product.coverimage ?? ''}
                 alt=""
                 fill
                 sizes="537px"
@@ -73,7 +74,7 @@ export default function ProductPage() {
               />
             </div>
             <div className="grid grid-cols-6 gap-x-3">
-              {drug?.product.images.map((image, i) => (
+              {drug?.product.images.map((image) => (
                 <div
                   key={image._id}
                   className="relative mb-6 h-[79px] w-[79px] border border-[#DBDBDB]"
@@ -99,8 +100,8 @@ export default function ProductPage() {
             {/* Brand | Rating | Availability */}
             <p className="mb-1.5">
               Brand:{" "}
-              {drug?.product.attribute.brand.map((b, i) => (
-                <span className="text-primary-500">{b.value}</span>
+              {drug?.product.attribute.brand.map((b) => (
+                <span key={b.value} className="text-primary-500">{b.value}</span>
               ))}
             </p>
             <div className="mb-2 mt-0.5 flex items-center gap-x-1">
@@ -132,8 +133,8 @@ export default function ProductPage() {
               <div className="shrink-0">
                 <h3 className="mb-1 text-gray-700">Color</h3>
                 <div className="flex flex-wrap gap-x-1.5">
-                  {drug?.product.attribute.color.map((col, index) => (
-                    <button className="flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2">
+                  {drug?.product.attribute.color.map((col) => (
+                    <button key={col.value} className="flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2">
                       {col.value}
                     </button>
                   ))}
@@ -143,8 +144,8 @@ export default function ProductPage() {
               <div className="shrink-0">
                 <h3 className="mb-1 text-gray-700">Size</h3>
                 <div className="flex flex-wrap gap-x-1.5">
-                  {drug?.product.attribute.size.map((s, index) => (
-                    <button className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white uppercase">
+                  {drug?.product.attribute.size.map((s) => (
+                    <button key={s.value} className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white uppercase">
                       {s.value}
                     </button>
                   ))}
