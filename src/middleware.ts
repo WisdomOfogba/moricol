@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  
+
   if (req.nextUrl.pathname.startsWith("/dashboard")) {
     if (!token) {
       const signInUrl = new URL("/signin", req.url);
