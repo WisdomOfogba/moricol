@@ -10,10 +10,11 @@ import { IoNutrition } from "react-icons/io5";
 import { TbPhysotherapist } from "react-icons/tb";
 import { CgMore } from "react-icons/cg";
 import { GiMedicines } from "react-icons/gi";
+import TelemedPageWrap from "../../_components/telemed-page-wrap";
 
 function Specialists() {
   return (
-    <div>
+    <TelemedPageWrap>
       <div className="grid grid-cols-2 gap-4 py-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <SpecialistCard
           color="bg-purple-100"
@@ -96,7 +97,7 @@ function Specialists() {
           description="Other categories."
         />
       </div>
-    </div>
+    </TelemedPageWrap>
   );
 }
 

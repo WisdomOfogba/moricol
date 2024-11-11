@@ -6,7 +6,7 @@ import { LoanDataType } from "@/definition";
 import Link from "next/link";
 import React, { useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
-import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
 
 function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const [filterStatus, setFilterStatus] = useState("All");
@@ -15,6 +15,7 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const filteredLoans = loans.filter(
     (loan) => filterStatus === "All" || loan.title.includes(filterStatus.toLowerCase()),
   );
+  console.log(filteredLoans);
 
   return (
     <div className="space-y-4">
@@ -52,15 +53,17 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
       </div>
       {filteredLoans.map((item, index) => (
         <Link
-          href={routes.LOANDASHBOARDHOME + `/status/${item.loanoffer}`}
+          href={item.title.includes("received") || item.title.includes("recieved") ? routes.LOANHISTORY + `/${item.loanoffer}` : routes.LOANDASHBOARDHOME + `/status/${item.loanoffer}`}
           key={index}
           className="group flex items-center rounded-lg bg-gray-50 bg-white p-4 shadow"
         >
           <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100">
-            {!item.title.includes("declined") ? (
-              <FaCheckCircle className="text-2xl text-green-500" />
-            ) : (
+            {item.title.includes("received") || item.title.includes("recieved") ? (
+              <FaInfoCircle className="text-2xl text-blue-500" />
+            ) : item.title.includes("declined") ? (
               <FaExclamationCircle className="text-2xl text-red-500" />
+            ) : (
+              <FaCheckCircle className="text-2xl text-green-500" />
             )}
           </div>
           <div className="flex-grow capitalize">

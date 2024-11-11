@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/accordion-shad";
+import TelemedPageWrap from "../../_components/telemed-page-wrap";
 
 const faqItems = [
   {
@@ -42,18 +43,20 @@ const faqItems = [
 
 export default function FAQAccordion() {
   return (
-    <div className="mx-auto max-w-3xl p-4">
-      <h1 className="mb-6 text-2xl font-bold">FAQs</h1>
-      <AccordionShadcn type="single" collapsible className="w-full">
-        {faqItems.map((item, index) => (
-          <AccordionItem key={index} value={`item-${index}`}>
-            <AccordionTrigger className="text-left">
-              {item.question}
-            </AccordionTrigger>
-            <AccordionContent>{item.answer}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </AccordionShadcn>
-    </div>
+    <TelemedPageWrap>
+      <div className="mx-auto max-w-3xl p-4">
+        <h1 className="mb-6 text-2xl font-bold">FAQs</h1>
+        <AccordionShadcn type="single" collapsible className="w-full">
+          {faqItems.map((item, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="text-left">
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent>{item.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </AccordionShadcn>
+      </div>
+    </TelemedPageWrap>
   );
 }

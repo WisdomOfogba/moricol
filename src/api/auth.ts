@@ -1,5 +1,8 @@
-import { API_BASE_URL } from "@/constants/config";
-import axios from "axios";
+
+import { API_BASE_URL } from '@/constants/config';
+import axios from 'axios';
+import handleAxiosError from './handle-axios-error';
+
 
 // Base URL of the external API
 
@@ -32,8 +35,9 @@ export const signup = async (userData: SignupData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Signup error:", error);
-    throw error;
+    const errorMessage = handleAxiosError(error, 'Error signing up');
+    throw new Error(errorMessage);
+
   }
 };
 
@@ -55,8 +59,10 @@ export const confirmVerificationCode = async (code: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Code verification error:", error);
-    throw error;
+
+    const errorMessage = handleAxiosError(error, 'Error verifying verification code');
+    throw new Error(errorMessage);
+
   }
 };
 
@@ -74,8 +80,8 @@ export const confirmPasswordResetCode = async (code: string, email: string) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Code verification error:', error);
-    throw error;
+    const errorMessage = handleAxiosError(error, 'Error verifying password reset code');
+    throw new Error(errorMessage);
   }
 };
 
@@ -103,8 +109,10 @@ export const resetPassword = async (resetData: ResetPasswordData) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Password reset error:", error);
-    throw error;
+
+    const errorMessage = handleAxiosError(error, 'Error resetting password');
+    throw new Error(errorMessage);
+
   }
 };
 
@@ -126,8 +134,10 @@ export const forgotPassword = async (email: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Forgot password error:", error);
-    throw error;
+
+    const errorMessage = handleAxiosError(error, 'Error initiating password reset');
+    throw new Error(errorMessage);
+
   }
 };
 
@@ -136,20 +146,20 @@ export const forgotPassword = async (email: string) => {
  * 
  * @param email - The user's email, new password and confirm password.
  */
-export const changePassword = async (email: string, new_password: string, confirm_password: string) => {
+export const changePassword = async (new_password: string, confirm_password: string, code: string) => {
   if (new_password !== confirm_password) {
     throw new Error("Passwords do not match");
   }
   try {
-    const response = await axios.post(`${API_BASE_URL}/user/reset/password`, { email, newpassword: new_password }, {
+    const response = await axios.post(`${API_BASE_URL}/user/change/password`, { password: new_password, code }, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Change password error:', error);
-    throw error;
+    const errorMessage = handleAxiosError(error, 'Error changing password');
+    throw new Error(errorMessage);
   }
 };
 

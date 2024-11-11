@@ -132,7 +132,7 @@ export default function JobsPostedClient({ unhired_jobposts, hired_jobposts }: {
                       {job.status.toUpperCase()}
                     </ShadButton>}
                     {job.status.toUpperCase() === 'PAY' &&
-                      <MakePaymentButton price={job.price} status={job.status} />
+                      <MakePaymentButton jobpostid={job._id} price={job.price} status={job.status} />
                     }
                   </TableCell>
                 </TableRow>

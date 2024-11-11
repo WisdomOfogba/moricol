@@ -4,13 +4,12 @@ import Image from "next/image";
 // import { IoNutrition } from "react-icons/io5";
 // import { TbPhysotherapist } from "react-icons/tb";
 import SpecialistCard from "./_components/specialist-card";
-import Link from "next/link";
-import { routes } from "@/constants/routes";
 import TelemedicineLayoutTemplate from "./(main)/template";
 import { Metadata } from "next";
 import telemedicineApi from "@/api/telemedicine";
 import { getUserSession } from "@/lib/auth";
 import { Session } from "next-auth";
+import TelemedPageWrap from "./_components/telemed-page-wrap";
 
 export const revalidate = 0;
 
@@ -50,62 +49,65 @@ export default async function Telemedicine() {
   const session = await getUserSession();
   const telemedicineData = await getTelemedicineData(session as Session);
 
+
   return (
     <TelemedicineLayoutTemplate>
-      <div className="flex min-h-screen flex-col md:flex-row">
-        <main className="flex-grow">
-          <h1 className="text-2xl font-bold">Welcome, {session?.user?.firstname}</h1>
+      <TelemedPageWrap>
+        <div className="flex min-h-screen flex-col md:flex-row">
+          <main className="flex-grow">
+            <h1 className="text-2xl font-bold">Welcome, {session?.user?.firstname}</h1>
 
-          <p className="mb-8 text-gray-600">Find your suitable doctors here</p>
+            <p className="mb-8 text-gray-600">Find your suitable doctors here</p>
 
-          <div className="pb-2">
-            <hr />
-            <p className="md:hidden py-2">Schedule an appointment</p>
-            <div className="hidden pt-3 md:block"></div>
+            <div className="pb-2">
+              <hr />
+              <p className="md:hidden py-2">Schedule an appointment</p>
+              <div className="hidden pt-3 md:block"></div>
 
-            <div className="flex md:flex md:flex-col md:items-end">
-              <Button className="md:w-fit">
-                Schedule a doctor&apos; appointment
-              </Button>
+              <div className="flex md:flex md:flex-col md:items-end">
+                <Button className="md:w-fit">
+                  Schedule a doctor&apos; appointment
+                </Button>
+              </div>
+              <div className="pt-3"></div>
+              <hr />
             </div>
-            <div className="pt-3"></div>
-            <hr />
-          </div>
 
-          {/* Specialists Section */}
-          <section className="mb-8">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Specialists</h2>
-              <Link
+            {/* Specialists Section */}
+            <section className="mb-8">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xl font-semibold">Specialists</h2>
+                {/* <Link
                 href={routes.TELEMEDICINE_SPECIALISTS}
                 className="text-primary-500 hover:underline"
               >
                 View all
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {
-                telemedicineData.map((category) => (
-                  <SpecialistCard
-                    key={category._id}
-                    id={category._id}
-                    color="bg-purple-100"
-                    icon={
-                      <div className=" bg-purple-200 h-fit w-fit rounded-full p-1">
-                        <Image src={category.image} alt={category.name} width={20} className="object-cover h-8 w-8 block rounded-full" height={20} />
-                      </div>
-                    }
-                    title={category.name}
-                    description={category.description}
-                  />
-                ))
-              }
+              </Link> */}
+              </div>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                {
+                  telemedicineData.map((category) => (
+                    <SpecialistCard
+                      key={category._id}
+                      id={category._id}
+                      color="bg-purple-100"
+                      icon={
+                        <div className=" bg-purple-200 h-fit w-fit rounded-full p-1">
+                          <Image src={category.image} alt={category.name} width={20} className="object-cover h-8 w-8 block rounded-full" height={20} />
+                        </div>
+                      }
+                      title={category.name}
+                      description={category.description}
+                    />
+                  ))
+                }
 
-            </div>
-          </section>
+              </div>
+            </section>
 
-        </main>
-      </div>
+          </main>
+        </div>
+      </TelemedPageWrap>
     </TelemedicineLayoutTemplate>
   );
 }

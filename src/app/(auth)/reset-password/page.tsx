@@ -8,6 +8,7 @@ export default function ResetPassword({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const email = searchParams.email as string | undefined;
+  const code = searchParams.code as string | undefined;
 
   return (
     <main className="flex h-screen min-h-screen overflow-hidden">
@@ -24,7 +25,7 @@ export default function ResetPassword({
           />
         </div>
 
-        <ResetPasswordForm email={email} />
+        <ResetPasswordForm email={email} code={code} />
       </section>
     </main>
   );

@@ -6,36 +6,38 @@ import Button from "@/components/button";
 import NavigationBackBtn from "@/components/nav-back-btn";
 import { LoanHistorySingleProps } from "../history/[loan_id]/page";
 import { formatDateToWords } from "@/util/format-dates-words";
+import { useState } from "react";
+import MakeLoanPayment from "./make-loan-payment";
+import { Input } from "@/components/input";
+import { FaInfoCircle } from "react-icons/fa";
 
-interface PaymentSchedule {
-  amount: number;
-  date: string;
-  id: string | number;
-  status: string;
-}
-
-interface PaymentHistory {
-  amount: number;
-  date: string;
-  id: string | number;
-  status: string;
-}
 
 interface LoanHistoryProps {
-  paymentSchedule: PaymentSchedule[];
-  paymentHistory: PaymentHistory[];
   loanData: LoanHistorySingleProps;
 }
 
 export default function LoanHistorySingleClient({
-  // paymentSchedule,
-  // paymentHistory,
   loanData
 }: LoanHistoryProps) {
 
 
   const { loan, loanhistory } = loanData;
   const { total_days, amount, status, daily_interest, installment_period } = loan;
+
+  const outstanding_exists = loan.balance > 0;
+  const [amountToPay, setAmountToPay] = useState(0);
+
+
+  const getNextPayment = () => {
+    const nextPayment = installment_period.find((payment, index) =>
+      !payment.loan_paid && index > installment_period.findIndex(p => p.loan_paid)
+    );
+
+    const due_date = nextPayment?.due_date ? formatDateToWords(nextPayment.due_date) : 'Nil';
+    const next_payment_amount = nextPayment?.repay_amount ? nextPayment.repay_amount : 0;
+    const next_payment_id = nextPayment?._id;
+    return { due_date, next_payment_amount, next_payment_id };
+  }
 
   return (
     <div className="min-h-screen">
@@ -51,8 +53,9 @@ export default function LoanHistorySingleClient({
                   <div>
                     <p className="text-sm">Loan amount</p>
                     <p className="text-3xl font-bold">₦{amount.toLocaleString('en-NG')}</p>
+                    <p className="text-xs text-gray-200 font-semibold py-2">Total amount due : ₦{loan.totalamount.toLocaleString('en-NG')} | Interest : ₦{loan.profit.toLocaleString('en-NG')}</p>
                   </div>
-                  <div className={`absolute right-[-10px] top-[-10px] h-12 w-12 rounded-full ${status === 'approved' ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                  <div className={`absolute right-[-10px] top-[-10px] h-12 w-12 rounded-full ${status === 'approved' || status === 'completed' ? 'bg-green-500' : 'bg-red-500'}`}></div>
                 </div>
                 <br />
                 <hr />
@@ -63,7 +66,7 @@ export default function LoanHistorySingleClient({
                   </div>
                   <div>
                     <p>Next payment</p>
-                    <p>Feb 29, 2023</p>
+                    <p>{getNextPayment().due_date}</p>
                   </div>
                   <div>
                     <p>Interest rate</p>
@@ -72,6 +75,33 @@ export default function LoanHistorySingleClient({
                 </div>
               </CardContent>
             </Card>
+
+            {outstanding_exists && <div className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                  <FaInfoCircle className="text-xl text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-blue-800"></h3>
+                  <p className="text-blue-700">
+                    You have an outstanding payment of ₦{(loan.totalamount - loan.total_amount_paid).toLocaleString('en-NG')}
+                  </p>
+                </div>
+              </div>
+            </div>}
+            {!outstanding_exists && <div className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                  <FaInfoCircle className="text-xl text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-green-800"></h3>
+                  <p className="text-green-700">
+                    Loan has been fully paid. <span className="font-bold">(₦{loan.total_amount_paid.toLocaleString('en-NG')} of ₦{loan.totalamount.toLocaleString('en-NG')})</span>
+                  </p>
+                </div>
+              </div>
+            </div>}
 
             <Tabs defaultValue="schedule">
               <TabsList className="mb-4 grid w-full grid-cols-2">
@@ -133,17 +163,60 @@ export default function LoanHistorySingleClient({
               </TabsContent>
             </Tabs>
 
-            <p className="mt-4 text-sm text-gray-600">
-              Next payment due on {(() => {
-                const nextPayment = installment_period.find((payment, index) =>
-                  !payment.loan_paid && index > installment_period.findIndex(p => p.loan_paid)
-                );
-                return nextPayment?.due_date ? formatDateToWords(nextPayment.due_date) : 'No upcoming payments';
-              })()}
-            </p>
-            <Button className="mt-4 w-full rounded-lg bg-primary-500 py-3 text-white hover:bg-primary-600">
-              PAY NOW
-            </Button>
+
+            {outstanding_exists && <dialog id="paymentDialog" className="p-6 rounded-lg shadow-lg w-96 max-w-full">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Make Payment</h3>
+                <p className="text-sm text-gray-600">Choose an amount to pay</p>
+                {Array.from(new Set(installment_period.map(p => p.repay_amount))).map((amount, index) => (
+                  <span onClick={() => setAmountToPay(amount)} key={index} className="inline-block cursor-pointer hover:bg-gray-200  bg-blue-100 rounded-full px-2 py-1 text-xs">
+                    ₦{amount.toLocaleString('en-NG')}
+                  </span>
+                ))}
+
+                <div className="space-y-2">
+                  <label htmlFor="paymentAmount" className="block text-sm font-medium text-gray-700">
+                    Or enter an amount
+                  </label>
+                  <Input
+                    type="number"
+                    id="paymentAmount"
+                    name="paymentAmount"
+                    value={amountToPay.toString()}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="Enter amount"
+                    min="0"
+                    step="0.01"
+                    onChange={(e) => setAmountToPay(Number(e.target.value.toString()))}
+                  />
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button
+                    onClick={() => {
+                      const dialog = document.getElementById('paymentDialog') as HTMLDialogElement;
+                      dialog.close();
+                    }}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                  >
+                    Cancel
+                  </button>
+                  <MakeLoanPayment price={amountToPay} loanid={loan._id} />
+                </div>
+              </div>
+            </dialog>}
+            {outstanding_exists && <Button
+              onClick={() => {
+                const dialog = document.getElementById('paymentDialog') as HTMLDialogElement;
+                dialog.showModal();
+              }}
+              variant="primary"
+              className="mt-4"
+            >
+              Make Payment
+            </Button>}
+
+
+
           </div>
         </div>
       </div>

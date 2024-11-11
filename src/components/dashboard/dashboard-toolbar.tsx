@@ -12,16 +12,9 @@ import { routes } from "@/constants/routes";
 import Link from "next/link";
 import { SelectContent, Select, SelectItem, SelectTrigger, SelectValue } from "../select";
 import { useRouter } from "next/navigation";
+import { servicesDashboardLinks } from "@/constants";
 
-const services = [
-  { name: 'Telemedicine', path: routes.TELEMEDICINE_DASHBOARD },
-  { name: 'Pharmacy', path: routes.PHARMARCYDASHBOARD },
-  { name: 'Massage', path: routes.MASSAGEDASHBOARDHOME },
-  { name: 'Home Care', path: routes.HOMECAREDASHBOARDHOME },
-  { name: 'Training', path: routes.TRAININGDASHBOARD },
-  { name: 'Recruitment', path: routes.RECRUITMENTDASHBOARD },
-  { name: 'Loan', path: routes.LOANDASHBOARDHOME }
-]
+
 
 export default function DashboardToolbar({
   toggleSidebar,
@@ -93,7 +86,7 @@ function ProfileDropdown() {
             <SelectValue placeholder="Select profile" />
           </SelectTrigger>
           <SelectContent>
-            {services.map((service) => (
+            {servicesDashboardLinks.map((service) => (
               <SelectItem
                 key={service.path}
                 value={service.path}

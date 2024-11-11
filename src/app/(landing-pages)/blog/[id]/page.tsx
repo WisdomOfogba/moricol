@@ -59,7 +59,7 @@ export default async function Blog({ params }: { params: { id: string } }) {
           <div className="w-full">
             <section className="mb-14">
               <div className="mb-14">
-                <div className="mb-6" dangerouslySetInnerHTML={{ __html: blogData.blog }} />
+                <div className="mb-6" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: blogData.blog }} />
               </div>
             </section>
 

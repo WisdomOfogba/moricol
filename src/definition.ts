@@ -263,3 +263,28 @@ export type LoanDataType = {
   createdAt: string;
   __v: number;
 };
+
+
+export interface Demographic {
+  bloodgroup: string;
+  genetype: string;
+  reports: string[];
+  allergy: string[];
+}
+
+export interface Profile {
+  userid: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  gender: string;
+  maritalstatus: string;
+  occupation: string;
+  dob: string;
+  religion: string;
+  country: string;
+  state: string;
+  photo: string;
+  language: string;
+  demographic: Demographic;
+}

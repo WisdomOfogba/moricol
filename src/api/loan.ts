@@ -1,6 +1,7 @@
 import { Session } from "next-auth";
 import { createClientAxios } from "./axios-client";
 import handleAxiosError from "./handle-axios-error";
+import { API_BASE_URL } from "@/constants/config";
 
 const loanUrl = 'user/loan'
 
@@ -19,6 +20,9 @@ const endpoints = {
     retrieveAllAccounts: loanUrl + '/retrieve/all/account',
     retrieveSingleAccount: loanUrl + '/retrieve/single/account',
     deleteAccount: loanUrl + '/delete/account',
+    updateJobPostPayment: API_BASE_URL + '/user/recruitment/update/jobpost/payment',
+    paymentGateway: loanUrl + '/payment/gateway',
+    payback: loanUrl + '/payback',
 
 
 }
@@ -268,6 +272,35 @@ const loanApi = {
             throw new Error(errorMessage);
         }
     },
+
+    initiatePayment: async ({ userid, email, amount, session }: { userid: string; email: string; amount: number; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.paymentGateway, {
+                userid,
+                email,
+                amount
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error initiating loan payment');
+            throw new Error(errorMessage);
+        }
+    },
+
+    paybackLoan: async ({ userid, loanid, amount, ref, session }: { userid: string; loanid: string; amount: number; ref: string; session: Session }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.payback, { userid, loanid, amount, paystackref: ref });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error processing loan payback');
+            throw new Error(errorMessage);
+        }
+    },
+
 }
 
 export default loanApi;

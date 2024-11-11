@@ -99,7 +99,7 @@ export default function OtpForm({ email }: { email: string | undefined }) {
       if (emailVerificationType === "signup") {
         router.push("/verify-email-success");
       } else if (emailVerificationType === "password-reset") {
-        router.push(`/reset-password?email=${email}`);
+        router.push(`/reset-password?email=${email}&code=${code}`);
       } else {
         router.push("/signin");
       }

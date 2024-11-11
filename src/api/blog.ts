@@ -37,6 +37,22 @@ export interface BlogResponse {
     data: BlogPost[];
 }
 
+export interface BlogCategory {
+    _id: string;
+    name: string;
+    status: 'active' | 'inactive';
+    blog: number;
+    createdAt: string;
+    __v: number;
+}
+
+export interface BlogCategoryResponse {
+    status_code: number;
+    status: boolean;
+    message: string;
+    data: BlogCategory[];
+}
+
 export const blogApi = {
     getSingleBlog: async ({ blogId }: BlogParams): Promise<{ data: BlogPost }> => {
         try {
@@ -75,13 +91,14 @@ export const blogApi = {
                     page
                 })
             });
-
+            console.log(response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             return await response.json();
         } catch (error) {
+            console.log(error);
             const errorMessage = handleAxiosError(error, 'Error retrieving blog categories');
             throw new Error(errorMessage);
         }
@@ -112,9 +129,13 @@ export const blogApi = {
         }
     },
 
-    getCategories: async (): Promise<{ data: string[] }> => {
+    getCategories: async (): Promise<BlogCategoryResponse> => {
         try {
             const response = await fetch(endpoints.getCategories, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 cache: 'reload'
             });
             return await response.json();
@@ -124,3 +145,6 @@ export const blogApi = {
         }
     }
 };
+
+
+

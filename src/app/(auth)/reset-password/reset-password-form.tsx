@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 
-export default function ResetPasswordForm({ email }: { email: string | undefined }) {
+export default function ResetPasswordForm({ email, code }: { email: string | undefined, code: string | undefined }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +23,7 @@ export default function ResetPasswordForm({ email }: { email: string | undefined
     if (!new_password || !confirm_password) return;
     try {
       setLoading(true);
-      await changePassword(email, new_password as string, confirm_password as string);
+      await changePassword(new_password as string, confirm_password as string, code as string);
       router.push("/success");
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
