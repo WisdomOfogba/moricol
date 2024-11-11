@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import { categories } from "@/constants";
 import RangeSlider from "@/components/dashboard/range-slider";
-import ProductCard from "@/components/dashboard/pharmacy-product-card";
+// import ProductCard from "@/components/dashboard/pharmacy-product-card";
 import onlinePharmacyApi from "@/api/online-pharmacy";
 import useFetch from "@/hooks/useFetch";
 import { useSession } from "next-auth/react";
@@ -20,6 +20,7 @@ export default function CategoryPage() {
   const [category, setCategory] = useState<string | null>(null);
   const [subCategory, setSubCategory] = useState<string[] | null>(null);
   const [subSubCategory, setSubSubCategory] = useState<string[] | null>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars 
   const [displayProducts, setDisplayProducts] = useState(false);
   useEffect(() => {
     if (cats?.data) setCategory(cats?.data[0].category);

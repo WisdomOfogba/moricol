@@ -11,7 +11,7 @@ export interface Product {
     _id: string;
     coverimage: string;
     name: string;
-    price: Number;
+    price: number;
     prescription: boolean;
   };
 }
@@ -81,10 +81,11 @@ const SliderUtil = ({ data }: { data: Array<Product> }) => {
   return (
     <div className="relative w-full">
       <Slider {...settings}>
-        {data?.map((drug, index) => {
+        {data?.map((drug) => {
           if (drug?.product) {
             return (
               <ProductCard
+                key={drug.product?._id}
                 id={drug.product?._id}
                 prescription={drug.product?.prescription}
                 drugName={drug.product?.name}

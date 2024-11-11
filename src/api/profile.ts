@@ -2,7 +2,7 @@ import { Session } from 'next-auth';
 import { createClientAxios } from './axios-client';
 import handleAxiosError from './handle-axios-error';
 import { API_BASE_URL } from '@/constants/config';
-import { Profile } from '@/definition';
+import { ProfileData } from '@/definition';
 
 const endpoints = {
     getProfile: `${API_BASE_URL}/user/retrieve/profile`,
@@ -12,7 +12,7 @@ const endpoints = {
 
 
 export const profileApi = {
-    getProfile: async ({ userid, session }: { userid: string; session: Session }): Promise<Profile> => {
+    getProfile: async ({ userid, session }: { userid: string; session: Session }): Promise<{ data: ProfileData }> => {
         const axios = createClientAxios({ session });
 
         try {
@@ -40,7 +40,7 @@ export const profileApi = {
         }
     },
 
-    updateProfile: async (profile: Profile, session: Session) => {
+    updateProfile: async (profile: ProfileData, session: Session) => {
         const axios = createClientAxios({ session });
 
         try {

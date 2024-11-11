@@ -1,20 +1,24 @@
 // /src/context/CartContext.tsx
-import { createContext, ReactNode, useContext, useState } from "react";
-import { CartItem, Product } from "@/types/global";
+import { createContext, useContext, useState } from "react";
+interface CartItem {
+  id: string;
+  quantity: number;
+  [key: string]: any;
+}
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: { id: string;[key: string]: any }) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: { id: string;[key: string]: any }) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {

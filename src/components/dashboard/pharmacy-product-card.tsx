@@ -16,7 +16,7 @@ export default function ProductCard({
 }: {
   id: string;
   drugName: string;
-  price: Number;
+  price: number;
   imageUrl: string;
   bestSelling?: boolean;
   prescription: boolean;

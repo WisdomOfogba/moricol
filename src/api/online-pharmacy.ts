@@ -14,18 +14,18 @@ export interface CreateDrugOrderRequestParams {
   patientPhoneNumber: string;
   drugName: string;
   drugId: string;
-  price: Number;
-  qty: Number;
+  price: number
+  qty: number
   session: Session;
 }
 export interface CreateAddressParams {
   userid: string;
-  phone: Number;
+  phone: number
   email: string;
   firstname: string;
   lastname: string;
   address: string;
-  postalcode: Number;
+  postalcode: number
   state: string;
   city: string;
   latitude?: string;
@@ -94,7 +94,7 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveAllCategory,
+        apiEndpoints.productCategory.retrieveAllCategory,
       );
       return response.data;
     } catch (error) {
@@ -114,7 +114,7 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveSubCategory,
+        apiEndpoints.productCategory.retrieveSubCategory,
 
         {
           category,
@@ -135,7 +135,7 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveInnerCategory,
+        apiEndpoints.productCategory.retrieveInnerCategory,
 
         {
           category: "66df402da60f3b195520d0f3",
@@ -151,14 +151,14 @@ const onlinePharmacyApi = {
   },
   getAllProducts: async (
     session: Session,
-    params: Object,
+    params: any,
   ): Promise<string[]> => {
     const axios = createClientAxios({ session: session });
     const data = JSON.stringify(params);
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveAllProduct,
+        apiEndpoints.productCategory.retrieveAllProduct,
 
         data,
       );
@@ -175,7 +175,7 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveNewProduct,
+        apiEndpoints.productCategory.retrieveNewProduct,
       );
       return response.data;
     } catch (error) {
@@ -191,7 +191,7 @@ const onlinePharmacyApi = {
       console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveBestProduct,
+        apiEndpoints.productCategory.retrieveBestProduct,
       );
       return response.data;
     } catch (error) {
@@ -210,7 +210,7 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
-          apiEndpoints.productCategory.retrieveSingleProduct,
+        apiEndpoints.productCategory.retrieveSingleProduct,
 
         {
           productid,
