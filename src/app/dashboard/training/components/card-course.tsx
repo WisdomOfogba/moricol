@@ -3,7 +3,7 @@ import { CourseData } from "@/definition";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CourseCard({courseData}: {courseData: CourseData} ) {
+export default function CourseCard({courseData }: {courseData: CourseData} ) {
   return (
     <Link href={`/dashboard/training/course/${courseData._id}`} className="block">
       <article className="border bg-white">

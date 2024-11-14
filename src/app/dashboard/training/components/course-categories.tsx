@@ -87,8 +87,8 @@ export default function CourseCategories({ courseData }: {courseData: CourseData
             <CheckboxListItem label={{ text: "6-12 Months" }} count={345} />
           </FilterContainer>
         </ul> */}
-        {courseData.map((course) => (
-          <CourseCard courseData={course} />
+        {courseData.map((course, i) => (
+          <CourseCard key={i} courseData={course} />
         ))}
       </div>
     </section>
