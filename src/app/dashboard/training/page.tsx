@@ -15,6 +15,7 @@ async function getCoursesData() {
 
 export default async function Home() {
   const courseData = await getCoursesData();
+  // console.log(courseData[1])
   return (
     <main>
       <section className="mb-6 flex items-start justify-between px-14 py-8">
@@ -34,7 +35,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <CourseCategories courseData={courseData[0]} />
+      <CourseCategories courseData={courseData} />
     </main>
   );
 }

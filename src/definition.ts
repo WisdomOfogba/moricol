@@ -322,23 +322,64 @@ export type ProfileData = {
 
 
 export type CourseData = {
-  _id: string,
-  bundle: string,
-  bundle_option: string,
-  care_certificate: boolean,
-  price: number,
-  rating: number,
-  thumbnail: string,
-  add_on: string[],
-  online_course: string[],
-  classroom_course: string[],
-  description: string,
-  instructors: string[],
-  start_messagge: string,
-  end_messagge: string,
-  editedBy: string,
-  editedAt: string,
-  createdAt: string,
-  __v: number,
-  client: number,
+  _id: string;
+  bundle: string;
+  bundle_option: string;
+  title: string;
+  care_certificate: boolean;
+  price: number;
+  rating: number;
+  level: number;
+  thumbnail: string;
+  add_on: string[];
+  online_course: string[];
+  classroom_course: string[];
+  description: string;
+  instructors: string[];
+  start_messagge: string;
+  end_messagge: string;
+  editedBy: string;
+  editedAt: string;
+  createdAt: string;
+  __v: number;
+  client: number;
+  category: string,
+  start_date: string,
+  end_date: string,
+  duration: string,
+  duration_description: string,
+  benefits: [
+    {
+      option: string,
+      _id: string
+    },
+    {
+      option: string,
+      _id: string
+    },
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  sections: [
+    {
+      option: string,
+      _id: string
+    },
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  for_who: [
+    {
+      option: string,
+      _id: string
+    },
+    {
+      option: string,
+      _id: string
+    }
+  ],
 }

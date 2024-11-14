@@ -22,7 +22,7 @@ import {
   Whatsapp,
 } from "@/components/svgs";
 import Image from "next/image";
-import CourseCard from "../../components/card-course";
+// import CourseCard from "../../components/card-course";
 import CurriculumCard from "../../components/curriculum-card";
 import CourseTimeLecturesSection from "../../components/time-lecture-section";
 import Link from "next/link";
@@ -530,11 +530,11 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {/* <CourseCard />
           <CourseCard />
           <CourseCard />
           <CourseCard />
-          <CourseCard />
-          <CourseCard />
+          <CourseCard /> */}
         </div>
       </section>
     </main>
