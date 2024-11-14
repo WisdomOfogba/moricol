@@ -319,3 +319,26 @@ export type ProfileData = {
   photo: string;
 
 }
+
+
+export type CourseData = {
+  _id: string,
+  bundle: string,
+  bundle_option: string,
+  care_certificate: boolean,
+  price: number,
+  rating: number,
+  thumbnail: string,
+  add_on: string[],
+  online_course: string[],
+  classroom_course: string[],
+  description: string,
+  instructors: string[],
+  start_messagge: string,
+  end_messagge: string,
+  editedBy: string,
+  editedAt: string,
+  createdAt: string,
+  __v: number,
+  client: number,
+}

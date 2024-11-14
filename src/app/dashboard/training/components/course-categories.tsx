@@ -3,11 +3,12 @@
 import React, { useState } from "react";
 import CourseCard from "./card-course";
 import { ChevronDownSvg, FilterSVG, SearchSvg } from "@/components/svgs";
+import { CourseData } from "@/definition";
 
 const categories = ["Classroom", "Visual", "Bundle", "Online"];
 const suggestions = ["user interface", "user experience"];
 
-export default function CourseCategories() {
+export default function CourseCategories({ courseData }: {courseData: CourseData}) {
   const [activeCategory, setActiveCategory] = useState(0);
 
   const categoriesList = categories.map((c, i) => (
@@ -58,7 +59,7 @@ export default function CourseCategories() {
 
           <p className="text-sm">
             <span className="font-semibold">3,145,684</span> results find for
-            “ui/ux design”
+            “ui/ux design”{courseData.bundle}
           </p>
         </div>
       </section>
