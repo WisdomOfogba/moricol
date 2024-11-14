@@ -6,15 +6,18 @@ import { CourseData } from "@/definition";
 
 async function getCoursesData() {
   try {
-    const { data: courseData }: { data: CourseData[] } = await CourseApi.getCourseBundleData();
-    return courseData;
+    const { data: courseClassroomData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "classroom"});
+    const { data: courseVisualData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "visual"});
+    const { data: courseBundleData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "bundle"});
+    const { data: courseOnlineData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "online"});
+    return { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get Courses data');
   }
 }
 
 export default async function Home() {
-  const courseData = await getCoursesData();
+  const { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData } = await getCoursesData();
   // console.log(courseData[1])
   return (
     <main>
@@ -35,7 +38,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <CourseCategories courseData={courseData} />
+      <CourseCategories courseData={[ courseClassroomData, courseVisualData, courseBundleData, courseOnlineData ]} />
     </main>
   );
 }

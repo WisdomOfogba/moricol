@@ -8,7 +8,14 @@ import { CourseData } from "@/definition";
 const categories = ["Classroom", "Visual", "Bundle", "Online"];
 const suggestions = ["user interface", "user experience"];
 
-export default function CourseCategories({ courseData }: {courseData: CourseData[]}) {
+export default function CourseCategories({ courseData }: {
+  courseData: [
+    courseClassroomData: CourseData[],
+    courseClassroomData: CourseData[],
+    courseClassroomData: CourseData[],
+    courseClassroomData: CourseData[],
+  ]
+}) {
   const [activeCategory, setActiveCategory] = useState(0);
 
   const categoriesList = categories.map((c, i) => (
@@ -87,7 +94,7 @@ export default function CourseCategories({ courseData }: {courseData: CourseData
             <CheckboxListItem label={{ text: "6-12 Months" }} count={345} />
           </FilterContainer>
         </ul> */}
-        {courseData.map((course, i) => (
+        {courseData[activeCategory].map((course, i) => (
           <CourseCard key={i} courseData={course} />
         ))}
       </div>

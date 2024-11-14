@@ -6,15 +6,15 @@ import { CourseData } from "@/definition";
 
 
 const endpoints = {
-    getCourseBundleData: `${API_BASE_URL}/user/training/retrieve/all/bundle/course`,
+    getCourseBundleData: `${API_BASE_URL}/user/training/retrieve/all`,
 };
 
 
 export const CourseApi = {
-    getCourseBundleData: async (): Promise<{ data: CourseData[] }> => {
+    getCourseData: async ({ type }: { type: string}): Promise<{ data: CourseData[] }> => {
 
         try {
-            const response = await axios.post(endpoints.getCourseBundleData);
+            const response = await axios.post( `${endpoints.getCourseBundleData}/${type}/course`);
             return response.data;
         } catch (error) {
             const errorMessage = handleAxiosError(error, 'Error retrieving profile');

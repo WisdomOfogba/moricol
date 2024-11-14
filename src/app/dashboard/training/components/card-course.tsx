@@ -21,9 +21,14 @@ export default function CourseCard({courseData }: {courseData: CourseData} ) {
         <div className="p-3.5 font-medium">
           {/* Badge */}
           <div className="mb-2.5 flex items-center justify-between">
-            <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
-              CORE & MANDATORY
+            <span>
+            {courseData.category && (
+              <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
+              {courseData.category}
             </span>
+            )}
+            
+                        </span>
             <p className="text-xs text-[#E29A13]">{courseData.level && `LEVEL ${courseData.level}`}</p>
           </div>
 
