@@ -99,7 +99,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -108,7 +107,6 @@ const onlinePharmacyApi = {
     session: Session,
     category: string,
   ): Promise<SubCategoryParams> => {
-    console.log(category);
     const axios = createClientAxios({ session: session });
 
     try {
@@ -123,7 +121,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },
@@ -145,7 +143,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },
@@ -165,7 +163,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },
@@ -180,7 +178,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },
@@ -196,7 +194,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },
@@ -219,7 +217,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-      console.log(errorMessage);
+
       throw new Error(errorMessage);
     }
   },

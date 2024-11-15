@@ -5,17 +5,29 @@ import AppointmentScheduler from "./appointments-scheduler";
 import Button from "@/components/button";
 import { BiCalendar, BiListUl } from "react-icons/bi";
 import AppointmentsList from "./appointments-list";
+import { AppointmentScheduleData, AppointmentStatus } from "@/definition";
+import Link from "next/link";
+import { routes } from "@/constants/routes";
 
-function AppointmentView() {
-  const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
+function AppointmentView({
+  appointments,
+  currentStatus
+}: {
+  appointments: AppointmentScheduleData[];
+  currentStatus: AppointmentStatus;
+}) {
+  const [viewMode, setViewMode] = useState<"calendar" | "list">("list");
+
 
   return (
     <div>
-      {/* <div className="mb-6 flex items-center justify-between">
-        <Button className="ml-auto w-fit bg-primary-500 text-white hover:bg-primary-600">
-          Schedule a Doctor&apos;s Appointment
-        </Button>
-      </div> */}
+      <div>
+        <Link className="mb-6 flex items-center justify-between" href={routes.TELEMEDICINE_APPOINTMENTS}>
+          <Button size="fit" className="ml-auto w-fit bg-primary-500 text-white hover:bg-primary-600">
+            Schedule an Appointment
+          </Button>
+        </Link>
+      </div>
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold">Appointments</h2>
@@ -39,8 +51,8 @@ function AppointmentView() {
           </Button>
         </div>
       </div>
-      {viewMode === "calendar" && <AppointmentScheduler />}
-      {viewMode === "list" && <AppointmentsList />}
+      {viewMode === "calendar" && <AppointmentScheduler appointments={appointments} />}
+      {viewMode === "list" && <AppointmentsList currentStatus={currentStatus} appointments={appointments} />}
     </div>
   );
 }

@@ -349,3 +349,21 @@ export type TelemedicineCategoryData = {
     __v: number;
   }>;
 }
+
+
+export type AppointmentScheduleData = {
+  time: {
+    start: string;
+    end: string;
+  };
+  _id: string;
+  date: string;
+  staffid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    photo: string;
+  } | null;
+}
+
+export type AppointmentStatus = '' | 'ongoing' | 'upcoming' | 'past';

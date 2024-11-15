@@ -13,9 +13,11 @@ import { useState } from "react";
 
 const SetReminderModal = ({
   show,
+  appointmentId,
   onClose,
 }: {
   show: boolean;
+  appointmentId: string | null;
   onClose: () => void;
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -29,6 +31,7 @@ const SetReminderModal = ({
   };
 
   const handleSetReminder = () => {
+    alert(appointmentId);
     onClose();
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, MessageSquare, Video, Plus } from "lucide-react";
+import { Phone, MessageSquare, Video } from "lucide-react";
 import Button from "@/components/button";
 import { Card, CardContent } from "@/components/card";
 import { Label } from "@/components/label";
@@ -10,21 +10,22 @@ import { AppointmentData } from "@/api/telemedicine";
 import { OrganizationMember, TelemedicineCategoryData } from "@/definition";
 import MakeAppointmentPayment from "./make-appointment-payment";
 import { RadioGroup, RadioGroupItem } from "@/components/radio-group";
+import SubmitAppointmentButton from "./submit-appointment-button";
 
 export default function HealthAppointmentConfirmation({
-  nextStep,
   prevStep,
   appointmentData,
   service,
   handleUpdateAppointmentData,
-  membership
+  membership,
+  setComplete
 }: {
-  nextStep: () => void;
   prevStep: () => void;
   appointmentData: AppointmentData;
   service: TelemedicineCategoryData;
   handleUpdateAppointmentData: (key: string, value: any) => void;
   membership: OrganizationMember[] | null;
+  setComplete: (value: string) => void;
 }) {
 
   return (
@@ -182,7 +183,7 @@ export default function HealthAppointmentConfirmation({
               )}
 
               {appointmentData.organization.organizationid !== null && (
-                <Button variant="outline" className="mr-2 bg-primary-500 text-white" onClick={nextStep}>Submit</Button>
+                <SubmitAppointmentButton tosend={appointmentData} setComplete={setComplete} />
               )}
             </div>
           </div>

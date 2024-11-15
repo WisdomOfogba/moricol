@@ -9,99 +9,43 @@ import FilterModal from "./filter-modal";
 import { FilterSVG } from "@/components/svgs";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
+import { AppointmentScheduleData, AppointmentStatus } from "@/definition";
+import { useRouter } from "next/navigation";
 
-interface Appointment {
-  id: number;
-  doctorName: string;
-  doctorImage: string;
-  status: "Accepted" | "Declined" | "Ongoing" | "Completed";
-  date: string;
-  time: string;
-  category: "ongoing" | "upcoming" | "past";
-}
-
-const appointments: Appointment[] = [
-  {
-    id: 1,
-    doctorName: "Dr. Brycen Bradford",
-    doctorImage: "/images/client.jpg",
-    status: "Accepted",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "upcoming",
-  },
-  {
-    id: 2,
-    doctorName: "Dr. Tierra Riley",
-    doctorImage: "/images/client.jpg",
-    status: "Completed",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "past",
-  },
-  {
-    id: 2,
-    doctorName: "Dr. Tierra Riley",
-    doctorImage: "/images/client.jpg",
-    status: "Declined",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "past",
-  },
-  {
-    id: 3,
-    doctorName: "Vivian Akpa",
-    doctorImage: "/images/client.jpg",
-    status: "Ongoing",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "ongoing",
-  },
-  {
-    id: 4,
-    doctorName: "Dr. Brycen Bradford",
-    doctorImage: "/images/client.jpg",
-    status: "Accepted",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "upcoming",
-  },
-  {
-    id: 5,
-    doctorName: "Dr. Tierra Riley",
-    doctorImage: "/images/client.jpg",
-    status: "Ongoing",
-    date: "June 12",
-    time: "09:00 AM - 10:00 AM",
-    category: "ongoing",
-  },
-];
-
-const AppointmentCard = ({ appointment }: { appointment: Appointment }) => (
+const AppointmentCard = ({ appointment }: { appointment: AppointmentScheduleData }) => (
   <Card className="mb-4">
     <CardContent className="flex items-center p-2">
-      <img
-        src={appointment.doctorImage}
-        alt={appointment.doctorName}
-        className="mr-2 h-16 w-16 rounded-full"
-      />
+      {appointment.staffid?.photo ? (
+        <img
+          src={appointment.staffid.photo}
+          alt={appointment.staffid.firstname}
+          className="mr-2 h-16 w-16 rounded-full object-cover"
+        />
+      ) : (
+        <div className="mr-2 flex h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300">
+            <span className="text-2xl text-gray-500">
+              {appointment.staffid?.firstname?.charAt(0)?.toUpperCase() || '?'}
+            </span>
+          </div>
+        </div>
+      )}
       <div className="flex-grow">
         <div className="flex items-start justify-between">
           <div>
-            <span
-              className={`text-xs ${
-                appointment.status === "Accepted"
-                  ? "text-green-800"
-                  : appointment.status === "Declined"
-                    ? "text-red-800"
-                    : "text-blue-800"
-              }`}
+            {/* <span
+              className={`text-xs ${appointment.appointmentStatus === "Accepted" // Changed from status to appointmentStatus
+                ? "text-green-800"
+                : appointment.appointmentStatus === "Declined"
+                  ? "text-red-800"
+                  : "text-blue-800"
+                }`}
             >
-              {appointment.status}
-            </span>
-            <h3 className="font-semibold">{appointment.doctorName}</h3>
+              {appointment.appointmentStatus} 
+            </span> */}
+            <h3 className="font-semibold">{appointment.staffid ? `${appointment.staffid.firstname} ${appointment.staffid.lastname}` : 'Unassigned'}</h3>
             <p className="text-xs text-gray-500">
-              {appointment.date}, {appointment.time}
+              {appointment.date.toString()}, {appointment.time.start}
             </p>
           </div>
         </div>
@@ -110,12 +54,22 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => (
   </Card>
 );
 
-export default function AppointmentsList() {
+export default function AppointmentsList({
+  appointments,
+  currentStatus
+}: {
+  appointments: AppointmentScheduleData[];
+  currentStatus: AppointmentStatus;
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const filteredAppointments = appointments.filter((appointment) =>
-    appointment.doctorName.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const [status, setStatus] = useState<AppointmentStatus>(currentStatus && currentStatus.trim() !== '' ? currentStatus : 'ongoing');
+  const router = useRouter();
+
+  const onTabChange = (value: string) => {
+    setStatus(value as AppointmentStatus);
+    router.replace(`${routes.TELEMEDICINE_APPOINTMENTS}?status=${value === 'ongoing' ? '' : value}`);
+  };
 
   return (
     <div className="mx-auto">
@@ -139,7 +93,7 @@ export default function AppointmentsList() {
       <FilterModal show={showModal} onClose={() => setShowModal(false)} />
       <hr />
       <br />
-      <Tabs defaultValue="ongoing" className="w-full">
+      <Tabs defaultValue="ongoing" value={status} onValueChange={onTabChange} className="w-full">
         <TabsList className="mb-4 grid w-full grid-cols-3 gap-2 md:gap-5">
           <TabsTrigger
             className="md:text-md rounded-lg border text-sm data-[state=active]:bg-primary-500 data-[state=active]:text-white"
@@ -166,19 +120,32 @@ export default function AppointmentsList() {
             value={category}
             className="grid grid-cols-1 gap-x-5 lg:grid-cols-3"
           >
-            {filteredAppointments
-              .filter((appointment) => appointment.category === category)
-              .map((appointment) => (
-                <Link
-                  key={appointment.id}
-                  href={routes.TELEMEDICINE_APPOINTMENTS + "/" + appointment.id}
-                >
-                  <AppointmentCard appointment={appointment} />
-                </Link>
-              ))}
+            {appointments.map((appointment) => (
+              <Link
+                key={appointment._id}
+                href={routes.TELEMEDICINE_APPOINTMENTS + "/" + appointment._id}
+              >
+                <AppointmentCard appointment={appointment} />
+              </Link>
+            ))}
           </TabsContent>
+
         ))}
       </Tabs>
+      {appointments.length === 0 && (
+        <div className="flex h-[300px] flex-col items-center justify-center">
+          <div className="mb-4 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <p className="text-lg font-medium text-gray-500">No appointments found</p>
+          <p className="text-sm text-gray-400">Book an appointment to get started</p>
+        </div>
+      )}
     </div>
   );
 }

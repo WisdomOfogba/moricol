@@ -13,6 +13,7 @@ import { landingPageServices, servicesDashboardLinks } from "@/constants";
 import loanApi from "@/api/loan";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/select";
 import telemedicineApi from "@/api/telemedicine";
+import { routes } from "@/constants/routes";
 
 
 export default function Payments() {
@@ -61,7 +62,8 @@ function PaymentsPage() {
                     } else if (storedData.service === 'medicalLoan') {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
                     } else if (storedData.service === 'telemedicine') {
-                        await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+                        const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+                        setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS_REMINDER + '/' + resp._id });
                     } else {
                         throw new Error("Invalid service");
                     }

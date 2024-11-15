@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import HealthInformationUpload from "./health-information-upload";
 import HealthAppointmentConfirmation from "./health-appointment-confirmation";
-import PaymentConfirmation from "./payment-confirmation";
 import ConfirmBookingModal from "./confirm-modal";
 import SetReminderModal from "./set-reminder-modal";
 import UserResponsive from "./user-responsive";
@@ -18,6 +17,7 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
   const [step, setStep] = useState<number>(0);
   const [complete, setComplete] = useState<boolean>(false);
   const [showReminderModal, setShowReminderModal] = useState<boolean>(false);
+  const [appointmentId, setAppointmentId] = useState<string | null>(null);
 
 
   const [appointmentData, setAppointmentData] = useState<AppointmentData>({
@@ -32,7 +32,7 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
     surgery: false,
     medicalcondition: false,
     familymedicalcondition: false,
-    medication: [{ days: 3, drug: "primarycomplain" }],
+    medication: [{ days: 0, drug: "none" }],
     primarycomplain: [""],
     others: [""],
     urgent_type: "routine",
@@ -44,7 +44,6 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
     location: "",
   });
 
-  console.log(appointmentData);
 
   const generateCalendarDays = () => {
     const today = new Date();
@@ -118,19 +117,16 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
         return (
           <HealthAppointmentConfirmation
             prevStep={prevStep}
-            nextStep={nextStep}
             appointmentData={appointmentData}
             service={service}
             handleUpdateAppointmentData={handleUpdateAppointmentData}
             membership={membership}
+            setComplete={(id: string) => {
+              setAppointmentId(id);
+              setComplete(true);
+            }}
           />
         );
-      case 5:
-        return <PaymentConfirmation
-
-          prevStep={prevStep}
-          nextStep={nextStep}
-        />;
       default:
         return null;
     }
@@ -150,6 +146,7 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
       />
       <SetReminderModal
         show={showReminderModal}
+        appointmentId={appointmentId}
         onClose={() => {
           setShowReminderModal(false);
         }}
