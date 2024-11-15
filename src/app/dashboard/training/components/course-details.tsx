@@ -183,12 +183,14 @@ export default function CourseDetail({course}: {course?: CourseData}) {
 
           {/* Course image */}
           <div className="relative h-[492px] w-full">
+            {course && 
             <Image
               fill
-              src="/images/client.jpg"
+              src={course.thumbnail}
               alt=""
               style={{ objectFit: "cover" }}
             />
+            }
           </div>
 
           {/* Links */}
@@ -228,8 +230,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
 
                 <ul className="grid grow gap-y-5">
-                  {course?.online_course
-                    .map((_, i) => (
+                  {Array(5).fill(" ").map((_, i) => (
                       <li
                         className="flex items-center gap-x-2 text-sm font-bold"
                         key={i}
@@ -251,8 +252,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
 
                 <ul className="grid grow gap-y-5">
-                  {course?.online_course
-                    .map((_, i) => (
+                  {Array(5).fill(" ").map((_, i) => (
                       <li
                         className="flex items-center gap-x-2 text-sm font-bold"
                         key={i}
@@ -313,22 +313,23 @@ export default function CourseDetail({course}: {course?: CourseData}) {
               </section>
 
               {/* Who the course is for */}
-              <section>
-                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                  Who is this course for:
-                </h3>
+              {course?.for_who &&
+                <section>
+                  <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                    Who is this course for:
+                  </h3>
 
-                <ul className="grid grow gap-y-5">
-                  {course?.for_who
-                    .map((_, i) => (
-                      <li className="flex items-center gap-x-2 text-sm" key={i}>
-                        <ArrowRightSvg className="-rotate-180" />
-                        This course is for those who want to launch a Level
-                        2lance Web Design Careers.{_.option}
-                      </li>
-                    ))}
-                </ul>
-              </section>
+                  <ul className="grid grow gap-y-5">
+                    {course.for_who.map((_, i) => (
+                        <li className="flex items-center gap-x-2 text-sm" key={i}>
+                          <ArrowRightSvg className="-rotate-180" />
+                          This course is for those who want to launch a Level
+                          2lance Web Design Careers.{_.option}
+                        </li>
+                      ))}
+                  </ul>
+                </section>
+              }
 
               {/* Course requirements */}
               <section>
@@ -418,7 +419,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                     </div>
                   </div>
                   <ul className="grid grow gap-y-5">
-                    {Array(course?.rating)
+                    {Array(5)
                       .fill("")
                       .map((_, i) => (
                         <li key={i} className="flex items-center text-sm">
