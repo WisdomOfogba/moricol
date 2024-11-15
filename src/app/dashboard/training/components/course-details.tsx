@@ -380,8 +380,8 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
                   </button>
                 </div>
                 <div>
-                  {review.map((review) => (
-                    <CourseReview review={review} />
+                  {review.map((review, i) => (
+                    <CourseReview key={i} review={review} />
                   ))}
                   <hr className="my-5 h-[1px] border-none bg-[#E9EAF0] last:hidden" />
                 </div>
