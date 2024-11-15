@@ -17,7 +17,7 @@ export const CourseApi = {
             const response = await axios.post( `${endpoints.getCourseBundleData}/${type}/course`);
             return response.data;
         } catch (error) {
-            const errorMessage = handleAxiosError(error, 'Error retrieving profile');
+            const errorMessage = handleAxiosError(error, 'Error retrieving Courses');
             throw new Error(errorMessage);
         }
     },
