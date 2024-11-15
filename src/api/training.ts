@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "@/constants/config";
 import axios from "axios";
 import handleAxiosError from "./handle-axios-error";
-import { CourseData } from "@/definition";
+import { CourseData, ReviewData } from "@/definition";
 
 const endpoints = {
   getCourseData: `${API_BASE_URL}/user/training/retrieve/all`,
@@ -33,7 +33,7 @@ export const CourseApi = {
   }: {
     type: string;
     id: string;
-  }): Promise<{ data: { course:CourseData } }> => {
+  }): Promise<{ data: { course:CourseData; review: ReviewData[] } }> => {
     const jsonObject: { [key: string]: string } = {};
     
     if (type === "visual") {

@@ -332,10 +332,21 @@ export type CourseData = {
   level: number;
   thumbnail: string;
   add_on: string[];
-  online_course: string[];
-  classroom_course: string[];
+  online_course: [{
+    course: string;
+    _id: string;
+  }];
+  classroom_course: [{
+    course: string;
+    _id: string;
+  }];
   description: string;
-  instructors: string[];
+  instructors: [
+    {
+    instructor: string;
+    _id: string;
+    }
+  ];
   start_messagge: string;
   end_messagge: string;
   editedBy: string;
@@ -352,21 +363,9 @@ export type CourseData = {
     {
       option: string,
       _id: string
-    },
-    {
-      option: string,
-      _id: string
-    },
-    {
-      option: string,
-      _id: string
     }
   ],
   sections: [
-    {
-      option: string,
-      _id: string
-    },
     {
       option: string,
       _id: string
@@ -376,14 +375,25 @@ export type CourseData = {
     {
       option: string,
       _id: string
-    },
-    {
-      option: string,
-      _id: string
     }
   ],
   redirect_course: { links: string[], redirect: boolean },
   standalone: true,
   curriculum: string[],
   requirement: string[],
+}
+
+export type ReviewData = {
+  _id: string,
+  userid: {
+    _id: string,
+    firstname: string,
+    lastname: string
+  },
+  courseid: string,
+  courseType: string,
+  review: string,
+  rating: number,
+  createdAt: string,
+  __v: number
 }

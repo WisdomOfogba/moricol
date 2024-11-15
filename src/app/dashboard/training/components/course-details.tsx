@@ -5,18 +5,18 @@ import {
   ChevronDownSvg,
   Clipboard,
   ClockSvg,
-  DollarSignSvg,
+  // DollarSignSvg,
   Envelop,
   Facebook,
   GreenCheckmarCircle,
   NetworkSvg,
-  NotebookSvg,
-  NotepadSvg,
+  // NotebookSvg,
+  // NotepadSvg,
   Spinner,
   StackSvg,
   StarSVG,
-  TrophySvg,
-  TvSvg,
+  // TrophySvg,
+  // TvSvg,
   Twitter,
   TwoUserCutOffSvg,
   Whatsapp,
@@ -28,57 +28,9 @@ import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
-import { CourseData } from "@/definition";
+import { CourseData, ReviewData } from "@/definition";
 import CourseCard from "./card-course";
 
-const highlightDetails = [
-  {
-    title: "Course Duration",
-    detail: "6 Months",
-    icon: <ClockSvg stroke="#A1A5B3" />,
-  },
-  {
-    title: "Course Level",
-    detail: "Level 2",
-    icon: <NetworkSvg />,
-  },
-  {
-    title: "Students Enrolled",
-    detail: "69,419,618",
-    icon: <TwoUserCutOffSvg />,
-  },
-];
-
-const benefits = [
-  {
-    icon: <ClockSvg />,
-    title: "Lifetime access",
-  },
-  {
-    icon: <DollarSignSvg />,
-    title: "30-days money-back guarantee",
-  },
-  {
-    icon: <NotebookSvg />,
-    title: "Level 2 exercises file & downloadable resources",
-  },
-  {
-    icon: <TrophySvg className="h-5 w-5" stroke="#E29A13" fill="" />,
-    title: "Shareable certificate of completion",
-  },
-  {
-    icon: <TvSvg />,
-    title: "Access on mobile , tablet and TV",
-  },
-  {
-    icon: <NotepadSvg />,
-    title: "English subtitles",
-  },
-  {
-    icon: <StackSvg />,
-    title: "100% online course",
-  },
-];
 
 const courseDescriptionDetailLink = [
   {
@@ -106,13 +58,13 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({course }: {course?: CourseData;}) {
+export default function CourseDetail({course, data, type, review }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]}) {
 
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
-      {Array(course?.rating)
+      {Array(course.rating)
         .fill("")
         .map((_, i) => (
           <li key={i}>
@@ -121,7 +73,6 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
         ))}
     </ul>
   );
-
   return (
     <main className="pb-20">
       <section className="flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
@@ -139,7 +90,7 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
 
       <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
         {/* Right hand side */}
-        <div className="grid gap-y-10">
+        <div className="grid gap-y-10 w-full">
           {/* Heading */}
           <div>
             {/* <Breadcrumb /> */}
@@ -149,7 +100,7 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
             </div>
 
             <h2 className="mb-6 text-3xl font-semibold">
-              {course?.title || course?.bundle}
+              {course.title || course.bundle}
             </h2>
 
             <div className="flex justify-between">
@@ -163,8 +114,12 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
                   <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
                   <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
                     <span>Dianne Russell</span>{" "}
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                    <span>Kristin Watson</span>
+                    {course.instructors.map((instructor, i) => (
+                      <>
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
+                        <span>{instructor.instructor}</span>
+                      </>
+                    ))}
                   </h3>
                 </div>
               </article>
@@ -223,73 +178,53 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
                 </div>
               </section>
 
-              {/* Additional Courses */}
-              <section>
-                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                  Additional Courses
-                </h3>
-
-                <ul className="grid grow gap-y-5">
-                  {Array(5).fill(" ").map((_, i) => (
-                      <li
-                        className="flex items-center gap-x-2 text-sm font-bold"
-                        key={i}
-                      >
-                        <ArrowRightSvg className="-rotate-180" />
-                        Care Certificate
-                        <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
-                          <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-              </section>
-
               {/* Online Courses */}
               <section>
-                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                  Online Courses
-                </h3>
+                  <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                    Classroom Courses
+                  </h3>
 
-                <ul className="grid grow gap-y-5">
-                  {Array(5).fill(" ").map((_, i) => (
-                      <li
-                        className="flex items-center gap-x-2 text-sm font-bold"
-                        key={i}
-                      >
-                        <ArrowRightSvg className="-rotate-180" />
-                        Care Certificate
-                        <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
-                          <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-              </section>
+              {course.online_course ? 
+                course.online_course.map((online, i) => (
+                  <ul key={i} className="grid grow gap-y-5">
+                        <li
+                          className="flex items-center gap-x-2 text-sm font-bold"
+                          key={i}
+                        >
+                          <ArrowRightSvg className="-rotate-180" />
+                          {online.course}{" "}
+                          <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
+                            <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
+                          </div>
+                        </li>
+                  </ul>
+                ))
+              : <p className="flex items-center gap-x-2 text-sm font-bold">No Online courses</p>}
+                </section>
 
               {/* Classroom Courses */}
-              <section>
-                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                  Classroom Courses
-                </h3>
+                <section>
+                  <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                    Classroom Courses
+                  </h3>
 
-                <ul className="grid grow gap-y-5">
-                  {Array(2)
-                    .fill("")
-                    .map((_, i) => (
-                      <li
-                        className="flex items-center gap-x-2 text-sm font-bold"
-                        key={i}
-                      >
-                        <ArrowRightSvg className="-rotate-180" />
-                        Care Certificate
-                        <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
-                          <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-              </section>
+              {course.classroom_course ? 
+                course.classroom_course.map((classroom, i) => (
+                  <ul key={i} className="grid grow gap-y-5">
+                        <li
+                          className="flex items-center gap-x-2 text-sm font-bold"
+                          key={i}
+                        >
+                          <ArrowRightSvg className="-rotate-180" />
+                          {classroom.course}{" "}
+                          <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
+                            <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
+                          </div>
+                        </li>
+                  </ul>
+                ))
+              : <p className="flex items-center gap-x-2 text-sm font-bold">No classroom courses</p>}
+                </section>
 
               {/* What you would use in this course */}
               <section className="bg-[#E1F7E366] p-10">
@@ -376,10 +311,8 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
               </h3>
               <div className="flex gap-x-6">
                 <ul className="grid grow gap-y-5">
-                  {Array(2)
-                    .fill("")
-                    .map((_, i) => (
-                      <li key={i} className="flex items-center text-sm">
+                  {course.instructors && course.instructors.map((instructor) => (
+                      <li key={instructor._id} className="flex items-center text-sm">
                         <article className="flex w-full items-center gap-x-7 border border-[#E9EAF0] px-6 py-2">
                           <div className="relative h-[63px] w-[63px] overflow-hidden rounded-full">
                             <Image
@@ -390,7 +323,7 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
                             />
                           </div>
                           <h4 className="text-lg font-semibold text-[#1D2026]">
-                            Vacko Sivil
+                            {instructor.instructor}
                           </h4>
                         </article>
                       </li>
@@ -447,7 +380,9 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
                   </button>
                 </div>
                 <div>
-                  <CourseReview />
+                  {review.map((review) => (
+                    <CourseReview review={review} />
+                  ))}
                   <hr className="my-5 h-[1px] border-none bg-[#E9EAF0] last:hidden" />
                 </div>
                 <button className="group flex w-fit items-center gap-x-3 bg-primary-100 px-6 py-3 font-semibold text-primary-500">
@@ -459,7 +394,7 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
           )}
         </div>
 
-        <CourseDetailSummary />
+        <CourseDetailSummary course={course} />
       </section>
 
       {/* Related courses */}
@@ -476,16 +411,34 @@ export default function CourseDetail({course }: {course?: CourseData;}) {
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {/* {courseData.map((course) => (
-            <CourseCard courseData={course} />
-          ))} */}
+          {data.map((course, i) => (
+            <CourseCard key={i} courseData={course} type={type} />
+          ))}
         </div>
       </section>
     </main>
   );
 }
 
-function CourseDetailSummary() {
+function CourseDetailSummary({course}: {course: CourseData}) {
+  const highlightDetails = [
+    {
+      title: "Course Duration",
+      detail: `${course.duration || "no duration"}`,
+      icon: <ClockSvg stroke="#A1A5B3" />,
+    },
+    {
+      title: "Course Level",
+      detail: `level ${course.level || "(no level)"}`,
+      icon: <NetworkSvg />,
+    },
+    {
+      title: "Students Enrolled",
+      detail: `${course.client}`,
+      icon: <TwoUserCutOffSvg />,
+    },
+  ];
+
   return (
     <article className="w-[424px] shrink-0 shadow-md">
       {/* Course Details */}
@@ -527,22 +480,23 @@ function CourseDetailSummary() {
           money-back guarantee
         </p>
       </div>
-      {/* Benefits */}
+      {/* Benefits */}{
+        course.benefits &&
       <div className="p-6">
         <h3 className="mb-4 font-medium text-[#1D2026]">
           This course includes:
         </h3>
         <ul className="grid gap-y-3">
-          {benefits.map(({ icon, title }, i) => (
+          {course.benefits.map(({ option }, i) => (
             <li key={i} className="flex items-center gap-x-3 text-sm">
               <span className="flex h-6 w-6 items-center justify-center">
-                {icon}
               </span>{" "}
-              {title}
+              {option}
             </li>
           ))}
         </ul>
       </div>
+        }
 
       <div className="border-t p-6">
         <h3 className="mb-4 font-medium text-[#1D2026]">Share this course:</h3>
@@ -567,7 +521,7 @@ function CourseDetailSummary() {
   );
 }
 
-function CourseReview() {
+function CourseReview({review}: {review: ReviewData}) {
   return (
     <article className="flex items-start gap-x-4">
       <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
@@ -581,12 +535,12 @@ function CourseReview() {
 
       <div>
         <div className="mb-2 flex items-center gap-x-2">
-          <h4 className="text-sm font-medium text-[#1D2026]">Guy Hawkins</h4>
+          <h4 className="text-sm font-medium text-[#1D2026]">{`${review.userid.firstname} ${review.userid.lastname}`}</h4>
           <div className="h-1 w-1 rounded-full bg-[#6E7485]" />
-          <p className="text-xs">1 week ago</p>
+          <p className="text-xs">{review.createdAt}</p>
         </div>
         <ul className="mb-3 flex">
-          {Array(5)
+          {Array(review.rating)
             .fill("")
             .map((_, i) => (
               <li key={i}>
@@ -595,10 +549,7 @@ function CourseReview() {
             ))}
         </ul>
         <p className="text-sm text-[#4E5566]">
-          I appreciate the precise short videos (10 mins or less each) because
-          overly long videos tend to make me lose focus. The instructor is very
-          knowledgeable in Web Design and it shows as he shares his knowledge.
-          These were my best 6 months of training. Thanks, Vako.
+          {review.review}
         </p>
       </div>
     </article>
