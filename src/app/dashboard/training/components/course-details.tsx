@@ -13,7 +13,7 @@ import {
   // NotebookSvg,
   // NotepadSvg,
   Spinner,
-  StackSvg,
+  // StackSvg,
   StarSVG,
   // TrophySvg,
   // TvSvg,
