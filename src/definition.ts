@@ -382,4 +382,8 @@ export type CourseData = {
       _id: string
     }
   ],
+  redirect_course: { links: string[], redirect: boolean },
+  standalone: true,
+  curriculum: string[],
+  requirement: string[],
 }

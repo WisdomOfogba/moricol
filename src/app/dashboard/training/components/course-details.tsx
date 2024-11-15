@@ -23,12 +23,13 @@ import {
 } from "@/components/svgs";
 import Image from "next/image";
 // import CourseCard from "../../components/card-course";
-import CurriculumCard from "../../components/curriculum-card";
-import CourseTimeLecturesSection from "../../components/time-lecture-section";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
 import { useState } from "react";
-import PrevPageBtn from "../../view-course/prev-page-btn";
+import PrevPageBtn from "../view-course/prev-page-btn";
+import CourseTimeLecturesSection from "./time-lecture-section";
+import CurriculumCard from "./curriculum-card";
+import { CourseData } from "@/definition";
 
 const highlightDetails = [
   {
@@ -105,8 +106,7 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({ params }: { params: { id: string } }) {
-  console.log(params);
+export default function CourseDetail({course}: {course?: CourseData}) {
 
   const [activeLink, setActiveLink] = useState("overview");
 
@@ -129,8 +129,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
           <PrevPageBtn />
           <div>
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
-              Complete Website Responsive Design: from Figma to Webflow to
-              Website Design
+              {course?.title || course?.bundle}
             </h1>
             <CourseTimeLecturesSection />
           </div>
@@ -150,8 +149,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
             </div>
 
             <h2 className="mb-6 text-3xl font-semibold">
-              Complete Website Responsive Design: from Figma to Webflow to
-              Website Design
+              {course?.title || course?.bundle}
             </h2>
 
             <div className="flex justify-between">

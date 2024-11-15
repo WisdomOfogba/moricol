@@ -95,7 +95,7 @@ export default function CourseCategories({ courseData }: {
           </FilterContainer>
         </ul> */}
         {courseData[activeCategory].map((course, i) => (
-          <CourseCard key={i} courseData={course} />
+          <CourseCard key={i} type={categories[activeCategory]} courseData={course} />
         ))}
       </div>
     </section>

@@ -18,7 +18,6 @@ async function getCoursesData() {
 
 export default async function Home() {
   const { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData } = await getCoursesData();
-  // console.log(courseData[1])
   return (
     <main>
       <section className="mb-6 flex items-start justify-between px-14 py-8">
