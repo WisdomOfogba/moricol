@@ -381,6 +381,7 @@ export type CourseData = {
   standalone: true,
   curriculum: string[],
   requirement: string[],
+  quantity: number,
 }
 
 export type ReviewData = {

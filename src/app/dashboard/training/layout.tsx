@@ -1,6 +1,5 @@
 import Image from "next/image";
 import {
-  CartSvg,
   ChevronDownSvg,
   HeartSVG,
   NotificationSvg,
@@ -8,6 +7,8 @@ import {
 } from "@/components/svgs";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
+import Cart from "./components/cart";
+import { CartProvider } from "@/lib/TrainingCartContext";
 
 export default function TrainingLayout({
   children,
@@ -15,10 +16,12 @@ export default function TrainingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <ToolBar />
-      {children}
-    </section>
+    <CartProvider>
+      <section>
+        <ToolBar />
+        {children}
+      </section>
+    </CartProvider>
   );
 }
 
@@ -54,12 +57,7 @@ function ToolBar() {
         <Link href={routes.TRAININGPROFILEWISHLIST}>
           <HeartSVG className="h-6 w-6" fill="#1D2026" />
         </Link>
-        <Link href={routes.TRAININGSHOPPINGCART} className="relative">
-          <CartSvg />
-          <div className="absolute -top-[3px] left-[11px] flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-medium leading-none text-white">
-            1
-          </div>
-        </Link>
+        <Cart />
         <Link href="/dashboard/training/profile" className="block">
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image

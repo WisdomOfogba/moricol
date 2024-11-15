@@ -15,7 +15,6 @@ async function getCoursesData({type, id}: {type: string; id: string;}) {
 
 const page = async ({ params: { id, type } }: { params: { id: string, type: string } }) => {
   const {courseDetails, courseData, courseDetailsReview} = await getCoursesData({type, id});
-  console.log(courseDetails)
   return <CourseDetail type={type} data={courseData} course={courseDetails} review={courseDetailsReview} />
 }
 

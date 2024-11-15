@@ -30,6 +30,7 @@ import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
 import { CourseData, ReviewData } from "@/definition";
 import CourseCard from "./card-course";
+import { useCart } from "@/lib/TrainingCartContext";
 
 
 const courseDescriptionDetailLink = [
@@ -59,7 +60,6 @@ const socialLinks = [
 ];
 
 export default function CourseDetail({course, data, type, review }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]}) {
-
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
@@ -438,6 +438,13 @@ function CourseDetailSummary({course}: {course: CourseData}) {
       icon: <TwoUserCutOffSvg />,
     },
   ];
+  const { addToCart } = useCart();
+  course.quantity = 1;
+
+  const handleAddToCart = () => {
+    addToCart(course);
+  };
+
 
   return (
     <article className="w-[424px] shrink-0 shadow-md">
@@ -455,7 +462,7 @@ function CourseDetailSummary({course}: {course: CourseData}) {
       </div>
       {/* Buttons */}
       <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-        <button className="w-full bg-primary-500 p-3 text-lg font-semibold text-white">
+        <button onClick={handleAddToCart} className="w-full bg-primary-500 p-3 text-lg font-semibold text-white">
           Add To Cart
         </button>
         <Link
