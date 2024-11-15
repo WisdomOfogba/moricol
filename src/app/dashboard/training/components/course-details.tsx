@@ -112,7 +112,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
-      {Array(5)
+      {Array(course?.rating)
         .fill("")
         .map((_, i) => (
           <li key={i}>
@@ -134,7 +134,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
             <CourseTimeLecturesSection />
           </div>
         </div>
-        <p className="text-2xl text-primary-500">PRICE: ₦20,000</p>
+        <p className="text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
       </section>
 
       <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
@@ -174,7 +174,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                   4.8{" "}
                   <span className="text-sm font-normal text-[#6E7485]">
                     {" "}
-                    (451,444 Rating)
+                    ({course?.rating} Rating)
                   </span>
                 </p>
               </div>
@@ -216,56 +216,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
                 <div className="grid gap-y-5 text-sm text-[#4E5566]">
                   <p>
-                    It gives you a huge self-satisfaction when you look at your
-                    work and say, &quot;I made this!&quot;. I love that feeling
-                    after I&apos;m done working on something. When I lean back
-                    in my chair, look at the final result with a smile, and have
-                    this little spark joy moment. Its especially satisfying when
-                    I know I just made ₦5,000.
-                  </p>
-                  <p>
-                    I do! And thats why I got into this field. Not for the love
-                    of Web Design, which I do now. But for the LIFESTYLE! There
-                    are many ways one can achieve this lifestyle. This is my
-                    way. This is how I achieved a lifestyle Ive been fantasizing
-                    about for five years. And Im going to teach you the same.
-                    Often people think Web Design is complicated. That it needs
-                    some creative talent or knack for computers. Sure, a lot of
-                    people make it very complicated. People make the simplest
-                    things complicated. Like most subjects taught in the
-                    universities. But I dont like complicated. I like easy. I
-                    like life hacks. I like to take the shortest and simplest
-                    route to my destination. I havent gone to an art school or
-                    have a computer science degree. Im an outsider to this field
-                    who hacked himself into it, somehow ending up being a
-                    sought-after professional. Thats how Im going to teach you
-                    Web Design. So youre not demotivated on your way with
-                    needless complexity. So you enjoy the process because its
-                    simple and fun. So you can become a Level 2lance Web
-                    Designer in no time.
-                  </p>
-                  <p>
-                    For example, this is a Design course but I dont teach you
-                    Photoshop. Because Photoshop is needlessly complicated for
-                    Web Design. But people still teach it to web designers. I
-                    dont. I teach Figma – a simple tool that is taking over the
-                    design world. You will be designing a complete website
-                    within a week while others are still learning how to create
-                    basic layouts in Photoshop.
-                  </p>
-                  <p>
-                    Second, this is a Development course. But I dont teach you
-                    how to code. Because for Web Design coding is needlessly
-                    complicated and takes too long to learn. Instead, I teach
-                    Webflow – a tool that is taking over the web design world.
-                    You will be building complex websites within two weeks while
-                    others are still learning the basics of HTML & CSS. Third,
-                    this is a Level 2lancing course. But I dont just teach you
-                    how to write great proposals. I give you a winning proposal
-                    template. When youre done with the course, you will have a
-                    stunning portfolio website with portfolio pieces already in
-                    it. Buy this course now and take it whenever the time is
-                    right for you.
+                    {course?.description}
                   </p>
                 </div>
               </section>
@@ -277,8 +228,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
 
                 <ul className="grid grow gap-y-5">
-                  {Array(2)
-                    .fill("")
+                  {course?.online_course
                     .map((_, i) => (
                       <li
                         className="flex items-center gap-x-2 text-sm font-bold"
@@ -301,8 +251,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
 
                 <ul className="grid grow gap-y-5">
-                  {Array(2)
-                    .fill("")
+                  {course?.online_course
                     .map((_, i) => (
                       <li
                         className="flex items-center gap-x-2 text-sm font-bold"
@@ -370,13 +319,12 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                 </h3>
 
                 <ul className="grid grow gap-y-5">
-                  {Array(5)
-                    .fill("")
+                  {course?.for_who
                     .map((_, i) => (
                       <li className="flex items-center gap-x-2 text-sm" key={i}>
                         <ArrowRightSvg className="-rotate-180" />
                         This course is for those who want to launch a Level
-                        2lance Web Design Careers.
+                        2lance Web Design Careers.{_.option}
                       </li>
                     ))}
                 </ul>
@@ -470,13 +418,13 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                     </div>
                   </div>
                   <ul className="grid grow gap-y-5">
-                    {Array(5)
+                    {Array(course?.rating)
                       .fill("")
                       .map((_, i) => (
                         <li key={i} className="flex items-center text-sm">
                           <FiveStar />
                           <p className="ml-1.5 mr-6 shrink-0 text-[#6E7485]">
-                            5 Star Rating
+                            {course?.rating} Star Rating
                           </p>
                           <div className="mr-4 w-full grow bg-primary-100">
                             <div className="h-2 w-[75%] bg-primary-500" />
