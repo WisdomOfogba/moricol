@@ -5,17 +5,16 @@ import { CourseData } from '@/definition';
 
 async function getCoursesData({type, id}: {type: string; id: string;}) {
   try {
-    const { data: courseData }: { data: CourseData[] } = await CourseApi.getCourseData({ type });
-    const course = courseData.find((c) => c._id === id)
-    return course;
+    const { data: {course: courseData} }: { data: {course: CourseData} } = await CourseApi.getSingleCourseData({ type, id });
+    return {courseData};
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get Courses data');
   }
 }
 
 const page = async ({ params: { id, type } }: { params: { id: string, type: string } }) => {
-  const course = await getCoursesData({type, id});
-  return <CourseDetail course={course} />
+  const {courseData} = await getCoursesData({type, id});
+  return <CourseDetail course={courseData} />
 }
 
 export default page

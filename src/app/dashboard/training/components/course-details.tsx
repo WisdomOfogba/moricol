@@ -22,7 +22,6 @@ import {
   Whatsapp,
 } from "@/components/svgs";
 import Image from "next/image";
-// import CourseCard from "../../components/card-course";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
 import { useState } from "react";
@@ -30,6 +29,7 @@ import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
 import { CourseData } from "@/definition";
+import CourseCard from "./card-course";
 
 const highlightDetails = [
   {
@@ -106,7 +106,7 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({course}: {course?: CourseData}) {
+export default function CourseDetail({course }: {course?: CourseData;}) {
 
   const [activeLink, setActiveLink] = useState("overview");
 
@@ -323,8 +323,7 @@ export default function CourseDetail({course}: {course?: CourseData}) {
                     {course.for_who.map((_, i) => (
                         <li className="flex items-center gap-x-2 text-sm" key={i}>
                           <ArrowRightSvg className="-rotate-180" />
-                          This course is for those who want to launch a Level
-                          2lance Web Design Careers.{_.option}
+                          {_.option}
                         </li>
                       ))}
                   </ul>
@@ -477,11 +476,9 @@ export default function CourseDetail({course}: {course?: CourseData}) {
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {/* <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard /> */}
+          {/* {courseData.map((course) => (
+            <CourseCard courseData={course} />
+          ))} */}
         </div>
       </section>
     </main>

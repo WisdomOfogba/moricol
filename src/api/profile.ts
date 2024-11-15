@@ -42,6 +42,7 @@ export const profileApi = {
 
     updateProfile: async (profile: ProfileData, session: Session) => {
         const axios = createClientAxios({ session });
+        
 
         try {
             const response = await axios.post(endpoints.updateProfile, {
