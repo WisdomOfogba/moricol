@@ -23,7 +23,7 @@ export default function ShoppingCard() {
       <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
-        <p className="text-sm text-[#6E7485]">Home / Shopping Cart</p>
+        <p className="text-sm text-[#6E7485]"><Link href="/dashboard/training">Home</Link>/ Shopping Cart</p>
       </section>
 
       <div className="px-14">
