@@ -37,18 +37,6 @@ interface RetrieveCategoryParams {
   session: Session;
 }
 
-interface CreateReviewParams {
-  userid: string;
-  rating: number;
-  comment: string;
-  session: Session;
-}
-// interface CreateReviewParams {
-//     userid: string;
-//     rating: number;
-//     comment: string;
-//     session: Session;
-// }
 
 interface OrganizationParams {
   userid: string;
