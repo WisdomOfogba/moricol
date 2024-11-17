@@ -41,7 +41,6 @@ export interface LoanHistoryItem {
   status: string;
 }
 
-
 export type UserDetails = {
   auth: Record<string, unknown>;
   _id: string;
@@ -72,14 +71,25 @@ export type LoginResponse = {
   };
 };
 
-
-
 export type UserResumeResponse = {
   reference: { name: string; email: string; phone: string };
-  contact_details: { name: string; phone: string; socials: { option: string; optionUrl: string }[] };
+  contact_details: {
+    name: string;
+    phone: string;
+    socials: { option: string; optionUrl: string }[];
+  };
   upload: { cv: string; picture: string };
-  others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
-  job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
+  others: {
+    skills: string[];
+    languages: string[];
+    hobby: string[];
+    notice_period: string;
+  };
+  job_preference: {
+    job_function: string[];
+    job_location: string[];
+    salary_range: string;
+  };
   _id: string;
   userid: string;
   bio: string;
@@ -99,8 +109,7 @@ export type UserResumeResponse = {
   createdAt: string;
   coverletter: string;
   __v: number;
-}
-
+};
 
 export type Education = {
   _id: string;
@@ -113,9 +122,7 @@ export type Education = {
   inview: boolean;
 };
 
-
-export type ResumeType = 'local' | 'foreign'
-
+export type ResumeType = "local" | "foreign";
 
 export type Certification = {
   _id: string;
@@ -127,8 +134,6 @@ export type Certification = {
   grade: string;
   inview: boolean;
 };
-
-
 
 export interface JobPostResponse {
   _id: string;
@@ -170,7 +175,6 @@ export interface JobPostResponse {
   __v: number;
 }
 
-
 export type FilterValues = {
   job_titles: string[];
   job_types: ("fulltime" | "parttime" | "contract")[];
@@ -185,7 +189,7 @@ export type LoanCategory = {
   _id: string;
   name: string;
   image: string;
-}
+};
 
 export type LoanDetails = {
   range: {
@@ -210,18 +214,17 @@ export type LoanDetails = {
   client: number;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type Plan = {
-  title: string
-  plan_type: string
-  min_members: number
-  max_members: number
-  subtitle: string
-  durations: { label: string, price: string }[]
-  highlighted?: boolean
-}
+  title: string;
+  plan_type: string;
+  min_members: number;
+  max_members: number;
+  subtitle: string;
+  durations: { label: string; price: string }[];
+  highlighted?: boolean;
+};
 
 export type Organization = {
   _id: string;
@@ -236,8 +239,7 @@ export type Organization = {
   active: boolean;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type OrganizationMember = {
   _id: string;
@@ -247,15 +249,14 @@ export type OrganizationMember = {
     lastname: string;
     email: string;
     phone: string;
-  }
+  };
   organizationid: {
     _id: string;
     name: string;
   };
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type LoanDataType = {
   _id: string;
@@ -266,7 +267,6 @@ export type LoanDataType = {
   createdAt: string;
   __v: number;
 };
-
 
 export interface Demographic {
   bloodgroup: string;
@@ -291,7 +291,6 @@ export interface ProfileRequestType {
   language: string;
   demographic: Demographic;
 }
-
 
 export type ProfileData = {
   demographic: {
@@ -320,10 +319,7 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
-
-}
-
-
+};
 
 export type TelemedicineCategoryData = {
   category: {
@@ -348,8 +344,7 @@ export type TelemedicineCategoryData = {
     createdAt: string;
     __v: number;
   }>;
-}
-
+};
 
 export type AppointmentScheduleData = {
   time: {
@@ -364,10 +359,9 @@ export type AppointmentScheduleData = {
     lastname: string;
     photo: string;
   } | null;
-}
+};
 
-export type AppointmentStatus = '' | 'ongoing' | 'upcoming' | 'past';
-
+export type AppointmentStatus = "" | "ongoing" | "upcoming" | "past";
 
 export type SingleAppointmentData = {
   time: {
@@ -435,4 +429,86 @@ export type SingleAppointmentData = {
   paymentid: string;
   createdAt: string;
   __v: number;
-}
+};
+
+export type CourseData = {
+  _id: string;
+  bundle: string;
+  bundle_option: string;
+  title: string;
+  care_certificate: boolean;
+  price: number;
+  rating: number;
+  level: number;
+  thumbnail: string;
+  add_on: string[];
+  online_course: [
+    {
+      course: string;
+      _id: string;
+    },
+  ];
+  classroom_course: [
+    {
+      course: string;
+      _id: string;
+    },
+  ];
+  description: string;
+  instructors: [
+    {
+      instructor: string;
+      _id: string;
+    },
+  ];
+  start_messagge: string;
+  end_messagge: string;
+  editedBy: string;
+  editedAt: string;
+  createdAt: string;
+  __v: number;
+  client: number;
+  category: string;
+  start_date: string;
+  end_date: string;
+  duration: string;
+  duration_description: string;
+  benefits: [
+    {
+      option: string;
+      _id: string;
+    },
+  ];
+  sections: [
+    {
+      option: string;
+      _id: string;
+    },
+  ];
+  for_who: [
+    {
+      option: string;
+      _id: string;
+    },
+  ];
+  redirect_course: { links: string[]; redirect: boolean };
+  standalone: true;
+  curriculum: string[];
+  requirement: string[];
+  quantity: number;
+};
+
+export type ReviewData = {
+  _id: string;
+  userid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+  };
+  courseid: string;
+  courseType: string;
+  review: string;
+  rating: number;
+  createdAt: string;
+  __v: number;
+};

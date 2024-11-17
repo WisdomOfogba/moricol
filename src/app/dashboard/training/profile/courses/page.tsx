@@ -1,5 +1,5 @@
 import { ChevronDownSvg, SearchSvg } from "@/components/svgs";
-import CourseCard from "../../components/card-course";
+// import CourseCard from "../../components/card-course";
 
 const filterOptions = [
   { title: "Sort by", option: ["Latest"] },
@@ -42,13 +42,13 @@ export default function TrainingProfileCourses() {
       </section>
 
       <section className="grid grid-cols-5 gap-6">
+        {/* <CourseCard />
         <CourseCard />
         <CourseCard />
         <CourseCard />
         <CourseCard />
         <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        <CourseCard /> */}
       </section>
     </main>
   );
