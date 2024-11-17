@@ -91,14 +91,12 @@ export const blogApi = {
                     page
                 })
             });
-            console.log(response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             return await response.json();
         } catch (error) {
-            console.log(error);
             const errorMessage = handleAxiosError(error, 'Error retrieving blog categories');
             throw new Error(errorMessage);
         }

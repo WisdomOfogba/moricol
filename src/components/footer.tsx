@@ -2,6 +2,7 @@ import { footerLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { LocationSVG } from "./svgs";
+import { Input } from "./input";
 
 export default function Footer() {
   return (
@@ -59,11 +60,12 @@ export default function Footer() {
                 <label htmlFor="email" className="mb-1 block text-center lg:text-left">
                   Email
                 </label>
-                <input
+                <Input
                   type="text"
                   id="email"
                   name="email"
                   className="w-full rounded-lg py-3 px-4"
+                  placeholder="Enter your email"
                 />
               </div>
               <button className="font-seimi w-full rounded-lg bg-primary-500 py-3">

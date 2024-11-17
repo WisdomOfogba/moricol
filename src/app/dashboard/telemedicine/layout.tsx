@@ -32,7 +32,7 @@ const links = [
   },
   {
     name: "Profile",
-    link: routes.TELEMEDICINE_PROFILE,
+    link: routes.PROFILE,
     SVGComponent: FaUser,
   },
   {

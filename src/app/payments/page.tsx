@@ -12,6 +12,8 @@ import { Session } from "next-auth";
 import { landingPageServices, servicesDashboardLinks } from "@/constants";
 import loanApi from "@/api/loan";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/select";
+import telemedicineApi from "@/api/telemedicine";
+import { routes } from "@/constants/routes";
 
 
 export default function Payments() {
@@ -33,11 +35,14 @@ function PaymentsPage() {
 
 
 
+
+
     useEffect(() => {
-        if (!session) return;
+        if (!session) return
         const fetchData = async () => {
             try {
                 setError(null);
+                setLoading(true);
                 const storedData = getFromLocalStorage();
                 setStoredData(storedData);
                 if (!storedData) {
@@ -56,6 +61,10 @@ function PaymentsPage() {
                         await jobsApi.updateJobPostPayment({ userid: paymentData.userid, jobpostid: paymentData.jobpostid, amount: paymentData.amount, session: session as Session });
                     } else if (storedData.service === 'medicalLoan') {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
+                    } else if (storedData.service === 'telemedicine') {
+                        const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+
+                        setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS + '/' + resp.data + '/reminder' });
                     } else {
                         throw new Error("Invalid service");
                     }

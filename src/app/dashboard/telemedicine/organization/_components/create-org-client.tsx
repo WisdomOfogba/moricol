@@ -58,10 +58,9 @@ export default function CreateOrgClient({ availablePlans }: CreateOrgClientProps
 
         try {
             setLoading(true)
-            const { data } = await telemedicineApi.organization.create({
+            await telemedicineApi.organization.create({
                 ...org
             })
-            console.log(data);
 
 
             enqueueSnackbar('Organization created successfully', { variant: 'success' })

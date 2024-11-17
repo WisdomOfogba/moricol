@@ -52,9 +52,6 @@ async function PreviewForeignResume() {
         <h2 className="mb-4 text-2xl font-bold">Preview Resume</h2>
         <div className="flex w-full justify-end gap-4 md:gap-8">
           <div className="space-x-4">
-            <button className="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600">
-              PUBLISH NOW
-            </button>
             <Link href={routes.RECRUITMENT_FOREIGN_RESUME} className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
               EDIT RESUME
             </Link>
