@@ -6,6 +6,7 @@ import { CourseData, ReviewData } from "@/definition";
 const endpoints = {
   getCourseData: `${API_BASE_URL}/user/training/retrieve/all`,
   getSingleCourseData: `${API_BASE_URL}/user/training/guest/retrieve/single`,
+  markLesson: `${API_BASE_URL}/user/training/mark/course`,
 };
 
 export const CourseApi = {
@@ -57,6 +58,32 @@ export const CourseApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error retrieving Courses");
+      throw new Error(errorMessage);
+    }
+  },
+  markLesson: async ({
+    userid,
+    lessonid,
+    sectionid,
+    courseid,
+  }: {
+    userid: string;
+    lessonid: string;
+    sectionid: string;
+    courseid: string;
+  }) => {
+    try {
+      const response = await axios.post(
+        endpoints.markLesson,
+        {
+          userid,
+          lessonid,
+          sectionid,
+          courseid,
+        })
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Marking Lesson");
       throw new Error(errorMessage);
     }
   },

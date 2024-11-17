@@ -95,7 +95,7 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
           <div>
             {/* <Breadcrumb /> */}
             <div className="mb-3 text-sm">
-              Home <span className="mx-2">{">"}</span> Online{" "}
+              <Link href="/dashboard/training">Home</Link> <span className="mx-2">{">"}</span> {type}{" "}
               <span className="mx-2">{">"}</span>
             </div>
 
@@ -113,7 +113,6 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
                 <div>
                   <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
                   <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
-                    <span>Dianne Russell</span>{" "}
                     {course.instructors.map((instructor) => (
                       <>
                         <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
@@ -439,7 +438,6 @@ function CourseDetailSummary({course}: {course: CourseData}) {
     },
   ];
   const { addToCart } = useCart();
-  course.quantity = 1;
 
   const handleAddToCart = () => {
     addToCart(course);
