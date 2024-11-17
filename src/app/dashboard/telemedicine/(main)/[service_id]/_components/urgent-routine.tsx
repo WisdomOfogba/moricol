@@ -15,7 +15,7 @@ export default function UrgentRoutine({ prevStep, nextStep, appointmentData, han
     <div className="flex flex-col md:flex-row">
       <div className="flex-grow">
         {/* Form */}
-        <form className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-md">
+        <div className="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-md">
           <div className="mb-6">
             <Checkbox id="terms"
               checked={terms}
@@ -101,7 +101,7 @@ export default function UrgentRoutine({ prevStep, nextStep, appointmentData, han
               CONTINUE
             </Button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

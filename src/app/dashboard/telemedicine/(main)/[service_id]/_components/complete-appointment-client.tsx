@@ -12,6 +12,8 @@ import DateServiceSelect from "./DateServiceSelect";
 import { TelemedicineCategoryData } from "@/definition";
 import { enqueueSnackbar } from "notistack";
 import { OrganizationMember } from "@/definition";
+import { routes } from "@/constants/routes";
+import { useRouter } from "next/navigation";
 
 const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, membership: OrganizationMember[] }> = ({ service, membership }) => {
   const [step, setStep] = useState<number>(0);
@@ -44,6 +46,8 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
     location: "",
   });
 
+  const router = useRouter();
+
 
   const generateCalendarDays = () => {
     const today = new Date();
@@ -66,7 +70,6 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
     let message = null;
     if (step === 0) {
       done = appointmentData!.time.start !== '' && appointmentData!.time.end !== '' && appointmentData!.date !== '' && appointmentData!.subcategoryid !== '';
-      console.log(appointmentData.time.start, appointmentData.time.end, appointmentData.date, appointmentData.subcategoryid);
       message = `Please select ${!appointmentData.date ? 'a date' : ''}${!appointmentData.time.start || !appointmentData.time.end ? ', time slot' : ''}${!appointmentData.subcategoryid ? ', service' : ''} for your appointment`.replace(/^Please select ,\s*/, 'Please select ');
     }
     if (step === 1) {
@@ -74,8 +77,8 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
       message = "Please select if you are responsive to the call";
     }
     if (step === 2) {
-      done = appointmentData!.urgent_type !== null
-      message = "Please select if you have an urgent or routine appointment";
+      done = appointmentData!.urgent_type !== null && appointmentData!.location !== ""
+      message = "Please select if you have an urgent or routine appointment, add your location";
     }
     if (step === 3) {
       done = appointmentData!.primarycomplain.length > 0 || appointmentData!.others.length > 0
@@ -148,14 +151,14 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
         show={showReminderModal}
         appointmentId={appointmentId}
         onClose={() => {
-          setShowReminderModal(false);
+          router.push(routes.TELEMEDICINE_APPOINTMENTS);
         }}
       />
       <h1 className="w-[90%] text-center md:m-auto md:w-[85%]">
         {step === 2 &&
 
           <span className="pt-8 block">
-            "Provide Health Information"
+            Provide Health Information
           </span>
         }
         {step === 3 &&
@@ -165,7 +168,7 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
         }
         {step === 4 &&
           <span className="pt-8 block">
-            "Make payment to confirm your appointment with your doctor."
+            Make payment to confirm your appointment.
           </span>
         }
       </h1>

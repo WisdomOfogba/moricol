@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { deleteFromLocalStorage, getFromLocalStorage } from "@/util/store-to-localstorage";
 import jobsApi from "@/api/jobs";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import { landingPageServices, servicesDashboardLinks } from "@/constants";
 import loanApi from "@/api/loan";
@@ -63,7 +63,8 @@ function PaymentsPage() {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
                     } else if (storedData.service === 'telemedicine') {
                         const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
-                        setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS_REMINDER + '/' + resp._id });
+
+                        setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS + '/' + resp.data + '/reminder' });
                     } else {
                         throw new Error("Invalid service");
                     }

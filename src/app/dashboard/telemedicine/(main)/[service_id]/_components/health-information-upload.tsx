@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Plus } from "lucide-react";
 import Button from "@/components/button";
 import { Card, CardContent } from "@/components/card";
@@ -279,11 +278,11 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
 
             {appointmentData.takingmedication && (
               <div>
-                <Label>List medications below:</Label>
+                <Label>List medications below and how many days you have been taking them:</Label>
                 <div className="space-y-2">
                   {appointmentData.medication.map((medication, index) => (
-                    <div className="flex items-center space-x-2">
-                      <Input placeholder="Medication 1"
+                    <div key={medication.drug + index} className="flex items-center space-x-2">
+                      <Input placeholder="Medication"
                         value={appointmentData.medication[index].drug}
                         onChange={(e) => {
                           const medIndex = appointmentData.medication.findIndex(m => m.drug === medication.drug)
@@ -293,30 +292,18 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
                           handleUpdateAppointmentData('medication', updatedArr)
                         }}
                       />
-                      <Select
-                        value={medication.days.toString()}
-                        onValueChange={(value) => {
+                      <Input
+                        type="number"
+                        placeholder="days? "
+                        value={medication.days}
+                        onChange={(e) => {
                           const medIndex = appointmentData.medication.findIndex(m => m.drug === medication.drug)
-                          const newValue = { ...appointmentData.medication[medIndex], days: value }
+                          const newValue = { ...appointmentData.medication[medIndex], days: parseInt(e.target.value) }
                           const updatedArr = [...appointmentData.medication]
                           updatedArr[medIndex] = newValue as any
                           handleUpdateAppointmentData('medication', updatedArr)
                         }}
-                      >
-                        <SelectTrigger className="w-[150px]">
-                          <SelectValue placeholder="How Long" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1-week">1 week</SelectItem>
-                          <SelectItem value="1-month">1 month</SelectItem>
-                          <SelectItem value="3-months">3 months</SelectItem>
-                          <SelectItem value="6-months">6 months</SelectItem>
-                          <SelectItem value="1-year">1 year</SelectItem>
-                          <SelectItem value="more-than-1-year">
-                            More than 1 year
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                      />
                     </div>
                   ))}
                   <Button onClick={() => {

@@ -20,7 +20,7 @@ export default function SubmitAppointmentButton({ tosend, setComplete }: { tosen
                 ...tosend,
                 userid: session?.user.id as string,
             });
-            setComplete(response._id);
+            setComplete(response.data);
         } catch (error) {
             console.error(error);
             enqueueSnackbar('Error making payment', { variant: 'error' });

@@ -40,12 +40,13 @@ export const profileApi = {
         }
     },
 
-    updateProfile: async (profile: ProfileData, session: Session) => {
+    updateProfile: async (profile: ProfileData & { userid: string }, session: Session) => {
         const axios = createClientAxios({ session });
 
         try {
             const response = await axios.post(endpoints.updateProfile, {
-                ...profile
+                ...profile,
+                userid: profile.userid
             });
             return response.data;
         } catch (error) {

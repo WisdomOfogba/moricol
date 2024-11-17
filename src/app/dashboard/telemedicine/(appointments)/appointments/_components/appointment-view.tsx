@@ -22,7 +22,7 @@ function AppointmentView({
   return (
     <div>
       <div>
-        <Link className="mb-6 flex items-center justify-between" href={routes.TELEMEDICINE_APPOINTMENTS}>
+        <Link className="mb-6 flex items-center justify-between" href={routes.TELEMEDICINE_DASHBOARD}>
           <Button size="fit" className="ml-auto w-fit bg-primary-500 text-white hover:bg-primary-600">
             Schedule an Appointment
           </Button>

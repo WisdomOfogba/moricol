@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import Image from "next/image";
 // import { FaRoad, FaUserDoctor, FaUserNurse } from "react-icons/fa6";
 // import { IoNutrition } from "react-icons/io5";
@@ -52,18 +51,19 @@ export default async function Telemedicine() {
           <main className="flex-grow">
             <h1 className="text-2xl font-bold">Welcome, {session?.user?.firstname}</h1>
 
-            <p className="mb-8 text-gray-600">Find your suitable doctors here</p>
+            <p className="mb-8 text-gray-600">Get the best healthcare services from our specialists</p>
 
             <div className="pb-2">
               <hr />
+
+              {/*
               <p className="md:hidden py-2">Schedule an appointment</p>
               <div className="hidden pt-3 md:block"></div>
-
-              <div className="flex md:flex md:flex-col md:items-end">
+               <div className="flex md:flex md:flex-col md:items-end">
                 <Button className="md:w-fit">
                   Schedule a doctor&apos; appointment
                 </Button>
-              </div>
+              </div> */}
               <div className="pt-3"></div>
               <hr />
             </div>
@@ -71,7 +71,7 @@ export default async function Telemedicine() {
             {/* Specialists Section */}
             <section className="mb-8">
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Specialists</h2>
+                <h2 className="text-xl font-semibold">Select a Category</h2>
                 {/* <Link
                 href={routes.TELEMEDICINE_SPECIALISTS}
                 className="text-primary-500 hover:underline"

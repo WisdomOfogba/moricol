@@ -1,16 +1,21 @@
 import { Session } from "next-auth";
 import { createClientAxios } from "./axios-client";
 import handleAxiosError from "./handle-axios-error";
+import { makeApiRequest } from ".";
 
 const telemedicineUrl = 'user/telemedicine'
 
 const endpoints = {
     homepage: telemedicineUrl + '/retrieve/all/category',
     retrieveCategory: telemedicineUrl + '/retrieve/category',
-    createReview: telemedicineUrl + '/category/subcategory',
+    createRatingReview: telemedicineUrl + '/create/review',
     makePayment: telemedicineUrl + '/make/session/payment',
     createAppointment: telemedicineUrl + '/create/appointment',
     retrieveAllAppointments: telemedicineUrl + '/retrieve/all/appointment',
+    retrieveSingleAppointment: telemedicineUrl + '/retrieve/single/appointment',
+    endAppointment: telemedicineUrl + '/end/appointment',
+    upload: telemedicineUrl + '/upload',
+    updateNotification: telemedicineUrl + '/update/notification',
     organization: {
         create: telemedicineUrl + '/create/organization',
         my: telemedicineUrl + '/my/organization',
@@ -31,12 +36,12 @@ interface RetrieveCategoryParams {
     session: Session;
 }
 
-interface CreateReviewParams {
-    userid: string;
-    rating: number;
-    comment: string;
-    session: Session;
-}
+// interface CreateReviewParams {
+//     userid: string;
+//     rating: number;
+//     comment: string;
+//     session: Session;
+// }
 
 interface OrganizationParams {
     userid: string;
@@ -163,17 +168,7 @@ const telemedicineApi = {
         }
     },
 
-    createReview: async ({ userid, rating, comment, session }: CreateReviewParams) => {
-        const axios = createClientAxios({ session });
 
-        try {
-            const response = await axios.post(endpoints.createReview, { userid, rating, comment });
-            return response.data;
-        } catch (error) {
-            const errorMessage = handleAxiosError(error, 'Error creating review');
-            throw new Error(errorMessage);
-        }
-    },
 
     organization: {
         create: async ({ userid, start_date, end_date, name, duration, plan_type, amount, user_limit, session }: CreateOrganizationParams) => {
@@ -350,6 +345,138 @@ const telemedicineApi = {
             const errorMessage = handleAxiosError(error, 'Error retrieving appointments');
             throw new Error(errorMessage);
         }
+    },
+
+    retrieveSingleAppointment: async ({
+        userid,
+        appointmentid,
+        session
+    }: {
+        userid: string;
+        appointmentid: string;
+        session: Session;
+    }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.retrieveSingleAppointment, {
+                userid,
+                appointmentid
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving appointment');
+            throw new Error(errorMessage);
+        }
+    },
+
+    endAppointment: async ({
+        userid,
+        appointmentid,
+        session
+    }: {
+        userid: string;
+        appointmentid: string;
+        session: Session;
+    }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.endAppointment, {
+                userid,
+                appointmentid
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error ending appointment');
+            throw new Error(errorMessage);
+        }
+    },
+
+    uploadFiles: async ({
+        userid,
+        appointmentid,
+        userupload,
+        session
+    }: {
+        userid: string;
+        appointmentid: string;
+        userupload: Array<{ name: string, upload: string }>;
+        session: Session;
+    }) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.upload, {
+                userid,
+                appointmentid,
+                userupload
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error uploading files');
+            throw new Error(errorMessage);
+        }
+    },
+
+    createRatingReview: async ({
+        userid,
+        telemedicineid,
+        staffid,
+        review,
+        rating,
+        recommend,
+        session
+    }: {
+        userid: string;
+        telemedicineid: string;
+        staffid: string;
+        review: string;
+        rating: number;
+        recommend: boolean;
+        session: Session;
+    }) => {
+        return makeApiRequest({
+            endpoint: endpoints.createRatingReview,
+            payload: {
+                userid,
+                telemedicineid,
+                staffid,
+                review,
+                rating,
+                recommend
+            },
+            errorMessage: 'Error creating review',
+            session
+        });
+    },
+    updateNotification: async ({
+        userid,
+        appointmentid,
+        email,
+        sms,
+        push,
+        session
+    }: {
+        userid: string;
+        appointmentid: string;
+        email: boolean;
+        sms: boolean;
+        push: boolean;
+        session: Session;
+    }) => {
+        return makeApiRequest({
+            endpoint: endpoints.updateNotification,
+            payload: {
+                userid,
+                appointmentid,
+                email,
+                sms,
+                push
+            },
+            errorMessage: 'Error updating notification preferences',
+            session
+        });
     },
 
 }

@@ -17,7 +17,7 @@ type DateServiceSelectProps = {
     handleUpdateAppointmentData: (key: string, value: any) => void;
 }
 
-export default function DateServiceSelect({ service, generateCalendarDays, handleUpdateAppointmentData, nextStep, appointmentData }: DateServiceSelectProps) {
+export default function DateServiceSelect({ service, handleUpdateAppointmentData, nextStep, appointmentData }: DateServiceSelectProps) {
 
     const generateEndTime = (t: string) => {
         // Extract hour, minute and period from time string (e.g. "9:30 AM")
@@ -34,7 +34,7 @@ export default function DateServiceSelect({ service, generateCalendarDays, handl
 
         // Add 30 minutes for appointment duration
         let minute24 = parseInt(minute) + 30;
-        let hourAdjust = Math.floor(minute24 / 60);
+        const hourAdjust = Math.floor(minute24 / 60);
         minute24 = minute24 % 60;
         hour24 = (hour24 + hourAdjust) % 24;
 

@@ -170,7 +170,7 @@ export default function HealthAppointmentConfirmation({
                   ))}
                   <div className="flex items-center space-x-3">
                     <RadioGroupItem value="null" checked={appointmentData.organization.use_organization === false} id="non-organization" />
-                    <Label htmlFor="non-organization">Don't Use Organization Wallet</Label>
+                    <Label htmlFor="non-organization">Don&apos;t Use Organization Wallet</Label>
                   </div>
                 </RadioGroup>
               </div>

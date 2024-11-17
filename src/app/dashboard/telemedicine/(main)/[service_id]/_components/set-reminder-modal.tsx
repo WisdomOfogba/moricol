@@ -1,3 +1,4 @@
+import telemedicineApi from "@/api/telemedicine";
 import Button from "@/components/button";
 import {
   Card,
@@ -8,9 +9,11 @@ import {
 } from "@/components/card";
 import { Checkbox } from "@/components/checkbox";
 import { Label } from "@/components/label";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
-
+import { useSnackbar } from "notistack";
 const SetReminderModal = ({
   show,
   appointmentId,
@@ -21,6 +24,10 @@ const SetReminderModal = ({
   onClose: () => void;
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOptionChange = (option: string) => {
     setSelectedOptions((prev) =>
@@ -30,14 +37,30 @@ const SetReminderModal = ({
     );
   };
 
-  const handleSetReminder = () => {
-    alert(appointmentId);
-    onClose();
+  const handleSetReminder = async () => {
+    try {
+      setLoading(true);
+      await telemedicineApi.updateNotification({
+        userid: session?.user?.id as string,
+        appointmentid: appointmentId as string,
+        email: selectedOptions.includes("email"),
+        sms: selectedOptions.includes("sms"),
+        push: selectedOptions.includes("push"),
+        session: session as Session
+      });
+      enqueueSnackbar("Reminder set successfully", { variant: "success" });
+      onClose();
+    } catch (error) {
+      console.error("Failed to update notification preferences:", error);
+      enqueueSnackbar("Failed to set reminder", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div
-      className={`fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-50 transition-opacity ${show ? "opacity-100" : "pointer-events-none opacity-0"
+      className={`fixed inset-0 z-[60] flex items-center left-0 top-0 justify-center bg-black bg-opacity-50 transition-opacity ${show ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
     >
       <div
@@ -53,7 +76,7 @@ const SetReminderModal = ({
               Send me a reminder Via
             </CardTitle>
           </CardHeader>
-          <CardContent className="justify-between space-y-4 md:flex">
+          <CardContent className="justify-between flex-col space-y-4 md:flex">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="email"
@@ -82,10 +105,11 @@ const SetReminderModal = ({
           </CardContent>
           <CardFooter>
             <Button
-              className="w-full bg-primary-500 text-white hover:bg-primary-600"
+              className="w-full bg-primary-500 flex items-center justify-center text-white hover:bg-primary-600"
               onClick={handleSetReminder}
+              disabled={loading}
             >
-              SET REMINDER
+              {loading ? <Loader2 className="animate-spin" /> : "SET REMINDER"}
             </Button>
           </CardFooter>
         </Card>

@@ -14,9 +14,6 @@ export const metadata = {
   description: "View and manage your telemedicine appointments"
 };
 
-
-
-
 async function getAppointments(session: Session, statusFetched: string, date: string, startTime: string, endTime: string) {
   try {
     if (!session || !session.user || !('id' in session.user)) {
@@ -30,13 +27,11 @@ async function getAppointments(session: Session, statusFetched: string, date: st
       userid: session.user.id,
       session
     });
-
     return appointmentsData;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get appointments data');
   }
 }
-
 
 async function Appointments({
   searchParams
