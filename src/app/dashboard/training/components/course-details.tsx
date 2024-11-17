@@ -24,13 +24,14 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
 import { CourseData, ReviewData } from "@/definition";
 import CourseCard from "./card-course";
 import { useCart } from "@/lib/TrainingCartContext";
+import MakeTrainingPaymentButton from "./make-training-payments";
 
 
 const courseDescriptionDetailLink = [
@@ -393,7 +394,7 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
           )}
         </div>
 
-        <CourseDetailSummary course={course} />
+        <CourseDetailSummary type={type} course={course} />
       </section>
 
       {/* Related courses */}
@@ -419,7 +420,7 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
   );
 }
 
-function CourseDetailSummary({course}: {course: CourseData}) {
+function CourseDetailSummary({course, type }: {course: CourseData, type: string }) {
   const highlightDetails = [
     {
       title: "Course Duration",
@@ -437,12 +438,34 @@ function CourseDetailSummary({course}: {course: CourseData}) {
       icon: <TwoUserCutOffSvg />,
     },
   ];
+  const [boughtCourses, setBoughtCourses] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+      try {
+        const boughtCoursesRes = await fetch(`/api/bought-courses`);
+        const boughtCoursesData = await boughtCoursesRes.json();
+
+        setBoughtCourses(
+          boughtCoursesData.map((course: { _id: string }) => course._id)
+        );
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [course._id]);
+
+
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart(course);
   };
-
+  
+  const isBought = boughtCourses.includes(course._id as string);
 
   return (
     <article className="w-[424px] shrink-0 shadow-md">
@@ -451,7 +474,7 @@ function CourseDetailSummary({course}: {course: CourseData}) {
         {highlightDetails.map(({ title, detail, icon }, i) => (
           <div className="flex justify-between text-sm" key={i}>
             <p className="flex items-center gap-x-2 text-[#1D2026]">
-              {icon}
+              {icon}  
               {title}
             </p>
             <p className="text-[#6E7485]">{detail}</p>
@@ -459,32 +482,32 @@ function CourseDetailSummary({course}: {course: CourseData}) {
         ))}
       </div>
       {/* Buttons */}
-      <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-        <button onClick={handleAddToCart} className="w-full bg-primary-500 p-3 text-lg font-semibold text-white">
-          Add To Cart
-        </button>
-        <Link
-          href={routes.TRAININGCHECKOUT}
-          className="inline-block w-full bg-primary-100 p-3 text-center text-lg font-semibold text-primary-500"
-        >
-          Buy Now
-        </Link>
-        <div className="flex gap-x-3">
-          <button className="w-full border border-[#E9EAF0] py-3 text-sm font-semibold">
-            Add To Wishlist
-          </button>
-          <Link
-            href={routes.TRAININGCHECKOUT}
-            className="inline-block w-full border border-[#E9EAF0] py-3 text-center text-sm font-semibold"
-          >
-            Buy Course
-          </Link>
+      {
+        isBought ? (
+        <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
+          <a href={`/dashboard/training/view-course/${course._id}`} className="w-full flex justify-center items-center bg-primary-500 p-3 text-lg font-semibold text-white">
+            View Course
+          </a>
         </div>
-        <p className="text-sm text-[#8C94A3]">
-          <span className="font-medium">Note:</span> all course have 30-days
-          money-back guarantee
-        </p>
-      </div>
+        ) : (
+        <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
+          <button onClick={handleAddToCart} className="w-full bg-primary-500 p-3 text-lg font-semibold text-white">
+            Add To Cart
+          </button>
+            <MakeTrainingPaymentButton button="now" type={type} courseid={course._id} price={course.price} />
+          <div className="flex gap-x-3">
+            <button className="w-full border border-[#E9EAF0] py-3 text-sm font-semibold">
+              Add To Wishlist
+            </button>
+            <MakeTrainingPaymentButton button="no" type={type} courseid={course._id} price={course.price} />
+          </div>
+          <p className="text-sm text-[#8C94A3]">
+            <span className="font-medium">Note:</span> all course have 30-days
+            money-back guarantee
+          </p>
+        </div>
+        )
+      }
       {/* Benefits */}{
         course.benefits &&
       <div className="p-6">

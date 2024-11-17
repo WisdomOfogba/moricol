@@ -6,7 +6,7 @@ import CartDetails from "../components/cart-details";
 import { useCart } from "@/lib/TrainingCartContext";
 
 export default function ShoppingCard() {
-  const { cart } = useCart()
+  const { cart, cartCount } = useCart()
 
   const getSum = () => {
     const total = cart.map((cart) => (
@@ -29,7 +29,7 @@ export default function ShoppingCard() {
       <div className="px-14">
         <section>
           <h3 className="mb-6 text-xl font-semibold text-[#1D2026]">
-            Shopping Cart (3)
+            Shopping Cart ({cartCount})
           </h3>
           <div className="mb-10 flex gap-x-6">
             <section className="w-full">
