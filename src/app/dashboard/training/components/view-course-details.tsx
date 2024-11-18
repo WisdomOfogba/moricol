@@ -3,10 +3,11 @@
 import { ChatCircles, File, StarSVG } from "@/components/svgs";
 import Image from "next/image";
 import { useState } from "react";
-import PrevPageBtn from "../prev-page-btn";
-import CourseTimeLecturesSection from "../../components/time-lecture-section";
+import PrevPageBtn from "../view-course/prev-page-btn";
+import CourseTimeLecturesSection from "./time-lecture-section";
 import { BiDownload } from "react-icons/bi";
-import CurriculumCard from "../../components/curriculum-card";
+import CurriculumCard from "./curriculum-card";
+import { SingleCourse } from "@/definition";
 
 const courseDescriptionDetailLink = [
   {
@@ -27,14 +28,18 @@ const courseDescriptionDetailLink = [
   },
 ];
 
-export default function CourseDetail({ params }: { params: { id: string } }) {
-  console.log(params);
+export default function CourseDetail({
+  singleCourse,
+}: {
+  singleCourse: SingleCourse;
+}) {
+  console.log(singleCourse);
 
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
-      {Array(5)
+      {Array(singleCourse.courseorder.courseid.rating)
         .fill("")
         .map((_, i) => (
           <li key={i}>
@@ -51,29 +56,32 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
           <PrevPageBtn />
           <div>
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
-              Complete Website Responsive Design: from Figma to Webflow to
-              Website Design
+              {singleCourse.courseorder.courseid.title}
             </h1>
-            <CourseTimeLecturesSection />
+            <CourseTimeLecturesSection
+              time={singleCourse.courseorder.courseid.duration}
+            />
           </div>
         </div>
-        <p className="text-2xl text-primary-500">PRICE: ₦20,000</p>
+        <p className="text-2xl text-primary-500">
+          PRICE: ₦{singleCourse.courseorder.courseid.price}
+        </p>
       </section>
 
       <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
         {/* Right hand side */}
-        <div className="grid gap-y-10">
+        <div className="grid gap-y-10 w-full">
           {/* Heading */}
           <div>
             {/* <Breadcrumb /> */}
             <div className="mb-3 text-sm">
-              Home <span className="mx-2">{">"}</span> Online{" "}
+              <a href="/dashboard/training/profile">Home</a>{" "}
+              <span className="mx-2">{">"}</span> Online{" "}
               <span className="mx-2">{">"}</span>
             </div>
 
             <h2 className="mb-6 text-3xl font-semibold">
-              Complete Website Responsive Design: from Figma to Webflow to
-              Website Design
+              {singleCourse.courseorder.courseid.title}
             </h2>
 
             <div className="flex justify-between">
@@ -86,16 +94,19 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
                 <div>
                   <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
                   <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
-                    <span>Dianne Russell</span>{" "}
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                    <span>Kristin Watson</span>
+                  {singleCourse.courseorder.courseid.instructors.map((instructor) => (
+                      <>
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
+                        <span>{instructor.instructor}</span>
+                      </>
+                    ))}
                   </h3>
                 </div>
               </article>
               <div className="flex items-center gap-x-2">
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
-                  4.8{" "}
+                  {singleCourse.courseorder.courseid.rating}{" "}
                   <span className="text-sm font-normal text-[#6E7485]">
                     {" "}
                     (451,444 Rating)
@@ -109,7 +120,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
           <div className="relative h-[492px] w-full">
             <Image
               fill
-              src="/images/client.jpg"
+              src={singleCourse.courseorder.courseid.thumbnail}
               alt=""
               style={{ objectFit: "cover" }}
             />
@@ -139,23 +150,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
               </h3>
               <div className="grid gap-y-5 text-sm text-[#4E5566]">
                 <p>
-                  We cover everything you need to build your first website. From
-                  creating your first page through to uploading your website to
-                  the internet. We’ll use the world’s most popular (and Level 2)
-                  web design tool called Visual Studio Code. There are exercise
-                  files you can download and then work along with me. At the end
-                  of each video I have a downloadable version of where we are in
-                  the process so that you can compare your project with mine.
-                  This will enable you to see easily where you might have a
-                  problem. We will delve into all the good stuff such as how to
-                  create your very own mobile burger menu from scratch learning
-                  some basic JavaScript and jQuery.
-                </p>
-                <p>
-                  If that all sounds a little too fancy - don’t worry, this
-                  course is aimed at people new to web design and who have never
-                  coded before. We’ll start right at the beginning and work our
-                  way through step by step.
+                  {singleCourse.courseorder.courseid.description}
                 </p>
               </div>
             </section>
@@ -208,7 +203,7 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
 
           {activeLink === "comments" && (
             <section>
-              <CommentSection />
+              <CommentSection comment={singleCourse.comment} />
             </section>
           )}
         </div>
@@ -216,10 +211,15 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
         <section className="w-full max-w-[524px] shrink-0">
           <div className="mb-3.5 flex items-center justify-between font-semibold">
             <h3 className="text-[#1D2026]">Course contents</h3>
-            <p className="text-xs text-[#23BD33]">15% Completed</p>
+            <p className="text-xs text-[#23BD33]">
+              {singleCourse.courseorder.progress}% Completed
+            </p>
           </div>
           <div className="mb-4 bg-[#E9EAF0]">
-            <div className="h-[3px] w-1/4 bg-[#23BD33]"></div>
+            <div
+              style={{ width: `${singleCourse.courseorder.progress}%` }}
+              className={`h-[3px] bg-[#23BD33]`}
+            ></div>
           </div>
           <div className="border text-xs">
             <CurriculumCard />
@@ -250,42 +250,42 @@ function AttachementCard() {
   );
 }
 
-const CommentSection = () => {
-  const comments = [
-    {
-      id: 1,
-      author: "Jane Doe",
-      avatar: "/api/placeholder/40/40",
-      content: "This is an example comment. It could be about anything!",
-      timestamp: "1 week ago",
-      isAdmin: false,
-    },
-    {
-      id: 2,
-      author: "John Smith",
-      avatar: "/api/placeholder/40/40",
-      content:
-        "Here's another comment. Notice how it's structured similarly to the others.",
-      timestamp: "1 week ago",
-      isAdmin: true,
-    },
-    {
-      id: 3,
-      author: "Alice Johnson",
-      avatar: "/api/placeholder/40/40",
-      content: "Great discussion everyone! Keep the comments coming.",
-      timestamp: "1 week ago",
-      isAdmin: false,
-    },
-  ];
+const CommentSection = ({comment}: {comment: [{id: string, author: string, avatar: string, content: string, timestamp: string, isAdmin: boolean}]}) => {
+//   const comments = [
+//     {
+//       id: 1,
+//       author: "Jane Doe",
+//       avatar: "/api/placeholder/40/40",
+//       content: "This is an example comment. It could be about anything!",
+//       timestamp: "1 week ago",
+//       isAdmin: false,
+//     },
+//     {
+//       id: 2,
+//       author: "John Smith",
+//       avatar: "/api/placeholder/40/40",
+//       content:
+//         "Here's another comment. Notice how it's structured similarly to the others.",
+//       timestamp: "1 week ago",
+//       isAdmin: true,
+//     },
+//     {
+//       id: 3,
+//       author: "Alice Johnson",
+//       avatar: "/api/placeholder/40/40",
+//       content: "Great discussion everyone! Keep the comments coming.",
+//       timestamp: "1 week ago",
+//       isAdmin: false,
+//     },
+//   ];
 
   return (
     <div>
       <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-        Comments <span className="font-normal">(01)</span>
+        Comments <span className="font-normal">({comment.length.toString().padStart(2, "0")})</span>
       </h3>
 
-      {comments.map((comment) => (
+      {comment.map((comment) => (
         <div key={comment.id} className="mb-4 flex space-x-3">
           <div className="relative h-10 w-10 overflow-hidden rounded-full">
             <Image

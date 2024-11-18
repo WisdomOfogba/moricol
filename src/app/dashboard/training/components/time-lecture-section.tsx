@@ -1,6 +1,6 @@
 import { ClockSvg, FolderSvg, PlaySVG } from "@/components/svgs";
 
-export default function CourseTimeLecturesSection() {
+export default function CourseTimeLecturesSection({ time }: {time?: string}) {
   return (
     <ul className="text-s flex gap-x-4">
       <li className="flex items-center gap-x-1.5">
@@ -12,7 +12,7 @@ export default function CourseTimeLecturesSection() {
       </li>
       <li className="flex items-center gap-x-1.5">
         <ClockSvg />
-        19h 37m
+        {time}
       </li>
     </ul>
   );

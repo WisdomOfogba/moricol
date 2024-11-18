@@ -60,7 +60,7 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({course, data, type, review, isBought }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]; isBought: boolean}) {
+export default function CourseDetail({course, data, type, review, isBought, courseorderid }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]; isBought: boolean, courseorderid?: string}) {
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
@@ -83,7 +83,7 @@ export default function CourseDetail({course, data, type, review, isBought }: {c
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
               {course?.title || course?.bundle}
             </h1>
-            <CourseTimeLecturesSection />
+            <CourseTimeLecturesSection time={course.duration} />
           </div>
         </div>
         <p className="text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
@@ -294,7 +294,7 @@ export default function CourseDetail({course, data, type, review, isBought }: {c
                 <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
                   Curriculum
                 </h3>
-                <CourseTimeLecturesSection />
+                <CourseTimeLecturesSection time={course.duration} />
               </div>
               <div className="border">
                 <CurriculumCard />
@@ -394,7 +394,7 @@ export default function CourseDetail({course, data, type, review, isBought }: {c
           )}
         </div>
 
-        <CourseDetailSummary isBought={isBought} type={type} course={course} />
+        <CourseDetailSummary courseorderid={courseorderid} isBought={isBought} type={type} course={course} />
       </section>
 
       {/* Related courses */}
@@ -420,7 +420,7 @@ export default function CourseDetail({course, data, type, review, isBought }: {c
   );
 }
 
-function CourseDetailSummary({course, type, isBought }: {course: CourseData, type: string, isBought: boolean }) {
+function CourseDetailSummary({course, type, isBought, courseorderid }: {course: CourseData, type: string, isBought: boolean, courseorderid?: string }) {
   const highlightDetails = [
     {
       title: "Course Duration",
@@ -464,7 +464,7 @@ function CourseDetailSummary({course, type, isBought }: {course: CourseData, typ
       {
         isBought ? (
         <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-          <a href={`/dashboard/training/view-course/${course._id}`} className="w-full flex justify-center items-center bg-primary-500 p-3 text-lg font-semibold text-white">
+          <a href={`/dashboard/training/view-course/${course._id}/${courseorderid}`} className="w-full flex justify-center items-center bg-primary-500 p-3 text-lg font-semibold text-white">
             View Course
           </a>
         </div>

@@ -400,7 +400,7 @@ export type ReviewData = {
 };
 
 export type OrderData = {
-  _id: number;
+  _id: string;
   amount: number;
   progress: number;
   progress_count: number;
@@ -449,3 +449,114 @@ export type OrderData = {
   __v: 0;
 };
 
+export type Dashboard = {
+  completedcourses: number;
+  activecourses: number;
+  enroledcourses: number;
+  courses: [
+    {
+      _id: string;
+      progress: number;
+      courseid: string;
+    },
+  ];
+};
+
+export type SingleCourse = {
+  comment: [
+    {
+      id: string;
+      author: string;
+      avatar: string;
+      content: string;
+      timestamp: string;
+      isAdmin: boolean;
+    },
+  ];
+  review: string[];
+  course: {
+    title: string;
+    thumbnail: string;
+    description: string;
+    _id: string;
+    price: string;
+    rating: string;
+  };
+  courseorder: courseorder
+};
+
+export type courseorder = {
+  _id: string;
+  amount: number;
+  progress: number;
+  coursetype: string;
+  curriculum: [
+    {
+      id: string;
+      section: [
+        {
+          lesson: {
+            _id: string;
+            lesson_type: string;
+            content: string;
+            isquiz: boolean;
+            quiz: {
+              mark: number;
+              user_score: number;
+              questions: [
+                {
+                  question: string;
+                  options: [
+                    {
+                      optionText: string;
+                      isCorrect: boolean;
+                    },
+                  ];
+                },
+              ];
+            };
+          };
+        },
+      ];
+    },
+  ];
+
+  userid: string;
+  courseid: {
+    _id: string;
+    title: string;
+    price: number;
+    rating: number;
+    thumbnail: string;
+    description: string;
+    duration: string;
+    instructors: [
+      {
+        instructor: string;
+        _id: string;
+      },
+    ];
+    requirement: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    for_who: [];
+    benefits: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    coursetype: string;
+    createdAt: string;
+    __v: number;
+    level: number;
+  };
+};
+
+export type instructors = {
+  _id: string,
+  name: string
+}

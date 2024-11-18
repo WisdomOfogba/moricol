@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "@/constants/config";
 import axios from "axios";
 import handleAxiosError from "./handle-axios-error";
-import { CourseData, OrderData, ReviewData } from "@/definition";
+import { CourseData, courseorder, Dashboard, instructors, OrderData, ReviewData, SingleCourse } from "@/definition";
 import { createClientAxios } from "./axios-client";
 import { Session } from "next-auth";
 const endpoints = {
@@ -12,6 +12,9 @@ const endpoints = {
   updateCoursePayment: `${API_BASE_URL}/user/training/order/course/`,
   getOrderHistory: `${API_BASE_URL}/user/training/retrieve/order/history`,
   getDashboard: `${API_BASE_URL}/user/training/dashboard`,
+  getSingleCourse: `${API_BASE_URL}/user/training/single/course`,
+  getCourse: `${API_BASE_URL}/user/training/mycourses`,
+  getInstructors: `${API_BASE_URL}/user/training/myinstructor`,
 };
 
 export const CourseApi = {
@@ -151,7 +154,7 @@ export const CourseApi = {
     session
   }: {
     userid: string, session: Session
-  }): Promise<{data: string[]} > => {
+  }): Promise<{data: Dashboard} > => {
     const axios = createClientAxios({ session });
     try {
       const response = await axios.post(
@@ -163,6 +166,70 @@ export const CourseApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error retrieving Dashboard");
+      throw new Error(errorMessage);
+    }
+  },
+  getSingleCourse: async ({
+    userid,
+    session,
+    courseorderid,
+    courseid
+  }: {
+    userid: string, session: Session, courseorderid: string, courseid: string
+  }): Promise<{data: SingleCourse} > => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(
+        `${endpoints.getSingleCourse}`,
+        {
+          userid,
+          courseorderid,
+          courseid,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error retrieving Single Course");
+      throw new Error(errorMessage);
+    }
+  },
+  getCourse: async ({
+    userid,
+    session,
+  }: {
+    userid: string, session: Session,
+  }): Promise<{data: courseorder[]} > => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(
+        `${endpoints.getCourse}`,
+        {
+          userid,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error retrieving Courses");
+      throw new Error(errorMessage);
+    }
+  },
+  getInstructors: async ({
+    userid,
+    session,
+  }: {
+    userid: string, session: Session,
+  }): Promise<{data: instructors[]} > => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(
+        `${endpoints.getInstructors}`,
+        {
+          userid,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error retrieving Courses");
       throw new Error(errorMessage);
     }
   },
