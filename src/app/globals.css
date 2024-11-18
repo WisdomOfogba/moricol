@@ -46,3 +46,7 @@
     padding-right: 0px;
   }
 }
+
+html {
+  scroll-behavior: smooth !important;
+}

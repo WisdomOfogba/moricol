@@ -1,20 +1,31 @@
 import React from "react";
-import BookAppointmentsClient from "./_components/book-appointments-client";
 import telemedicineApi from "@/api/telemedicine";
 import { Session } from "next-auth";
 import { getUserSession } from "@/lib/auth";
+import { OrganizationMember, TelemedicineCategoryData } from "@/definition";
+import CompleteAppointmentClient from "./_components/complete-appointment-client";
+
+export const metadata = {
+  title: "Book Appointment",
+  description: "Book an appointment for telemedicine services",
+};
+
 
 async function getService(serviceId: string, session: Session) {
   try {
     if (!session || !session.user || !('id' in session.user)) {
       throw new Error('User session is invalid or user ID is missing');
     }
-    const { data: serviceData } = await telemedicineApi.retrieveSingleCategory({
+    const { data: serviceData }: { data: TelemedicineCategoryData } = await telemedicineApi.retrieveSingleCategory({
       categoryid: serviceId,
       session
     });
+    const { data: membershipData }: { data: OrganizationMember[] } = await telemedicineApi.organization.retrieveMembership({
+      userid: session.user.id,
+      session
+    });
 
-    return serviceData;
+    return { serviceData, membershipData };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get doctors data');
   }
@@ -22,11 +33,11 @@ async function getService(serviceId: string, session: Session) {
 
 async function SingleServicePage({ params }: { params: { service_id: string } }) {
   const session = await getUserSession();
-  const service = await getService(params.service_id, session as Session);
-  console.log(service);
+  const { serviceData, membershipData } = await getService(params.service_id, session as Session);
+
   return (
     <div>
-      <BookAppointmentsClient service_id={params.service_id} />
+      <CompleteAppointmentClient service={serviceData} membership={membershipData} />
     </div>
   );
 }

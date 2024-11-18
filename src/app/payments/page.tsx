@@ -13,6 +13,8 @@ import { landingPageServices, servicesDashboardLinks } from "@/constants";
 import loanApi from "@/api/loan";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/select";
 import { CourseApi } from "@/api/training";
+import telemedicineApi from "@/api/telemedicine";
+import { routes } from "@/constants/routes";
 
 
 export default function Payments() {
@@ -34,11 +36,14 @@ function PaymentsPage() {
 
 
 
+
+
     useEffect(() => {
-        if (!session) return;
+        if (!session) return
         const fetchData = async () => {
             try {
                 setError(null);
+                setLoading(true);
                 const storedData = getFromLocalStorage();
                 setStoredData(storedData);
                 if (!storedData) {
@@ -59,6 +64,10 @@ function PaymentsPage() {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
                     } else if (storedData.service === 'training') {
                         await CourseApi.updateCoursePayment({ userid: paymentData.userid, courseid: paymentData.courseid, amount: paymentData.amount, session: session as Session , ref: reference, coursetype: paymentData.coursetype});
+                    } else if (storedData.service === 'telemedicine') {
+                        const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+
+                        setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS + '/' + resp.data + '/reminder' });
                     } else {
                         throw new Error("Invalid service");
                     }

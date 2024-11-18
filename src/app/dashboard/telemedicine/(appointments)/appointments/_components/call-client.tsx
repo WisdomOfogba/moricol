@@ -60,7 +60,7 @@ export default function CallClient() {
             </Link>
           </div>
         </div>
-        <div className="mx-auto h-[95%] max-w-[500px] bg-white">
+        <div className="mx-auto h-full md:max-w-[550px] bg-white">
           <div className="relative flex h-full flex-1 flex-col overflow-hidden">
             <div className="h-full w-full">
               <div className="flex h-[80%] flex-1 flex-col items-center justify-center p-4">

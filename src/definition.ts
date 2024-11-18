@@ -250,7 +250,10 @@ export type OrganizationMember = {
     email: string;
     phone: string;
   };
-  organizationid: string;
+  organizationid: {
+    _id: string;
+    name: string;
+  };
   createdAt: string;
   __v: number;
 };
@@ -293,7 +296,7 @@ export type ProfileData = {
   demographic: {
     bloodgroup: string;
     genotype: string;
-    allergy: string[];
+    allergy: string[] | string;
     reports: string[];
   };
   mail_on: boolean;
@@ -316,6 +319,116 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
+};
+
+export type TelemedicineCategoryData = {
+  category: {
+    editedBy: null | string;
+    editedAt: string;
+    _id: string;
+    name: string;
+    status: string;
+    image: string;
+    description: string;
+    client: number;
+    createdAt: string;
+    __v: number;
+  };
+  subcategory: Array<{
+    editedBy: null | string;
+    editedAt: string;
+    _id: string;
+    name: string;
+    price: number;
+    category: string;
+    createdAt: string;
+    __v: number;
+  }>;
+};
+
+export type AppointmentScheduleData = {
+  time: {
+    start: string;
+    end: string;
+  };
+  _id: string;
+  date: string;
+  staffid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    photo: string;
+  } | null;
+};
+
+export type AppointmentStatus = "" | "ongoing" | "upcoming" | "past";
+
+export type SingleAppointmentData = {
+  time: {
+    start: string;
+    end: string;
+  };
+  organization: {
+    use_organization: boolean;
+    organizationid: string | null;
+  };
+  user_notification: {
+    sms: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  staff_notification: {
+    sms: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  sessiontype: {
+    chat: boolean;
+    video: boolean;
+    audio: boolean;
+  };
+  _id: string;
+  date: string;
+  feelingdays: number;
+  takingmedication: boolean;
+  user_responsiveness: boolean;
+  session_close: boolean;
+  urgent_type: string;
+  state: string;
+  country: string;
+  drugallergy: boolean;
+  surgery: boolean;
+  medicalcondition: boolean;
+  familymedicalcondition: boolean;
+  booked: boolean;
+  sessionover: boolean;
+  sessiontaken: boolean;
+  medication: Array<{
+    days: number;
+    drug: string;
+    _id: string;
+  }>;
+  primarycomplain: string[];
+  others: string[];
+  total_amount: number;
+  note: string;
+  status: string;
+  userupload: Array<{
+    name: string;
+    upload: string;
+    _id: string;
+  }>;
+  staffupload: Array<{
+    name: string;
+    upload: string;
+    _id: string;
+  }>;
+  userid: string;
+  staffid: string;
+  subcategoryid: string;
+  paymentid: string;
+  createdAt: string;
+  __v: number;
 };
 
 export type CourseData = {
@@ -382,6 +495,7 @@ export type CourseData = {
   standalone: true;
   curriculum: string[];
   requirement: string[];
+  quantity: number;
 };
 
 export type ReviewData = {
