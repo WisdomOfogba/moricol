@@ -13,6 +13,8 @@ import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
 
+export const dynamic = "force-dynamic"
+
 export default function TrainingLayout({
   children,
 }: {

@@ -5,6 +5,8 @@ import { getUserSession } from "@/lib/session";
 import { profileApi } from "@/api/profile";
 import { ProfileData } from "@/definition";
 
+export const dynamic = "force-dynamic"
+
 async function getProfileData() {
   try {
     const session = await getUserSession();

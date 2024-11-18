@@ -4,6 +4,8 @@ import { CourseApi } from '@/api/training';
 import { CourseData, OrderData, ReviewData } from '@/definition';
 import { getUserSession } from '@/lib/session';
 
+export const dynamic = "force-dynamic"
+
 async function getCoursesData({type, id}: {type: string; id: string;}) {
   try {
     const { data: {course: courseDetails, review: courseDetailsReview} }: { data: {course: CourseData; review: ReviewData[]} } = await CourseApi.getSingleCourseData({ type, id });

@@ -11,6 +11,8 @@ import Link from "next/link";
 import { getUserSession } from "@/lib/auth";
 import { profileApi } from "@/api/profile";
 
+export const dynamic = "force-dynamic"
+
 async function getProfileData() {
   try {
     const session = await getUserSession();
