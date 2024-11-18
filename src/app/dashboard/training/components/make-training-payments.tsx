@@ -1,6 +1,6 @@
 "use client";
 
-import jobsApi from "@/api/jobs";
+import { CourseApi } from "@/api/training";
 import { storeToLocalStorage } from "@/util/store-to-localstorage";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
@@ -37,7 +37,7 @@ const MakeTrainingPaymentButton = ({
     });
     try {
       setIsLoading(true);
-      const response = await jobsApi.makePayment(
+      const response = await CourseApi.makePayment(
         session?.user.id as string,
         session?.user.email as string,
         price,

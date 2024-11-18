@@ -2,11 +2,11 @@
 
 import { ChatCircles, File, StarSVG } from "@/components/svgs";
 import Image from "next/image";
-import CourseTimeLecturesSection from "../components/time-lecture-section";
-import CurriculumCard from "../components/curriculum-card";
-import { BiDownload } from "react-icons/bi";
-import PrevPageBtn from "./prev-page-btn";
 import { useState } from "react";
+import PrevPageBtn from "../prev-page-btn";
+import CourseTimeLecturesSection from "../../components/time-lecture-section";
+import { BiDownload } from "react-icons/bi";
+import CurriculumCard from "../../components/curriculum-card";
 
 const courseDescriptionDetailLink = [
   {

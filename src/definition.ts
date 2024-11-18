@@ -41,7 +41,6 @@ export interface LoanHistoryItem {
   status: string;
 }
 
-
 export type UserDetails = {
   auth: Record<string, unknown>;
   _id: string;
@@ -72,14 +71,25 @@ export type LoginResponse = {
   };
 };
 
-
-
 export type UserResumeResponse = {
   reference: { name: string; email: string; phone: string };
-  contact_details: { name: string; phone: string; socials: { option: string; optionUrl: string }[] };
+  contact_details: {
+    name: string;
+    phone: string;
+    socials: { option: string; optionUrl: string }[];
+  };
   upload: { cv: string; picture: string };
-  others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
-  job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
+  others: {
+    skills: string[];
+    languages: string[];
+    hobby: string[];
+    notice_period: string;
+  };
+  job_preference: {
+    job_function: string[];
+    job_location: string[];
+    salary_range: string;
+  };
   _id: string;
   userid: string;
   bio: string;
@@ -99,8 +109,7 @@ export type UserResumeResponse = {
   createdAt: string;
   coverletter: string;
   __v: number;
-}
-
+};
 
 export type Education = {
   _id: string;
@@ -113,9 +122,7 @@ export type Education = {
   inview: boolean;
 };
 
-
-export type ResumeType = 'local' | 'foreign'
-
+export type ResumeType = "local" | "foreign";
 
 export type Certification = {
   _id: string;
@@ -127,8 +134,6 @@ export type Certification = {
   grade: string;
   inview: boolean;
 };
-
-
 
 export interface JobPostResponse {
   _id: string;
@@ -170,7 +175,6 @@ export interface JobPostResponse {
   __v: number;
 }
 
-
 export type FilterValues = {
   job_titles: string[];
   job_types: ("fulltime" | "parttime" | "contract")[];
@@ -185,7 +189,7 @@ export type LoanCategory = {
   _id: string;
   name: string;
   image: string;
-}
+};
 
 export type LoanDetails = {
   range: {
@@ -210,18 +214,17 @@ export type LoanDetails = {
   client: number;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type Plan = {
-  title: string
-  plan_type: string
-  min_members: number
-  max_members: number
-  subtitle: string
-  durations: { label: string, price: string }[]
-  highlighted?: boolean
-}
+  title: string;
+  plan_type: string;
+  min_members: number;
+  max_members: number;
+  subtitle: string;
+  durations: { label: string; price: string }[];
+  highlighted?: boolean;
+};
 
 export type Organization = {
   _id: string;
@@ -236,8 +239,7 @@ export type Organization = {
   active: boolean;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type OrganizationMember = {
   _id: string;
@@ -247,12 +249,11 @@ export type OrganizationMember = {
     lastname: string;
     email: string;
     phone: string;
-  },
+  };
   organizationid: string;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type LoanDataType = {
   _id: string;
@@ -263,7 +264,6 @@ export type LoanDataType = {
   createdAt: string;
   __v: number;
 };
-
 
 export interface Demographic {
   bloodgroup: string;
@@ -288,7 +288,6 @@ export interface ProfileRequestType {
   language: string;
   demographic: Demographic;
 }
-
 
 export type ProfileData = {
   demographic: {
@@ -317,9 +316,7 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
-
-}
-
+};
 
 export type CourseData = {
   _id: string;
@@ -332,20 +329,24 @@ export type CourseData = {
   level: number;
   thumbnail: string;
   add_on: string[];
-  online_course: [{
-    course: string;
-    _id: string;
-  }];
-  classroom_course: [{
-    course: string;
-    _id: string;
-  }];
+  online_course: [
+    {
+      course: string;
+      _id: string;
+    },
+  ];
+  classroom_course: [
+    {
+      course: string;
+      _id: string;
+    },
+  ];
   description: string;
   instructors: [
     {
-    instructor: string;
-    _id: string;
-    }
+      instructor: string;
+      _id: string;
+    },
   ];
   start_messagge: string;
   end_messagge: string;
@@ -354,46 +355,97 @@ export type CourseData = {
   createdAt: string;
   __v: number;
   client: number;
-  category: string,
-  start_date: string,
-  end_date: string,
-  duration: string,
-  duration_description: string,
+  category: string;
+  start_date: string;
+  end_date: string;
+  duration: string;
+  duration_description: string;
   benefits: [
     {
-      option: string,
-      _id: string
-    }
-  ],
+      option: string;
+      _id: string;
+    },
+  ];
   sections: [
     {
-      option: string,
-      _id: string
-    }
-  ],
+      option: string;
+      _id: string;
+    },
+  ];
   for_who: [
     {
-      option: string,
-      _id: string
-    }
-  ],
-  redirect_course: { links: string[], redirect: boolean },
-  standalone: true,
-  curriculum: string[],
-  requirement: string[],
-}
+      option: string;
+      _id: string;
+    },
+  ];
+  redirect_course: { links: string[]; redirect: boolean };
+  standalone: true;
+  curriculum: string[];
+  requirement: string[];
+};
 
 export type ReviewData = {
-  _id: string,
+  _id: string;
   userid: {
-    _id: string,
-    firstname: string,
-    lastname: string
-  },
-  courseid: string,
-  courseType: string,
-  review: string,
-  rating: number,
-  createdAt: string,
-  __v: number
-}
+    _id: string;
+    firstname: string;
+    lastname: string;
+  };
+  courseid: string;
+  courseType: string;
+  review: string;
+  rating: number;
+  createdAt: string;
+  __v: number;
+};
+
+export type OrderData = {
+  _id: number;
+  amount: number;
+  progress: number;
+  progress_count: number;
+  course_completed: boolean;
+  curriculum: [
+    {
+      _id: string;
+      session_completed: false;
+      section: [
+        {
+          lesson: {
+            lesson_type: string;
+            content: string;
+            isquiz: boolean;
+            quiz: {
+              mark: number;
+              user_score: number;
+              questions: [
+                {
+                  question: string;
+                  options: [
+                    {
+                      optionText: string;
+                      isCorrect: boolean;
+                    },
+                    {
+                      optionText: string;
+                      isCorrect: boolean;
+                    },
+                  ];
+                },
+              ];
+            };
+          };
+          _id: string;
+          lesson_completed: false;
+        },
+      ];
+    },
+  ];
+  userid: string;
+  paystackref: string;
+  courseid: string;
+  coursetype: string;
+  createdAt: string;
+  __v: 0;
+};
+

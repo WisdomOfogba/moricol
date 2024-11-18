@@ -24,7 +24,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
@@ -60,7 +60,7 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({course, data, type, review }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]}) {
+export default function CourseDetail({course, data, type, review, isBought }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]; isBought: boolean}) {
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
@@ -394,7 +394,7 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
           )}
         </div>
 
-        <CourseDetailSummary type={type} course={course} />
+        <CourseDetailSummary isBought={isBought} type={type} course={course} />
       </section>
 
       {/* Related courses */}
@@ -420,7 +420,7 @@ export default function CourseDetail({course, data, type, review }: {course: Cou
   );
 }
 
-function CourseDetailSummary({course, type }: {course: CourseData, type: string }) {
+function CourseDetailSummary({course, type, isBought }: {course: CourseData, type: string, isBought: boolean }) {
   const highlightDetails = [
     {
       title: "Course Duration",
@@ -438,25 +438,6 @@ function CourseDetailSummary({course, type }: {course: CourseData, type: string 
       icon: <TwoUserCutOffSvg />,
     },
   ];
-  const [boughtCourses, setBoughtCourses] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-
-      try {
-        const boughtCoursesRes = await fetch(`/api/bought-courses`);
-        const boughtCoursesData = await boughtCoursesRes.json();
-
-        setBoughtCourses(
-          boughtCoursesData.map((course: { _id: string }) => course._id)
-        );
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [course._id]);
 
 
   const { addToCart } = useCart();
@@ -464,8 +445,6 @@ function CourseDetailSummary({course, type }: {course: CourseData, type: string 
   const handleAddToCart = () => {
     addToCart(course);
   };
-  
-  const isBought = boughtCourses.includes(course._id as string);
 
   return (
     <article className="w-[424px] shrink-0 shadow-md">

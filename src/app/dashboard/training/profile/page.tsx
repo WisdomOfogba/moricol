@@ -5,11 +5,29 @@ import {
   PlaySVG,
   TrophySvg,
 } from "@/components/svgs";
-import { SummaryCardProps } from "@/definition";
+import { ProfileData, SummaryCardProps } from "@/definition";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
+import { getUserSession } from "@/lib/auth";
+import { profileApi } from "@/api/profile";
 
-export default function TrainingProfile() {
+async function getProfileData() {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: profileData }: { data: ProfileData } = await profileApi.getProfile({ userid: session.user.id, session });
+    return profileData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get profile data');
+  }
+}
+
+export default async function TrainingProfile() {
+
+  const profileData = await getProfileData();
+
   return (
     <main className="px-14 py-12">
       <section className="mb-10">
@@ -42,7 +60,7 @@ export default function TrainingProfile() {
       <section>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
-            Let’s start learning, Kevin
+            Let’s start learning, {profileData.firstname}
           </h2>
 
           <div className="flex gap-x-2">

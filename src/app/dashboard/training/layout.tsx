@@ -9,6 +9,9 @@ import Link from "next/link";
 import { routes } from "@/constants/routes";
 import Cart from "./components/cart";
 import { CartProvider } from "@/lib/TrainingCartContext";
+import { getUserSession } from "@/lib/auth";
+import { ProfileData } from "@/definition";
+import { profileApi } from "@/api/profile";
 
 export default function TrainingLayout({
   children,
@@ -25,7 +28,24 @@ export default function TrainingLayout({
   );
 }
 
-function ToolBar() {
+async function getProfileData() {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: profileData }: { data: ProfileData } = await profileApi.getProfile({ userid: session.user.id, session });
+    return profileData;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get profile data');
+  }
+}
+
+async function ToolBar() {
+
+
+  const profileData = await getProfileData();
+
   return (
     <header className="flex gap-x-20 border-b bg-white px-5 py-4">
       {/* Logo */}
@@ -61,7 +81,7 @@ function ToolBar() {
         <Link href="/dashboard/training/profile" className="block">
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image
-              src="/images/client.jpg"
+              src={profileData.photo ? profileData.photo : "/images/client.jpg"}
               alt=""
               fill
               style={{ objectFit: "cover" }}
