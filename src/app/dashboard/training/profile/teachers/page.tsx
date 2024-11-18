@@ -30,7 +30,7 @@ export default async function TrainingProfileTeachers() {
     <main className="px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-center text-2xl font-semibold text-[#1D2026]">
-          Instructors (678)
+          Instructors ({Instructors.length})
         </h2>
       </section>
 
