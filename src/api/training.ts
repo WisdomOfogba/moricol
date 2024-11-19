@@ -2,10 +2,12 @@ import { API_BASE_URL } from "@/constants/config";
 import axios from "axios";
 import handleAxiosError from "./handle-axios-error";
 import {
+  archive,
   CourseData,
   courseorder,
   Dashboard,
   instructors,
+  messaging,
   OrderData,
   ReviewData,
   SingleCourse,
@@ -24,6 +26,10 @@ const endpoints = {
   getCourse: `${API_BASE_URL}/user/training/mycourses`,
   getInstructors: `${API_BASE_URL}/user/training/myinstructor`,
   saveCourse: `${API_BASE_URL}/user/training/saved/course`,
+  getSavedCourse: `${API_BASE_URL}/user/training/retrieve/saved/course`,
+  getArchive: `${API_BASE_URL}/user/training/message/archive`,
+  getMessages: `${API_BASE_URL}/user/training/retrieve/messages`,
+  sendMessages: `${API_BASE_URL}/user/training/send/message`,
 };
 
 export const CourseApi = {
@@ -123,6 +129,48 @@ export const CourseApi = {
       throw new Error(errorMessage);
     }
   },
+  getSavedCourse: async ({
+    userid,
+    session,
+  }: {
+    userid: string;
+    session: Session;
+  }): Promise<{ data: courseorder[] }> => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(endpoints.getSavedCourse, {
+        userid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error retrieving Saved Courses",
+      );
+      throw new Error(errorMessage);
+    }
+  },
+  getArchive: async ({
+    userid,
+    session,
+  }: {
+    userid: string;
+    session: Session;
+  }): Promise<{ data: archive[] }> => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(endpoints.getArchive, {
+        userid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error retrieving Saved Courses",
+      );
+      throw new Error(errorMessage);
+    }
+  },
   getSingleCourseData: async ({
     type,
     id,
@@ -198,6 +246,51 @@ export const CourseApi = {
         error,
         "Error retrieving Order History",
       );
+      throw new Error(errorMessage);
+    }
+  },
+  getMessages: async ({
+    userid,
+    adminid,
+    session,
+  }: {
+    userid: string;
+    adminid: string;
+    session: Session;
+  }): Promise<{ data: messaging[] }> => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.getMessages}`, {
+        userid,
+        adminid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error retrieving Messages");
+      throw new Error(errorMessage);
+    }
+  },
+  sendMessages: async ({
+    userid,
+    adminid,
+    message,
+    session,
+  }: {
+    userid: string;
+    adminid: string;
+    session: Session;
+    message: string;
+  }) => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.sendMessages}`, {
+        userid,
+        adminid,
+        message,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error sending Messages");
       throw new Error(errorMessage);
     }
   },
