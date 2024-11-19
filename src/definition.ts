@@ -604,8 +604,7 @@ export type courseorder = {
   amount: number;
   progress: number;
   coursetype: string;
-  curriculum: curriculum[]
-
+  curriculum: curriculum[];
   userid: string;
   courseid: {
     _id: string;
@@ -645,3 +644,21 @@ export type instructors = {
   _id: string;
   name: string;
 };
+
+
+export type archive = {
+  _id: string,
+  admin_details: {
+      name: string
+  }
+}
+
+export type messaging = {
+  _id: string,
+  message: string,
+  sender: string,
+  userid: string,
+  adminid: string,
+  createdAt: string,
+  __v: number
+}

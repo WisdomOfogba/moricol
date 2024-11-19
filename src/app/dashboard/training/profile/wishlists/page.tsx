@@ -1,14 +1,58 @@
-import { HeartSVG } from "@/components/svgs";
 import WishlistCourseCard from "../../components/wishlist-course-card";
-import Link from "next/link";
-import { routes } from "@/constants/routes";
+import { courseorder, OrderData } from "@/definition";
+import { CourseApi } from "@/api/training";
+import { getUserSession } from "@/lib/auth";
+import MakeTrainingPaymentButton from "../../components/make-training-payments";
+// import AddCart from "../../components/addCart";
 
-export default function TrainingProfileWishlists() {
+async function getSavedCourses() {
+  const session = await getUserSession();
+  if (!session || !session.user || !("id" in session.user)) {
+    throw new Error("User session is invalid or user ID is missing");
+  }
+  try {
+    const { data: Courses }: { data: courseorder[] } =
+      await CourseApi.getSavedCourse({
+        userid: session.user.id,
+        session,
+      });
+    return Courses;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "Failed to get Saved Courses data",
+    );
+  }
+}
+
+async function getOrder() {
+  const session = await getUserSession();
+  if (!session || !session.user || !("id" in session.user)) {
+    throw new Error("User session is invalid or user ID is missing");
+  }
+  try {
+    const { data: Order }: { data: OrderData[] } =
+      await CourseApi.getOrderHistory({
+        userid: session.user.id,
+        session,
+      });
+    return Order;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to get Courses data",
+    );
+  }
+}
+
+export default async function TrainingProfileWishlists() {
+  const Courses = await getSavedCourses();
+
   return (
     <main className="px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
-          Wishlists (3)
+          Wishlists ({Courses.length})
         </h2>
       </section>
 
@@ -19,35 +63,56 @@ export default function TrainingProfileWishlists() {
             <h3>PRICES</h3>
             <h3>ACTION</h3>
           </div>
+          {Courses.map((course, i) => (
+            <Wishlists key={i} course={course} />
+          ))}
+          {/* <Wishlists />
           <Wishlists />
-          <Wishlists />
-          <Wishlists />
-          <Wishlists />
+          <Wishlists /> */}
         </div>
       </section>
     </main>
   );
 }
 
-function Wishlists() {
+async function Wishlists({ course }: { course: courseorder }) {
+  const Order = await getOrder();
+  const isBought = Order.some((order) => order.courseid === course.courseid?._id);
+  const courseorder = Order.find(order => order.courseid === course.courseid?._id)
+  const courseorderid = courseorder?._id
+
   return (
     <article className="grid grid-cols-[3fr_1fr_2fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
-      <WishlistCourseCard />
-      <div className="text-lg font-medium text-primary-500">₦37.00</div>
-      <div className="flex gap-x-3">
-        <Link
-          href={routes.TRAININGCHECKOUT}
-          className="flex h-12 w-[176px] items-center justify-center bg-[#F5F7FA] text-center font-semibold text-[#1D2026]"
-        >
-          Buy Now
-        </Link>
-        <button className="h-12 w-[176px] bg-primary-500 font-semibold text-white">
-          Add To Cart
-        </button>
-        <button className="h-12 bg-primary-100 px-3 font-semibold text-white">
-          <HeartSVG fill="#E29A13" className="h-6 w-6" />
-        </button>
+      <WishlistCourseCard course={course} />
+      <div className="text-lg font-medium text-primary-500">
+        ₦{course.amount}
       </div>
+      {isBought ? (
+        <>
+          <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
+            <a
+              href={`/dashboard/training/view-course/${course._id}/${courseorderid}`}
+              className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
+            >
+              View Course
+            </a>
+          </div>
+        </>
+      ) : (
+        <div className="flex gap-x-3">
+          <MakeTrainingPaymentButton
+            button="now"
+            courses={[
+              {
+                coursetype: course.coursetype,
+                courseid: course._id,
+                amount: course.amount,
+              },
+            ]}
+          />
+          {/* <AddCart course={course} /> */}
+        </div>
+      )}
     </article>
   );
 }
