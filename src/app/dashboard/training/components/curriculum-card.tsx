@@ -11,7 +11,7 @@ import { Video } from "lucide-react";
 export default function CurriculumCard({
   curriculum,
 }: {
-  curriculum?: curriculum;
+  curriculum: curriculum;
 }) {
   const [isAccordionOpen, setAccordion] = useState(false);
 

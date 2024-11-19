@@ -29,8 +29,9 @@ import CourseTimeLecturesSection from "./time-lecture-section";
 import CurriculumCard from "./curriculum-card";
 import { CourseData, ReviewData } from "@/definition";
 import CourseCard from "./card-course";
-import { useCart } from "@/lib/TrainingCartContext";
 import MakeTrainingPaymentButton from "./make-training-payments";
+import Addwishlist from "./addwishlist";
+import AddCart from "./addCart";
 
 const courseDescriptionDetailLink = [
   {
@@ -106,7 +107,10 @@ export default function CourseDetail({
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
               {course?.title || course?.bundle}
             </h1>
-            <CourseTimeLecturesSection sections={course.curriculum?.length} time={course.duration} />
+            <CourseTimeLecturesSection
+              sections={course.curriculum?.length}
+              time={course.duration}
+            />
           </div>
         </div>
         <p className="text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
@@ -389,7 +393,6 @@ export default function CourseDetail({
           {/* Rating | Feedback */}
           {activeLink === "review" && (
             <>
-
               <section className="grid gap-y-5">
                 <div className="flex items-center justify-between">
                   <h3 className="text-2xl font-semibold text-[#1D2026]">
@@ -471,11 +474,7 @@ function CourseDetailSummary({
     },
   ];
 
-  const { addToCart } = useCart();
 
-  const handleAddToCart = () => {
-    addToCart(course);
-  };
 
   return (
     <article className="w-[424px] shrink-0 shadow-md">
@@ -493,37 +492,43 @@ function CourseDetailSummary({
       </div>
       {/* Buttons */}
       {isBought ? (
-        <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-          <a
-            href={`/dashboard/training/view-course/${course._id}/${courseorderid}`}
-            className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
-          >
-            View Course
-          </a>
-        </div>
+        <>
+          <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
+            <a
+              href={`/dashboard/training/view-course/${course._id}/${courseorderid}`}
+              className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
+            >
+              View Course
+            </a>
+          </div>
+          <div className="flex gap-x-3">
+            <Addwishlist course={course} type={type} />
+          </div>
+        </>
       ) : (
         <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-primary-500 p-3 text-lg font-semibold text-white"
-          >
-            Add To Cart
-          </button>
+          <AddCart type={type} course={course} />
           <MakeTrainingPaymentButton
             button="now"
-            type={type}
-            courseid={course._id}
-            price={course.price}
+            courses={[
+              {
+                coursetype: type,
+                courseid: course._id,
+                amount: course.price,
+              },
+            ]}
           />
           <div className="flex gap-x-3">
-            <button className="w-full border border-[#E9EAF0] py-3 text-sm font-semibold">
-              Add To Wishlist
-            </button>
+            <Addwishlist course={course} type={type} />
             <MakeTrainingPaymentButton
               button="no"
-              type={type}
-              courseid={course._id}
-              price={course.price}
+              courses={[
+                {
+                  coursetype: type,
+                  courseid: course._id,
+                  amount: course.price,
+                },
+              ]}
             />
           </div>
           <p className="text-sm text-[#8C94A3]">

@@ -506,6 +506,25 @@ export type curriculum = {
         lesson_type: string;
         content: string;
         isquiz: false;
+        quiz: {
+          mark: number;
+          user_score: number;
+          questions: [
+            {
+              question: string;
+              options: [
+                {
+                  optionText: string;
+                  isCorrect: boolean;
+                },
+                {
+                  optionText: string;
+                  isCorrect: boolean;
+                },
+              ];
+            },
+          ];
+        };
       };
       lesson_name: string;
       _id: string;
@@ -535,42 +554,7 @@ export type OrderData = {
   progress: number;
   progress_count: number;
   course_completed: boolean;
-  curriculum: [
-    {
-      _id: string;
-      session_completed: false;
-      section: [
-        {
-          lesson: {
-            lesson_type: string;
-            content: string;
-            isquiz: boolean;
-            quiz: {
-              mark: number;
-              user_score: number;
-              questions: [
-                {
-                  question: string;
-                  options: [
-                    {
-                      optionText: string;
-                      isCorrect: boolean;
-                    },
-                    {
-                      optionText: string;
-                      isCorrect: boolean;
-                    },
-                  ];
-                },
-              ];
-            };
-          };
-          _id: string;
-          lesson_completed: false;
-        },
-      ];
-    },
-  ];
+  curriculum: curriculum[];
   userid: string;
   paystackref: string;
   courseid: string;
@@ -620,36 +604,7 @@ export type courseorder = {
   amount: number;
   progress: number;
   coursetype: string;
-  curriculum: [
-    {
-      id: string;
-      section: [
-        {
-          lesson: {
-            _id: string;
-            lesson_type: string;
-            content: string;
-            isquiz: boolean;
-            quiz: {
-              mark: number;
-              user_score: number;
-              questions: [
-                {
-                  question: string;
-                  options: [
-                    {
-                      optionText: string;
-                      isCorrect: boolean;
-                    },
-                  ];
-                },
-              ];
-            };
-          };
-        },
-      ];
-    },
-  ];
+  curriculum: curriculum[]
 
   userid: string;
   courseid: {

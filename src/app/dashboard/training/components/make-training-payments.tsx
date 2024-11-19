@@ -9,38 +9,35 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 const MakeTrainingPaymentButton = ({
-  price,
-  courseid,
-  type,
+  courses,
   button,
 }: {
-  price: number;
-  courseid: string;
-  type: string;
-  button: string;
+  courses: Array<{
+    amount: number;
+    courseid: string;
+    coursetype: string;
+  }>
+  button?: string;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+  const totalPrice = courses.reduce((sum, course) => sum + course.amount, 0);
+  const userid = session?.user.id
 
   const handlePay = async () => {
     storeToLocalStorage({
       service: "training",
       link: pathname,
-      toSend: {
-        userid: session?.user.id,
-        amount: price,
-        coursetype: type,
-        courseid,
-      },
+      toSend: { courses, userid },
     });
     try {
       setIsLoading(true);
       const response = await CourseApi.makePayment(
         session?.user.id as string,
         session?.user.email as string,
-        price,
+        totalPrice,
         session as Session,
       );
       window.open(response.data, "_self");

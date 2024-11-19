@@ -63,7 +63,7 @@ function PaymentsPage() {
                     } else if (storedData.service === 'medicalLoan') {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
                     } else if (storedData.service === 'training') {
-                        await CourseApi.updateCoursePayment({ userid: paymentData.userid, courseid: paymentData.courseid, amount: paymentData.amount, session: session as Session , ref: reference, coursetype: paymentData.coursetype});
+                        await CourseApi.updateCoursePayment({ userid: paymentData.userid, session: session as Session , paystackref: reference, courses: paymentData.courses});
                     } else if (storedData.service === 'telemedicine') {
                         const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
 

@@ -1,21 +1,17 @@
-"use client"
-import { ArrowRightSvg } from "@/components/svgs";
+"use client";
 import Link from "next/link";
-import { routes } from "@/constants/routes";
 import CartDetails from "../components/cart-details";
 import { useCart } from "@/lib/TrainingCartContext";
+import MakeTrainingPaymentButton from "../components/make-training-payments";
 
 export default function ShoppingCard() {
-  const { cart, cartCount } = useCart()
+  const { cart, cartCount } = useCart();
 
   const getSum = () => {
-    const total = cart.map((cart) => (
-      cart.price
-    ))
+    const total = cart.map((cart) => cart.price);
     const sum = total.reduce((partialSum, a) => partialSum + a, 0);
     return sum;
-  }
-
+  };
   const sum = getSum();
 
   return (
@@ -23,7 +19,9 @@ export default function ShoppingCard() {
       <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
-        <p className="text-sm text-[#6E7485]"><Link href="/dashboard/training">Home</Link>/ Shopping Cart</p>
+        <p className="text-sm text-[#6E7485]">
+          <Link href="/dashboard/training">Home</Link>/ Shopping Cart
+        </p>
       </section>
 
       <div className="px-14">
@@ -51,25 +49,25 @@ export default function ShoppingCard() {
               </p>
               <p className="flex items-center justify-between text-sm">
                 <span className="text-[#6E7485]">Coupon Discount</span>
-                <span className="font-medium text-[#1D2026]">8%</span>
+                <span className="font-medium text-[#1D2026]">0%</span>
               </p>
               <p className="flex items-center justify-between text-sm">
                 <span className="text-[#6E7485]">Taxs</span>
-                <span className="font-medium text-[#1D2026]">₦17.99 NAIRA</span>
+                <span className="font-medium text-[#1D2026]">₦0 NAIRA</span>
               </p>
               <hr />
               <p className="flex items-center justify-between text-[#202029]">
                 Total:{" "}
-                <span className="text-2xl font-semibold">₦{sum - (sum * 0.08) + 17.99} NAIRA</span>
+                <span className="text-2xl font-semibold">₦{sum} NAIRA</span>
               </p>
-              <Link
-                href={routes.TRAININGCHECKOUT}
-                className="flex w-full items-center justify-center gap-x-3 bg-primary-500 py-3 font-semibold text-white"
-              >
-                Proceed to Checkout{" "}
-                <ArrowRightSvg stroke="#ffffff" className="-rotate-180" />
-              </Link>
-              <hr className="my-2" />   
+              <MakeTrainingPaymentButton
+                courses={cart.map((cart) => ({
+                  courseid: cart._id,
+                  amount: cart.price,
+                  coursetype: cart.coursetype
+                }))}
+              />
+              <hr className="my-2" />
               <div>
                 <h3 className="mb-4 text-sm font-medium text-[#1D2026]">
                   Apply coupon code

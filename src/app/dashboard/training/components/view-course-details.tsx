@@ -33,8 +33,6 @@ export default function CourseDetail({
 }: {
   singleCourse: SingleCourse;
 }) {
-  console.log(singleCourse);
-
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
@@ -70,7 +68,7 @@ export default function CourseDetail({
 
       <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
         {/* Right hand side */}
-        <div className="grid gap-y-10 w-full">
+        <div className="grid w-full gap-y-10">
           {/* Heading */}
           <div>
             {/* <Breadcrumb /> */}
@@ -94,12 +92,14 @@ export default function CourseDetail({
                 <div>
                   <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
                   <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
-                  {singleCourse.courseorder.courseid.instructors.map((instructor) => (
-                      <>
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                        <span>{instructor.instructor}</span>
-                      </>
-                    ))}
+                    {singleCourse.courseorder.courseid.instructors.map(
+                      (instructor) => (
+                        <>
+                          <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
+                          <span>{instructor.instructor}</span>
+                        </>
+                      ),
+                    )}
                   </h3>
                 </div>
               </article>
@@ -149,9 +149,7 @@ export default function CourseDetail({
                 Lectures Description
               </h3>
               <div className="grid gap-y-5 text-sm text-[#4E5566]">
-                <p>
-                  {singleCourse.courseorder.courseid.description}
-                </p>
+                <p>{singleCourse.courseorder.courseid.description}</p>
               </div>
             </section>
           )}
@@ -221,9 +219,11 @@ export default function CourseDetail({
               className={`h-[3px] bg-[#23BD33]`}
             ></div>
           </div>
-          <div className="border text-xs">
-            <CurriculumCard />
-            <CurriculumCard />
+          <div className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}>
+            {singleCourse.courseorder.curriculum.map((curriculum, i) => (
+              <CurriculumCard key={i} curriculum={curriculum} />
+            ))}
+            {/* <CurriculumCard /> */}
           </div>
         </section>
       </section>
@@ -250,39 +250,55 @@ function AttachementCard() {
   );
 }
 
-const CommentSection = ({comment}: {comment: [{id: string, author: string, avatar: string, content: string, timestamp: string, isAdmin: boolean}]}) => {
-//   const comments = [
-//     {
-//       id: 1,
-//       author: "Jane Doe",
-//       avatar: "/api/placeholder/40/40",
-//       content: "This is an example comment. It could be about anything!",
-//       timestamp: "1 week ago",
-//       isAdmin: false,
-//     },
-//     {
-//       id: 2,
-//       author: "John Smith",
-//       avatar: "/api/placeholder/40/40",
-//       content:
-//         "Here's another comment. Notice how it's structured similarly to the others.",
-//       timestamp: "1 week ago",
-//       isAdmin: true,
-//     },
-//     {
-//       id: 3,
-//       author: "Alice Johnson",
-//       avatar: "/api/placeholder/40/40",
-//       content: "Great discussion everyone! Keep the comments coming.",
-//       timestamp: "1 week ago",
-//       isAdmin: false,
-//     },
-//   ];
+const CommentSection = ({
+  comment,
+}: {
+  comment: [
+    {
+      id: string;
+      author: string;
+      avatar: string;
+      content: string;
+      timestamp: string;
+      isAdmin: boolean;
+    },
+  ];
+}) => {
+  //   const comments = [
+  //     {
+  //       id: 1,
+  //       author: "Jane Doe",
+  //       avatar: "/api/placeholder/40/40",
+  //       content: "This is an example comment. It could be about anything!",
+  //       timestamp: "1 week ago",
+  //       isAdmin: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       author: "John Smith",
+  //       avatar: "/api/placeholder/40/40",
+  //       content:
+  //         "Here's another comment. Notice how it's structured similarly to the others.",
+  //       timestamp: "1 week ago",
+  //       isAdmin: true,
+  //     },
+  //     {
+  //       id: 3,
+  //       author: "Alice Johnson",
+  //       avatar: "/api/placeholder/40/40",
+  //       content: "Great discussion everyone! Keep the comments coming.",
+  //       timestamp: "1 week ago",
+  //       isAdmin: false,
+  //     },
+  //   ];
 
   return (
     <div>
       <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-        Comments <span className="font-normal">({comment.length.toString().padStart(2, "0")})</span>
+        Comments{" "}
+        <span className="font-normal">
+          ({comment.length.toString().padStart(2, "0")})
+        </span>
       </h3>
 
       {comment.map((comment) => (
