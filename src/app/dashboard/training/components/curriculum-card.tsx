@@ -4,8 +4,15 @@ import { ChevronDownSvg, File } from "@/components/svgs";
 import { useState } from "react";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import Image from "next/image";
+import { curriculum } from "@/definition";
+import { MdQuiz } from "react-icons/md";
+import { Video } from "lucide-react";
 
-export default function CurriculumCard() {
+export default function CurriculumCard({
+  curriculum,
+}: {
+  curriculum?: curriculum;
+}) {
   const [isAccordionOpen, setAccordion] = useState(false);
 
   return (
@@ -21,35 +28,38 @@ export default function CurriculumCard() {
             className={`transition-all duration-300 ${isAccordionOpen ? "-rotate-180" : ""}`}
             stroke={`${isAccordionOpen ? "#E29A13" : "#6E7485"}`}
           />
-          Geting Started
+          {curriculum?.section_name}
         </div>
-        <CourseTimeLecturesSection />
+        <CourseTimeLecturesSection lectures={curriculum?.section.length} />
       </button>
-
       <ul
         className={`grid gap-y-3.5 px-5 pb-5 transition-all duration-300 ${isAccordionOpen ? "block h-auto" : "hidden h-0"}`}
       >
-        <li className="text-s flex items-center justify-between">
-          <div className="flex items-center gap-x-2">
-            <div className="relative h-4 w-4 overflow-hidden">
-              <Image
-                alt=""
-                src="/icons/chevron-down.svg"
-                fill
-                className="-rotate-90"
-              />
-            </div>
-            <p className="text-[#4E5566]">What is webflow?</p>
-          </div>
-          <p className="text-[#8C94A3]">07:31</p>
-        </li>
-        <li className="text-s flex items-center justify-between">
-          <div className="flex items-center gap-x-2">
-            <File />
-            <p className="text-[#4E5566]">Webflow Terms and Condition</p>
-          </div>
-          <p className="text-[#8C94A3]">5.35 MB</p>
-        </li>
+        {curriculum?.section.map((section, i) => (
+          <>
+            <li key={i} className="text-s flex items-center justify-between">
+              <div className="flex items-center gap-x-2">
+                <div className="relative h-4 w-4 overflow-hidden">
+                  <Image
+                    alt=""
+                    src="/icons/chevron-down.svg"
+                    fill
+                    className="-rotate-90"
+                  />
+                </div>
+                <p className="text-[#4E5566]">{section.lesson_name}</p>
+              </div>
+              <p className="text-[#8C94A3]">{section.lesson.lesson_type}</p>
+            </li>
+            <li className="text-s flex items-center justify-between cursor-pointer">
+              <div className="flex items-center gap-x-2">
+                <File />
+                <p className="text-[#4E5566]">{section.lesson.lesson_type}</p>
+              </div>
+              <p className="text-[#8C94A3]">{section.lesson.isquiz ? <MdQuiz /> : <Video />}</p>
+            </li>
+          </>
+        ))}
       </ul>
     </article>
   );

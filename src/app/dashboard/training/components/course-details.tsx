@@ -2,7 +2,6 @@
 
 import {
   ArrowRightSvg,
-  ChevronDownSvg,
   Clipboard,
   ClockSvg,
   // DollarSignSvg,
@@ -33,8 +32,22 @@ import CourseCard from "./card-course";
 import { useCart } from "@/lib/TrainingCartContext";
 import MakeTrainingPaymentButton from "./make-training-payments";
 
-
 const courseDescriptionDetailLink = [
+  {
+    name: "Overview",
+    link: "overview",
+  },
+  {
+    name: "Instructor",
+    link: "instructor",
+  },
+  {
+    name: "Review",
+    link: "review",
+  },
+];
+
+const onlineCourseDescriptionDetailLink = [
   {
     name: "Overview",
     link: "overview",
@@ -60,18 +73,28 @@ const socialLinks = [
   { icon: <Whatsapp />, key: "whatsapp" },
 ];
 
-export default function CourseDetail({course, data, type, review, isBought, courseorderid }: {course: CourseData; data: CourseData[]; type: string; review: ReviewData[]; isBought: boolean, courseorderid?: string}) {
+export default function CourseDetail({
+  course,
+  data,
+  type,
+  review,
+  isBought,
+  courseorderid,
+}: {
+  course: CourseData;
+  data: CourseData[];
+  type: string;
+  review: ReviewData[];
+  isBought: boolean;
+  courseorderid?: string;
+}) {
   const [activeLink, setActiveLink] = useState("overview");
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
-      {Array(course.rating)
-        .fill("")
-        .map((_, i) => (
-          <li key={i}>
-            <StarSVG fill="#FD8E1F" className={className} />
-          </li>
-        ))}
+      <li>
+        <StarSVG fill="#FD8E1F" className={className} />
+      </li>
     </ul>
   );
   return (
@@ -83,7 +106,7 @@ export default function CourseDetail({course, data, type, review, isBought, cour
             <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
               {course?.title || course?.bundle}
             </h1>
-            <CourseTimeLecturesSection time={course.duration} />
+            <CourseTimeLecturesSection sections={course.curriculum?.length} time={course.duration} />
           </div>
         </div>
         <p className="text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
@@ -91,12 +114,13 @@ export default function CourseDetail({course, data, type, review, isBought, cour
 
       <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
         {/* Right hand side */}
-        <div className="grid gap-y-10 w-full">
+        <div className="grid w-full gap-y-10">
           {/* Heading */}
           <div>
             {/* <Breadcrumb /> */}
             <div className="mb-3 text-sm">
-              <Link href="/dashboard/training">Home</Link> <span className="mx-2">{">"}</span> {type}{" "}
+              <Link href="/dashboard/training">Home</Link>{" "}
+              <span className="mx-2">{">"}</span> {type}{" "}
               <span className="mx-2">{">"}</span>
             </div>
 
@@ -126,10 +150,10 @@ export default function CourseDetail({course, data, type, review, isBought, cour
               <div className="flex items-center gap-x-2">
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
-                  4.8{" "}
+                  {course?.rating}{" "}
                   <span className="text-sm font-normal text-[#6E7485]">
                     {" "}
-                    ({course?.rating} Rating)
+                    (100 Rating)
                   </span>
                 </p>
               </div>
@@ -138,29 +162,46 @@ export default function CourseDetail({course, data, type, review, isBought, cour
 
           {/* Course image */}
           <div className="relative h-[492px] w-full">
-            {course && 
-            <Image
-              fill
-              src={course.thumbnail}
-              alt=""
-              style={{ objectFit: "cover" }}
-            />
-            }
+            {course && (
+              <Image
+                fill
+                src={course.thumbnail}
+                alt=""
+                style={{ objectFit: "cover" }}
+              />
+            )}
           </div>
 
           {/* Links */}
           <section>
             <ul className="flex gap-x-6 border-b border-b-[#E9EAF0]">
-              {courseDescriptionDetailLink.map(({ name, link }) => (
-                <li className="w-full" key={name}>
-                  <button
-                    className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
-                    onClick={() => setActiveLink(link)}
-                  >
-                    {name}
-                  </button>
-                </li>
-              ))}
+              {type === "online" ? (
+                <>
+                  {onlineCourseDescriptionDetailLink.map(({ name, link }) => (
+                    <li className="w-full" key={name}>
+                      <button
+                        className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
+                        onClick={() => setActiveLink(link)}
+                      >
+                        {name}
+                      </button>
+                    </li>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {courseDescriptionDetailLink.map(({ name, link }) => (
+                    <li className="w-full" key={name}>
+                      <button
+                        className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
+                        onClick={() => setActiveLink(link)}
+                      >
+                        {name}
+                      </button>
+                    </li>
+                  ))}
+                </>
+              )}
             </ul>
           </section>
 
@@ -172,59 +213,65 @@ export default function CourseDetail({course, data, type, review, isBought, cour
                   Description
                 </h3>
                 <div className="grid gap-y-5 text-sm text-[#4E5566]">
-                  <p>
-                    {course?.description}
-                  </p>
+                  <p>{course?.description}</p>
                 </div>
               </section>
 
               {/* Online Courses */}
               <section>
-                  <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                    Classroom Courses
-                  </h3>
+                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                  Classroom Courses
+                </h3>
 
-              {course.online_course ? 
-                course.online_course.map((online, i) => (
-                  <ul key={i} className="grid grow gap-y-5">
-                        <li
-                          className="flex items-center gap-x-2 text-sm font-bold"
-                          key={i}
-                        >
-                          <ArrowRightSvg className="-rotate-180" />
-                          {online.course}{" "}
-                          <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
-                            <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
-                          </div>
-                        </li>
-                  </ul>
-                ))
-              : <p className="flex items-center gap-x-2 text-sm font-bold">No Online courses</p>}
-                </section>
+                {course.online_course ? (
+                  course.online_course.map((online, i) => (
+                    <ul key={i} className="grid grow gap-y-5">
+                      <li
+                        className="flex items-center gap-x-2 text-sm font-bold"
+                        key={i}
+                      >
+                        <ArrowRightSvg className="-rotate-180" />
+                        {online.course}{" "}
+                        <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
+                          <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
+                        </div>
+                      </li>
+                    </ul>
+                  ))
+                ) : (
+                  <p className="flex items-center gap-x-2 text-sm font-bold">
+                    No Online courses
+                  </p>
+                )}
+              </section>
 
               {/* Classroom Courses */}
-                <section>
-                  <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                    Classroom Courses
-                  </h3>
+              <section>
+                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
+                  Classroom Courses
+                </h3>
 
-              {course.classroom_course ? 
-                course.classroom_course.map((classroom, i) => (
-                  <ul key={i} className="grid grow gap-y-5">
-                        <li
-                          className="flex items-center gap-x-2 text-sm font-bold"
-                          key={i}
-                        >
-                          <ArrowRightSvg className="-rotate-180" />
-                          {classroom.course}{" "}
-                          <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
-                            <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
-                          </div>
-                        </li>
-                  </ul>
-                ))
-              : <p className="flex items-center gap-x-2 text-sm font-bold">No classroom courses</p>}
-                </section>
+                {course.classroom_course ? (
+                  course.classroom_course.map((classroom, i) => (
+                    <ul key={i} className="grid grow gap-y-5">
+                      <li
+                        className="flex items-center gap-x-2 text-sm font-bold"
+                        key={i}
+                      >
+                        <ArrowRightSvg className="-rotate-180" />
+                        {classroom.course}{" "}
+                        <div className="flex h-4 w-3.5 items-center justify-center bg-primary-50">
+                          <ArrowRightSvg className="h-5 w-5 rotate-[135deg]" />
+                        </div>
+                      </li>
+                    </ul>
+                  ))
+                ) : (
+                  <p className="flex items-center gap-x-2 text-sm font-bold">
+                    No classroom courses
+                  </p>
+                )}
+              </section>
 
               {/* What you would use in this course */}
               <section className="bg-[#E1F7E366] p-10">
@@ -248,7 +295,7 @@ export default function CourseDetail({course, data, type, review, isBought, cour
               </section>
 
               {/* Who the course is for */}
-              {course?.for_who &&
+              {course?.for_who && (
                 <section>
                   <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
                     Who is this course for:
@@ -256,14 +303,14 @@ export default function CourseDetail({course, data, type, review, isBought, cour
 
                   <ul className="grid grow gap-y-5">
                     {course.for_who.map((_, i) => (
-                        <li className="flex items-center gap-x-2 text-sm" key={i}>
-                          <ArrowRightSvg className="-rotate-180" />
-                          {_.option}
-                        </li>
-                      ))}
+                      <li className="flex items-center gap-x-2 text-sm" key={i}>
+                        <ArrowRightSvg className="-rotate-180" />
+                        {_.option}
+                      </li>
+                    ))}
                   </ul>
                 </section>
-              }
+              )}
 
               {/* Course requirements */}
               <section>
@@ -297,8 +344,10 @@ export default function CourseDetail({course, data, type, review, isBought, cour
                 <CourseTimeLecturesSection time={course.duration} />
               </div>
               <div className="border">
-                <CurriculumCard />
-                <CurriculumCard />
+                {course.curriculum &&
+                  course.curriculum.map((curriculum, i) => (
+                    <CurriculumCard curriculum={curriculum} key={i} />
+                  ))}
               </div>
             </section>
           )}
@@ -311,8 +360,12 @@ export default function CourseDetail({course, data, type, review, isBought, cour
               </h3>
               <div className="flex gap-x-6">
                 <ul className="grid grow gap-y-5">
-                  {course.instructors && course.instructors.map((instructor) => (
-                      <li key={instructor._id} className="flex items-center text-sm">
+                  {course.instructors &&
+                    course.instructors.map((instructor) => (
+                      <li
+                        key={instructor._id}
+                        className="flex items-center text-sm"
+                      >
                         <article className="flex w-full items-center gap-x-7 border border-[#E9EAF0] px-6 py-2">
                           <div className="relative h-[63px] w-[63px] overflow-hidden rounded-full">
                             <Image
@@ -336,48 +389,12 @@ export default function CourseDetail({course, data, type, review, isBought, cour
           {/* Rating | Feedback */}
           {activeLink === "review" && (
             <>
-              <section>
-                <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                  Course Rating
-                </h3>
-                <div className="flex gap-x-6">
-                  <div className="flex w-[200px] flex-col items-center justify-center border border-[#E9EAF0]">
-                    <p className="mb-6 text-5xl font-semibold">4.8</p>
-                    <div className="flex flex-col items-center justify-center gap-y-3">
-                      <FiveStar />
-                      <p className="text-sm font-medium text-[#1D2026]">
-                        Course Rating
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="grid grow gap-y-5">
-                    {Array(5)
-                      .fill("")
-                      .map((_, i) => (
-                        <li key={i} className="flex items-center text-sm">
-                          <FiveStar />
-                          <p className="ml-1.5 mr-6 shrink-0 text-[#6E7485]">
-                            {course?.rating} Star Rating
-                          </p>
-                          <div className="mr-4 w-full grow bg-primary-100">
-                            <div className="h-2 w-[75%] bg-primary-500" />
-                          </div>
-                          <p className="font-medium text-[#1D2026]">75%</p>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              </section>
 
               <section className="grid gap-y-5">
                 <div className="flex items-center justify-between">
                   <h3 className="text-2xl font-semibold text-[#1D2026]">
                     Students Feedback
                   </h3>
-                  <button className="flex items-center gap-x-12 border border-[#E9EAF0] px-4 py-3 text-[#4E5566]">
-                    5 Start Rating
-                    <ChevronDownSvg />
-                  </button>
                 </div>
                 <div>
                   {review.map((review, i) => (
@@ -394,7 +411,12 @@ export default function CourseDetail({course, data, type, review, isBought, cour
           )}
         </div>
 
-        <CourseDetailSummary courseorderid={courseorderid} isBought={isBought} type={type} course={course} />
+        <CourseDetailSummary
+          courseorderid={courseorderid}
+          isBought={isBought}
+          type={type}
+          course={course}
+        />
       </section>
 
       {/* Related courses */}
@@ -420,7 +442,17 @@ export default function CourseDetail({course, data, type, review, isBought, cour
   );
 }
 
-function CourseDetailSummary({course, type, isBought, courseorderid }: {course: CourseData, type: string, isBought: boolean, courseorderid?: string }) {
+function CourseDetailSummary({
+  course,
+  type,
+  isBought,
+  courseorderid,
+}: {
+  course: CourseData;
+  type: string;
+  isBought: boolean;
+  courseorderid?: string;
+}) {
   const highlightDetails = [
     {
       title: "Course Duration",
@@ -439,7 +471,6 @@ function CourseDetailSummary({course, type, isBought, courseorderid }: {course: 
     },
   ];
 
-
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
@@ -453,7 +484,7 @@ function CourseDetailSummary({course, type, isBought, courseorderid }: {course: 
         {highlightDetails.map(({ title, detail, icon }, i) => (
           <div className="flex justify-between text-sm" key={i}>
             <p className="flex items-center gap-x-2 text-[#1D2026]">
-              {icon}  
+              {icon}
               {title}
             </p>
             <p className="text-[#6E7485]">{detail}</p>
@@ -461,49 +492,62 @@ function CourseDetailSummary({course, type, isBought, courseorderid }: {course: 
         ))}
       </div>
       {/* Buttons */}
-      {
-        isBought ? (
+      {isBought ? (
         <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-          <a href={`/dashboard/training/view-course/${course._id}/${courseorderid}`} className="w-full flex justify-center items-center bg-primary-500 p-3 text-lg font-semibold text-white">
+          <a
+            href={`/dashboard/training/view-course/${course._id}/${courseorderid}`}
+            className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
+          >
             View Course
           </a>
         </div>
-        ) : (
+      ) : (
         <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-          <button onClick={handleAddToCart} className="w-full bg-primary-500 p-3 text-lg font-semibold text-white">
+          <button
+            onClick={handleAddToCart}
+            className="w-full bg-primary-500 p-3 text-lg font-semibold text-white"
+          >
             Add To Cart
           </button>
-            <MakeTrainingPaymentButton button="now" type={type} courseid={course._id} price={course.price} />
+          <MakeTrainingPaymentButton
+            button="now"
+            type={type}
+            courseid={course._id}
+            price={course.price}
+          />
           <div className="flex gap-x-3">
             <button className="w-full border border-[#E9EAF0] py-3 text-sm font-semibold">
               Add To Wishlist
             </button>
-            <MakeTrainingPaymentButton button="no" type={type} courseid={course._id} price={course.price} />
+            <MakeTrainingPaymentButton
+              button="no"
+              type={type}
+              courseid={course._id}
+              price={course.price}
+            />
           </div>
           <p className="text-sm text-[#8C94A3]">
             <span className="font-medium">Note:</span> all course have 30-days
             money-back guarantee
           </p>
         </div>
-        )
-      }
-      {/* Benefits */}{
-        course.benefits &&
-      <div className="p-6">
-        <h3 className="mb-4 font-medium text-[#1D2026]">
-          This course includes:
-        </h3>
-        <ul className="grid gap-y-3">
-          {course.benefits.map(({ option }, i) => (
-            <li key={i} className="flex items-center gap-x-3 text-sm">
-              <span className="flex h-6 w-6 items-center justify-center">
-              </span>{" "}
-              {option}
-            </li>
-          ))}
-        </ul>
-      </div>
-        }
+      )}
+      {/* Benefits */}
+      {course.benefits && (
+        <div className="p-6">
+          <h3 className="mb-4 font-medium text-[#1D2026]">
+            This course includes:
+          </h3>
+          <ul className="grid gap-y-3">
+            {course.benefits.map(({ option }, i) => (
+              <li key={i} className="flex items-center gap-x-3 text-sm">
+                <span className="flex h-6 w-6 items-center justify-center"></span>{" "}
+                {option}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="border-t p-6">
         <h3 className="mb-4 font-medium text-[#1D2026]">Share this course:</h3>
@@ -528,7 +572,7 @@ function CourseDetailSummary({course, type, isBought, courseorderid }: {course: 
   );
 }
 
-function CourseReview({review}: {review: ReviewData}) {
+function CourseReview({ review }: { review: ReviewData }) {
   return (
     <article className="flex items-start gap-x-4">
       <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
@@ -555,9 +599,7 @@ function CourseReview({review}: {review: ReviewData}) {
               </li>
             ))}
         </ul>
-        <p className="text-sm text-[#4E5566]">
-          {review.review}
-        </p>
+        <p className="text-sm text-[#4E5566]">{review.review}</p>
       </div>
     </article>
   );

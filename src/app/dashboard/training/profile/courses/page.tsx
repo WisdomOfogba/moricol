@@ -43,7 +43,7 @@ export default async function TrainingProfileCourses() {
     <main className="px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
-          Courses (678)
+          Courses ({Courses.length})
         </h2>
 
         <div className="flex gap-x-6">

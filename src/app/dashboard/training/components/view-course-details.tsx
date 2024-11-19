@@ -39,7 +39,7 @@ export default function CourseDetail({
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
-      {Array(singleCourse.courseorder.courseid.rating)
+      {Array(1)
         .fill("")
         .map((_, i) => (
           <li key={i}>

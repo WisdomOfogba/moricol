@@ -35,7 +35,7 @@ async function getSingle({courseid, courseorderid}: {courseid: string, courseord
   }
   const { data: singleCourse }: { data: SingleCourse } = await CourseApi.getSingleCourse({ userid: session.user.id, session, courseid, courseorderid });
   try {
-    return singleCourse.courseorder;
+    return singleCourse;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : 'Failed to get profile data');
   }
@@ -118,6 +118,7 @@ function SummaryCard({ color, icon, total, title }: SummaryCardProps) {
 }
 
 async function MyCourseCard({ progress, course }: { progress: number, course: {courseid: string, _id: string} }) {
+
   const singleCourse = await getSingle({courseid: course.courseid, courseorderid: course._id})
 
   return (
@@ -125,7 +126,7 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
       {/* Image */}
       <div className="relative h-[13.75rem]">
         <Image
-          src={singleCourse?.courseid.thumbnail ? singleCourse.courseid.thumbnail : "/images/dashboard/drug.png"}
+          src={singleCourse.courseorder.courseid?.thumbnail ? singleCourse.courseorder.courseid?.thumbnail : "/images/dashboard/drug.png"}
           alt=""
           fill
           style={{ objectFit: "cover" }}
@@ -135,15 +136,15 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
       {/* Details */}
       <div className="p-4">
         <h3 className="mb-1.5 text-xs text-[#6E7485]">
-          {singleCourse?.courseid.description ? singleCourse.courseid.description : "No Description"}
+          {singleCourse.courseorder.courseid?.description ? singleCourse.courseorder.courseid?.description : "No Description"}
         </h3>
-        <p className="text-sm font-medium text-[#1D2026]">{singleCourse?.courseid.title ? singleCourse.courseid.title : "No Title"}</p>
+        <p className="text-sm font-medium text-[#1D2026]">{singleCourse.courseorder.courseid?.title ? singleCourse.courseorder.courseid?.title : "No Title"}</p>
       </div>
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-t-[#E9EAF0] p-4 text-sm text-[#4E5566]">
         <Link
-          href={`${routes.TRAININGVIEWCOURSE}/${singleCourse?.courseid._id ? singleCourse.courseid._id : "No-Description"}/${course._id}`}
+          href={`${routes.TRAININGVIEWCOURSE}/${singleCourse.courseorder.courseid?._id ? singleCourse.courseorder.courseid?._id : "No-Description"}/${course._id}`}
           className={`inline-block rounded-none border-none bg-primary-100 px-4 py-3 text-center font-semibold text-primary-500 hover:bg-primary-500 hover:text-white ${progress > 0 ? "w-fit" : "w-full"}`}
         >
           Watch Lecture

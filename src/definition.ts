@@ -493,9 +493,25 @@ export type CourseData = {
   ];
   redirect_course: { links: string[]; redirect: boolean };
   standalone: true;
-  curriculum: string[];
+  curriculum: curriculum[];
   requirement: string[];
   quantity: number;
+};
+
+export type curriculum = {
+  section_name: string;
+  section: [
+    {
+      lesson: {
+        lesson_type: string;
+        content: string;
+        isquiz: false;
+      };
+      lesson_name: string;
+      _id: string;
+    },
+  ];
+  _id: string;
 };
 
 export type ReviewData = {
@@ -596,7 +612,7 @@ export type SingleCourse = {
     price: string;
     rating: string;
   };
-  courseorder: courseorder
+  courseorder: courseorder;
 };
 
 export type courseorder = {
@@ -671,6 +687,6 @@ export type courseorder = {
 };
 
 export type instructors = {
-  _id: string,
-  name: string
-}
+  _id: string;
+  name: string;
+};
