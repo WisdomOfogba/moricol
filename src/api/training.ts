@@ -66,28 +66,31 @@ export const CourseApi = {
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error saving Course",
-      );
+      const errorMessage = handleAxiosError(error, "Error saving Course");
       throw new Error(errorMessage);
     }
   },
-  updateCoursePayment: async (
-    userid: string,
-    session: Session,
-    paystackref: string,
+  updateCoursePayment: async ({
+    userid,
+    session,
+    paystackref,
+    courses,
+  }: {
+    userid: string;
+    session: Session;
+    paystackref: string;
     courses: Array<{
-      courseid: string,
-      amount: number,
-      coursetype: string,
-    }>) => {
+      courseid: string;
+      amount: number;
+      coursetype: string;
+    }>;
+  }) => {
     const axios = createClientAxios({ session });
     try {
       const response = await axios.post(endpoints.updateCoursePayment, {
         userid,
         paystackref,
-        courses: courses.map(course => ({
+        courses: courses.map((course) => ({
           ...course,
           coursetype: `${course.coursetype}course`,
           userid,
