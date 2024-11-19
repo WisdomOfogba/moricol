@@ -44,7 +44,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (exists) return prevCart;
 
       // Adding coursehey
-      return [...prevCart, { ...item, coursetype: "online" }];
+      return [...prevCart, { ...item, coursetype: item.coursetype }];
     });
   };
 
