@@ -30,7 +30,7 @@ const AddCart = ({
         rating: course.rating,
         thumbnail: course.thumbnail,
       });
-      enqueueSnackbar("Added to wishlist succesfully", { variant: "error" });
+      enqueueSnackbar("Added to wishlist succesfully", { variant: "success" });
     } catch (error) {
       console.error(error);
       enqueueSnackbar("Error making payment", { variant: "error" });
