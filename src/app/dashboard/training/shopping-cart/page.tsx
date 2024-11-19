@@ -1,15 +1,29 @@
-import { ArrowRightSvg, CircleCancel } from "@/components/svgs";
-import WishlistCourseCard from "../components/wishlist-course-card";
+"use client"
+import { ArrowRightSvg } from "@/components/svgs";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
+import CartDetails from "../components/cart-details";
+import { useCart } from "@/lib/TrainingCartContext";
 
 export default function ShoppingCard() {
+  const { cart } = useCart()
+
+  const getSum = () => {
+    const total = cart.map((cart) => (
+      cart.price
+    ))
+    const sum = total.reduce((partialSum, a) => partialSum + a, 0);
+    return sum;
+  }
+
+  const sum = getSum();
+
   return (
     <main>
       <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
-        <p className="text-sm text-[#6E7485]">Home / Shopping Cart</p>
+        <p className="text-sm text-[#6E7485]"><Link href="/dashboard/training">Home</Link>/ Shopping Cart</p>
       </section>
 
       <div className="px-14">
@@ -18,7 +32,7 @@ export default function ShoppingCard() {
             Shopping Cart (3)
           </h3>
           <div className="mb-10 flex gap-x-6">
-            <section>
+            <section className="w-full">
               <div className="border border-[#E9EAF0]">
                 <div className="grid grid-cols-[3fr_1fr_1fr] gap-x-6 border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
                   <h3>COURSE</h3>
@@ -26,39 +40,14 @@ export default function ShoppingCard() {
                   <h3>ACTION</h3>
                 </div>
                 {/* <Wishlists /> */}
-                <article className="grid grid-cols-[3fr_1fr_1fr] items-center gap-x-6 border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
-                  <div className="flex items-center gap-x-5">
-                    <CircleCancel />
-                    <WishlistCourseCard />
-                  </div>
-                  <div className="text-lg font-medium text-primary-500">
-                    ₦37.00
-                  </div>
-
-                  <button className="text-left font-semibold text-primary-500">
-                    Move to Wishlist
-                  </button>
-                </article>
-                <article className="grid grid-cols-[3fr_1fr_1fr] items-center gap-x-6 border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
-                  <div className="flex items-center gap-x-5">
-                    <CircleCancel />
-                    <WishlistCourseCard />
-                  </div>
-                  <div className="text-lg font-medium text-primary-500">
-                    ₦37.00
-                  </div>
-
-                  <button className="text-left font-semibold text-primary-500">
-                    Move to Wishlist
-                  </button>
-                </article>
+                <CartDetails />
               </div>
             </section>
 
             <section className="grid w-full max-w-[312px] shrink-0 gap-y-4 p-6">
               <p className="flex items-center justify-between text-sm">
                 <span className="text-[#6E7485]">Subtotal</span>
-                <span className="font-medium text-[#1D2026]">₦61.97 NAIRA</span>
+                <span className="font-medium text-[#1D2026]">₦{sum} NAIRA</span>
               </p>
               <p className="flex items-center justify-between text-sm">
                 <span className="text-[#6E7485]">Coupon Discount</span>
@@ -71,7 +60,7 @@ export default function ShoppingCard() {
               <hr />
               <p className="flex items-center justify-between text-[#202029]">
                 Total:{" "}
-                <span className="text-2xl font-semibold">₦75.00 NAIRA</span>
+                <span className="text-2xl font-semibold">₦{sum - (sum * 0.08) + 17.99} NAIRA</span>
               </p>
               <Link
                 href={routes.TRAININGCHECKOUT}

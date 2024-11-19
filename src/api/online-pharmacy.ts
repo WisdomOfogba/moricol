@@ -99,6 +99,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -107,6 +108,7 @@ const onlinePharmacyApi = {
     session: Session,
     category: string,
   ): Promise<SubCategoryParams> => {
+    console.log(category);
     const axios = createClientAxios({ session: session });
 
     try {
@@ -121,7 +123,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -143,7 +145,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -163,7 +165,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -178,7 +180,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -186,6 +188,7 @@ const onlinePharmacyApi = {
     const axios = createClientAxios({ session: session });
 
     try {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
         apiEndpoints.productCategory.retrieveBestProduct,
@@ -193,7 +196,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },
@@ -201,6 +204,7 @@ const onlinePharmacyApi = {
     session: Session,
     productid: string | string[],
   ): Promise<SingProductParams> => {
+    console.log(productid);
     const axios = createClientAxios({ session: session });
 
     try {
@@ -215,7 +219,7 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-
+      console.log(errorMessage);
       throw new Error(errorMessage);
     }
   },

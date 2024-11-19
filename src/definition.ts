@@ -447,3 +447,82 @@ export type SingleAppointmentData = {
   createdAt: string;
   __v: number;
 }
+
+
+export type CourseData = {
+  _id: string;
+  bundle: string;
+  bundle_option: string;
+  title: string;
+  care_certificate: boolean;
+  price: number;
+  rating: number;
+  level: number;
+  thumbnail: string;
+  add_on: string[];
+  online_course: [{
+    course: string;
+    _id: string;
+  }];
+  classroom_course: [{
+    course: string;
+    _id: string;
+  }];
+  description: string;
+  instructors: [
+    {
+      instructor: string;
+      _id: string;
+    }
+  ];
+  start_messagge: string;
+  end_messagge: string;
+  editedBy: string;
+  editedAt: string;
+  createdAt: string;
+  __v: number;
+  client: number;
+  category: string,
+  start_date: string,
+  end_date: string,
+  duration: string,
+  duration_description: string,
+  benefits: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  sections: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  for_who: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  redirect_course: { links: string[], redirect: boolean },
+  standalone: true,
+  curriculum: string[],
+  requirement: string[],
+  quantity: number,
+}
+
+export type ReviewData = {
+  _id: string,
+  userid: {
+    _id: string,
+    firstname: string,
+    lastname: string
+  },
+  courseid: string,
+  courseType: string,
+  review: string,
+  rating: number,
+  createdAt: string,
+  __v: number
+}
