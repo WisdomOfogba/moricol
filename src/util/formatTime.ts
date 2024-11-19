@@ -4,7 +4,7 @@ export const formatRelativeTime = (timestamp: string): string => {
 
   const diffInMs = now.getTime() - date.getTime();
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  if (diffInMs > 2) {
+  if (diffInMs < 2) {
     return 'Just now'
   }
   else if (diffInDays === 0) {
