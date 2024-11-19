@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import Image from "next/image";
 // import { FaRoad, FaUserDoctor, FaUserNurse } from "react-icons/fa6";
 // import { IoNutrition } from "react-icons/io5";
@@ -14,17 +13,11 @@ import TelemedPageWrap from "./_components/telemed-page-wrap";
 export const revalidate = 0;
 
 type TelemedicineDataType = {
-  editedBy: null;
-  editedAt: string;
-  _id: string;
-  name: string;
-  status: string;
-  image: string;
-  description: string;
-  client: number;
-  createdAt: string;
-  __v: number;
-};
+  categoryId: string;
+  categoryName: string;
+  categoryimage: string;
+  categorydescription: string;
+}
 
 
 export const metadata: Metadata = {
@@ -50,6 +43,7 @@ export default async function Telemedicine() {
   const telemedicineData = await getTelemedicineData(session as Session);
 
 
+
   return (
     <TelemedicineLayoutTemplate>
       <TelemedPageWrap>
@@ -57,18 +51,19 @@ export default async function Telemedicine() {
           <main className="flex-grow">
             <h1 className="text-2xl font-bold">Welcome, {session?.user?.firstname}</h1>
 
-            <p className="mb-8 text-gray-600">Find your suitable doctors here</p>
+            <p className="mb-8 text-gray-600">Get the best healthcare services from our specialists</p>
 
             <div className="pb-2">
               <hr />
+
+              {/*
               <p className="md:hidden py-2">Schedule an appointment</p>
               <div className="hidden pt-3 md:block"></div>
-
-              <div className="flex md:flex md:flex-col md:items-end">
+               <div className="flex md:flex md:flex-col md:items-end">
                 <Button className="md:w-fit">
                   Schedule a doctor&apos; appointment
                 </Button>
-              </div>
+              </div> */}
               <div className="pt-3"></div>
               <hr />
             </div>
@@ -76,7 +71,7 @@ export default async function Telemedicine() {
             {/* Specialists Section */}
             <section className="mb-8">
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Specialists</h2>
+                <h2 className="text-xl font-semibold">Select a Category</h2>
                 {/* <Link
                 href={routes.TELEMEDICINE_SPECIALISTS}
                 className="text-primary-500 hover:underline"
@@ -88,16 +83,16 @@ export default async function Telemedicine() {
                 {
                   telemedicineData.map((category) => (
                     <SpecialistCard
-                      key={category._id}
-                      id={category._id}
+                      key={category.categoryId}
+                      id={category.categoryId}
                       color="bg-purple-100"
                       icon={
                         <div className=" bg-purple-200 h-fit w-fit rounded-full p-1">
-                          <Image src={category.image} alt={category.name} width={20} className="object-cover h-8 w-8 block rounded-full" height={20} />
+                          <Image src={category.categoryimage} alt={category.categoryName} width={20} className="object-cover h-8 w-8 block rounded-full" height={20} />
                         </div>
                       }
-                      title={category.name}
-                      description={category.description}
+                      title={category.categoryName}
+                      description={category.categorydescription}
                     />
                   ))
                 }

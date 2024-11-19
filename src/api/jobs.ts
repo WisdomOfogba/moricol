@@ -195,13 +195,14 @@ const jobsApi = {
     },
 
 
-    updateJobPostPayment: async ({ userid, jobpostid, amount, session }: { userid: string; jobpostid: string; amount: number; session: Session }) => {
+    updateJobPostPayment: async ({ userid, jobpostid, amount, ref, session }: { userid: string; jobpostid: string; amount: number; ref: string; session: Session }) => {
         const axios = createClientAxios({ session });
         try {
             const response = await axios.post(endpoints.updateMyJobPostPayment, {
                 userid,
                 jobpostid,
-                amount
+                amount,
+                ref
             });
             return response.data;
         } catch (error) {

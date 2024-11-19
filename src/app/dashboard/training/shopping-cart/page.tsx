@@ -69,7 +69,7 @@ export default function ShoppingCard() {
                 Proceed to Checkout{" "}
                 <ArrowRightSvg stroke="#ffffff" className="-rotate-180" />
               </Link>
-              <hr className="my-2" />   
+              <hr className="my-2" />
               <div>
                 <h3 className="mb-4 text-sm font-medium text-[#1D2026]">
                   Apply coupon code
