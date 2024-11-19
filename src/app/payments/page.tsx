@@ -58,7 +58,7 @@ function PaymentsPage() {
 
                 if (Object.keys(landingPageServices).includes(storedData.service)) {
                     if (storedData.service === 'recruitment') {
-                        await jobsApi.updateJobPostPayment({ userid: paymentData.userid, jobpostid: paymentData.jobpostid, amount: paymentData.amount, session: session as Session });
+                        await jobsApi.updateJobPostPayment({ userid: paymentData.userid, ref: reference, jobpostid: paymentData.jobpostid, amount: paymentData.amount, session: session as Session });
                     } else if (storedData.service === 'medicalLoan') {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
                     } else if (storedData.service === 'telemedicine') {

@@ -102,6 +102,7 @@ export default function LoanApplicationClient({
   });
 
   const handleUpdateApplyDataField = (field: keyof Omit<CreateOfferParams, "userid" | "session">, value: string | number | InstallmentPeriod[] | BankDetails) => {
+    console.log(field, value);
     setApplyData((prev) => ({ ...prev, [field]: value }));
   };
 

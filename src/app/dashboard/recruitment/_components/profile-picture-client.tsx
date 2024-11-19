@@ -141,7 +141,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
     }
   }, [upload]);
 
-  const uploadToCloudinary = async (file: File) => { 
+  const uploadToCloudinary = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_PRESET!);
@@ -162,7 +162,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
 
         const pictureUrl = await uploadToCloudinary(pictureFile);
         const cvUrl = await uploadToCloudinary(cvFile);
-        
+
         //uploading to backend
         await resumeApi.updateUploads({
           userId: session?.user.id as string,
@@ -173,7 +173,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
         });
         enqueueSnackbar('Files uploaded successfully', { variant: 'success' });
         router.push(next_route);
-       
+
       } catch (error) {
         console.error('Error uploading files:', error);
         throw error;
@@ -183,12 +183,12 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
     }
   }
 
- 
+
   return (
-    <ContentLayout 
-      next_route={next_route} 
-      pageTitle="Profile Picture & CV Upload" 
-      step={9} 
+    <ContentLayout
+      next_route={next_route}
+      pageTitle="Profile Picture & CV Upload"
+      step={9}
       isLoading={isLoading}
       nextFunction={uploadFiles}
     >
@@ -203,10 +203,10 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
         <hr className="my-8" />
         <FileUpload
           title="Upload CV"
-          accept=".pdf,.doc,.docx"
+          accept=".pdf"
           file={cvFile}
           setFile={setCvFile}
-          formats="PDF, DOC, DOCX"
+          formats="PDF"
         />
       </div>
     </ContentLayout>

@@ -7,10 +7,12 @@ import { routes } from "@/constants/routes";
 import { UserResumeResponse, UserDetails } from "@/definition";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, EducationItem, LanguageItem, HobbyItem, ReferenceItem } from "./_components";
-import Image from "next/image";
 export const revalidate = 10;
 
-
+export const metadata = {
+  title: 'Preview Resume',
+  description: 'Preview Resume'
+};
 
 async function getResume() {
   const session = await getUserSession();
@@ -219,7 +221,14 @@ async function PreviewResume() {
           </Section>
           <Section title="CV" editable={true} editLink={routes.RECRUITMENT_PROFILE_PICTURE}>
             <div className="rounded bg-red-100 p-4">
-              <Image src={data.upload.cv} alt="CV" width={400} height={400} />
+              {/* <Image src={data.upload.cv} alt="CV" width={400} height={400} /> */}
+              {data.upload.cv && (
+                <iframe
+                  src={data.upload.cv}
+                  className="w-full h-[600px] rounded"
+                  title="CV Preview"
+                />
+              )}
             </div>
             {!data.upload.cv && (
               <span className="flex w-full flex-col items-center justify-center py-8 text-gray-500">

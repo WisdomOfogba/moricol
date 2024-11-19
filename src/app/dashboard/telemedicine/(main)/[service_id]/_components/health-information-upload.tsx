@@ -295,7 +295,7 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
                       <Input
                         type="number"
                         placeholder="days? "
-                        value={medication.days}
+                        value={medication.days.toString()}
                         onChange={(e) => {
                           const medIndex = appointmentData.medication.findIndex(m => m.drug === medication.drug)
                           const newValue = { ...appointmentData.medication[medIndex], days: parseInt(e.target.value) }
