@@ -7,6 +7,8 @@ import CourseTimeLecturesSection from "../components/time-lecture-section";
 import Image from "next/image";
 import PrevPageBtn from "../view-course/prev-page-btn";
 
+export const dynamic = "force-dynamic"
+
 export default function BuyCourse() {
   return (
     <main>
