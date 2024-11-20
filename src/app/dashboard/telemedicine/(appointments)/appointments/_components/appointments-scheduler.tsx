@@ -32,7 +32,6 @@ const months = [
 ];
 
 
-
 interface CalendarViewProps {
   currentDate: Date;
   setCurrentDate: (date: Date) => void;

@@ -43,7 +43,6 @@ export default async function Telemedicine() {
   const telemedicineData = await getTelemedicineData(session as Session);
 
 
-
   return (
     <TelemedicineLayoutTemplate>
       <TelemedPageWrap>

@@ -56,7 +56,6 @@ function EndAppointmentModal({ appointmentid }: { appointmentid: string }) {
           <article className="flex w-full max-w-[806px] flex-col items-center justify-center rounded-lg bg-white px-7 py-10">
             <h3>COMPLETED</h3>
             <div className="relative mb-7 h-20 w-20">
-
               <Image
                 src="/images/end-app.png"
                 alt=""
@@ -64,7 +63,6 @@ function EndAppointmentModal({ appointmentid }: { appointmentid: string }) {
                 sizes="128px"
                 className="h-full object-contain"
               />
-
             </div>
             <h3 className="mb-8 max-w-[635px] text-center text-2xl font-medium">
               Your appointment booking has successfully ended.

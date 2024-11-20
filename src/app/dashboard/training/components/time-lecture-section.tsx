@@ -1,19 +1,36 @@
 import { ClockSvg, FolderSvg, PlaySVG } from "@/components/svgs";
 
-export default function CourseTimeLecturesSection() {
+export default function CourseTimeLecturesSection({
+  time,
+  lectures,
+  sections,
+}: {
+  time?: string;
+  lectures?: number;
+  sections?: number;
+}) {
   return (
     <ul className="text-s flex gap-x-4">
-      <li className="flex items-center gap-x-1.5">
-        <FolderSvg />6 sections
-      </li>
-      <li className="flex items-center gap-x-1.5">
-        <PlaySVG stroke="#564FFD" className="h-[20px] w-[20px]" />
-        22 lectures
-      </li>
-      <li className="flex items-center gap-x-1.5">
-        <ClockSvg />
-        19h 37m
-      </li>
+      {sections && (
+        <li className="flex items-center gap-x-1.5">
+          <>
+            <FolderSvg /> {sections} sections
+          </>
+        </li>
+      )}
+      {lectures && (
+        <li className="flex items-center gap-x-1.5">
+          <PlaySVG stroke="#564FFD" className="h-[20px] w-[20px]" />
+          {lectures || "10"} {lectures > 1 ? "lectures" : "lecture"}
+        </li>
+      )}
+      {time && (
+        <li className="flex items-center gap-x-1.5">
+          <>
+            <ClockSvg /> {time}
+          </>
+        </li>
+      )}
     </ul>
   );
 }
