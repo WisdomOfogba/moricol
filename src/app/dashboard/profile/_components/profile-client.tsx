@@ -207,6 +207,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
 
               <div>
+
                 <h3 className="mb-2 text-lg font-semibold">Next of Kin</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
@@ -275,6 +276,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
 
               <div>
+
                 <Label htmlFor="uploadMedical">
                   {isRecordEditable ? "Upload Scans or Medical Report" : "Scans & Medical Report"}
                 </Label>

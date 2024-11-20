@@ -53,7 +53,7 @@ export default function ProductPage() {
     };
     fetchData();
   }, []);
-  // console.log(drug);
+
 
   return (
     <main>

@@ -7,7 +7,7 @@ import {
   DollarSignSvg,
   PlaySVG,
 } from "@/components/svgs";
-import WishlistCourseCard from "./wishlist-course-card";
+// import WishlistCourseCard from "./wishlist-course-card";
 
 export default function PurchaseHistoryCard() {
   const [isAccordionIsOpen, setAccordion] = useState(false);
@@ -34,7 +34,7 @@ export default function PurchaseHistoryCard() {
         {/* Payment history accordon right hand side */}
         <ul className="grid gap-y-6">
           <li className="flex items-center gap-x-11">
-            <WishlistCourseCard />
+            {/* <WishlistCourseCard /> */}
             <p className="text-xl font-medium text-primary-500">₦13.99</p>
           </li>
         </ul>
@@ -47,7 +47,7 @@ export default function PurchaseHistoryCard() {
           <div className="mt-6 flex items-center justify-between text-sm text-[#1D2026]">
             <p>Kelvin Gilbert</p>
             <p className="text-lg">4142 *** *** ***</p>
-            <p>04/24</p>
+            <p>04/24</p>+1
           </div>
         </div>
       </section>

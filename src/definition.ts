@@ -297,8 +297,6 @@ export interface ProfileRequestType {
   demographic: Demographic;
 }
 
-
-
 export type ProfileData = {
   demographic: {
     bloodgroup: string;
@@ -605,12 +603,36 @@ export type SingleCourse = {
   ];
   review: string[];
   course: {
+    _id: string;
     title: string;
+    price: number;
+    rating: number;
     thumbnail: string;
     description: string;
-    _id: string;
-    price: string;
-    rating: string;
+    duration: string;
+    instructors: [
+      {
+        instructor: string;
+        _id: string;
+      },
+    ];
+    requirement: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    for_who: [];
+    benefits: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    coursetype: string;
+    createdAt: string;
+    __v: number;
+    level: number;
   };
   courseorder: courseorder;
 };
@@ -620,8 +642,7 @@ export type courseorder = {
   amount: number;
   progress: number;
   coursetype: string;
-  curriculum: curriculum[]
-
+  curriculum: curriculum[];
   userid: string;
   courseid: {
     _id: string;
@@ -662,6 +683,23 @@ export type instructors = {
   name: string;
 };
 
+
+export type archive = {
+  _id: string,
+  admin_details: {
+      name: string
+  }
+}
+
+export type messaging = {
+  _id: string,
+  message: string,
+  sender: string,
+  userid: string,
+  adminid: string,
+  createdAt: string,
+  __v: number
+}
 
 /*
 export type CourseData = {
@@ -742,3 +780,4 @@ export type ReviewData = {
   __v: number
 }
   */
+

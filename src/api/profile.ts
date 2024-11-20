@@ -55,8 +55,6 @@ export const profileApi = {
     }
   },
 
-
-
   updateProfile: async (
     profile: ProfileData & { userid: string },
     session: Session,

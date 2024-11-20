@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 
 async function getCoursesData() {
   try {
+<<<<<<< HEAD
     const { data: courseClassroomData }: { data: CourseData[] } =
       await CourseApi.getCourseData({ type: "classroom" });
     const { data: courseVisualData }: { data: CourseData[] } =
@@ -22,6 +23,13 @@ async function getCoursesData() {
       courseBundleData,
       courseOnlineData,
     };
+=======
+    const { data: courseClassroomData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "classroom" });
+    const { data: courseVisualData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "visual" });
+    const { data: courseBundleData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "bundle" });
+    const { data: courseOnlineData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "online" });
+    return { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData };
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   } catch (error) {
     throw new Error(
       error instanceof Error ? error.message : "Failed to get Courses data",
@@ -30,12 +38,16 @@ async function getCoursesData() {
 }
 
 export default async function Home() {
+<<<<<<< HEAD
   const {
     courseClassroomData,
     courseVisualData,
     courseBundleData,
     courseOnlineData,
   } = await getCoursesData();
+=======
+  const { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData } = await getCoursesData();
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   return (
     <main>
       <section className="mb-6 flex items-start justify-between px-14 py-8">
@@ -55,6 +67,7 @@ export default async function Home() {
         </div>
       </section>
 
+<<<<<<< HEAD
       <CourseCategories
         courseData={[
           courseClassroomData,
@@ -63,6 +76,9 @@ export default async function Home() {
           courseOnlineData,
         ]}
       />
+=======
+      <CourseCategories courseData={[courseClassroomData, courseVisualData, courseBundleData, courseOnlineData]} />
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
     </main>
   );
 }

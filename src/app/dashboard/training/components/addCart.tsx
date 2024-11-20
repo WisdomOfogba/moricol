@@ -30,7 +30,7 @@ const AddCart = ({
         rating: course.rating,
         thumbnail: course.thumbnail,
       });
-      enqueueSnackbar("Added to wishlist succesfully", { variant: "success" });
+      enqueueSnackbar("Added to Cart succesfully", { variant: "success" });
     } catch (error) {
       console.error(error);
       enqueueSnackbar("Error making payment", { variant: "error" });
@@ -42,9 +42,9 @@ const AddCart = ({
   return (
     <button
       onClick={() => handleWishlist(course)}
-      className="w-full border border-[#E9EAF0] py-3 text-sm font-semibold"
+      className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
     >
-      {isLoading ? "Loading" : "Add To Wishlist"}
+      {isLoading ? "Loading" : "Add To Cart"}
     </button>
   );
 };
