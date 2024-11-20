@@ -61,6 +61,7 @@ export default function ShoppingCard() {
                 <span className="text-2xl font-semibold">₦{sum} NAIRA</span>
               </p>
               <MakeTrainingPaymentButton
+              button="now"
                 courses={cart.map((cart) => ({
                   courseid: cart._id,
                   amount: cart.price,
