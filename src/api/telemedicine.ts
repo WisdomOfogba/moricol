@@ -564,5 +564,6 @@ const telemedicineApi = {
   },
 
 }
+}
 
 export default telemedicineApi;
