@@ -12,6 +12,7 @@ async function getCoursesData({type, id}: {type: string; id: string;}) {
   try {
     const { data: {course: courseDetails, review: courseDetailsReview} }: { data: {course: CourseData; review: ReviewData[]} } = await CourseApi.getSingleCourseData({ type, id });
     const { data: courseData }: { data: CourseData[] } = await CourseApi.getCourseData({ type });
+    console.log("hey")
     return {courseDetails, courseData, courseDetailsReview};
   } catch (error) {
     if (error instanceof Error && error.message.includes("Cannot populate path")) {

@@ -350,7 +350,7 @@ export default function CourseDetail({
               <div className="border">
                 {course.curriculum &&
                   course.curriculum.map((curriculum, i) => (
-                    <CurriculumCard curriculum={curriculum} key={i} />
+                    <CurriculumCard courseid={course._id} curriculum={curriculum} key={i} />
                   ))}
               </div>
             </section>
@@ -494,12 +494,12 @@ function CourseDetailSummary({
       {isBought ? (
         <>
           <div className="grid gap-y-3 border-y border-y-[#E9EAF0] p-6">
-            <a
+            <Link
               href={`/dashboard/training/view-course/${course._id}/${courseorderid}`}
               className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
             >
               View Course
-            </a>
+            </Link>
           </div>
           <div className="flex gap-x-3">
             <Addwishlist course={course} type={type} />

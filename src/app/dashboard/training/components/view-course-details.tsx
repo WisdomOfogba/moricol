@@ -221,7 +221,7 @@ export default function CourseDetail({
           </div>
           <div className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}>
             {singleCourse.courseorder.curriculum.map((curriculum, i) => (
-              <CurriculumCard key={i} curriculum={curriculum} />
+              <CurriculumCard courseid={singleCourse.course._id} key={i} curriculum={curriculum} />
             ))}
             {/* <CurriculumCard /> */}
           </div>
