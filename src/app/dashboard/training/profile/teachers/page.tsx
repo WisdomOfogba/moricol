@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 import { StarSVG } from "@/components/svgs";
-import Button from "@/components/button";
 import { instructors } from "@/definition";
 import { CourseApi } from "@/api/training";
 import { getUserSession } from "@/lib/auth";
+import Link from "next/link";
 
 async function getInstructors() {
   const session = await getUserSession();
@@ -76,11 +76,12 @@ function InstructorCard({instructor}: {instructor: instructors}) {
           </p>
         </div>
 
-        <Button
-          className={`rounded-none border-none bg-primary-100 px-4 font-semibold text-primary-500 hover:bg-primary-500 hover:text-white`}
+        <Link
+        href={`/dashboard/training/profile/messages/${instructor._id}`}
+          className={`rounded-none border-none bg-primary-100 px-4 font-semibold text-primary-500 hover:bg-primary-500 hover:text-white w-full py-6 flex items-center justify-center`}
         >
           Send Message
-        </Button>
+        </Link>
       </div>
     </article>
   );
