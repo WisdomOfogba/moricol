@@ -106,7 +106,7 @@ export default function ClientMessagingPage({
 
       {/* Messaging Body */}
       <section className="no-scrollbar grid max-h-[678px] gap-y-6 overflow-y-auto px-6 py-12">
-        {messages.reverse().map((msg) =>
+        {messages.map((msg) =>
           msg.sender === "user" ? (
             <OutGoingMessage key={msg._id} msg={msg} />
           ) : (
