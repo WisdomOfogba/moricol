@@ -249,7 +249,11 @@ export type OrganizationMember = {
     lastname: string;
     email: string;
     phone: string;
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   organizationid: {
     _id: string;
     name: string;
@@ -273,6 +277,11 @@ export interface Demographic {
   genetype: string;
   reports: string[];
   allergy: string[];
+  emergency_contact: string;
+  emergency_name: string;
+  kin_name: string;
+  kin_relationship: string;
+  kin_number: string;
 }
 
 export interface ProfileRequestType {
@@ -292,12 +301,22 @@ export interface ProfileRequestType {
   demographic: Demographic;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 export type ProfileData = {
   demographic: {
     bloodgroup: string;
     genotype: string;
     allergy: string[] | string;
     reports: string[];
+    emergency_contact: string;
+    emergency_name: string;
+    kin_name: string;
+    kin_relationship: string;
+    kin_number: string;
   };
   mail_on: boolean;
   _id: string;
@@ -319,7 +338,14 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
+<<<<<<< HEAD
 };
+=======
+
+}
+
+
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 
 export type TelemedicineCategoryData = {
   category: {
@@ -429,7 +455,12 @@ export type SingleAppointmentData = {
   paymentid: string;
   createdAt: string;
   __v: number;
+<<<<<<< HEAD
 };
+=======
+}
+
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 
 export type CourseData = {
   _id: string;
@@ -442,6 +473,7 @@ export type CourseData = {
   level: number;
   thumbnail: string;
   add_on: string[];
+<<<<<<< HEAD
   online_course: [
     {
       course: string;
@@ -454,12 +486,26 @@ export type CourseData = {
       _id: string;
     },
   ];
+=======
+  online_course: [{
+    course: string;
+    _id: string;
+  }];
+  classroom_course: [{
+    course: string;
+    _id: string;
+  }];
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   description: string;
   instructors: [
     {
       instructor: string;
       _id: string;
+<<<<<<< HEAD
     },
+=======
+    }
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   ];
   start_messagge: string;
   end_messagge: string;
@@ -468,6 +514,7 @@ export type CourseData = {
   createdAt: string;
   __v: number;
   client: number;
+<<<<<<< HEAD
   category: string;
   start_date: string;
   end_date: string;
@@ -645,3 +692,49 @@ export type instructors = {
   _id: string;
   name: string;
 };
+=======
+  category: string,
+  start_date: string,
+  end_date: string,
+  duration: string,
+  duration_description: string,
+  benefits: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  sections: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  for_who: [
+    {
+      option: string,
+      _id: string
+    }
+  ],
+  redirect_course: { links: string[], redirect: boolean },
+  standalone: true,
+  curriculum: string[],
+  requirement: string[],
+  quantity: number,
+}
+
+export type ReviewData = {
+  _id: string,
+  userid: {
+    _id: string,
+    firstname: string,
+    lastname: string
+  },
+  courseid: string,
+  courseType: string,
+  review: string,
+  rating: number,
+  createdAt: string,
+  __v: number
+}
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86

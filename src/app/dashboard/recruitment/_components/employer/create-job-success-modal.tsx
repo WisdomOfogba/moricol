@@ -67,9 +67,7 @@ function CreateJobSuccessModal({ goBack, createFunction, isEdit }: { goBack: () 
             <Link href={routes.RECRUITMENTDASHBOARD} className="w-full">
               <Button>OKAY</Button>
             </Link>
-            <Link href="#" className="primary-color pt-5">
-              Set a Notification for when they apply
-            </Link>
+
           </article>
         </ModalLayout>
       )}

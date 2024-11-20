@@ -30,7 +30,11 @@ import { useRouter } from "next/navigation";
 export default function ProfileClient({ profileData }: { profileData: ProfileData }) {
   const [isAcctEditable, setIsAcctEditable] = useState(false);
   const [isRecordEditable, setIsRecordEditable] = useState(false);
+<<<<<<< HEAD
   const [editedProfileData, setEditedProfileData] = useState<ProfileData>({ ...profileData, demographic: { ...profileData.demographic, allergy: Array.isArray(profileData.demographic.allergy) ? profileData.demographic.allergy.join(", ") : profileData.demographic.allergy } });
+=======
+  const [editedProfileData, setEditedProfileData] = useState<ProfileData>({ ...profileData, demographic: { ...profileData.demographic, allergy: Array.isArray(profileData.demographic.allergy) ? profileData.demographic.allergy.join(", ") : profileData.demographic.allergy, genotype: profileData.demographic.genotype } });
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
@@ -86,8 +90,13 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
         demographic: {
           allergy: !Array.isArray(editedProfileData.demographic.allergy) ? editedProfileData.demographic.allergy.split(", ") : editedProfileData.demographic.allergy,
           bloodgroup: editedProfileData.demographic.bloodgroup,
-          genetype: editedProfileData.demographic.genotype,
-          reports: editedProfileData.demographic.reports
+          genotype: editedProfileData.demographic.genotype,
+          reports: editedProfileData.demographic.reports,
+          emergency_contact: editedProfileData.demographic.emergency_contact,
+          emergency_name: editedProfileData.demographic.emergency_name,
+          kin_name: editedProfileData.demographic.kin_name,
+          kin_relationship: editedProfileData.demographic.kin_relationship,
+          kin_number: editedProfileData.demographic.kin_number
         },
         userid: session?.user.id as string
       }
@@ -107,9 +116,14 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
         language: data.language,
         demographic: {
           bloodgroup: data.demographic.bloodgroup,
-          genetype: data.demographic.genetype,
+          genotype: data.demographic.genotype,
           reports: data.demographic.reports,
-          allergy: data.demographic.allergy
+          allergy: data.demographic.allergy,
+          emergency_contact: data.demographic.emergency_contact,
+          emergency_name: data.demographic.emergency_name,
+          kin_name: data.demographic.kin_name,
+          kin_relationship: data.demographic.kin_relationship,
+          kin_number: data.demographic.kin_number
         }
       }
       // @ts-expect-error not a problem
@@ -117,6 +131,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
       router.refresh();
       enqueueSnackbar("Profile updated successfully", { variant: "success" });
     } catch (error) {
+      enqueueSnackbar("Failed to update profile", { variant: "error" });
       console.error(error);
     } finally {
       setLoading(false);
@@ -196,6 +211,77 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
 
               <div>
+<<<<<<< HEAD
+=======
+                <h3 className="mb-2 text-lg font-semibold">Next of Kin</h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="kinName">Name</Label>
+                    <Input
+                      id="kinName"
+                      placeholder="Next of kin name"
+                      className={!isRecordEditable ? readonlyClass : ""}
+                      readOnly={!isRecordEditable}
+                      value={editedProfileData.demographic.kin_name}
+                      onChange={(e) => handleDemographicChange('kin_name', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="kinPhone">Phone Number</Label>
+                    <Input
+                      id="kinPhone"
+                      placeholder="Next of kin phone number"
+                      className={!isRecordEditable ? readonlyClass : ""}
+                      readOnly={!isRecordEditable}
+                      value={editedProfileData.demographic.kin_number}
+                      onChange={(e) => handleDemographicChange('kin_number', e.target.value)}
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label htmlFor="kinRelationship">Relationship</Label>
+                    <Input
+                      id="kinRelationship"
+                      placeholder="Relationship to next of kin"
+                      className={!isRecordEditable ? readonlyClass : ""}
+                      readOnly={!isRecordEditable}
+                      value={editedProfileData.demographic.kin_relationship}
+                      onChange={(e) => handleDemographicChange('kin_relationship', e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="mb-2 text-lg font-semibold">
+                  Emergency Contact Details
+                </h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="emergencyName">Name of Contact</Label>
+                    <Input
+                      id="emergencyName"
+                      placeholder="Emergency contact name"
+                      className={!isRecordEditable ? readonlyClass : ""}
+                      readOnly={!isRecordEditable}
+                      value={editedProfileData.demographic.emergency_name}
+                      onChange={(e) => handleDemographicChange('emergency_name', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="emergencyPhone">Contact Phone Number</Label>
+                    <Input
+                      id="emergencyPhone"
+                      placeholder="Emergency contact phone"
+                      className={!isRecordEditable ? readonlyClass : ""}
+                      readOnly={!isRecordEditable}
+                      value={editedProfileData.demographic.emergency_contact}
+                      onChange={(e) => handleDemographicChange('emergency_contact', e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
                 <Label htmlFor="uploadMedical">
                   {isRecordEditable ? "Upload Scans or Medical Report" : "Scans & Medical Report"}
                 </Label>
