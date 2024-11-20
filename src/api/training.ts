@@ -30,6 +30,7 @@ const endpoints = {
   getArchive: `${API_BASE_URL}/user/training/message/archive`,
   getMessages: `${API_BASE_URL}/user/training/retrieve/messages`,
   sendMessages: `${API_BASE_URL}/user/training/send/message`,
+  updateQuizScore: `${API_BASE_URL}/user/training/mark/quiz/score`,
 };
 
 export const CourseApi = {
@@ -209,18 +210,51 @@ export const CourseApi = {
     lessonid,
     sectionid,
     courseid,
+    session,
   }: {
     userid: string;
     lessonid: string;
     sectionid: string;
     courseid: string;
+    session: Session
   }) => {
+    const axios = createClientAxios({ session });
     try {
       const response = await axios.post(endpoints.markLesson, {
         userid,
         lessonid,
         sectionid,
         courseid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Marking Lesson");
+      throw new Error(errorMessage);
+    }
+  },
+  updateQuizScore: async ({
+    userid,
+    lessonid,
+    sectionid,
+    courseid,
+    session,
+    score,
+  }: {
+    userid: string;
+    lessonid: string;
+    sectionid: string;
+    courseid: string;
+    session: Session;
+    score: number;
+  }) => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(endpoints.updateQuizScore, {
+        userid,
+        lessonid,
+        sectionid,
+        courseid,
+        score,
       });
       return response.data;
     } catch (error) {
