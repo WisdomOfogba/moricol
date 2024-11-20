@@ -7,13 +7,45 @@ import Image from "next/image";
 import { curriculum } from "@/definition";
 import { MdQuiz } from "react-icons/md";
 import { Video } from "lucide-react";
+import { CourseApi } from "@/api/training";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { useSnackbar } from "notistack";
+import QuizSection from "./quizSection";
 
 export default function CurriculumCard({
   curriculum,
+  courseid
 }: {
   curriculum: curriculum;
+  courseid: string;
 }) {
   const [isAccordionOpen, setAccordion] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleMarkLesson = async (lessonId: string) => {
+    try {
+      setIsLoading(true)
+      const response = await CourseApi.markLesson({
+        userid: session?.user.id as string,
+        courseid: courseid as string,
+        session: session as Session,
+        sectionid: curriculum._id,
+        lessonid: lessonId,
+    });
+      if (response.status === 200) {
+        console.log("Lesson marked as complete!");
+      }
+      enqueueSnackbar("Lesson marked as complete!", { variant: "success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("Error marking course", { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <article className="border-b last:border-b-0">
@@ -49,15 +81,25 @@ export default function CurriculumCard({
                 </div>
                 <p className="text-[#4E5566]">{section.lesson_name}</p>
               </div>
-              <p className="text-[#8C94A3]">{section.lesson.lesson_type}</p>
+              <button
+                onClick={() => handleMarkLesson(section._id)}
+                className="mt-2 bg-primary-500 px-4 py-2 text-white"
+              >
+                {isLoading ? "Marking..." : "Mark as Completed"}
+              </button>
             </li>
-            <li className="text-s flex items-center justify-between cursor-pointer">
+            <li className="text-s flex cursor-pointer items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <File />
                 <p className="text-[#4E5566]">{section.lesson.lesson_type}</p>
               </div>
-              <p className="text-[#8C94A3]">{section.lesson.isquiz ? <MdQuiz /> : <Video />}</p>
+              <p className="text-[#8C94A3]">
+                {section.lesson.isquiz ? <MdQuiz /> : <Video />}
+              </p>
             </li>
+            {section.lesson.isquiz && (
+              <QuizSection quiz={section.lesson.quiz} lessonid={section._id} courseid={courseid} sectionid={curriculum._id} />
+            )}
           </>
         ))}
       </ul>

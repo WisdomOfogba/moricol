@@ -23,7 +23,7 @@ const Addwishlist = ({ course, type }: { course: CourseData, type: string }) => 
         enqueueSnackbar("Added to wishlist succesfully", { variant: "success" });
       } catch (error) {
         console.error(error);
-        enqueueSnackbar("Error making payment", { variant: "error" });
+        enqueueSnackbar("Error adding to wishlist", { variant: "error" });
       } finally {
         setIsLoading(false);
       }
