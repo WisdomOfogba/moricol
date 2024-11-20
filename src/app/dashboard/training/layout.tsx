@@ -1,27 +1,15 @@
 import Image from "next/image";
-<<<<<<< HEAD
 import { HeartSVG } from "@/components/svgs";
-=======
-import {
-  ChevronDownSvg,
-  HeartSVG,
-  NotificationSvg,
-  SearchSvg,
-} from "@/components/svgs";
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 import Link from "next/link";
 import { routes } from "@/constants/routes";
 import Cart from "./components/cart";
 import { CartProvider } from "@/lib/TrainingCartContext";
-<<<<<<< HEAD
 import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
 import { UserCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
-=======
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 
 export default function TrainingLayout({
   children,
@@ -78,11 +66,7 @@ async function ToolBar() {
           <HeartSVG className="h-6 w-6" fill="#1D2026" />
         </Link>
         <Cart />
-<<<<<<< HEAD
         <Link href="/dashboard/profile" className="block">
-=======
-        <Link href="/dashboard/training/profile" className="block">
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image
               src={profileData.photo ? profileData.photo : "/images/client.jpg"}
