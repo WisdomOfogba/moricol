@@ -12,6 +12,11 @@ import resumeApi from "@/api/local-resume";
 export const revalidate = 10;
 
 
+export const metadata = {
+  title: 'Preview Foreign Resume',
+  description: 'Preview Foreign Resume'
+};
+
 
 async function getResume() {
   const session = await getUserSession();
@@ -218,7 +223,16 @@ async function PreviewForeignResume() {
             )}
           </Section>
           <Section title="CV" editable={true} editLink={routes.RECRUITMENT_FOREIGN_PROFILE_PICTURE}>
-            <div className="rounded bg-red-100 p-4">CV</div>
+            <div className="rounded bg-red-100 p-4">
+              {/* <Image src={data.upload.cv} alt="CV" width={400} height={400} /> */}
+              {data.upload.cv && (
+                <iframe
+                  src={data.upload.cv}
+                  className="w-full h-[600px] rounded"
+                  title="CV Preview"
+                />
+              )}
+            </div>
             {!data.upload.cv && (
               <span className="flex w-full flex-col items-center justify-center py-8 text-gray-500">
                 <p className="text-lg text-secondary-500">No CV added yet</p>

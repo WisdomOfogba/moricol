@@ -42,20 +42,18 @@ export const profileApi = {
   }) => {
     const axios = createClientAxios({ session });
 
-        try {
-            const response = await axios.post(endpoints.resetPassword, {
-                userid,
-                newpassword,
-                currentpassword
-            });
-            return response.data;
-        } catch (error) {
-            const errorMessage = handleAxiosError(error, 'Error resetting password');
-            throw new Error(errorMessage);
-        }
-    },
-
-   
+    try {
+      const response = await axios.post(endpoints.resetPassword, {
+        userid,
+        newpassword,
+        currentpassword
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, 'Error resetting password');
+      throw new Error(errorMessage);
+    }
+  },
 
   updateProfile: async (
     profile: ProfileData & { userid: string },

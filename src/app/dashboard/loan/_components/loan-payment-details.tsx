@@ -75,7 +75,7 @@ function LoanPaymentDetails({
               id="account-number"
               placeholder="Enter your account number"
               className="w-full"
-              value={applyData.bank_details.accountnumber}
+              value={applyData.bank_details.accountnumber.toString()}
               onChange={(e) => handleFieldChangeAndUpdate('bank_details', { ...applyData.bank_details, accountnumber: e.target.value })}
             />
           </div>

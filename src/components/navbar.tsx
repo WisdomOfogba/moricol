@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/sheet";
 import { useState } from "react";
+import UserProfileLink from "./auth/user-profile-link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,11 +18,14 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger onClick={() => setIsOpen(!isOpen)} className="xl:hidden transition-colors hover:text-primary-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
-            </svg>
-          </SheetTrigger>
+          <div className="flex items-center">
+            <SheetTrigger onClick={() => setIsOpen(!isOpen)} className="xl:hidden transition-colors hover:text-primary-500">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+              </svg>
+            </SheetTrigger>
+            <UserProfileLink />
+          </div>
           <SheetContent side="right" className="bg-white px-0" onClick={(event) => {
             if (event.target instanceof HTMLAnchorElement) {
               event.preventDefault();
