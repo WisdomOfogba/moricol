@@ -53,7 +53,6 @@ async function PreviewResume() {
         <h2 className="mb-4 text-2xl font-bold">Preview Resume</h2>
         <div className="flex w-full justify-end gap-4 md:gap-8">
           <div className="space-x-4">
-
             <Link href={routes.RECRUITMENTRESUME} className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
               EDIT RESUME
             </Link>

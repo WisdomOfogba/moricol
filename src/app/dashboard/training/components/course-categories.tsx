@@ -11,9 +11,9 @@ const suggestions = ["user interface", "user experience"];
 export default function CourseCategories({ courseData }: {
   courseData: [
     courseClassroomData: CourseData[],
-    courseClassroomData: CourseData[],
-    courseClassroomData: CourseData[],
-    courseClassroomData: CourseData[],
+    courseVisualData: CourseData[],
+    courseBundleData: CourseData[],
+    courseOnlineData: CourseData[],
   ]
 }) {
   const [activeCategory, setActiveCategory] = useState(0);
@@ -95,7 +95,7 @@ export default function CourseCategories({ courseData }: {
           </FilterContainer>
         </ul> */}
         {courseData[activeCategory].map((course, i) => (
-          <CourseCard key={i} type={categories[activeCategory]} courseData={course} />
+          <CourseCard key={i} type={`${categories[activeCategory]}`} courseData={course} />
         ))}
       </div>
     </section>

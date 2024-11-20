@@ -4,20 +4,38 @@ import { routes } from "@/constants/routes";
 import { CourseApi } from "@/api/training";
 import { CourseData } from "@/definition";
 
+export const dynamic = "force-dynamic";
+
 async function getCoursesData() {
   try {
-    const { data: courseClassroomData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "classroom" });
-    const { data: courseVisualData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "visual" });
-    const { data: courseBundleData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "bundle" });
-    const { data: courseOnlineData }: { data: CourseData[] } = await CourseApi.getCourseData({ type: "online" });
-    return { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData };
+    const { data: courseClassroomData }: { data: CourseData[] } =
+      await CourseApi.getCourseData({ type: "classroom" });
+    const { data: courseVisualData }: { data: CourseData[] } =
+      await CourseApi.getCourseData({ type: "visual" });
+    const { data: courseBundleData }: { data: CourseData[] } =
+      await CourseApi.getCourseData({ type: "bundle" });
+    const { data: courseOnlineData }: { data: CourseData[] } =
+      await CourseApi.getCourseData({ type: "online" });
+    return {
+      courseClassroomData,
+      courseVisualData,
+      courseBundleData,
+      courseOnlineData,
+    };
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : 'Failed to get Courses data');
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to get Courses data",
+    );
   }
 }
 
 export default async function Home() {
-  const { courseClassroomData, courseVisualData, courseBundleData, courseOnlineData } = await getCoursesData();
+  const {
+    courseClassroomData,
+    courseVisualData,
+    courseBundleData,
+    courseOnlineData,
+  } = await getCoursesData();
   return (
     <main>
       <section className="mb-6 flex items-start justify-between px-14 py-8">
@@ -37,7 +55,14 @@ export default async function Home() {
         </div>
       </section>
 
-      <CourseCategories courseData={[courseClassroomData, courseVisualData, courseBundleData, courseOnlineData]} />
+      <CourseCategories
+        courseData={[
+          courseClassroomData,
+          courseVisualData,
+          courseBundleData,
+          courseOnlineData,
+        ]}
+      />
     </main>
   );
 }

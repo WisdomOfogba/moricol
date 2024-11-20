@@ -1,11 +1,23 @@
 "use client";
 
-import { CourseData } from "@/definition";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
+// Updated CourseData Type
+export type Coursedata = {
+  _id: string;
+  title: string;
+  price: number;
+  coursetype: string;
+  instructors: {
+    instructor: string;
+  }[];
+  rating: number;
+  thumbnail: string
+};
+
 type CartContextType = {
-  cart: CourseData[];
-  addToCart: (item: CourseData) => void;
+  cart: Coursedata[];
+  addToCart: (item: Coursedata) => void;
   removeFromCart: (id: string) => void;
   cartCount: number;
 };
@@ -13,9 +25,8 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CourseData[]>([]);
+  const [cart, setCart] = useState<Coursedata[]>([]);
 
-  // Load cart from localStorage on first render
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
@@ -23,18 +34,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (item: CourseData) => {
+  const addToCart = (item: Coursedata) => {
     setCart((prevCart) => {
-      // Prevent duplicates
       const exists = prevCart.some((cartItem) => cartItem._id === item._id);
       if (exists) return prevCart;
 
-      return [...prevCart, item];
+      // Adding coursehey
+      return [...prevCart, { ...item, coursetype: item.coursetype }];
     });
   };
 
@@ -42,7 +52,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => prevCart.filter((item) => item._id !== id));
   };
 
-  const cartCount = cart.length; // Number of unique products in the cart
+  const cartCount = cart.length;
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, cartCount }}>

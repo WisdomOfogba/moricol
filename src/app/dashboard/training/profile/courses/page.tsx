@@ -1,5 +1,8 @@
+import { CourseApi } from "@/api/training";
 import { ChevronDownSvg, SearchSvg } from "@/components/svgs";
-// import CourseCard from "../../components/card-course";
+import { courseorder } from "@/definition";
+import { getUserSession } from "@/lib/auth";
+import CourseCard2 from "../../components/card2-course";
 
 const filterOptions = [
   { title: "Sort by", option: ["Latest"] },
@@ -7,7 +10,24 @@ const filterOptions = [
   { title: "Teacher", option: ["All Teachers"] },
 ];
 
-export default function TrainingProfileCourses() {
+async function getCourses() {
+  const session = await getUserSession();
+  if (!session || !session.user || !('id' in session.user)) {
+    throw new Error('User session is invalid or user ID is missing');
+  }
+  try {
+    const { data: Courses }: { data: courseorder[] } = await CourseApi.getCourse({
+      userid: session.user.id,
+      session,
+    });
+    return Courses
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get Courses data');
+  }
+}
+
+
+export default async function TrainingProfileCourses() {
   const filterButtons = filterOptions.map(({ option, title }) => (
     <div key={title} className="flex flex-col gap-y-2">
       <p className="text-sm text-[#4E5566]">{title}:</p>
@@ -17,11 +37,13 @@ export default function TrainingProfileCourses() {
     </div>
   ));
 
+  const Courses = await getCourses()
+
   return (
     <main className="px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
-          Courses (678)
+          Courses ({Courses.length})
         </h2>
 
         <div className="flex gap-x-6">
@@ -42,13 +64,12 @@ export default function TrainingProfileCourses() {
       </section>
 
       <section className="grid grid-cols-5 gap-6">
-        {/* <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard /> */}
+        {Courses.map((course, i) => {
+
+          const index = course.coursetype.lastIndexOf("course")
+
+          return <CourseCard2 key={i} courseData={course} type={course.coursetype.slice(0, index)} />;
+        })}
       </section>
     </main>
   );
