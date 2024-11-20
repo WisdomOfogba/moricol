@@ -54,6 +54,7 @@ export default function ProductPage() {
     fetchData();
   }, []);
 
+
   return (
     <main>
       <PageToolBar />

@@ -3,29 +3,30 @@ import { createClientAxios } from "./axios-client";
 import handleAxiosError from "./handle-axios-error";
 import { makeApiRequest } from ".";
 
-const telemedicineUrl = "user/telemedicine";
+const telemedicineUrl = 'user/telemedicine'
 
 const endpoints = {
-  homepage: telemedicineUrl + "/homepage",
-  retrieveCategory: telemedicineUrl + "/category/subcategory",
-  createReview: telemedicineUrl + "/create/review",
-  createRatingReview: telemedicineUrl + "/create/review",
-  makePayment: telemedicineUrl + "/make/session/payment",
-  createAppointment: telemedicineUrl + "/create/appointment",
-  retrieveAllAppointments: telemedicineUrl + "/retrieve/all/appointment",
-  retrieveSingleAppointment: telemedicineUrl + "/retrieve/single/appointment",
-  endAppointment: telemedicineUrl + "/end/appointment",
-  upload: telemedicineUrl + "/upload",
-  updateNotification: telemedicineUrl + "/update/notification",
+
+  homepage: telemedicineUrl + '/retrieve/all/category',
+  retrieveCategory: telemedicineUrl + '/retrieve/category',
+  createRatingReview: telemedicineUrl + '/create/review',
+  makePayment: telemedicineUrl + '/make/session/payment',
+  createAppointment: telemedicineUrl + '/create/appointment',
+  retrieveAllAppointments: telemedicineUrl + '/retrieve/all/appointment',
+  retrieveSingleAppointment: telemedicineUrl + '/retrieve/single/appointment',
+  endAppointment: telemedicineUrl + '/end/appointment',
+  upload: telemedicineUrl + '/upload',
+  updateNotification: telemedicineUrl + '/update/notification',
+
   organization: {
-    create: telemedicineUrl + "/create/organization",
-    my: telemedicineUrl + "/my/organization",
-    addMember: telemedicineUrl + "/organization/add/member",
-    removeMember: telemedicineUrl + "/organization/remove/member",
-    retrieveMembers: telemedicineUrl + "/retrieve/organization/member",
-    retrieveMembership: telemedicineUrl + "/my/membership",
+    create: telemedicineUrl + '/create/organization',
+    my: telemedicineUrl + '/my/organization',
+    addMember: telemedicineUrl + '/organization/add/member',
+    removeMember: telemedicineUrl + '/organization/remove/member',
+    retrieveMembers: telemedicineUrl + '/retrieve/organization/member',
+    retrieveMembership: telemedicineUrl + '/my/membership',
   },
-};
+}
 
 interface HomepageParams {
   userid: string;
@@ -97,14 +98,14 @@ export interface AppointmentData {
   location?: string;
 }
 
+
 export const availablePlansList = [
   {
     title: "1 - 5 PERSONS",
     plan_type: "1-5",
     min_members: 1,
     max_members: 5,
-    subtitle:
-      "For Organization who wants to cater for not so many persons all at once",
+    subtitle: "For Organization who wants to cater for not so many persons all at once",
     durations: [
       { label: "WEEKLY", price: "5000" },
       { label: "MONTHLY", price: "8000" },
@@ -116,8 +117,7 @@ export const availablePlansList = [
     plan_type: "6-10",
     min_members: 6,
     max_members: 10,
-    subtitle:
-      "For Organization who wants to cater for for many person in their company",
+    subtitle: "For Organization who wants to cater for for many person in their company",
     durations: [
       { label: "WEEKLY", price: "10000" },
       { label: "MONTHLY", price: "20000" },
@@ -130,83 +130,139 @@ export const availablePlansList = [
     plan_type: "11-30",
     min_members: 11,
     max_members: 30,
-    subtitle:
-      "For Organization who wants to cater for so many persons all at once",
+    subtitle: "For Organization who wants to cater for so many persons all at once",
     durations: [
       { label: "WEEKLY", price: "25000" },
       { label: "MONTHLY", price: "30000" },
       { label: "QUARTERLY", price: "50000" },
     ],
   },
-];
+]
 
 const telemedicineApi = {
   homepage: async ({ userid, session }: HomepageParams) => {
     const axios = createClientAxios({ session });
 
-    try {
-      const response = await axios.post(endpoints.homepage, { userid });
-      return response.data;
-    } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error retrieving telemedicine homepage",
-      );
-      throw new Error(errorMessage);
-    }
-  },
 
-  retrieveSingleCategory: async ({
-    categoryid,
-    session,
-  }: RetrieveCategoryParams) => {
+        try {
+            const response = await axios.post(endpoints.homepage, { userid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving telemedicine homepage');
+            throw new Error(errorMessage);
+        }
+    },
+
+    retrieveSingleCategory: async ({ categoryid, session }: RetrieveCategoryParams) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.retrieveCategory, { categoryid });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error retrieving telemedicine category');
+            throw new Error(errorMessage);
+        }
+    },
+
+
+
+    organization: {
+        create: async ({ userid, start_date, end_date, name, duration, plan_type, amount, user_limit, session }: CreateOrganizationParams) => {
+            const axios = createClientAxios({ session });
+
+            try {
+                const response = await axios.post(endpoints.organization.create, { userid, start_date, end_date, name, duration, plan_type, amount, user_limit });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error creating organization');
+                throw new Error(errorMessage);
+            }
+        },
+
+        my: async ({ userid, session }: OrganizationParams) => {
+            const axios = createClientAxios({ session });
+
+            try {
+                const response = await axios.post(endpoints.organization.my, { userid });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error retrieving organization');
+                throw new Error(errorMessage);
+            }
+        },
+
+        addMember: async ({ userid, organizationid, email, session }: Omit<MemberParams, 'memberId'>) => {
+            const axios = createClientAxios({ session });
+
+            try {
+                const response = await axios.post(endpoints.organization.addMember, { userid, organizationid, email });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error adding member');
+                throw new Error(errorMessage);
+            }
+        },
+
+        removeMember: async ({ userid, organizationid, memberId, session }: Omit<MemberParams, 'email'>) => {
+            const axios = createClientAxios({ session });
+
+            try {
+                const response = await axios.post(endpoints.organization.removeMember, { userid, organizationid, memberid: memberId });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error removing member');
+                throw new Error(errorMessage);
+            }
+        },
+
+        retrieveMembers: async ({ userid, organizationid, session }: Omit<MemberParams, 'memberId' | 'email'>) => {
+            const axios = createClientAxios({ session });
+            try {
+                const response = await axios.post(endpoints.organization.retrieveMembers, { userid, organizationid });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error retrieving members');
+                throw new Error(errorMessage);
+            }
+        },
+
+        retrieveMembership: async ({ userid, session }: OrganizationParams) => {
+            const axios = createClientAxios({ session });
+
+            try {
+                const response = await axios.post(endpoints.organization.retrieveMembership, { userid });
+                return response.data;
+            } catch (error) {
+                const errorMessage = handleAxiosError(error, 'Error retrieving membership');
+                throw new Error(errorMessage);
+            }
+        },
+
+
+  retrieveSingleCategory: async ({ categoryid, session }: RetrieveCategoryParams) => {
     const axios = createClientAxios({ session });
 
     try {
-      const response = await axios.post(endpoints.retrieveCategory, {
-        categoryid,
-      });
+      const response = await axios.post(endpoints.retrieveCategory, { categoryid });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error retrieving telemedicine category",
-      );
+      const errorMessage = handleAxiosError(error, 'Error retrieving telemedicine category');
       throw new Error(errorMessage);
     }
   },
 
+
+
   organization: {
-    create: async ({
-      userid,
-      start_date,
-      end_date,
-      name,
-      duration,
-      plan_type,
-      amount,
-      user_limit,
-      session,
-    }: CreateOrganizationParams) => {
+    create: async ({ userid, start_date, end_date, name, duration, plan_type, amount, user_limit, session }: CreateOrganizationParams) => {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(endpoints.organization.create, {
-          userid,
-          start_date,
-          end_date,
-          name,
-          duration,
-          plan_type,
-          amount,
-          user_limit,
-        });
+        const response = await axios.post(endpoints.organization.create, { userid, start_date, end_date, name, duration, plan_type, amount, user_limit });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(
-          error,
-          "Error creating organization",
-        );
+        const errorMessage = handleAxiosError(error, 'Error creating organization');
         throw new Error(errorMessage);
       }
     },
@@ -215,78 +271,45 @@ const telemedicineApi = {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(endpoints.organization.my, {
-          userid,
-        });
+        const response = await axios.post(endpoints.organization.my, { userid });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(
-          error,
-          "Error retrieving organization",
-        );
+        const errorMessage = handleAxiosError(error, 'Error retrieving organization');
         throw new Error(errorMessage);
       }
     },
 
-    addMember: async ({
-      userid,
-      organizationid,
-      email,
-      session,
-    }: Omit<MemberParams, "memberId">) => {
+    addMember: async ({ userid, organizationid, email, session }: Omit<MemberParams, 'memberId'>) => {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(endpoints.organization.addMember, {
-          userid,
-          organizationid,
-          email,
-        });
+        const response = await axios.post(endpoints.organization.addMember, { userid, organizationid, email });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(error, "Error adding member");
+        const errorMessage = handleAxiosError(error, 'Error adding member');
         throw new Error(errorMessage);
       }
     },
 
-    removeMember: async ({
-      userid,
-      organizationid,
-      memberId,
-      session,
-    }: Omit<MemberParams, "email">) => {
+    removeMember: async ({ userid, organizationid, memberId, session }: Omit<MemberParams, 'email'>) => {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(endpoints.organization.removeMember, {
-          userid,
-          organizationid,
-          memberid: memberId,
-        });
+        const response = await axios.post(endpoints.organization.removeMember, { userid, organizationid, memberid: memberId });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(error, "Error removing member");
+        const errorMessage = handleAxiosError(error, 'Error removing member');
         throw new Error(errorMessage);
       }
     },
 
-    retrieveMembers: async ({
-      userid,
-      organizationid,
-      session,
-    }: Omit<MemberParams, "memberId" | "email">) => {
+    retrieveMembers: async ({ userid, organizationid, session }: Omit<MemberParams, 'memberId' | 'email'>) => {
       const axios = createClientAxios({ session });
       try {
-        const response = await axios.post(
-          endpoints.organization.retrieveMembers,
-          { userid, organizationid },
-        );
+        const response = await axios.post(endpoints.organization.retrieveMembers, { userid, organizationid });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(
-          error,
-          "Error retrieving members",
-        );
+        const errorMessage = handleAxiosError(error, 'Error retrieving members');
         throw new Error(errorMessage);
       }
     },
@@ -295,43 +318,28 @@ const telemedicineApi = {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(
-          endpoints.organization.retrieveMembership,
-          { userid },
-        );
+        const response = await axios.post(endpoints.organization.retrieveMembership, { userid });
         return response.data;
       } catch (error) {
-        const errorMessage = handleAxiosError(
-          error,
-          "Error retrieving membership",
-        );
+        const errorMessage = handleAxiosError(error, 'Error retrieving membership');
         throw new Error(errorMessage);
       }
     },
+
   },
 
-  makePayment: async ({
-    userid,
-    email,
-    amount,
-    session,
-  }: {
-    userid: string;
-    email: string;
-    amount: number;
-    session: Session;
-  }) => {
+  makePayment: async ({ userid, email, amount, session }: { userid: string, email: string, amount: number, session: Session }) => {
     const axios = createClientAxios({ session });
 
     try {
       const response = await axios.post(endpoints.makePayment, {
         userid,
         email,
-        amount,
+        amount
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Error making payment");
+      const errorMessage = handleAxiosError(error, 'Error making payment');
       throw new Error(errorMessage);
     }
   },
@@ -357,7 +365,7 @@ const telemedicineApi = {
     time,
     sessiontype,
     organization,
-    session,
+    session
   }: AppointmentData & { session: Session }) => {
     const axios = createClientAxios({ session });
 
@@ -386,10 +394,7 @@ const telemedicineApi = {
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error creating appointment",
-      );
+      const errorMessage = handleAxiosError(error, 'Error creating appointment');
       throw new Error(errorMessage);
     }
   },
@@ -400,7 +405,7 @@ const telemedicineApi = {
     start_time,
     end_time,
     date,
-    session,
+    session
   }: {
     userid: string;
     status?: string;
@@ -417,14 +422,11 @@ const telemedicineApi = {
         status,
         start_time,
         end_time,
-        date,
+        date
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error retrieving appointments",
-      );
+      const errorMessage = handleAxiosError(error, 'Error retrieving appointments');
       throw new Error(errorMessage);
     }
   },
@@ -432,7 +434,7 @@ const telemedicineApi = {
   retrieveSingleAppointment: async ({
     userid,
     appointmentid,
-    session,
+    session
   }: {
     userid: string;
     appointmentid: string;
@@ -443,14 +445,11 @@ const telemedicineApi = {
     try {
       const response = await axios.post(endpoints.retrieveSingleAppointment, {
         userid,
-        appointmentid,
+        appointmentid
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(
-        error,
-        "Error retrieving appointment",
-      );
+      const errorMessage = handleAxiosError(error, 'Error retrieving appointment');
       throw new Error(errorMessage);
     }
   },
@@ -458,7 +457,7 @@ const telemedicineApi = {
   endAppointment: async ({
     userid,
     appointmentid,
-    session,
+    session
   }: {
     userid: string;
     appointmentid: string;
@@ -469,11 +468,11 @@ const telemedicineApi = {
     try {
       const response = await axios.post(endpoints.endAppointment, {
         userid,
-        appointmentid,
+        appointmentid
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Error ending appointment");
+      const errorMessage = handleAxiosError(error, 'Error ending appointment');
       throw new Error(errorMessage);
     }
   },
@@ -482,11 +481,11 @@ const telemedicineApi = {
     userid,
     appointmentid,
     userupload,
-    session,
+    session
   }: {
     userid: string;
     appointmentid: string;
-    userupload: Array<{ name: string; upload: string }>;
+    userupload: Array<{ name: string, upload: string }>;
     session: Session;
   }) => {
     const axios = createClientAxios({ session });
@@ -495,11 +494,11 @@ const telemedicineApi = {
       const response = await axios.post(endpoints.upload, {
         userid,
         appointmentid,
-        userupload,
+        userupload
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Error uploading files");
+      const errorMessage = handleAxiosError(error, 'Error uploading files');
       throw new Error(errorMessage);
     }
   },
@@ -511,7 +510,7 @@ const telemedicineApi = {
     review,
     rating,
     recommend,
-    session,
+    session
   }: {
     userid: string;
     telemedicineid: string;
@@ -529,10 +528,10 @@ const telemedicineApi = {
         staffid,
         review,
         rating,
-        recommend,
+        recommend
       },
-      errorMessage: "Error creating review",
-      session,
+      errorMessage: 'Error creating review',
+      session
     });
   },
   updateNotification: async ({
@@ -541,7 +540,7 @@ const telemedicineApi = {
     email,
     sms,
     push,
-    session,
+    session
   }: {
     userid: string;
     appointmentid: string;
@@ -557,12 +556,13 @@ const telemedicineApi = {
         appointmentid,
         email,
         sms,
-        push,
+        push
       },
-      errorMessage: "Error updating notification preferences",
-      session,
+      errorMessage: 'Error updating notification preferences',
+      session
     });
   },
-};
+
+}
 
 export default telemedicineApi;
