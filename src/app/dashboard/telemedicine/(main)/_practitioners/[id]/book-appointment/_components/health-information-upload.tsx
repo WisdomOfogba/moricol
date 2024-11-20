@@ -211,6 +211,7 @@ export default function HealthInformationUpload({ nextStep }: PageProps) {
                   id="duration"
                   className="w-20"
                   defaultValue="3"
+
                 />
                 <Select defaultValue="days">
                   <SelectTrigger className="w-[100px]">

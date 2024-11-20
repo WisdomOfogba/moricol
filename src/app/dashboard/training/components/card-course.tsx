@@ -3,7 +3,7 @@ import { CourseData } from "@/definition";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CourseCard({courseData, type }: {courseData: CourseData, type: string} ) {
+export default function CourseCard({ courseData, type }: { courseData: CourseData, type: string }) {
   return (
     <Link href={`/dashboard/training/course/${type.toLowerCase()}/${courseData._id}`} className="block">
       <article className="border bg-white">
@@ -22,13 +22,13 @@ export default function CourseCard({courseData, type }: {courseData: CourseData,
           {/* Badge */}
           <div className="mb-2.5 flex items-center justify-between">
             <span>
-            {courseData.category && (
-              <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
-              {courseData.category}
+              {courseData.category && (
+                <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
+                  {courseData.category}
+                </span>
+              )}
+
             </span>
-            )}
-            
-                        </span>
             <p className="text-xs text-[#E29A13]">{courseData.level && `LEVEL ${courseData.level}`}</p>
           </div>
 

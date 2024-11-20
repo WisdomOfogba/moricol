@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 "use client";
+=======
+"use client"
+import { ArrowRightSvg } from "@/components/svgs";
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 import Link from "next/link";
 import CartDetails from "../components/cart-details";
 import { useCart } from "@/lib/TrainingCartContext";
@@ -19,9 +24,13 @@ export default function ShoppingCard() {
       <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
+<<<<<<< HEAD
         <p className="text-sm text-[#6E7485]">
           <Link href="/dashboard/training">Home</Link>/ Shopping Cart
         </p>
+=======
+        <p className="text-sm text-[#6E7485]"><Link href="/dashboard/training">Home</Link>/ Shopping Cart</p>
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       </section>
 
       <div className="px-14">
@@ -58,6 +67,7 @@ export default function ShoppingCard() {
               <hr />
               <p className="flex items-center justify-between text-[#202029]">
                 Total:{" "}
+<<<<<<< HEAD
                 <span className="text-2xl font-semibold">₦{sum} NAIRA</span>
               </p>
               <MakeTrainingPaymentButton
@@ -67,6 +77,17 @@ export default function ShoppingCard() {
                   coursetype: cart.coursetype
                 }))}
               />
+=======
+                <span className="text-2xl font-semibold">₦{sum - (sum * 0.08) + 17.99} NAIRA</span>
+              </p>
+              <Link
+                href={routes.TRAININGCHECKOUT}
+                className="flex w-full items-center justify-center gap-x-3 bg-primary-500 py-3 font-semibold text-white"
+              >
+                Proceed to Checkout{" "}
+                <ArrowRightSvg stroke="#ffffff" className="-rotate-180" />
+              </Link>
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
               <hr className="my-2" />
               <div>
                 <h3 className="mb-4 text-sm font-medium text-[#1D2026]">

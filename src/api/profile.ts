@@ -55,7 +55,24 @@ export const profileApi = {
         }
     },
 
+<<<<<<< HEAD
    
+=======
+    updateProfile: async (profile: ProfileData & { userid: string }, session: Session) => {
+        const axios = createClientAxios({ session });
+
+        try {
+            const response = await axios.post(endpoints.updateProfile, {
+                ...profile,
+                userid: profile.userid
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = handleAxiosError(error, 'Error updating profile');
+            throw new Error(errorMessage);
+        }
+    },
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
 
   updateProfile: async (
     profile: ProfileData & { userid: string },

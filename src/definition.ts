@@ -249,7 +249,7 @@ export type OrganizationMember = {
     lastname: string;
     email: string;
     phone: string;
-  };
+  }
   organizationid: {
     _id: string;
     name: string;
@@ -273,6 +273,11 @@ export interface Demographic {
   genetype: string;
   reports: string[];
   allergy: string[];
+  emergency_contact: string;
+  emergency_name: string;
+  kin_name: string;
+  kin_relationship: string;
+  kin_number: string;
 }
 
 export interface ProfileRequestType {
@@ -291,13 +296,17 @@ export interface ProfileRequestType {
   language: string;
   demographic: Demographic;
 }
-
 export type ProfileData = {
   demographic: {
     bloodgroup: string;
     genotype: string;
     allergy: string[] | string;
     reports: string[];
+    emergency_contact: string;
+    emergency_name: string;
+    kin_name: string;
+    kin_relationship: string;
+    kin_number: string;
   };
   mail_on: boolean;
   _id: string;

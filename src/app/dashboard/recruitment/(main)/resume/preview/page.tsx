@@ -7,10 +7,12 @@ import { routes } from "@/constants/routes";
 import { UserResumeResponse, UserDetails } from "@/definition";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import { Section, ExperienceItem, CertificationItem, ContactItem, SkillItem, EducationItem, LanguageItem, HobbyItem, ReferenceItem } from "./_components";
-import Image from "next/image";
 export const revalidate = 10;
 
-
+export const metadata = {
+  title: 'Preview Resume',
+  description: 'Preview Resume'
+};
 
 async function getResume() {
   const session = await getUserSession();
@@ -51,6 +53,10 @@ async function PreviewResume() {
         <h2 className="mb-4 text-2xl font-bold">Preview Resume</h2>
         <div className="flex w-full justify-end gap-4 md:gap-8">
           <div className="space-x-4">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
             <Link href={routes.RECRUITMENTRESUME} className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
               EDIT RESUME
             </Link>
@@ -218,7 +224,14 @@ async function PreviewResume() {
           </Section>
           <Section title="CV" editable={true} editLink={routes.RECRUITMENT_PROFILE_PICTURE}>
             <div className="rounded bg-red-100 p-4">
-              <Image src={data.upload.cv} alt="CV" width={400} height={400} />
+              {/* <Image src={data.upload.cv} alt="CV" width={400} height={400} /> */}
+              {data.upload.cv && (
+                <iframe
+                  src={data.upload.cv}
+                  className="w-full h-[600px] rounded"
+                  title="CV Preview"
+                />
+              )}
             </div>
             {!data.upload.cv && (
               <span className="flex w-full flex-col items-center justify-center py-8 text-gray-500">

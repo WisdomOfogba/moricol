@@ -12,6 +12,11 @@ import resumeApi from "@/api/local-resume";
 export const revalidate = 10;
 
 
+export const metadata = {
+  title: 'Preview Foreign Resume',
+  description: 'Preview Foreign Resume'
+};
+
 
 async function getResume() {
   const session = await getUserSession();
@@ -52,6 +57,10 @@ async function PreviewForeignResume() {
         <h2 className="mb-4 text-2xl font-bold">Preview Resume</h2>
         <div className="flex w-full justify-end gap-4 md:gap-8">
           <div className="space-x-4">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
             <Link href={routes.RECRUITMENT_FOREIGN_RESUME} className="rounded border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50">
               EDIT RESUME
             </Link>
@@ -218,7 +227,16 @@ async function PreviewForeignResume() {
             )}
           </Section>
           <Section title="CV" editable={true} editLink={routes.RECRUITMENT_FOREIGN_PROFILE_PICTURE}>
-            <div className="rounded bg-red-100 p-4">CV</div>
+            <div className="rounded bg-red-100 p-4">
+              {/* <Image src={data.upload.cv} alt="CV" width={400} height={400} /> */}
+              {data.upload.cv && (
+                <iframe
+                  src={data.upload.cv}
+                  className="w-full h-[600px] rounded"
+                  title="CV Preview"
+                />
+              )}
+            </div>
             {!data.upload.cv && (
               <span className="flex w-full flex-col items-center justify-center py-8 text-gray-500">
                 <p className="text-lg text-secondary-500">No CV added yet</p>
