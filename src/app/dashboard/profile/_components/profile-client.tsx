@@ -30,11 +30,7 @@ import { useRouter } from "next/navigation";
 export default function ProfileClient({ profileData }: { profileData: ProfileData }) {
   const [isAcctEditable, setIsAcctEditable] = useState(false);
   const [isRecordEditable, setIsRecordEditable] = useState(false);
-<<<<<<< HEAD
-  const [editedProfileData, setEditedProfileData] = useState<ProfileData>({ ...profileData, demographic: { ...profileData.demographic, allergy: Array.isArray(profileData.demographic.allergy) ? profileData.demographic.allergy.join(", ") : profileData.demographic.allergy } });
-=======
   const [editedProfileData, setEditedProfileData] = useState<ProfileData>({ ...profileData, demographic: { ...profileData.demographic, allergy: Array.isArray(profileData.demographic.allergy) ? profileData.demographic.allergy.join(", ") : profileData.demographic.allergy, genotype: profileData.demographic.genotype } });
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
@@ -211,8 +207,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
 
               <div>
-<<<<<<< HEAD
-=======
+
                 <h3 className="mb-2 text-lg font-semibold">Next of Kin</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
@@ -281,7 +276,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
 
               <div>
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
+
                 <Label htmlFor="uploadMedical">
                   {isRecordEditable ? "Upload Scans or Medical Report" : "Scans & Medical Report"}
                 </Label>

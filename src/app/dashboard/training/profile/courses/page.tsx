@@ -16,7 +16,7 @@ async function getCourses() {
     throw new Error('User session is invalid or user ID is missing');
   }
   try {
-    const {data: Courses}: {data: courseorder[]} = await CourseApi.getCourse({
+    const { data: Courses }: { data: courseorder[] } = await CourseApi.getCourse({
       userid: session.user.id,
       session,
     });

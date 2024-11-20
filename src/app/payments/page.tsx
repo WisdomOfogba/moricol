@@ -12,10 +12,8 @@ import { Session } from "next-auth";
 import { landingPageServices, servicesDashboardLinks } from "@/constants";
 import loanApi from "@/api/loan";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/select";
-<<<<<<< HEAD
 import { CourseApi } from "@/api/training";
-=======
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
+
 import telemedicineApi from "@/api/telemedicine";
 import { routes } from "@/constants/routes";
 
@@ -65,11 +63,11 @@ function PaymentsPage() {
                         await jobsApi.updateJobPostPayment({ userid: paymentData.userid, ref: reference, jobpostid: paymentData.jobpostid, amount: paymentData.amount, session: session as Session });
                     } else if (storedData.service === 'medicalLoan') {
                         await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
-<<<<<<< HEAD
+
                     } else if (storedData.service === 'training') {
-                        await CourseApi.updateCoursePayment({ userid: paymentData.userid, session: session as Session , paystackref: reference, courses: paymentData.courses});
-=======
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
+
+                        await CourseApi.updateCoursePayment({ userid: paymentData.userid, session: session as Session, paystackref: reference, courses: paymentData.courses });
+
                     } else if (storedData.service === 'telemedicine') {
                         const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
 
