@@ -43,7 +43,6 @@ export default function QuizSection({ quiz, lessonid, courseid, sectionid }: { q
     setLoading(true);
     let calculatedScore = 0;
 
-    // Calculate score locally
     quiz.questions.forEach((question, index) => {
       const userAnswer = answers[index];
       const correctOption = question.options.find((option) => option.isCorrect);
