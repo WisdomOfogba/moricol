@@ -99,10 +99,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -111,10 +107,6 @@ const onlinePharmacyApi = {
     session: Session,
     category: string,
   ): Promise<SubCategoryParams> => {
-<<<<<<< HEAD
-=======
-    console.log(category);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
     const axios = createClientAxios({ session: session });
 
     try {
@@ -129,10 +121,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -154,10 +142,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -177,10 +161,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -195,10 +175,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -206,10 +182,6 @@ const onlinePharmacyApi = {
     const axios = createClientAxios({ session: session });
 
     try {
-<<<<<<< HEAD
-=======
-      console.log(process.env.NEXT_PUBLIC_API_URL);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL +
         apiEndpoints.productCategory.retrieveBestProduct,
@@ -217,10 +189,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching Products");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
@@ -228,10 +196,6 @@ const onlinePharmacyApi = {
     session: Session,
     productid: string | string[],
   ): Promise<SingProductParams> => {
-<<<<<<< HEAD
-=======
-    console.log(productid);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
     const axios = createClientAxios({ session: session });
 
     try {
@@ -246,10 +210,6 @@ const onlinePharmacyApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error fetching categories");
-<<<<<<< HEAD
-=======
-      console.log(errorMessage);
->>>>>>> 2d2a2a37f30e333d63524f8c747bf7f7d6888b86
       throw new Error(errorMessage);
     }
   },
