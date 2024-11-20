@@ -589,12 +589,36 @@ export type SingleCourse = {
   ];
   review: string[];
   course: {
+    _id: string;
     title: string;
+    price: number;
+    rating: number;
     thumbnail: string;
     description: string;
-    _id: string;
-    price: string;
-    rating: string;
+    duration: string;
+    instructors: [
+      {
+        instructor: string;
+        _id: string;
+      },
+    ];
+    requirement: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    for_who: [];
+    benefits: [
+      {
+        option: string;
+        _id: string;
+      },
+    ];
+    coursetype: string;
+    createdAt: string;
+    __v: number;
+    level: number;
   };
   courseorder: courseorder;
 };

@@ -12,7 +12,7 @@ import {
 } from "../profile/messages/layout";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { archive } from "@/definition";
+import { archive, messaging } from "@/definition";
 
 export default function ClientMessagingPage({
     archive,
@@ -22,7 +22,7 @@ export default function ClientMessagingPage({
 }: {
     archive: archive[];
   adminid: string;
-  messages: any[];
+  messages: messaging[];
   session: Session; // session is passed down from the server component
 }) {
   const [messages, setMessages] = useState(initialMessages);
@@ -42,7 +42,7 @@ export default function ClientMessagingPage({
       const response = await sendMessage({
         adminid,
         message: newMessage,
-        session, // Pass session down to the API
+        session,    
       });
 
       console.log("Message sent successfully:", response);
@@ -106,7 +106,7 @@ export default function ClientMessagingPage({
 
       {/* Messaging Body */}
       <main className="no-scrollbar grid max-h-[678px] gap-y-6 overflow-y-auto px-6 py-12">
-        {messages.map((msg) =>
+        {[...messages].reverse().map((msg) =>
           msg.sender === "user" ? (
             <OutGoingMessage key={msg._id} msg={msg} />
           ) : (
