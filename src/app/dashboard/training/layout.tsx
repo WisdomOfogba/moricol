@@ -7,7 +7,7 @@ import { CartProvider } from "@/lib/TrainingCartContext";
 import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
-import { UserCircle2 } from "lucide-react";
+import { LayoutDashboard, UserCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -54,7 +54,7 @@ async function ToolBar() {
 
       {/* Button and Input */}
       <div className="mx-auto items-center justify-center flex">
-        <Link href="/dashboard/training">Training</Link>
+        <Link href="/dashboard/training"><LayoutDashboard /></Link>
       </div>
 
       {/* Icon and Profile */}
