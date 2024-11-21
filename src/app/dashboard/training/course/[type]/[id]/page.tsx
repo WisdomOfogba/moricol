@@ -43,6 +43,9 @@ async function getOrder() {
 }
 
 const page = async ({ params: { id, type } }: { params: { id: string, type: string } }) => {
+  if(id === "undefined") {
+    return notFound()
+  }
   const {courseDetails, courseData, courseDetailsReview} = await getCoursesData({type, id});
   const Order = await getOrder()
   const isBought = Order.some(order => order.courseid === id);

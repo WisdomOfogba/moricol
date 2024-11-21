@@ -26,6 +26,9 @@ async function getSingle({courseid, courseorderid}: {courseid: string, courseord
 }
 
 const page = async ({ params: {id, courseid} }: { params: { id: string, courseid: string } }) => {
+  if (courseid === id){
+    return notFound()
+  }
   const singleCourse = await getSingle({courseid: id, courseorderid: courseid})
   return (
     <CourseDetail singleCourse={singleCourse} />

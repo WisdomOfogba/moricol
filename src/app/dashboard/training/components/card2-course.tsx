@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CourseCard2({courseData, type }: {courseData: courseorder, type: string} ) {
+  if(courseData.courseid?._id === undefined) {
+    return;
+  }
   return (
     <Link href={`/dashboard/training/course/${type.toLowerCase()}/${courseData.courseid?._id}`} className="block">
       <article className="border bg-white">
@@ -23,7 +26,7 @@ export default function CourseCard2({courseData, type }: {courseData: courseorde
           <div className="mb-2.5 flex items-center justify-between">
             <span>
               <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
-              No category
+              {type}
             </span>
             
                         </span>

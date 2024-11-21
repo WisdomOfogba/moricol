@@ -2,11 +2,11 @@
 
 import {
   ArrowRightSvg,
-  Clipboard,
+  // Clipboard,
   ClockSvg,
   // DollarSignSvg,
-  Envelop,
-  Facebook,
+  // Envelop,
+  // Facebook,
   GreenCheckmarCircle,
   NetworkSvg,
   // NotebookSvg,
@@ -16,9 +16,9 @@ import {
   StarSVG,
   // TrophySvg,
   // TvSvg,
-  Twitter,
+  // Twitter,
   TwoUserCutOffSvg,
-  Whatsapp,
+  // Whatsapp,
 } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,12 +67,12 @@ const onlineCourseDescriptionDetailLink = [
   },
 ];
 
-const socialLinks = [
-  { icon: <Facebook />, key: "facebook" },
-  { icon: <Twitter />, key: "twitter" },
-  { icon: <Envelop />, key: "mail" }, // Changed Envelop to Mail as it's not in lucide-react
-  { icon: <Whatsapp />, key: "whatsapp" },
-];
+// const socialLinks = [
+//   { icon: <Facebook />, key: "facebook" },
+//   { icon: <Twitter />, key: "twitter" },
+//   { icon: <Envelop />, key: "mail" }, // Changed Envelop to Mail as it's not in lucide-react
+//   { icon: <Whatsapp />, key: "whatsapp" },
+// ];
 
 export default function CourseDetail({
   course,
@@ -194,7 +194,7 @@ export default function CourseDetail({
                 </>
               ) : (
                 <>
-                  {courseDescriptionDetailLink.map(({ name, link }) => (
+                  {type !== "classroom" && courseDescriptionDetailLink.map(({ name, link }) => (
                     <li className="w-full" key={name}>
                       <button
                         className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
@@ -209,7 +209,7 @@ export default function CourseDetail({
             </ul>
           </section>
 
-          {activeLink === "overview" && (
+          {type !== "classroom" && activeLink === "overview" && (
             <>
               {/* Description */}
               <section>
@@ -501,7 +501,7 @@ function CourseDetailSummary({
               View Course
             </Link>
           </div>
-          <div className="flex gap-x-3">
+          <div className="flex gap-x-3 p-6">
             <Addwishlist course={course} type={type} />
           </div>
         </>
@@ -553,26 +553,6 @@ function CourseDetailSummary({
           </ul>
         </div>
       )}
-
-      <div className="border-t p-6">
-        <h3 className="mb-4 font-medium text-[#1D2026]">Share this course:</h3>
-
-        <div className="flex gap-x-2">
-          <button className="flex grow items-center gap-x-3 bg-[#F5F7FA] px-5 py-3.5 text-sm font-medium">
-            <Clipboard />
-            Copy link
-          </button>
-
-          {socialLinks.map(({ icon, key }) => (
-            <button
-              key={key}
-              className="flex h-12 w-12 items-center justify-center bg-[#F5F7FA]"
-            >
-              {icon}
-            </button>
-          ))}
-        </div>
-      </div>
     </article>
   );
 }
