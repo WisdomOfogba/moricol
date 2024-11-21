@@ -77,9 +77,17 @@ export default async function TrainingProfileWishlists() {
 
 async function Wishlists({ course }: { course: courseorder }) {
   const Order = await getOrder();
-  const isBought = Order.some((order) => order.courseid === course.courseid?._id);
-  const courseorder = Order.find(order => order.courseid === course.courseid?._id)
-  const courseorderid = courseorder?._id
+  const isBought = Order.some(
+    (order) => order.courseid === course.courseid?._id,
+  );
+  const courseorder = Order.find(
+    (order) => order.courseid === course.courseid?._id,
+  );
+  const courseorderid = courseorder?._id;
+
+  if(course.courseid?._id === undefined || courseorderid === course._id) {
+    return;
+  }
 
   return (
     <article className="grid grid-cols-[3fr_1fr_2fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
@@ -99,19 +107,20 @@ async function Wishlists({ course }: { course: courseorder }) {
           </div>
         </>
       ) : (
-        <div className="flex gap-x-3">
-          <MakeTrainingPaymentButton
-            button="now"
-            courses={[
-              {
-                coursetype: course.coursetype,
-                courseid: course._id,
-                amount: course.amount,
-              },
-            ]}
-          />
-          {/* <AddCart course={course} /> */}
-        </div>
+        <>
+          {course._id !== undefined && (
+            <MakeTrainingPaymentButton
+              button="now"
+              courses={[
+                {
+                  coursetype: course.coursetype,
+                  courseid: course._id,
+                  amount: course.amount,
+                },
+              ]}
+            />
+          )}
+        </>
       )}
     </article>
   );

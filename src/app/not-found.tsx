@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -10,9 +11,9 @@ export default function NotFound() {
       <p className="mt-9 font-medium text-white">
         Oops! it seems you followed a backlink
       </p>
-      <button className="font-montserrat mt-6 w-full max-w-[697px] rounded border border-[#4B0082] bg-white py-3 font-medium">
+      <Link href="/" className="font-montserrat mt-6 w-full max-w-[697px] rounded border flex items-center justify-center border-[#4B0082] bg-white py-3 font-medium">
         GO BACK TO HOME
-      </button>
+      </Link>
     </section>
   );
 }

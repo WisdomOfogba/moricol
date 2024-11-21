@@ -11,20 +11,22 @@ import { useState } from "react";
 const MakeTrainingPaymentButton = ({
   courses,
   button,
+  type,
 }: {
   courses: Array<{
     amount: number;
     courseid: string;
     coursetype: string;
-  }>
+  }>;
   button?: string;
+  type?: any;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
   const totalPrice = courses.reduce((sum, course) => sum + course.amount, 0);
-  const userid = session?.user.id
+  const userid = session?.user.id;
 
   const handlePay = async () => {
     storeToLocalStorage({
@@ -52,12 +54,23 @@ const MakeTrainingPaymentButton = ({
   return (
     <>
       {button === "now" ? (
-        <button
-          className="inline-block w-full bg-primary-100 p-3 text-center text-lg font-semibold text-primary-500"
-          onClick={handlePay}
-        >
-          {isLoading ? "Loading..." : "Buy now"}
-        </button>
+        <>
+          {type ? (
+            <button
+              className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
+              onClick={handlePay}
+            >
+              {isLoading ? "Loading..." : "Proceed to cart"}
+            </button>
+          ) : (
+            <button
+              className="flex w-full items-center justify-center bg-primary-500 p-3 text-lg font-semibold text-white"
+              onClick={handlePay}
+            >
+              {isLoading ? "Loading..." : "Buy now"}
+            </button>
+          )}
+        </>
       ) : (
         <button
           className="inline-block w-full border border-[#E9EAF0] py-3 text-center text-sm font-semibold"

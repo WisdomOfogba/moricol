@@ -62,6 +62,7 @@ export default function ShoppingCard() {
               </p>
               <MakeTrainingPaymentButton
               button="now"
+              type
                 courses={cart.map((cart) => ({
                   courseid: cart._id,
                   amount: cart.price,

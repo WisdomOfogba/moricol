@@ -120,6 +120,9 @@ function SummaryCard({ color, icon, total, title }: SummaryCardProps) {
 async function MyCourseCard({ progress, course }: { progress: number, course: {courseid: string, _id: string} }) {
 
   const singleCourse = await getSingle({courseid: course.courseid, courseorderid: course._id})
+  if(singleCourse.courseorder.courseid?._id === undefined) {
+    return;
+  }
 
   return (
     <article className="border border-[#E9EAF0] bg-white">

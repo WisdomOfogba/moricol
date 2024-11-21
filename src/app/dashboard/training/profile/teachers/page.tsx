@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { StarSVG } from "@/components/svgs";
+// import { StarSVG } from "@/components/svgs";
 import { instructors } from "@/definition";
 import { CourseApi } from "@/api/training";
 import { getUserSession } from "@/lib/auth";
@@ -67,18 +67,10 @@ function InstructorCard({instructor}: {instructor: instructors}) {
         </div>
       </div>
       <div className="border-t border-t-[#E9EAF0] px-5 py-4">
-        <div className="mb-4 flex justify-between text-sm font-medium text-[#4E5566]">
-          <p className="flex items-center gap-x-1">
-            <StarSVG fill="#FD8E1F" /> 5.0
-          </p>
-          <p>
-            343,334 <span className="text-sm font-normal">Students</span>
-          </p>
-        </div>
 
         <Link
         href={`/dashboard/training/profile/messages/${instructor._id}`}
-          className={`rounded-none border-none bg-primary-100 px-4 font-semibold text-primary-500 hover:bg-primary-500 hover:text-white w-full py-6 flex items-center justify-center`}
+          className={`rounded-none border-none bg-primary-100 px-4 font-semibold text-primary-500 hover:bg-primary-500 hover:text-white w-full py-4 flex items-center justify-center`}
         >
           Send Message
         </Link>

@@ -94,7 +94,7 @@ export default function ClientMessagingPage({
           </div>
           <div className="text-sm text-[#4E5566]">
             <h3 className="mb-2 text-lg font-medium text-[#1D2026]">
-              {admin && admin.admin_details.name}
+              {admin ? admin.admin_details.name : "New Instructor"}
             </h3>
             <p>online</p>
           </div>
