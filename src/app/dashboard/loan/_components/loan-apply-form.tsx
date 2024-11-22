@@ -198,7 +198,7 @@ function LoanApplyForm({
               <Label className="block pb-2" htmlFor="bvn">
                 BVN
               </Label>
-              <Input id="bvn" value={applyData.bvn} onChange={(e) => {
+              <Input autoFocus id="bvn" value={applyData.bvn} onChange={(e) => {
                 const numericValue = e.target.value.replace(/[^0-9]/g, '');
                 handleFieldChangeAndUpdate('bvn', numericValue);
               }} placeholder="Please fill your BVN (10+ digits)" />

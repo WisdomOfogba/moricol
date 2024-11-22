@@ -202,7 +202,7 @@ const jobsApi = {
                 userid,
                 jobpostid,
                 amount,
-                ref
+                paystackref: ref
             });
             return response.data;
         } catch (error) {

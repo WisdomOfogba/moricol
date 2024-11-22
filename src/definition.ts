@@ -371,7 +371,7 @@ export type AppointmentScheduleData = {
   } | null;
 };
 
-export type AppointmentStatus = "" | "ongoing" | "upcoming" | "past";
+export type AppointmentStatus = "" | "ongoing" | "accepted" | "past";
 
 export type SingleAppointmentData = {
   time: {
@@ -685,7 +685,7 @@ export type archive = {
   admin_details: {
     name: string;
   };
-};
+}
 
 export type messaging = {
   _id: string;
@@ -776,3 +776,13 @@ export type ReviewData = {
   __v: number
 }
   */
+
+export type NotesData = {
+  _id: string,
+  title: string,
+  comment: string,
+  staffid: string,
+  appointmentid: string,
+  createdAt: string,
+  __v: number
+}
