@@ -143,7 +143,7 @@ function CredentialsApply({ job_id }: { job_id: string }) {
       body: formData
     });
     const data = await response.json();
-    return data.url;
+    return data.secure_url;
   };
 
   const uploadFiles = async () => {

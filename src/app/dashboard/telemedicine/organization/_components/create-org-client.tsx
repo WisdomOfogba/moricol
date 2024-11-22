@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import SelectPlan from './select-plan'
 import { Plan } from '@/definition'
@@ -9,16 +9,17 @@ import telemedicineApi, { CreateOrganizationParams } from '@/api/telemedicine'
 import { useSnackbar } from 'notistack'
 import { Session } from 'next-auth'
 import dayjs from 'dayjs'
-import { routes } from '@/constants/routes'
+import { storeToLocalStorage } from '@/util/store-to-localstorage'
 
 interface CreateOrgClientProps {
     availablePlans: Plan[]
 }
 
 export default function CreateOrgClient({ availablePlans }: CreateOrgClientProps) {
-    const router = useRouter()
     const { data: session } = useSession()
     const { enqueueSnackbar } = useSnackbar()
+    const pathname = usePathname();
+
 
     const [selectedPlan, setSelectedPlan] = useState<{
         planIndex: number
@@ -58,13 +59,16 @@ export default function CreateOrgClient({ availablePlans }: CreateOrgClientProps
 
         try {
             setLoading(true)
-            await telemedicineApi.organization.create({
-                ...org
-            })
+            storeToLocalStorage({ service: 'telemedicine_org_creation', link: pathname, toSend: org })
 
 
-            enqueueSnackbar('Organization created successfully', { variant: 'success' })
-            router.push(routes.TELEMEDICINE_ORGANIZATION)
+            const response = await telemedicineApi.makePayment({
+                userid: session?.user.id as string,
+                email: session?.user.email as string,
+                amount: Number(availablePlans[selectedPlan.planIndex].durations[selectedPlan.durationIndex].price),
+                session: session as Session
+            });
+            window.open(response.data, '_self');
 
         } catch (error) {
             enqueueSnackbar('Failed to create organization', { variant: 'error' })

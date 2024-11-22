@@ -219,7 +219,7 @@ export default function DateServiceSelect({ service, handleUpdateAppointmentData
                     <h3>Select communication methods:</h3>
                     <div
                         className={`flex items-center space-x-2 rounded-lg p-2 cursor-pointer ${appointmentData?.sessiontype.audio ? 'bg-green-100' : 'bg-gray-50'}`}
-                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, audio: !appointmentData?.sessiontype.audio })}
+                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, audio: !appointmentData?.sessiontype.audio, chat: false, video: false })}
                     >
                         <div className="rounded-lg bg-white p-2">
                             <Phone className="text-blue-500" />
@@ -233,7 +233,7 @@ export default function DateServiceSelect({ service, handleUpdateAppointmentData
                     </div>
                     <div
                         className={`flex items-center space-x-2 rounded-lg p-2 cursor-pointer ${appointmentData?.sessiontype.chat ? 'bg-green-100' : 'bg-gray-50'}`}
-                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, chat: !appointmentData?.sessiontype.chat })}
+                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, chat: !appointmentData?.sessiontype.chat, audio: false, video: false })}
                     >
                         <div className="rounded-lg bg-white p-2">
                             <MessageSquare className="text-primary-500" />
@@ -247,7 +247,7 @@ export default function DateServiceSelect({ service, handleUpdateAppointmentData
                     </div>
                     <div
                         className={`flex items-center space-x-2 rounded-lg p-2 cursor-pointer ${appointmentData?.sessiontype.video ? 'bg-green-100' : 'bg-gray-50'}`}
-                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, video: !appointmentData?.sessiontype.video })}
+                        onClick={() => handleUpdateAppointmentData("sessiontype", { ...appointmentData?.sessiontype, video: !appointmentData?.sessiontype.video, audio: false, chat: false })}
                     >
                         <div className="rounded-lg bg-white p-2">
                             <Video className="text-purple-500" />
