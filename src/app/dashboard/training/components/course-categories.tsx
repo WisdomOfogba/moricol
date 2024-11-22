@@ -40,7 +40,7 @@ export default function CourseCategories({ courseData }: {
         <div className="flex justify-between">
           <div className="flex gap-x-6">
             <FilterBtn />
-            <div className="flex w-[26rem] items-center gap-x-3 border border-[#E9EAF0] px-4 py-3 text-[#4E5566] has-[:focus]:border-primary-500 has-[:focus]:bg-primary-50">
+            <div className="flex w-[26rem] sm:w-[23rem] lg:w-[26rem] items-center gap-x-3 border border-[#E9EAF0] px-4 py-3 text-[#4E5566] has-[:focus]:border-primary-500 has-[:focus]:bg-primary-50">
               <SearchSvg />
               <input
                 type="text"
@@ -50,7 +50,7 @@ export default function CourseCategories({ courseData }: {
             </div>
           </div>
 
-          <div className="flex items-center gap-x-6">
+          <div className="lg:flex items-center gap-x-6 hidden">
             <p className="text-sm text-[#4E5566]">Sort by:</p>
             <button className="flex w-52 items-center justify-between border border-[#E9EAF0] px-4 py-3 text-[#4E5566]">
               Trending <ChevronDownSvg />
@@ -58,7 +58,7 @@ export default function CourseCategories({ courseData }: {
           </div>
         </div>
 
-        <div className="flex items-center justify-between pb-4 pt-6">
+        <div className="lg:flex hidden items-center justify-between pb-4 pt-6">
           <div className="flex gap-x-3 text-sm">
             <p className="#1D2026">Suggestion:</p>
             <ul className="flex gap-x-3 text-primary-500">{suggestionsList}</ul>
@@ -73,7 +73,7 @@ export default function CourseCategories({ courseData }: {
 
       <ul className="mb-8 flex w-full justify-between">{categoriesList}</ul>
 
-      <div className="grid grid-cols-5 gap-x-6 gap-y-7 bg-[#F5F7FA] px-14 py-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-7 bg-[#F5F7FA] px-14 py-8">
         {/* <ul className="grid gap-y-6">
           <FilterContainer title="Duration">
             <CheckboxListItem label={{ text: "BUNDLE 1" }} count={345} />
@@ -104,7 +104,7 @@ export default function CourseCategories({ courseData }: {
 
 function FilterBtn() {
   return (
-    <button className="flex items-center gap-x-6 border border-primary-500 px-6 py-3">
+    <button className="sm:flex hidden items-center gap-x-6 border border-primary-500 px-6 py-3">
       <FilterSVG /> <span>Filter</span>
       <span className="bg-primary-500 px-1.5 py-1 text-white">3</span>
     </button>

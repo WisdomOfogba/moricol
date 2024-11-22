@@ -29,7 +29,7 @@ const CartDetails = () => {
                   <CircleCancel />
                 </button>
                 <article className="flex gap-x-5 text-[#1D2026]">
-                  <div className="relative h-[120px] w-40 overflow-hidden">
+                  <div className="relative h-[120px] w-40 overflow-hidden hidden: lg:flex">
                     <Image
                       src={cart.thumbnail}
                       alt=""

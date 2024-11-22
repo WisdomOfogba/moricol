@@ -61,7 +61,7 @@ export default async function TrainingProfileLayout({
             </div>
           </div>
 
-          <ul className="flex justify-between gap-x-6">{profileLinksList}</ul>
+          <ul className="flex justify-between w-full overflow-auto gap-x-6">{profileLinksList}</ul>
         </article>
       </div>
       {children}

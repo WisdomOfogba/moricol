@@ -53,7 +53,7 @@ export default async function TrainingProfile() {
           Dashboard
         </h2>
 
-        <div className="flex gap-x-6">
+        <div className="flex flex-wrap gap-6 items-center">
           <SummaryCard
             color="#F9EBD0"
             icon={<PlaySVG />}
@@ -90,7 +90,7 @@ export default async function TrainingProfile() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-4 justify-between gap-x-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 justify-between gap-6">
           {dashboard.courses.map((item, i) => (
             <MyCourseCard key={i} progress={item.progress} course={item} />
           ))}

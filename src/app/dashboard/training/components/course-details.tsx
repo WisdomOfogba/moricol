@@ -101,10 +101,10 @@ export default function CourseDetail({
   return (
     <main className="pb-20">
       <section className="flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
-        <div className="flex gap-x-4">
+        <div className="flex gap-x-4 items-center">
           <PrevPageBtn />
           <div>
-            <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
+            <h1 className="mb-3 text-base sm:text-lg font-medium text-[#1D2026] relative">
               {course?.title || course?.bundle}
             </h1>
             <CourseTimeLecturesSection
@@ -113,10 +113,10 @@ export default function CourseDetail({
             />
           </div>
         </div>
-        <p className="text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
+        <p className="text-lg lg:text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
       </section>
 
-      <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
+      <section className="mb-16 flex flex-col xl:flex-row items-center xl:items-start justify-between gap-6 px-14 py-6">
         {/* Right hand side */}
         <div className="grid w-full gap-y-10">
           {/* Heading */}
@@ -128,11 +128,11 @@ export default function CourseDetail({
               <span className="mx-2">{">"}</span>
             </div>
 
-            <h2 className="mb-6 text-3xl font-semibold">
+            <h2 className="mb-6 text-xl sm:text-3xl font-semibold">
               {course.title || course.bundle}
             </h2>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between w-full">
               <article className="flex items-center gap-x-3">
                 <div className="flex">
                   <div className="relative h-[50px] w-[50px] overflow-hidden rounded-full border-[3px] border-white">
@@ -141,7 +141,7 @@ export default function CourseDetail({
                 </div>
                 <div>
                   <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
-                  <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
+                  <h3 className="text-medium flex flex-wrap items-center gap-x-1.5 text-[#1D2026]">
                     {course.instructors.map((instructor) => (
                       <>
                         <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
@@ -151,7 +151,7 @@ export default function CourseDetail({
                   </h3>
                 </div>
               </article>
-              <div className="flex items-center gap-x-2">
+              <div className="hidden sm:flex items-center gap-x-2">
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
                   {course?.rating}{" "}
@@ -170,6 +170,7 @@ export default function CourseDetail({
               <Image
                 fill
                 src={course.thumbnail}
+                className="w-full"
                 alt=""
                 style={{ objectFit: "cover" }}
               />
@@ -350,7 +351,7 @@ export default function CourseDetail({
               <div className="border">
                 {course.curriculum &&
                   course.curriculum.map((curriculum, i) => (
-                    <CurriculumCard courseid={course._id} curriculum={curriculum} key={i} />
+                    <CurriculumCard curriculum={curriculum} key={i} />
                   ))}
               </div>
             </section>

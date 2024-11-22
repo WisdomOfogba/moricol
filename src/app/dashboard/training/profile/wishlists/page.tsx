@@ -57,7 +57,7 @@ export default async function TrainingProfileWishlists() {
       </section>
 
       <section>
-        <div className="border border-[#E9EAF0]">
+        <div className="border border-[#E9EAF0] overflow-auto">
           <div className="grid grid-cols-[3fr_1fr_2fr] border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
             <h3>COURSE</h3>
             <h3>PRICES</h3>
