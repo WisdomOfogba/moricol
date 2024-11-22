@@ -16,6 +16,8 @@ const endpoints = {
   endAppointment: telemedicineUrl + '/end/appointment',
   upload: telemedicineUrl + '/upload',
   updateNotification: telemedicineUrl + '/update/notification',
+  retrieveAllNotes: telemedicineUrl + '/retrieve/all/note',
+  retrieveSingleNote: telemedicineUrl + '/retrieve/single/note',
   organization: {
     create: telemedicineUrl + '/create/organization',
     my: telemedicineUrl + '/my/organization',
@@ -36,6 +38,12 @@ interface RetrieveCategoryParams {
   session: Session;
 }
 
+// interface CreateReviewParams {
+//     userid: string;
+//     rating: number;
+//     comment: string;
+//     session: Session;
+// }
 
 interface OrganizationParams {
   userid: string;
@@ -71,8 +79,9 @@ export interface AppointmentData {
   medicalcondition: boolean;
   familymedicalcondition: boolean;
   medication: Array<{
-    days: number;
+    days: number | string;
     drug: string;
+    drugs?: string;
   }>;
   primarycomplain: string[];
   others: string[];
@@ -165,11 +174,11 @@ const telemedicineApi = {
 
 
   organization: {
-    create: async ({ userid, start_date, end_date, name, duration, plan_type, amount, user_limit, session }: CreateOrganizationParams) => {
+    create: async ({ userid, start_date, end_date, name, duration, plan_type, amount, user_limit, session, paystackref }: CreateOrganizationParams & { paystackref: string }) => {
       const axios = createClientAxios({ session });
 
       try {
-        const response = await axios.post(endpoints.organization.create, { userid, start_date, end_date, name, duration, plan_type, amount, user_limit });
+        const response = await axios.post(endpoints.organization.create, { userid, start_date, end_date, name, duration, plan_type, amount, user_limit, paystackref });
         return response.data;
       } catch (error) {
         const errorMessage = handleAxiosError(error, 'Error creating organization');
@@ -472,8 +481,46 @@ const telemedicineApi = {
       session
     });
   },
+  retrieveAllNotes: async ({
+    userid,
+    appointmentid,
+    session
+  }: {
+    userid: string;
+    appointmentid: string;
+    session: Session;
+  }) => {
+    return makeApiRequest({
+      endpoint: endpoints.retrieveAllNotes,
+      payload: {
+        userid,
+        appointmentid
+      },
+      errorMessage: 'Error retrieving notes',
+      session
+    });
+  },
+
+  retrieveSingleNote: async ({
+    userid,
+    noteid,
+    session
+  }: {
+    userid: string;
+    noteid: string;
+    session: Session;
+  }) => {
+    return makeApiRequest({
+      endpoint: endpoints.retrieveSingleNote,
+      payload: {
+        userid,
+        noteid
+      },
+      errorMessage: 'Error retrieving note',
+      session
+    });
+  },
 
 }
-
 
 export default telemedicineApi;

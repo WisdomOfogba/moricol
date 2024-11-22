@@ -3,7 +3,7 @@ import { landingPageServices } from "@/constants";
 export const DEFAULT_KEY = 'icolsijfk33647jckd';
 
 export const storeToLocalStorage = (value: {
-    service: keyof typeof landingPageServices,
+    service: keyof typeof landingPageServices | 'telemedicine_org_creation',
     link?: string,
     toSend: any
 }, key?: string) => {

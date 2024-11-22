@@ -375,7 +375,7 @@ export type AppointmentScheduleData = {
   } | null;
 };
 
-export type AppointmentStatus = "" | "ongoing" | "upcoming" | "past";
+export type AppointmentStatus = "" | "ongoing" | "accepted" | "past";
 
 export type SingleAppointmentData = {
   time: {
@@ -687,7 +687,7 @@ export type instructors = {
 export type archive = {
   _id: string,
   admin_details: {
-      name: string
+    name: string
   }
 }
 
@@ -781,3 +781,13 @@ export type ReviewData = {
 }
   */
 
+
+export type NotesData = {
+  _id: string,
+  title: string,
+  comment: string,
+  staffid: string,
+  appointmentid: string,
+  createdAt: string,
+  __v: number
+}

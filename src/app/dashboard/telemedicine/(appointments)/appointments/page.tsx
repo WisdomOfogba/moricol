@@ -20,7 +20,7 @@ async function getAppointments(session: Session, statusFetched: string, date: st
       throw new Error('User session is invalid or user ID is missing');
     }
     const { data: appointmentsData }: { data: AppointmentScheduleData[] } = await telemedicineApi.retrieveAllAppointments({
-      status: statusFetched ?? '',
+      status: statusFetched ?? 'ongoing',
       start_time: startTime ?? '',
       end_time: endTime ?? '',
       date: date ?? '',

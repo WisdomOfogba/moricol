@@ -4,6 +4,8 @@ import loanApi from "@/api/loan";
 import { DeclinedLoanComponent } from "../../_components/declined/loan-declined";
 import { LoanApprovedComponent } from "../../_components/approved/loan-approved";
 
+export const revalidate = 0;
+
 
 async function getLoanData(loanid: string) {
     try {

@@ -229,6 +229,7 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
                   type="number"
                   id="duration"
                   className="w-20"
+                  min={0}
                   value={appointmentData.feelingdays.toString().split(' ')[0]}
                   onChange={(e) => handleUpdateAppointmentData('feelingdays', e.target.value)}
                 />
@@ -278,17 +279,18 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
 
             {appointmentData.takingmedication && (
               <div>
-                <Label>List medications below and how many days you have been taking them:</Label>
+                <div className="text-sm text-gray-600">List medications below and how many days you have been taking them:</div>
                 <div className="space-y-2">
                   {appointmentData.medication.map((medication, index) => (
                     <div key={medication.drug + index} className="flex items-center space-x-2">
-                      <Input placeholder="Medication"
-                        value={appointmentData.medication[index].drug}
+                      <Input
+                        type="text"
+                        placeholder="drug name "
+                        value={medication.drugs}
                         onChange={(e) => {
-                          const medIndex = appointmentData.medication.findIndex(m => m.drug === medication.drug)
-                          const newValue = { ...appointmentData.medication[medIndex], drug: e.target.value }
+                          const newValue = { ...appointmentData.medication[index], drugs: e.target.value, }
                           const updatedArr = [...appointmentData.medication]
-                          updatedArr[medIndex] = newValue as any
+                          updatedArr[index] = newValue as any
                           handleUpdateAppointmentData('medication', updatedArr)
                         }}
                       />
@@ -297,13 +299,13 @@ export default function HealthInformationUpload({ nextStep, prevStep, appointmen
                         placeholder="days? "
                         value={medication.days.toString()}
                         onChange={(e) => {
-                          const medIndex = appointmentData.medication.findIndex(m => m.drug === medication.drug)
-                          const newValue = { ...appointmentData.medication[medIndex], days: parseInt(e.target.value) }
+                          const newValue = { ...appointmentData.medication[index], days: parseInt(e.target.value) }
                           const updatedArr = [...appointmentData.medication]
-                          updatedArr[medIndex] = newValue as any
+                          updatedArr[index] = newValue as any
                           handleUpdateAppointmentData('medication', updatedArr)
                         }}
                       />
+
                     </div>
                   ))}
                   <Button onClick={() => {
