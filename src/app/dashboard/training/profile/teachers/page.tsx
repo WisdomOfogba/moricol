@@ -35,7 +35,7 @@ export default async function TrainingProfileTeachers() {
       </section>
 
       <section>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {Instructors.map((instructor, i) => (
             <InstructorCard instructor={instructor} key={i} />
           ))}

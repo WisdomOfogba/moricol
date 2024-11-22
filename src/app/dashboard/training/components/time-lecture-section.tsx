@@ -10,7 +10,7 @@ export default function CourseTimeLecturesSection({
   sections?: number;
 }) {
   return (
-    <ul className="text-s flex gap-x-4">
+    <ul className="text-s flex gap-x-4 flex-wrap">
       {sections && (
         <li className="flex items-center gap-x-1.5">
           <>

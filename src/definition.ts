@@ -249,7 +249,7 @@ export type OrganizationMember = {
     lastname: string;
     email: string;
     phone: string;
-  }
+  };
   organizationid: {
     _id: string;
     name: string;
@@ -329,11 +329,7 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
-
-}
-
-
-
+};
 
 export type TelemedicineCategoryData = {
   category: {
@@ -514,37 +510,37 @@ export type CourseData = {
 
 export type curriculum = {
   section_name: string;
-  section: [
-    {
-      lesson: {
-        lesson_type: string;
-        content: string;
-        isquiz: false;
-        quiz: {
-          mark: number;
-          user_score: number;
-          questions: [
+  section: section[]
+  _id: string;
+};
+
+export type section = {
+  lesson_name: string;
+  _id: string;
+  lesson: {
+    lesson_type: string;
+    content: string;
+    isquiz: boolean;
+    quiz: {
+      mark: string;
+      user_score: number;
+      questions: [
+        {
+          question: string;
+          options: [
             {
-              question: string;
-              options: [
-                {
-                  optionText: string;
-                  isCorrect: boolean;
-                },
-                {
-                  optionText: string;
-                  isCorrect: boolean;
-                },
-              ];
+              optionText: string;
+              isCorrect: boolean;
+            },
+            {
+              optionText: string;
+              isCorrect: boolean;
             },
           ];
-        };
-      };
-      lesson_name: string;
-      _id: string;
-    },
-  ];
-  _id: string;
+        },
+      ];
+    };
+  };
 };
 
 export type ReviewData = {
@@ -610,6 +606,7 @@ export type SingleCourse = {
     thumbnail: string;
     description: string;
     duration: string;
+    curriculum: curriculum[];
     instructors: [
       {
         instructor: string;
@@ -683,23 +680,22 @@ export type instructors = {
   name: string;
 };
 
-
 export type archive = {
-  _id: string,
+  _id: string;
   admin_details: {
-      name: string
-  }
-}
+    name: string;
+  };
+};
 
 export type messaging = {
-  _id: string,
-  message: string,
-  sender: string,
-  userid: string,
-  adminid: string,
-  createdAt: string,
-  __v: number
-}
+  _id: string;
+  message: string;
+  sender: string;
+  userid: string;
+  adminid: string;
+  createdAt: string;
+  __v: number;
+};
 
 /*
 export type CourseData = {
@@ -780,4 +776,3 @@ export type ReviewData = {
   __v: number
 }
   */
-

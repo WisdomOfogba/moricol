@@ -8,7 +8,7 @@ export default function PrevPageBtn() {
 
   return (
     <button
-      className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-white"
+      className="flex w-[30px] h-[30px] sm:h-[58px] sm:w-[58px] items-center justify-center rounded-full bg-white"
       onClick={() => router.back()}
     >
       <ArrowRightSvg stroke="#1D2026" />

@@ -36,7 +36,7 @@ export default async function TrainingProfileMessages({
 
   return (
     <main className="px-14 py-12">
-      <section className="flex gap-x-6">
+      <section className="flex flex-col items-center xl:items-start xl:flex-row gap-x-6">
         {/* Friend list section */}
         <aside className="w-[424px] shrink-0 border border-[#E9EAF0] py-6">
           <div className="mb-4 flex items-center justify-between px-6">
