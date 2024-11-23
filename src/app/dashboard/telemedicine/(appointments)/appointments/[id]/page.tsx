@@ -189,10 +189,11 @@ async function SingleAppointment({
               ) : (
                 <p className="py-5">No sent files yet.</p>
               )}
+              <br />
+              <UploadAppointmentFiles appointmentid={id} />
             </TabsContent>
           </Tabs>
-          <br />
-          <UploadAppointmentFiles appointmentid={id} />
+
         </section>
       </div>
     </TelemedicineLayoutTemplate>
