@@ -6,18 +6,19 @@ import { useState } from "react";
 import { Session } from "next-auth";
 import { Loader2 } from "lucide-react";
 
-export default function SubmitAppointmentButton({ tosend, setComplete }: { tosend: AppointmentData, setComplete: (value: string) => void }) {
+export default function SubmitAppointmentButton({ tosend, setComplete }: { tosend: AppointmentData | any, setComplete: (value: string) => void }) {
     const { enqueueSnackbar } = useSnackbar();
     const { data: session } = useSession();
     const [isLoading, setIsLoading] = useState(false);
 
     const handlePay = async () => {
+        const toSendnew = { ...tosend, medication: tosend.medication.map((med: { days: string, drug: string, drugs?: string }) => ({ days: parseInt(med.days), drug: med.drugs, })) }
 
         try {
             setIsLoading(true);
             const response = await telemedicineApi.createAppointment({
                 session: session as Session,
-                ...tosend,
+                ...toSendnew,
                 userid: session?.user.id as string,
             });
             setComplete(response.data);

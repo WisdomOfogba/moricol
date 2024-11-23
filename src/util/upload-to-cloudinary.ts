@@ -10,7 +10,7 @@ const uploadToCloudinary = async (file: File) => {
         body: formData
     });
     const data = await response.json();
-    return data.url;
+    return data.secure_url;
 };
 
 export default uploadToCloudinary;

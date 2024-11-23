@@ -68,7 +68,7 @@ export default function AppointmentsList({
 
   const onTabChange = (value: string) => {
     setStatus(value as AppointmentStatus);
-    router.replace(`${routes.TELEMEDICINE_APPOINTMENTS}?status=${value === 'ongoing' ? '' : value}`);
+    router.replace(`${routes.TELEMEDICINE_APPOINTMENTS}?status=${value === 'ongoing' ? 'ongoing' : value}`);
   };
 
   return (
@@ -103,7 +103,7 @@ export default function AppointmentsList({
           </TabsTrigger>
           <TabsTrigger
             className="md:text-md rounded-lg border text-sm data-[state=active]:bg-primary-500 data-[state=active]:text-white"
-            value="upcoming"
+            value="accepted"
           >
             Upcoming
           </TabsTrigger>
@@ -114,7 +114,7 @@ export default function AppointmentsList({
             Past
           </TabsTrigger>
         </TabsList>
-        {["ongoing", "upcoming", "past"].map((category) => (
+        {["ongoing", "accepted", "past"].map((category) => (
           <TabsContent
             key={category}
             value={category}
