@@ -27,7 +27,7 @@ export default async function TrainingProfileTeachers() {
   const Instructors = await getInstructors()
 
   return (
-    <main className="px-14 py-12">
+    <main className="px-4 sm:px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-center text-2xl font-semibold text-[#1D2026]">
           Instructors ({Instructors.length})
@@ -35,7 +35,7 @@ export default async function TrainingProfileTeachers() {
       </section>
 
       <section>
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Instructors.map((instructor, i) => (
             <InstructorCard instructor={instructor} key={i} />
           ))}

@@ -601,6 +601,7 @@ export type SingleCourse = {
   course: {
     _id: string;
     title: string;
+    bundle: string;
     price: number;
     rating: number;
     thumbnail: string;
@@ -644,6 +645,7 @@ export type courseorder = {
   courseid: {
     _id: string;
     title: string;
+    bundle: string;
     price: number;
     rating: number;
     thumbnail: string;

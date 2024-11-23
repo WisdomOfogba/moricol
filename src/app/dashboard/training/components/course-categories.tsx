@@ -2,78 +2,58 @@
 
 import React, { useState } from "react";
 import CourseCard from "./card-course";
-import { ChevronDownSvg, FilterSVG, SearchSvg } from "@/components/svgs";
+import { FilterSVG, SearchSvg } from "@/components/svgs";
 import { CourseData } from "@/definition";
 
 const categories = ["Classroom", "Visual", "Bundle", "Online"];
-const suggestions = ["user interface", "user experience"];
 
-export default function CourseCategories({ courseData }: {
+export default function CourseCategories({
+  courseData,
+}: {
   courseData: [
     courseClassroomData: CourseData[],
     courseVisualData: CourseData[],
     courseBundleData: CourseData[],
     courseOnlineData: CourseData[],
-  ]
+  ];
 }) {
   const [activeCategory, setActiveCategory] = useState(0);
 
   const categoriesList = categories.map((c, i) => (
     <li
       key={i}
-      className={`w-full border-b pb-1 text-center ${activeCategory === i ? "border-primary-500 text-primary-500" : "border-gray-700 text-gray-700"}`}
+      className={`w-[160px] border-b pb-1 text-center sm:w-full ${activeCategory === i ? "border-primary-500 text-primary-500" : "border-gray-700 text-gray-700"}`}
     >
       <button onClick={() => setActiveCategory(i)}>{c}</button>
     </li>
   ));
 
-  const suggestionsList = suggestions.map((s, i) => (
-    <li key={i} className="">
-      {s}
-    </li>
-  ));
-
   return (
-    <section>
+    <section className="w-full">
       {/* Filter section */}
-      <section className="mb-10 px-14">
-        <div className="flex justify-between">
-          <div className="flex gap-x-6">
+      <section className="mb-10 w-full px-4 sm:px-14">
+        <div className="flex w-full justify-between">
+          <div className="flex w-full gap-x-6">
             <FilterBtn />
-            <div className="flex w-[26rem] sm:w-[23rem] lg:w-[26rem] items-center gap-x-3 border border-[#E9EAF0] px-4 py-3 text-[#4E5566] has-[:focus]:border-primary-500 has-[:focus]:bg-primary-50">
+            <div className="flex w-full items-center gap-x-3 border border-[#E9EAF0] px-4 py-3 text-[#4E5566] has-[:focus]:border-primary-500 has-[:focus]:bg-primary-50 sm:w-[23rem] lg:w-[26rem]">
               <SearchSvg />
               <input
                 type="text"
                 placeholder="UI/UX Design"
-                className="bg-transparent focus:outline-none"
+                className="w-full bg-transparent focus:outline-none"
               />
             </div>
           </div>
-
-          <div className="lg:flex items-center gap-x-6 hidden">
-            <p className="text-sm text-[#4E5566]">Sort by:</p>
-            <button className="flex w-52 items-center justify-between border border-[#E9EAF0] px-4 py-3 text-[#4E5566]">
-              Trending <ChevronDownSvg />
-            </button>
-          </div>
-        </div>
-
-        <div className="lg:flex hidden items-center justify-between pb-4 pt-6">
-          <div className="flex gap-x-3 text-sm">
-            <p className="#1D2026">Suggestion:</p>
-            <ul className="flex gap-x-3 text-primary-500">{suggestionsList}</ul>
-          </div>
-
-          <p className="text-sm">
-            <span className="font-semibold">3,145,684</span> results find for
-            “ui/ux design”
-          </p>
         </div>
       </section>
 
-      <ul className="mb-8 flex w-full justify-between">{categoriesList}</ul>
+      <div className="w-full overflow-auto no-scrollbar">
+        <ul className="mb-8 flex w-max sm:w-full justify-between">
+          {categoriesList}
+        </ul>
+      </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-7 bg-[#F5F7FA] px-14 py-8">
+      <div className="grid grid-cols-1 gap-x-6 gap-y-7 bg-[#F5F7FA] px-4 py-8 sm:grid-cols-2 sm:px-14 lg:grid-cols-4 xl:grid-cols-5">
         {/* <ul className="grid gap-y-6">
           <FilterContainer title="Duration">
             <CheckboxListItem label={{ text: "BUNDLE 1" }} count={345} />
@@ -95,7 +75,11 @@ export default function CourseCategories({ courseData }: {
           </FilterContainer>
         </ul> */}
         {courseData[activeCategory].map((course, i) => (
-          <CourseCard key={i} type={`${categories[activeCategory]}`} courseData={course} />
+          <CourseCard
+            key={i}
+            type={`${categories[activeCategory]}`}
+            courseData={course}
+          />
         ))}
       </div>
     </section>
@@ -104,7 +88,7 @@ export default function CourseCategories({ courseData }: {
 
 function FilterBtn() {
   return (
-    <button className="sm:flex hidden items-center gap-x-6 border border-primary-500 px-6 py-3">
+    <button className="hidden items-center gap-x-6 border border-primary-500 px-6 py-3 sm:flex">
       <FilterSVG /> <span>Filter</span>
       <span className="bg-primary-500 px-1.5 py-1 text-white">3</span>
     </button>

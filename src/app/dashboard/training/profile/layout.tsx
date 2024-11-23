@@ -28,7 +28,7 @@ export default async function TrainingProfileLayout({
 }) {
   const profileLinksList = trainingDashboardProfileLinks.map(
     ({ href, name }) => (
-      <li className="w-full" key={href}>
+      <li className="min-w-max" key={href}>
         <Navlink
           href={href}
           className="inline-block w-full border-b-2 border-b-transparent py-5 text-center"
@@ -44,11 +44,11 @@ export default async function TrainingProfileLayout({
 
   return (
     <section className="no-scrollbar overflow-y-auto">
-      <div className="relative bg-primary-100 px-14 pt-9">
+      <div className="relative bg-primary-100 px-4 sm:px-14 pt-9">
         <article className="relative -bottom-2 border border-primary-500 bg-white">
           <div className="flex items-center gap-x-6 border-b border-primary-500 p-10">
-            <div className="relative h-[6.875rem] w-[6.875rem] overflow-hidden rounded-full">
-              <Image fill src={profileData.photo ? profileData.photo : "/images/client.jpg"} alt="" sizes="6.875rem" />
+            <div className="relative h-[60px] w-[60px] sm:h-[100px] sm:w-[100px] overflow-hidden rounded-full">
+              <Image width={100} height={100} className="w-16 sm:w-28" src={profileData.photo ? profileData.photo : "/images/client.jpg"} alt="" />
             </div>
 
             <div>
@@ -61,7 +61,7 @@ export default async function TrainingProfileLayout({
             </div>
           </div>
 
-          <ul className="flex justify-between w-full overflow-auto gap-x-6">{profileLinksList}</ul>
+          <ul className="flex justify-between w-full overflow-auto gap-x-6 px-4 sm:px-14 no-scrollbar">{profileLinksList}</ul>
         </article>
       </div>
       {children}
