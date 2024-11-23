@@ -4,14 +4,106 @@ import Button from "@/components/button";
 import ModalLayout from "@/components/layouts/modal-layout";
 import { CancelSvg } from "@/components/svgs";
 import { useState } from "react";
+import onlinePharmacyApi, { CreateAddressParams } from "@/api/online-pharmacy";
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 export default function EditOrAddAddress({
   title,
+  addressid,
+  useraddress,
+  firstname,
+  lastname,
+  phone,
+  country,
+  city,
+  state,
+  postalcode,
+  email,
 }: {
   title: "Edit" | "New" | "Add";
+  addressid?: string;
+  useraddress?: string;
+  firstname?: string;
+  lastname?: string;
+  phone?: string;
+  country?: string;
+  city?: string;
+  state?: string;
+  postalcode?: string;
+  email?: string;
 }) {
   const [isAddressModalOpen, setAddressModal] = useState(false);
-
+  const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
+  const [address, setAddress] = useState<CreateAddressParams>({
+    address: useraddress ?? "",
+    firstname: firstname ?? "",
+    lastname: lastname ?? "",
+    phone: phone ?? "",
+    country: country ?? "",
+    city: city ?? "",
+    state: state ?? "",
+    postalcode: postalcode ?? "",
+    userid: session?.user.id ?? "",
+    email: email ?? "",
+    latitiude: "6deef",
+    longitude: "2344",
+    addressid,
+  });
+  // console.log(addressid);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const { name, value } = event.target as HTMLInputElement;
+    setAddress((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    (event.target as HTMLInputElement).focus();
+  };
+  // const [value, setValue] = useState(null);
+  // const handleAddressChange = (address: string) => {
+  //   setAddress((prevState) => ({
+  //     ...prevState,
+  //     address,
+  //   }));
+  // };
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (title == "New") {
+      await onlinePharmacyApi
+        .createAddress(session!, {
+          ...address,
+          address: address.address.toLowerCase(),
+        })
+        .then((res) => {
+          if (res.status_code == 200) {
+            setAddressModal(false);
+            enqueueSnackbar("Created successfully!", { variant: "success" });
+          }
+        })
+        .catch((err) => {
+          enqueueSnackbar(err, { variant: "error" });
+          console.log(err);
+        });
+    } else {
+      await onlinePharmacyApi
+        .updateAddress(session!, {
+          ...address,
+          address: address.address.toLowerCase(),
+        })
+        .then((res) => {
+          if (res.status_code == 200) {
+            setAddressModal(false);
+            enqueueSnackbar("Updated successfully!", { variant: "success" });
+          }
+        })
+        .catch((err) => {
+          enqueueSnackbar(err, { variant: "error" });
+          console.log(err);
+        });
+    }
+  };
   const closeEditModal = () => {
     setAddressModal(false);
   };
@@ -55,23 +147,154 @@ export default function EditOrAddAddress({
 
             <ul className="mb-7 grid gap-y-7">
               <li className="flex justify-between gap-x-6">
-                <TextInput label="First Name" />
-                <TextInput label="Last Name" />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    value={address.firstname}
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    value={address.lastname}
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
               </li>
               <li className="flex justify-between gap-x-6">
-                <TextInput label="Country / Region" />
-                <TextInput label="State" />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Country / Region
+                  </label>
+                  <input
+                    type="text"
+                    name="country"
+                    value={address.country}
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={address.state}
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
               </li>
+
+              {/* <AddressBar /> */}
               <li>
-                <TextInput label="Street Address" />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Street Adress
+                  </label>
+                  <input
+                    type="text"
+                    value={address.address}
+                    name="address"
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
               </li>
               <li className="flex justify-between gap-x-6">
-                <TextInput label="Town / City" />
-                <TextInput label="Zip Code" />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Town / City
+                  </label>
+                  <input
+                    type="text"
+                    // ref={inputRef}
+                    value={address.city}
+                    name="city"
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Zip Code
+                  </label>
+                  <input
+                    type="text"
+                    // ref={inputRef}
+                    value={address.postalcode}
+                    name="postalcode"
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
               </li>
               <li className="flex justify-between gap-x-6">
-                <TextInput label="Phone Number" />
-                <TextInput label="Email Address" />
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    value={address.phone}
+                    name="phone"
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor=""
+                    className="mb-2 block text-xs text-[#636985]"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    // ref={inputRef}
+                    value={address.email}
+                    name="email"
+                    onChange={handleChange}
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
+                  />
+                </div>
               </li>
             </ul>
             <div className="flex justify-end gap-x-5">
@@ -81,7 +304,10 @@ export default function EditOrAddAddress({
               >
                 Cancel
               </button>
-              <Button className="w-fit rounded px-16 py-3 text-xs font-bold">
+              <Button
+                onClick={handleSubmit}
+                className="w-fit rounded px-16 py-3 text-xs font-bold"
+              >
                 Save
               </Button>
             </div>
@@ -89,19 +315,5 @@ export default function EditOrAddAddress({
         </ModalLayout>
       )}
     </>
-  );
-}
-
-function TextInput({ label }: { label: string }) {
-  return (
-    <div className="w-full">
-      <label htmlFor="" className="mb-2 block text-xs text-[#636985]">
-        {label}
-      </label>
-      <input
-        type="text"
-        className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
-      />
-    </div>
   );
 }

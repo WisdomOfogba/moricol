@@ -283,10 +283,10 @@ function LoanApplyForm({
                     id="outstanding-loan-no"
                     name="outstanding-loan"
                     value="false"
-                    checked={applyData.outstanding.owe === false}
+                    checked={!applyData.outstanding.owe}
                     onChange={(e) => handleFieldChangeAndUpdate('outstanding', {
                       ...applyData.outstanding,
-                      owe: e.target.value === 'true'
+                      owe: e.target.value === 'false'
                     })}
                     className="h-4 w-4 border-gray-300 text-primary-500 focus:ring-primary-500 active:bg-primary-500"
                   />
@@ -305,7 +305,7 @@ function LoanApplyForm({
                 <Input
                   id="loan-details"
                   type="number"
-                  value={applyData.outstanding.amount.toString()}
+                  value={applyData.outstanding.amount}
                   onChange={(e) => handleFieldChangeAndUpdate('outstanding', {
                     ...applyData.outstanding,
                     amount: Number(e.target.value)
