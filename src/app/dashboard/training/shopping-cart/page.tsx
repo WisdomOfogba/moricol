@@ -15,8 +15,8 @@ export default function ShoppingCard() {
   const sum = getSum();
 
   return (
-    <main>
-      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
+    <main className="w-full">
+      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-4 sm:px-14 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
         <p className="text-sm text-[#6E7485]">
@@ -24,25 +24,27 @@ export default function ShoppingCard() {
         </p>
       </section>
 
-      <div className="px-14">
+      <div className="px-4 sm:px-14">
         <section>
-          <h3 className="mb-6 text-xl font-semibold text-[#1D2026]">
+          <h3 className="mb-6 text-center text-xl font-semibold text-[#1D2026]">
             Shopping Cart ({cartCount})
           </h3>
-          <div className="mb-10 flex gap-x-6">
-            <section className="w-full">
-              <div className="border border-[#E9EAF0]">
-                <div className="grid grid-cols-[3fr_1fr_1fr] gap-x-6 border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
+          <div className="mb-10 flex flex-col items-center gap-6 px-4 xl:flex-row xl:items-start">
+            <section className="w-full overflow-x-scroll">
+              <div className={`border border-[#E9EAF0] ${cartCount > 0 ? "w-min" : "w-full"}`}>
+                <div className="grid grid-cols-[3fr_1fr_1fr] w-full gap-x-6 border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
                   <h3>COURSE</h3>
                   <h3>PRICES</h3>
                   <h3>ACTION</h3>
                 </div>
                 {/* <Wishlists /> */}
-                <CartDetails />
+                <div>
+                  <CartDetails />
+                </div>
               </div>
             </section>
 
-            <section className="grid w-full max-w-[312px] shrink-0 gap-y-4 p-6">
+            <section className="grid w-full shrink-0 gap-y-4 p-6 xl:max-w-[312px]">
               <p className="flex items-center justify-between text-sm">
                 <span className="text-[#6E7485]">Subtotal</span>
                 <span className="font-medium text-[#1D2026]">₦{sum} NAIRA</span>
@@ -61,11 +63,12 @@ export default function ShoppingCard() {
                 <span className="text-2xl font-semibold">₦{sum} NAIRA</span>
               </p>
               <MakeTrainingPaymentButton
-              button="now"
+                button="now"
+                type
                 courses={cart.map((cart) => ({
                   courseid: cart._id,
                   amount: cart.price,
-                  coursetype: cart.coursetype
+                  coursetype: cart.coursetype,
                 }))}
               />
               <hr className="my-2" />

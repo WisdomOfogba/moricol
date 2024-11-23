@@ -1,7 +1,6 @@
-// ClientMessagingPage.tsx (Client Component)
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PaperPlaneSvg, PencilLine } from "@/components/svgs";
 import Button from "@/components/button";
 import { CourseApi } from "@/api/training";
@@ -27,8 +26,20 @@ export default function ClientMessagingPage({
 }) {
   const [messages, setMessages] = useState(initialMessages);
   const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     const admin = archive.find(a => a._id === adminid);
+
+    const scrollToBottom = () => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    useEffect(() => {
+      scrollToBottom();
+    }, [messages]);
+    
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,9 +55,7 @@ export default function ClientMessagingPage({
         message: newMessage,
         session,    
       });
-
-      console.log("Message sent successfully:", response);
-      setMessages((prev) => [...prev, response.data]);
+      setMessages((prev) => [ response.data, ...prev]);
       setNewMessage("");
     } catch (err) {
       console.error("Failed to send message:", err);
@@ -78,7 +87,7 @@ export default function ClientMessagingPage({
   }
 
   return (
-    <section className="relative grow border border-[#E9EAF0] pb-24">
+    <section className="relative w-full border border-[#E9EAF0] pb-24">
       {/* Messaging Header */}
       <header className="flex items-center justify-between border-b border-b-[#E9EAF0] px-6 py-5">
         <article className="flex items-center gap-x-4">
@@ -94,7 +103,7 @@ export default function ClientMessagingPage({
           </div>
           <div className="text-sm text-[#4E5566]">
             <h3 className="mb-2 text-lg font-medium text-[#1D2026]">
-              {admin && admin.admin_details.name}
+              {admin ? admin.admin_details.name : "New Instructor"}
             </h3>
             <p>online</p>
           </div>
@@ -106,13 +115,14 @@ export default function ClientMessagingPage({
 
       {/* Messaging Body */}
       <section className="no-scrollbar grid max-h-[678px] gap-y-6 overflow-y-auto px-6 py-12">
-        {messages.map((msg) =>
+        {messages.slice().reverse().map((msg) =>
           msg.sender === "user" ? (
             <OutGoingMessage key={msg._id} msg={msg} />
           ) : (
             <IncomingMessage key={msg._id} msg={msg} />
           ),
         )}
+      <div ref={messagesEndRef}></div>
       </section>
 
       {/* Messaging Footer */}

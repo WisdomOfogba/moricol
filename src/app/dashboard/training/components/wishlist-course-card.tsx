@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { StarSVG } from "@/components/svgs";
+// import { StarSVG } from "@/components/svgs";
 import { courseorder } from "@/definition";
 
 export default function WishlistCourseCard({
@@ -19,13 +19,6 @@ export default function WishlistCourseCard({
       </div>
       <div className="flex flex-col justify-between">
         <div>
-          <div className="mb-2 flex items-center gap-x-2 text-sm font-medium">
-            <StarSVG fill="#FD8E1F" />
-            <p>
-              {course.courseid?.rating || 0}{" "}
-              <span className="text-[#8C94A3]">(451434 Review)</span>
-            </p>
-          </div>
           {/* Course title */}
           <h3 className="mb-6 w-[312px] font-medium">
             {course.courseid?.title}

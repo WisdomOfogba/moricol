@@ -6,8 +6,10 @@ import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import { BiDownload } from "react-icons/bi";
-import CurriculumCard from "./curriculum-card";
-import { SingleCourse } from "@/definition";
+import { section, SingleCourse } from "@/definition";
+import ViewCurriculumCard from "./ViewCurriculumCard";
+import VideoPlayer from "./VideoPlayer";
+import QuizComponent from "./QuizComponent";
 
 const courseDescriptionDetailLink = [
   {
@@ -28,12 +30,29 @@ const courseDescriptionDetailLink = [
   },
 ];
 
-export default function CourseDetail({
+export default function ViewCourseDetail({
   singleCourse,
 }: {
   singleCourse: SingleCourse;
 }) {
   const [activeLink, setActiveLink] = useState("overview");
+  const [activeLesson, setActiveLesson] = useState("");
+  const [sectionid, setSectionid] = useState("");
+  const [lesson, setLesson] = useState<section | null>(null);
+
+  const handleSetLesson = (
+    type: string,
+    section?: section,
+    sectionid?: string,
+  ) => {
+    setActiveLesson(type);
+    if (section) {
+      setLesson(section);
+    }
+    if (sectionid) {
+      setSectionid(sectionid);
+    }
+  };
 
   const FiveStar = ({ className }: { className?: string }) => (
     <ul className="flex shrink-0">
@@ -48,89 +67,127 @@ export default function CourseDetail({
   );
 
   return (
-    <main className="pb-20">
-      <section className="flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
-        <div className="flex gap-x-4">
-          <PrevPageBtn />
-          <div>
-            <h1 className="mb-3 text-lg font-medium text-[#1D2026]">
-              {singleCourse.courseorder.courseid.title}
-            </h1>
+    <main className="w-full pb-20">
+      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
+        <PrevPageBtn />
+        <div className="flex w-full">
+          <div className="flex w-full flex-col">
+            <div className="flex w-full items-center justify-between">
+              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] sm:w-min sm:text-lg">
+                {singleCourse.courseorder.courseid.title ||
+                  singleCourse.courseorder.courseid.bundle}
+              </h1>
+              <p className="text-base text-primary-500 lg:text-2xl">
+                PRICE: ₦{singleCourse.courseorder.courseid.price}
+              </p>
+            </div>
             <CourseTimeLecturesSection
               time={singleCourse.courseorder.courseid.duration}
             />
           </div>
         </div>
-        <p className="text-2xl text-primary-500">
-          PRICE: ₦{singleCourse.courseorder.courseid.price}
-        </p>
       </section>
 
-      <section className="mb-16 flex items-start justify-between gap-x-6 px-14 py-6">
+      <section className="mb-16 flex flex-col-reverse items-center justify-between gap-6 px-4 py-6 sm:px-14 xl:flex-row xl:items-start">
         {/* Right hand side */}
         <div className="grid w-full gap-y-10">
           {/* Heading */}
-          <div>
-            {/* <Breadcrumb /> */}
-            <div className="mb-3 text-sm">
-              <a href="/dashboard/training/profile">Home</a>{" "}
-              <span className="mx-2">{">"}</span> Online{" "}
-              <span className="mx-2">{">"}</span>
-            </div>
+          {activeLesson === "" && (
+            <>
+              <div className="w-full">
+                {/* <Breadcrumb /> */}
+                <div className="mb-3 hidden text-sm sm:block">
+                  <a href="/dashboard/training/profile">Home</a>{" "}
+                  <span className="mx-2">{">"}</span> Online{" "}
+                  <span className="mx-2">{">"}</span>
+                </div>
 
-            <h2 className="mb-6 text-3xl font-semibold">
-              {singleCourse.courseorder.courseid.title}
-            </h2>
-
-            <div className="flex justify-between">
-              <article className="flex items-center gap-x-3">
-                <div className="flex">
-                  <div className="relative h-[50px] w-[50px] overflow-hidden rounded-full border-[3px] border-white">
-                    <Image fill src="/images/client.jpg" alt="" />
+                <h2 className="my-6 text-xl font-semibold sm:mb-6 sm:text-3xl">
+                  {singleCourse.courseorder.courseid.title ||
+                    singleCourse.courseorder.courseid.bundle}
+                </h2>
+                <div className="flex w-full justify-between">
+                  <article className="flex w-full items-center gap-x-3">
+                    <div className="flex">
+                      <div className="relative h-[50px] w-[50px] overflow-hidden rounded-full border-[3px] border-white">
+                        <Image
+                          width={500}
+                          height={281}
+                          src="/images/client.jpg"
+                          alt=""
+                          className="flex w-full"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
+                      <h3 className="text-medium flex flex-wrap items-center gap-x-1.5 text-[#1D2026]">
+                        {singleCourse.courseorder.courseid.instructors.map(
+                          (instructor) => (
+                            <>
+                              <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
+                              <span className="w-16 truncate">
+                                {instructor.instructor}
+                              </span>
+                            </>
+                          ),
+                        )}
+                      </h3>
+                    </div>
+                  </article>
+                  <div className="hidden items-center gap-x-2 sm:flex">
+                    <FiveStar className="h-6 w-6" />
+                    <p className="font-medium text-[#1D2026]">
+                      {singleCourse.courseorder.courseid.rating}{" "}
+                      <span className="text-sm font-normal text-[#6E7485]">
+                        {" "}
+                        (451,444 Rating)
+                      </span>
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
-                  <h3 className="text-medium flex items-center gap-x-1.5 text-[#1D2026]">
-                    {singleCourse.courseorder.courseid.instructors.map(
-                      (instructor) => (
-                        <>
-                          <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                          <span>{instructor.instructor}</span>
-                        </>
-                      ),
-                    )}
-                  </h3>
-                </div>
-              </article>
-              <div className="flex items-center gap-x-2">
-                <FiveStar className="h-6 w-6" />
-                <p className="font-medium text-[#1D2026]">
-                  {singleCourse.courseorder.courseid.rating}{" "}
-                  <span className="text-sm font-normal text-[#6E7485]">
-                    {" "}
-                    (451,444 Rating)
-                  </span>
-                </p>
               </div>
-            </div>
-          </div>
 
-          {/* Course image */}
-          <div className="relative h-[492px] w-full">
-            <Image
-              fill
-              src={singleCourse.courseorder.courseid.thumbnail}
-              alt=""
-              style={{ objectFit: "cover" }}
-            />
-          </div>
+              {/* Course image */}
+              <div className="relative h-[492px] w-full">
+                <Image
+                  fill
+                  src={singleCourse.courseorder.courseid.thumbnail}
+                  alt=""
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </>
+          )}
+          {activeLesson === "video" && (
+            <>
+              <VideoPlayer videoUrl={lesson?.lesson.content} />
+              <h2 className="mb-6 text-3xl font-semibold">
+                {lesson?.lesson_name}
+              </h2>
+            </>
+          )}
+          {activeLesson === "quiz" && (
+            <>
+              {lesson !== null && (
+                <QuizComponent
+                  lessonid={lesson._id}
+                  sectionid={sectionid}
+                  courseid={singleCourse.course._id}
+                  quiz={lesson.lesson.quiz}
+                />
+              )}
+            </>
+          )}
+          {activeLesson === "assignment" && <h1>{`${lesson?.lesson_name}`}</h1>}
+          {activeLesson === "survey" && <h1>{`${lesson?.lesson_name}`}</h1>}
+          {activeLesson === "pdf" && <h1>{`${lesson?.lesson_name}`}</h1>}
 
           {/* Links */}
-          <section>
-            <ul className="flex gap-x-6 border-b border-b-[#E9EAF0]">
+          <section className="no-scrollbar flex w-full overflow-auto">
+            <ul className="flex w-max gap-x-6 border-b border-b-[#E9EAF0] sm:w-full">
               {courseDescriptionDetailLink.map(({ name, link }, i) => (
-                <li key={i} className="w-full">
+                <li key={i} className="w-[160px] sm:w-full">
                   <button
                     className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
                     onClick={() => setActiveLink(link)}
@@ -206,26 +263,34 @@ export default function CourseDetail({
           )}
         </div>
 
-        <section className="w-full max-w-[524px] shrink-0">
-          <div className="mb-3.5 flex items-center justify-between font-semibold">
-            <h3 className="text-[#1D2026]">Course contents</h3>
-            <p className="text-xs text-[#23BD33]">
-              {singleCourse.courseorder.progress}% Completed
-            </p>
-          </div>
-          <div className="mb-4 bg-[#E9EAF0]">
+        {singleCourse.courseorder.curriculum.length > 0 && (
+          <section className="w-full max-w-[524px] shrink-0">
+            <div className="mb-3.5 flex items-center justify-between font-semibold">
+              <h3 className="text-[#1D2026]">Course contents</h3>
+              <p className="text-xs text-[#23BD33]">
+                {singleCourse.courseorder.progress}% Completed
+              </p>
+            </div>
+            <div className="mb-4 bg-[#E9EAF0]">
+              <div
+                style={{ width: `${singleCourse.courseorder.progress}%` }}
+                className={`h-[3px] bg-[#23BD33]`}
+              ></div>
+            </div>
             <div
-              style={{ width: `${singleCourse.courseorder.progress}%` }}
-              className={`h-[3px] bg-[#23BD33]`}
-            ></div>
-          </div>
-          <div className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}>
-            {singleCourse.courseorder.curriculum.map((curriculum, i) => (
-              <CurriculumCard courseid={singleCourse.course._id} key={i} curriculum={curriculum} />
-            ))}
-            {/* <CurriculumCard /> */}
-          </div>
-        </section>
+              className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}
+            >
+              {singleCourse.course?.curriculum.map((curriculum, i) => (
+                <ViewCurriculumCard
+                  setLesson={handleSetLesson}
+                  key={i}
+                  curriculum={curriculum}
+                />
+              ))}
+              {/* <CurriculumCard /> */}
+            </div>
+          </section>
+        )}
       </section>
     </main>
   );
