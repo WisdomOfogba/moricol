@@ -29,7 +29,7 @@ async function getCourses() {
 
 export default async function TrainingProfileCourses() {
   const filterButtons = filterOptions.map(({ option, title }) => (
-    <div key={title} className="flex flex-col gap-y-2">
+    <div key={title} className="hidden xl:flex flex-col gap-y-2">
       <p className="text-sm text-[#4E5566]">{title}:</p>
       <button className="flex w-52 items-center justify-between border border-[#E9EAF0] px-4 py-3 text-[#4E5566]">
         {option[0]} <ChevronDownSvg />
@@ -40,7 +40,7 @@ export default async function TrainingProfileCourses() {
   const Courses = await getCourses()
 
   return (
-    <main className="px-14 py-12">
+    <main className="px-4 sm:px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
           Courses ({Courses.length})
@@ -63,7 +63,7 @@ export default async function TrainingProfileCourses() {
         </div>
       </section>
 
-      <section className="grid grid-cols-5 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {Courses.map((course, i) => {
 
           const index = course.coursetype.lastIndexOf("course")

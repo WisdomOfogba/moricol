@@ -151,7 +151,7 @@ function ProfilePictureClient({ type, next_route, upload }: { type: ResumeType, 
       body: formData
     });
     const data = await response.json();
-    return data.url;
+    return data.secure_url;
   };
 
   const uploadFiles = async () => {

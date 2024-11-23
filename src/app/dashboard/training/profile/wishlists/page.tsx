@@ -49,7 +49,7 @@ export default async function TrainingProfileWishlists() {
   const Courses = await getSavedCourses();
 
   return (
-    <main className="px-14 py-12">
+    <main className="px-4 sm:px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
           Wishlists ({Courses.length})
@@ -57,7 +57,7 @@ export default async function TrainingProfileWishlists() {
       </section>
 
       <section>
-        <div className="border border-[#E9EAF0]">
+        <div className={`border border-[#E9EAF0] ${Courses.length > 0 ? "w-min" : "w-full"}`}>
           <div className="grid grid-cols-[3fr_1fr_2fr] border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
             <h3>COURSE</h3>
             <h3>PRICES</h3>
@@ -77,9 +77,17 @@ export default async function TrainingProfileWishlists() {
 
 async function Wishlists({ course }: { course: courseorder }) {
   const Order = await getOrder();
-  const isBought = Order.some((order) => order.courseid === course.courseid?._id);
-  const courseorder = Order.find(order => order.courseid === course.courseid?._id)
-  const courseorderid = courseorder?._id
+  const isBought = Order.some(
+    (order) => order.courseid === course.courseid?._id,
+  );
+  const courseorder = Order.find(
+    (order) => order.courseid === course.courseid?._id,
+  );
+  const courseorderid = courseorder?._id;
+
+  if(course.courseid?._id === undefined || courseorderid === course._id) {
+    return;
+  }
 
   return (
     <article className="grid grid-cols-[3fr_1fr_2fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
@@ -99,19 +107,20 @@ async function Wishlists({ course }: { course: courseorder }) {
           </div>
         </>
       ) : (
-        <div className="flex gap-x-3">
-          <MakeTrainingPaymentButton
-            button="now"
-            courses={[
-              {
-                coursetype: course.coursetype,
-                courseid: course._id,
-                amount: course.amount,
-              },
-            ]}
-          />
-          {/* <AddCart course={course} /> */}
-        </div>
+        <>
+          {course._id !== undefined && (
+            <MakeTrainingPaymentButton
+              button="now"
+              courses={[
+                {
+                  coursetype: course.coursetype,
+                  courseid: course._id,
+                  amount: course.amount,
+                },
+              ]}
+            />
+          )}
+        </>
       )}
     </article>
   );

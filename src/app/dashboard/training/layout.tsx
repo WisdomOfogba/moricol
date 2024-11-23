@@ -7,7 +7,7 @@ import { CartProvider } from "@/lib/TrainingCartContext";
 import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
-import { UserCircle2 } from "lucide-react";
+import { LayoutDashboard, UserCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -46,26 +46,30 @@ async function ToolBar() {
   const profileData = await getProfileData();
 
   return (
-    <header className="flex gap-x-20 border-b bg-white px-5 py-4">
+    <header className="flex items-center gap-x-20 border-b bg-white px-5 py-4">
       {/* Logo */}
-      <Link href="/" className="relative block h-16 w-[127px]">
+      <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
       </Link>
 
       {/* Button and Input */}
-      <div className="mx-auto items-center justify-center flex">
-        <Link href="/dashboard/training">Training</Link>
+      <div className="mx-auto flex items-center justify-center">
+        <Link href="/dashboard/training">
+          <LayoutDashboard />
+        </Link>
       </div>
 
       {/* Icon and Profile */}
       <div className="flex grow items-center justify-end gap-x-6">
-        <Link href="/dashboard/training/profile" className="relative">
-          <UserCircle2 />
-        </Link>
-        <Link href={routes.TRAININGPROFILEWISHLIST}>
-          <HeartSVG className="h-6 w-6" fill="#1D2026" />
-        </Link>
-        <Cart />
+        <div className="flex grow items-center justify-end gap-x-6">
+          <Link href="/dashboard/training/profile" className="relative">
+            <UserCircle2 />
+          </Link>
+          <Link href={routes.TRAININGPROFILEWISHLIST}>
+            <HeartSVG className="h-6 w-6" fill="#1D2026" />
+          </Link>
+          <Cart />
+        </div>
         <Link href="/dashboard/profile" className="block">
           <div className="relative h-12 w-12 overflow-hidden rounded-full">
             <Image

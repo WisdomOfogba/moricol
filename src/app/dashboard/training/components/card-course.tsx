@@ -22,9 +22,9 @@ export default function CourseCard({ courseData, type }: { courseData: CourseDat
           {/* Badge */}
           <div className="mb-2.5 flex items-center justify-between">
             <span>
-              {courseData.category && (
+              {type && (
                 <span className="bg-[#F9EBD0] px-1.5 py-1 text-[10px] font-medium text-[#714D0A]">
-                  {courseData.category}
+                  {type}
                 </span>
               )}
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import CourseDetail from '../../../components/view-course-details'
+import ViewCourseDetail from '../../../components/view-course-details'
 import { CourseApi } from '@/api/training';
 import { SingleCourse } from '@/definition';
 import { getUserSession } from '@/lib/auth';
@@ -26,9 +26,12 @@ async function getSingle({courseid, courseorderid}: {courseid: string, courseord
 }
 
 const page = async ({ params: {id, courseid} }: { params: { id: string, courseid: string } }) => {
+  if (courseid === id){
+    return notFound()
+  }
   const singleCourse = await getSingle({courseid: id, courseorderid: courseid})
   return (
-    <CourseDetail singleCourse={singleCourse} />
+    <ViewCourseDetail singleCourse={singleCourse} />
   )
 }
 

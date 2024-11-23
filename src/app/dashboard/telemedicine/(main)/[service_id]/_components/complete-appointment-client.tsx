@@ -34,7 +34,7 @@ const CompleteAppointmentClient: React.FC<{ service: TelemedicineCategoryData, m
     surgery: false,
     medicalcondition: false,
     familymedicalcondition: false,
-    medication: [{ days: 0, drug: "none" }],
+    medication: [{ days: '', drugs: "", drug: "" }],
     primarycomplain: [""],
     others: [""],
     urgent_type: "routine",

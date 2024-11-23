@@ -4,24 +4,24 @@ import Link from "next/link";
 
 export default function Recruitment() {
   return (
-    <section className="relative overflow-hidden bg-[#0093AD] p-20 text-center text-white">
-      <div className="relative z-10 mx-auto mb-20 flex max-w-[1120px] flex-col items-center">
-        <h1 className="mb-9 text-5xl font-extrabold lg:text-7xl">
+    <section className="relative overflow-hidden bg-[#0093AD] p-4 sm:p-8 md:p-12 lg:p-20 text-center text-white pt-10">
+      <div className="relative z-10 mx-auto mb-8 md:mb-12 lg:mb-20 flex max-w-[1120px] flex-col items-center">
+        <h1 className="mb-4 md:mb-6 lg:mb-9 text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-extrabold">
           Making candidates become the best version of themselves
         </h1>
-        <p className="mb-11 text-2xl">
+        <p className="mb-6 md:mb-8 lg:mb-11 text-lg md:text-xl lg:text-2xl">
           Moricol Healthcare Recruitment and Management Services is a
           multidimensional company using cutting edge technology to promote
           health and longevity of life
         </p>
-        <div className="mt-9 flex w-full max-w-[600px] gap-x-2.5">
+        <div className="mt-4 md:mt-6 lg:mt-9 flex w-full max-w-[600px] flex-col sm:flex-row gap-4 sm:gap-x-2.5 px-4 sm:px-0">
           <Link
             href={routes.RECRUITMENTDASHBOARD}
-            className="w-full max-w-[293px] rounded-lg bg-primary-500 px-9 py-3 text-primary-50"
+            className="w-full max-w-full sm:max-w-[293px] rounded-lg bg-primary-500 px-6 sm:px-9 py-3 text-primary-50"
           >
             GET STARTED
           </Link>
-          <button className="w-full max-w-[293px] rounded-lg border border-primary-500 bg-white px-9 py-3 text-primary-500">
+          <button className="w-full max-w-full sm:max-w-[293px] rounded-lg border border-primary-500 bg-white px-6 sm:px-9 py-3 text-primary-500">
             LOGIN
           </button>
         </div>
@@ -32,24 +32,22 @@ export default function Recruitment() {
         alt=""
         width={1100}
         height={727}
-        className="relative z-10 mx-auto"
+        className="relative z-10 mx-auto w-full px-4 sm:px-0"
       />
 
       {/* Vector  */}
-
       <svg
-        // width="2000"
-        // height="454"
         viewBox="0 0 1440 454"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-screeen absolute bottom-0 left-0 z-0"
+        className="absolute bottom-0 left-0 z-0 w-full"
       >
         <path
           d="M108 268C30 268 0 224.748 0 224.748V454H1440V0C1419.18 153.169 1325.92 242.767 1158.43 242.767C1024.43 242.767 925.143 177.028 892.248 144.159C878.516 178.029 824.435 245.17 717.963 242.767C611.491 240.365 244.936 235.368 222 203.5C210.985 243.544 162.5 268 108 268Z"
           fill="white"
         />
       </svg>
+
       {/* Lines */}
       <svg
         width="1440"
@@ -57,7 +55,7 @@ export default function Recruitment() {
         viewBox="0 0 1440 426"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute bottom-[250px] left-0 z-0 w-full"
+        className="absolute bottom-[250px] left-0 z-0 w-full hidden md:block"
       >
         <path
           d="M122.412 240.897C24.9415 267.462 -0.894173 347.318 69.4281 387.474C139.75 427.63 151.05 358.064 19.6304 200.08C-66.0316 114.949 -63.3987 -66.0793 151.05 28.7893C419.11 147.375 963.934 215.766 1086.65 122.277C1184.82 47.4869 1295.82 91.1147 1339.04 122.277C1390.03 159.034 1436 274.745 1280.73 377.645C1086.65 506.269 1083.17 329.332 1255.49 301.725C1393.35 279.639 1467.27 326.404 1487 352.547"

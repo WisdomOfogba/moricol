@@ -5,6 +5,7 @@ import { getUserSession } from "@/lib/auth";
 import { archive, messaging } from "@/definition";
 import { CourseApi } from "@/api/training";
 import { formatRelativeTime } from "@/util/formatTime";
+import Link from "next/link";
 
 async function getSavedCourses() {
   const session = await getUserSession();
@@ -34,10 +35,10 @@ export default async function TrainingProfileMessages({
   const archive = await getSavedCourses();
 
   return (
-    <main className="px-14 py-12">
-      <section className="flex gap-x-6">
+    <main className="px-4 sm:px-14 py-12">
+      <section className="flex flex-col items-center xl:items-start xl:flex-row gap-6">
         {/* Friend list section */}
-        <aside className="w-[424px] shrink-0 border border-[#E9EAF0] py-6">
+        <aside className="w-full xl:w-[424px] shrink-0 border border-[#E9EAF0] py-6">
           <div className="mb-4 flex items-center justify-between px-6">
             <h2 className="text-xl font-semibold text-[#1D2026]">Message</h2>
             {/* <ComposeMessage /> */}
@@ -71,7 +72,7 @@ export default async function TrainingProfileMessages({
 
 function MessageUserCard({ archive }: { archive: archive }) {
   return (
-    <a href={`/dashboard/training/profile/messages/${archive._id}`} className="transition-color flex cursor-pointer gap-x-4 px-6 py-3 duration-300 hover:bg-primary-50">
+    <Link href={`/dashboard/training/profile/messages/${archive._id}`} className="transition-color flex cursor-pointer gap-x-4 px-6 py-3 duration-300 hover:bg-primary-50">
       <div className="relative h-12 w-12 rounded-full">
         <Image
           src="/images/client.jpg"
@@ -85,13 +86,13 @@ function MessageUserCard({ archive }: { archive: archive }) {
       <div className="flex grow flex-col justify-between text-sm text-[#4E5566]">
         <div className="flex justify-between">
           <h3 className="font-medium text-[#1D2026]">
-            {archive.admin_details.name}
+            {archive.admin_details.name || "Instructors name"}
           </h3>
           <p>just now</p>
         </div>
         <div className="flex items-center justify-between"></div>
       </div>
-    </a>
+    </Link>
   );
 }
 

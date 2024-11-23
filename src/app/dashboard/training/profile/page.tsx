@@ -47,13 +47,13 @@ export default async function TrainingProfile() {
   const {profileData, dashboard } = await getData();
 
   return (
-    <main className="px-14 py-12">
+    <main className="px-4 sm:px-14 w-full py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
           Dashboard
         </h2>
 
-        <div className="flex gap-x-6">
+        <div className="flex w-full overflow-auto gap-6 items-center no-scrollbar">
           <SummaryCard
             color="#F9EBD0"
             icon={<PlaySVG />}
@@ -90,7 +90,7 @@ export default async function TrainingProfile() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-4 justify-between gap-x-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between gap-6">
           {dashboard.courses.map((item, i) => (
             <MyCourseCard key={i} progress={item.progress} course={item} />
           ))}
@@ -103,7 +103,7 @@ export default async function TrainingProfile() {
 function SummaryCard({ color, icon, total, title }: SummaryCardProps) {
   return (
     <article
-      className="flex w-full max-w-[312px] items-center gap-x-6 p-6"
+      className="flex w-full max-w-[312px] min-w-[280px] items-center gap-x-6 p-6"
       style={{ background: color }}
     >
       <div className="flex h-[60px] w-[60px] items-center justify-center bg-white">
@@ -120,6 +120,9 @@ function SummaryCard({ color, icon, total, title }: SummaryCardProps) {
 async function MyCourseCard({ progress, course }: { progress: number, course: {courseid: string, _id: string} }) {
 
   const singleCourse = await getSingle({courseid: course.courseid, courseorderid: course._id})
+  if(singleCourse.courseorder.courseid?._id === undefined) {
+    return;
+  }
 
   return (
     <article className="border border-[#E9EAF0] bg-white">

@@ -1,6 +1,13 @@
+import telemedicineApi from "@/api/telemedicine";
 import TelemedicineLayoutTemplate from "@/app/dashboard/telemedicine/(main)/template";
-import { Card, CardContent, CardFooter } from "@/components/card";
-import { ShadButton } from "@/components/shadcn-button";
+import { Card, CardContent } from "@/components/card";
+// import { ShadButton } from "@/components/shadcn-button";
+import { NotesData } from "@/definition";
+import { getUserSession } from "@/lib/auth";
+import dayjs from "dayjs";
+import { Metadata } from "next";
+import { Session } from "next-auth";
+
 
 interface NoteDetailProps {
   timestamp: string;
@@ -22,7 +29,7 @@ const NoteDetail: React.FC<NoteDetailProps> = ({
           </div>
           <div className="mb-6 text-center">
             <h2 className="mb-2 text-sm font-semibold text-gray-500">TITLE</h2>
-            <h1 className="text-2xl font-bold">{title}</h1>
+            <h1 className="text-2xl font-bold capitalize">{title}</h1>
           </div>
           <div>
             <h2 className="mb-2 text-center font-semibold text-gray-500">
@@ -31,23 +38,56 @@ const NoteDetail: React.FC<NoteDetailProps> = ({
             <p className="whitespace-pre-wrap text-gray-700">{content}</p>
           </div>
         </CardContent>
-        <CardFooter>
+        {/* <CardFooter>
           <ShadButton className="w-full bg-primary-500 text-white hover:bg-primary-600">
             DONE
           </ShadButton>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
 };
 
-export default function NoteDetailView() {
+
+
+export const revalidate = 0
+
+
+export const metadata: Metadata = {
+  title: "Notes | View Appointment Notes - Moricol",
+  description: "View notes shared during appointment",
+};
+
+
+async function getNotes(session: Session, id: string) {
+  try {
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: note }: { data: NotesData } = await telemedicineApi.retrieveSingleNote({
+      noteid: id,
+      userid: session.user.id,
+      session
+    });
+
+    return note;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get appointments data');
+  }
+}
+
+export default async function NoteDetailView({ params }: {
+  params: { id: string, note_id: string }
+}) {
+
+  const session = await getUserSession()
+  const note = await getNotes(session as Session, params.note_id as string)
+
+
   const noteData: NoteDetailProps = {
-    timestamp: "9/4/2023 . 9:00AM",
-    title: "Getting Started with Mr. John Paul",
-    content: `Lorem ipsum dolor sit amet consectetur. Libero nunc turpis cursus eu laoreet. Nibh quis integer ligula gravida. Adipiscing elementum vulputate interdum quis habitant risus ac. Lacus ut pellentesque proin euismod turpis tristique eget scelerisque integer. Tortor suscipit curabitur interdum elementum ut id. Neque purus scelerisque sit ipsum tellus. Nulla pulvinar etiam cursus arcu leo. Nisi quis urna quisque eu in.
-Urna quis blandit at in congue faucibus tortor vel erat. Massa molestie malesuada euismod viverra odio. Morbi scelerisque sed varius hendrerit mus pharetra elit. Aliquam aliquet quam lacus urna penatibus viverra eget mattis. Mi in sed sit consequat ipsum pellentesque vulputate pulvinar. Ullamcorper dui nunc lobortis feugiat sed.
-Sed elementum aenean a egestas. Habitant vitae maecenas nunc aliquam sed libero in. Facilisi sapien pellentesque egestas non at purus et. Enim sit tristique facilisis purus. Enim metus proin et sed aenean tincidunt aliquam ipsum iaculis. Nunc euismod mattis phasellus ac nulla odio risus mauris ut. Sed amet arcu eu interdum. Dignissim tristique sed adipiscing in aliquam vel. Sit.`,
+    timestamp: dayjs(note.createdAt).format('DD/MM/YYYY'),
+    title: note.title,
+    content: note.comment,
   };
 
   return (

@@ -59,33 +59,29 @@ function PaymentsPage() {
         const paymentData = storedData.toSend;
         // console.log(storedData.service, paymentData);
 
-        if (Object.keys(landingPageServices).includes(storedData.service)) {
-          if (storedData.service === "recruitment") {
-            await jobsApi.updateJobPostPayment({
-              userid: paymentData.userid,
-              jobpostid: paymentData.jobpostid,
-              amount: paymentData.amount,
-              session: session as Session,
-            });
-          } else if (storedData.service === "medicalLoan") {
-            await loanApi.paybackLoan({
-              userid: paymentData.userid,
-              loanid: paymentData.loanid,
-              amount: paymentData.amount,
-              session: session as Session,
-              ref: reference,
-            });
-          } else if (storedData.service === "onlinePharmacy") {
-            if (typeof paymentData === "string") {
-              await onlinePharmacyApi.makePendingOrderPayment(
-                session,
-                session.user.id,
-                paymentData,
-              );
-              console.log("pending order made");
-            } else {
-              await onlinePharmacyApi.createOrder(session, paymentData);
-            }
+        if (([...Object.keys(landingPageServices), 'telemedicine_org_creation']).includes(storedData.service)) {
+          if (storedData.service === 'recruitment') {
+            await jobsApi.updateJobPostPayment({ userid: paymentData.userid, ref: reference, jobpostid: paymentData.jobpostid, amount: paymentData.amount, session: session as Session });
+
+          } else if (storedData.service === 'medicalLoan') {
+
+            await loanApi.paybackLoan({ userid: paymentData.userid, loanid: paymentData.loanid, amount: paymentData.amount, session: session as Session, ref: reference });
+
+          } else if (storedData.service === 'training') {
+
+            await CourseApi.updateCoursePayment({ userid: paymentData.userid, session: session as Session, paystackref: reference, courses: paymentData.courses });
+
+          } else if (storedData.service === 'telemedicine') {
+            const resp = await telemedicineApi.createAppointment({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+
+            setStoredData({ ...storedData, link: routes.TELEMEDICINE_APPOINTMENTS + '/' + resp.data + '/reminder' });
+
+          } else if (storedData.service === 'telemedicine_org_creation') {
+
+            await telemedicineApi.organization.create({ ...paymentData, userid: session.user.id, paystackref: reference, session: session as Session });
+
+            setStoredData({ ...storedData, link: routes.TELEMEDICINE_ORGANIZATION });
+
           } else {
             throw new Error("Invalid service");
           }

@@ -1,60 +1,51 @@
+import TelemedicineLayoutTemplate from "@/app/dashboard/telemedicine/(main)/template";
+import { Session } from "next-auth";
+import telemedicineApi from "@/api/telemedicine";
+import { getUserSession } from "@/lib/auth";
+import { Metadata } from "next";
+import { routes } from "@/constants/routes";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/card";
-import TelemedicineLayoutTemplate from "@/app/dashboard/telemedicine/(main)/template";
-import { routes } from "@/constants/routes";
+import { NotesData } from "@/definition";
+import dayjs from "dayjs";
 
-interface Note {
-  id: string;
-  title: string;
-  timestamp: string;
+
+export const revalidate = 0
+
+
+export const metadata: Metadata = {
+  title: "Notes | View Appointment Notes - Moricol",
+  description: "View notes shared during appointment",
+};
+
+
+async function getNotes(session: Session, id: string) {
+  try {
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: notes }: { data: NotesData[] } = await telemedicineApi.retrieveAllNotes({
+      appointmentid: id,
+      userid: session.user.id,
+      session
+    });
+
+    return notes;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get appointments data');
+  }
 }
 
-const notes: Note[] = [
-  {
-    id: "1",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "2",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "3",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "4",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "5",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "6",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "7",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-  {
-    id: "8",
-    title: "Getting Started with Mr. John Paul",
-    timestamp: "9/4/2023 . 9:00AM",
-  },
-];
 
-const id = "fj";
+export default async function NotesPage({ params }: {
+  params: { id: string }
+}) {
 
-export default function NotesPage() {
+  const session = await getUserSession()
+  const notes = await getNotes(session as Session, params.id as string)
+
+
+
   return (
     <TelemedicineLayoutTemplate>
       <div className="min-h-screen">
@@ -62,18 +53,29 @@ export default function NotesPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {notes.map((note) => (
             <Link
-              href={`${routes.TELEMEDICINE_APPOINTMENTS}/${id}/${note.id}`}
-              key={note.id}
+              href={`${routes.TELEMEDICINE_APPOINTMENTS}/${params.id}/notes/${note._id}`}
+              key={note._id}
               className="block"
             >
               <Card className="transition-shadow hover:shadow-md">
                 <CardContent className="p-4">
-                  <h2 className="mb-2 text-lg font-semibold">{note.title}</h2>
-                  <p className="text-sm text-gray-500">{note.timestamp}</p>
+                  <h2 className="mb-2 text-lg font-semibold capitalize">{note.title}</h2>
+                  <p className="text-sm text-gray-500">{dayjs(note.createdAt).format('DD/MM/YYYY')}</p>
                 </CardContent>
               </Card>
             </Link>
           ))}
+
+          {notes.length === 0 && (
+            <div className="col-span-full flex flex-col items-center justify-center p-12 text-center">
+              <div className="mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <p className="text-xl text-gray-500">No notes have been added yet.</p>
+            </div>
+          )}
         </div>
       </div>
     </TelemedicineLayoutTemplate>

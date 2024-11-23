@@ -1,4 +1,4 @@
-import { MessageSquare, Phone, Video } from "lucide-react";
+import { MessageSquare, Notebook, Phone, Video } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import CommunicationOption from "../../../_components/communication-option";
@@ -68,7 +68,7 @@ async function SingleAppointment({
           </Link>
           <div className="flex justify-between">
             {/* @ts-expect-error -- not a problem */}
-            <Profile photo={appointment.staffid?.photo} date={appointment.date} name={appointment.staffid?.firstname} />
+            <Profile photo={appointment.staffid?.photo} date={appointment.date} name={appointment.staffid?.firstname + ' ' + appointment.staffid?.lastname} />
 
             <Link
               className="block h-fit"
@@ -132,7 +132,7 @@ async function SingleAppointment({
                   />
                 </Link>
               )}
-              {/* <Link
+              <Link
                 href={`${routes.TELEMEDICINE_APPOINTMENTS}/${id}/notes`}
                 className="ease block border-primary-500 transition transition-all duration-300 hover:scale-[99%]"
               >
@@ -141,7 +141,7 @@ async function SingleAppointment({
                   title="Notes"
                   description="View notes."
                 />
-              </Link> */}
+              </Link>
               <EndAppointmentModal appointmentid={id} />
               {review && <ReviewClient appointmentid={id} staffid={appointment.staffid} />}
             </div>
@@ -189,10 +189,11 @@ async function SingleAppointment({
               ) : (
                 <p className="py-5">No sent files yet.</p>
               )}
+              <br />
+              <UploadAppointmentFiles appointmentid={id} />
             </TabsContent>
           </Tabs>
-          <br />
-          <UploadAppointmentFiles appointmentid={id} />
+
         </section>
       </div>
     </TelemedicineLayoutTemplate>
