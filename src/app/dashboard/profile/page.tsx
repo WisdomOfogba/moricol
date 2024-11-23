@@ -26,5 +26,6 @@ async function getProfileData() {
 
 export default async function Profile() {
   const profileData = await getProfileData();
+  // console.log(profileData);
   return <ProfileClient profileData={profileData} />;
 }

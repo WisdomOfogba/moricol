@@ -1,61 +1,65 @@
+"use client";
 import { cn } from "@/util/cn";
-import Button from "../button";
 import { HeartSVG } from "../svgs";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { SavedProducts } from "@/app/dashboard/pharmarcy/account/saved-items/page";
+import onlinePharmacyApi from "@/api/online-pharmacy";
+import { Product, setCart } from "@/lib/features/cartSlice";
+import { useAppDispatch } from "@/lib/hook";
 
 export default function PageToolBar() {
+  const { data: session } = useSession();
+  const [savedProducts, setSavedProducts] = useState<SavedProducts[]>([]);
+  const cart = useSelector((state: RootState) => state.drugcart.cart);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const fetchData = async () => {
+      await onlinePharmacyApi
+        .getSavedProduct(
+          session!,
+          //@ts-expect-error: threll be id
+          session?.user.id,
+        )
+        .then((res) => {
+          setSavedProducts(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, [session]);
+
+  useEffect(() => {
+    const existingCart = localStorage.getItem("cart");
+    if (existingCart) {
+      const newCart: Product[] = JSON.parse(existingCart);
+      dispatch(setCart(newCart));
+    }
+  }, []);
+
   return (
-    <section className="border-b-grey-300 flex items-center gap-x-10 border-b px-14 py-5">
-      <form className="flex grow items-center gap-x-4">
-        <div className="flex grow gap-x-2.5 rounded-lg bg-primary-50 px-6 py-3.5">
-          <SearchSVG />
-          <input
-            type="search"
-            placeholder="Search drugs, cosmetics, consumables, etc..."
-            className="bg-transparent text-sm text-[#666666] focus:outline-none"
-          />
-        </div>
-        <Button className="w-fit">SEARCH</Button>
-      </form>
-      <div className="flex shrink-0 gap-x-7">
-        <button className="relative">
+    <section className="border-b-grey-300 flex items-end justify-end gap-y-5 border-b px-5 py-5 lg:gap-x-10 lg:px-14">
+      <div className="flex gap-x-7 justify-self-end">
+        <Link
+          href="/dashboard/pharmarcy/account/saved-items"
+          className="relative"
+        >
           <HeartSVG />
-          <NumberBadge className="absolute -right-2 -top-1" />
-        </button>
+          <NumberBadge
+            qty={savedProducts.filter((s) => s.productid != null).length}
+            className="absolute -right-2 -top-1"
+          />
+        </Link>
         <Link href={routes.PHARMARCYCART} className="relative">
           <CartSVG />
-          <NumberBadge className="absolute -right-2 -top-1" />
+          <NumberBadge qty={cart.length} className="absolute -right-2 -top-1" />
         </Link>
       </div>
     </section>
-  );
-}
-
-function SearchSVG() {
-  return (
-    <svg
-      width="19"
-      height="18"
-      viewBox="0 0 19 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M9.2004 15.5649C12.9236 15.5649 15.9418 12.5466 15.9418 8.82345C15.9418 5.10027 12.9236 2.08203 9.2004 2.08203C5.47722 2.08203 2.45898 5.10027 2.45898 8.82345C2.45898 12.5466 5.47722 15.5649 9.2004 15.5649Z"
-        stroke="#E29A13"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M13.8887 13.8633L16.5317 16.4994"
-        stroke="#E29A13"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 
@@ -100,7 +104,7 @@ function CartSVG() {
   );
 }
 
-function NumberBadge({ className }: { className?: string }) {
+function NumberBadge({ className, qty }: { className?: string; qty?: number }) {
   return (
     <div
       className={cn(
@@ -108,7 +112,7 @@ function NumberBadge({ className }: { className?: string }) {
         className,
       )}
     >
-      0
+      {qty ? String(qty) : "0"}
     </div>
   );
 }

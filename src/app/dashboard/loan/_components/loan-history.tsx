@@ -15,6 +15,7 @@ function LoanHistory({ loans }: { loans: LoanDataType[] }) {
   const filteredLoans = loans.filter(
     (loan) => filterStatus === "All" || loan.title.includes(filterStatus.toLowerCase()),
   );
+  console.log(filteredLoans);
 
   return (
     <div className="space-y-4">

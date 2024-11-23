@@ -1,12 +1,179 @@
+"use client";
+
 import Button from "@/components/button";
 import SummaryProductCard from "@/components/dashboard/summary-product-card";
-import { LocationSVG, OneUserSvg, PhoneSVG } from "@/components/svgs";
-import { routes } from "@/constants/routes";
-import Image from "next/image";
-import Link from "next/link";
-import EditOrAddAddress from "../modals/edit-or-add-address";
-
+import { useSnackbar } from "notistack";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { formatNaira } from "@/util/currency-format";
+import { calculateTotal } from "@/util/get-total";
+import { useEffect, useState } from "react";
+import { AddressParams } from "../account/addresses/page";
+import onlinePharmacyApi from "@/api/online-pharmacy";
+import { useSession } from "next-auth/react";
+import Address from "../components/Address";
+import { useRouter } from "next/navigation";
+import { storeToLocalStorage } from "@/util/store-to-localstorage";
+import { Order, Product } from "@/lib/features/cartSlice";
+import { PrescriptionParams } from "../prescription/[id]/page";
+import { setCart } from "@/lib/features/cartSlice";
 export default function Checkout() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const [address, setAddress] = useState<AddressParams>();
+  const [loaded, setLoaded] = useState<boolean>(false);
+  // const [link, setLink] = useState<string>("");
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [coupon, setCouponId] = useState<string>("");
+  const [userData, setUserData] = useState<PrescriptionParams>();
+  const cart = useAppSelector((state) => state.drugcart.cart);
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useAppDispatch();
+
+  const checkPrescription = (cart: Product[]) => {
+    for (let index = 0; index < cart.length; index++) {
+      if (cart[index].prescription) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleCoupon = async () => {
+    await onlinePharmacyApi
+      .useCoupon(session!, {
+        //@ts-expect-error: 'there'll be id'
+        userid: session?.user.id,
+        coupon,
+        amount: calculateTotal(cart),
+      })
+      .then((s) => {
+        if (s.data) {
+          // console.log(s);
+          setTotalAmount(s.data);
+          enqueueSnackbar({
+            variant: "success",
+            message: "Coupon successfully applied!",
+          });
+        } else {
+          enqueueSnackbar({ variant: "error", message: s.message });
+        }
+      })
+      .catch((err: Error) =>
+        enqueueSnackbar({ variant: "error", message: err.message }),
+      );
+  };
+  const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const presDetails = localStorage.getItem("nin");
+    if (presDetails) {
+      const userPresDetails: PrescriptionParams = JSON.parse(presDetails);
+      setUserData(userPresDetails);
+    }
+
+    const order: Order = {
+      // @ts-expect-error: 'id' is not a property of 'session'
+      userid: session?.user.id,
+      total_amount: totalAmount,
+      delivery_fee: deliveryFee,
+      prescription_needed: checkPrescription(cart),
+      couponid: null,
+      coupon_used: coupon != "",
+      // @ts-expect-error: 'id' is not a property of 'session'
+      trackingid: session?.user.id,
+      items: cart,
+      addressid: address?._id ?? "",
+      report: [
+        {
+          name: userData?.name ?? "polie",
+          upload: userData?.fileName ?? "",
+        },
+      ],
+      nin: userData?.nin ?? "",
+    };
+    localStorage.removeItem("nin");
+    if (checkPrescription(cart)) {
+      await onlinePharmacyApi
+        .createOrder(session!, order)
+        .then(() => {
+          localStorage.removeItem("cart");
+          enqueueSnackbar(
+            "Pending Order successfully created. Payment can be made after Doctor's approval",
+            { variant: "success" },
+          );
+          router.push("/dashboard/pharmarcy/account");
+        })
+        .catch((err) => {
+          console.log(err);
+          enqueueSnackbar(err, { variant: "error" });
+        });
+    } else {
+      await onlinePharmacyApi
+        .makePayment(
+          session!,
+          // @ts-expect-error: 'id' is not a property of 'session'
+          session?.user.id,
+          session?.user.email,
+
+          totalAmount + deliveryFee,
+        )
+        .then((val) => {
+          storeToLocalStorage({
+            service: "onlinePharmacy",
+            toSend: order,
+            link: "/dashboard/pharmarcy",
+          });
+          localStorage.removeItem("cart");
+          router.push(val.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const existingCart = localStorage.getItem("cart");
+      if (existingCart) {
+        const newCart: Product[] = JSON.parse(existingCart);
+        dispatch(setCart(newCart));
+      }
+      await onlinePharmacyApi
+        .getAddress(
+          session!,
+          // @ts-expect-error: 'id' is not a property of 'session'
+          session?.user.id,
+        )
+        .then(async (s) => {
+          // console.log(s);
+          setAddress(s.data);
+          setLoaded(true);
+          setTotalAmount(calculateTotal(cart));
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, [session]);
+
+  useEffect(() => {
+    const fetchDeliveryFee = async () => {
+      if (loaded)
+        await onlinePharmacyApi
+          .deliveryFee(session!, {
+            //@ts-expect-error: therell
+            addressid: address._id,
+            //@ts-expect-error: therell
+            userid: session?.user.id,
+            productorders: cart.map((c) => c._id),
+          })
+          .then((s) => {
+            setDeliveryFee(s.data);
+          })
+          .catch((err) => console.log(err));
+    };
+    fetchDeliveryFee();
+  }, [loaded]);
+
   return (
     <main className="px-8 py-6 pb-20">
       <section className="mb-9">
@@ -17,77 +184,36 @@ export default function Checkout() {
         </div>
       </section>
 
-      <div className="flex items-start gap-x-8">
+      <div className="items-start gap-x-8 lg:flex">
         <section className="grow">
           <section className="mb-9">
-            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
-              <h2 className="shrink-0 font-semibold text-primary-500">
-                Billing
-              </h2>
-            </div>
-            <div className="mb-4 flex items-start justify-between py-5">
-              <div>
-                <p className="mb-1.5 flex items-center gap-x-1 text-xs text-gray-500">
-                  <OneUserSvg /> C Darl Uzu
-                </p>
-                <p className="mb-1.5 flex items-center gap-x-1 text-xs text-gray-500">
-                  <LocationSVG fill={"#E29A13"} className="h-4 w-4" /> Court
-                  Estate, Durumi | Federal Capital Territory - ABUJA- DURUMI |
-                  900103
-                </p>
-                <p className="flex items-center gap-x-1 text-xs text-gray-500">
-                  <PhoneSVG /> +234 7035286570
-                </p>
-              </div>
-              <Button
-                className="w-fit py-2.5 text-xs font-bold"
-                variant="outline"
-              >
-                Change
-              </Button>
-            </div>
-
-            <article className="max-w-[320px] rounded border border-gray-300 p-5 text-xs space-y-3">
-              <p>Click on Add Address to add a new address</p>
-              {/* <Button className="mt-3 w-fit">Add Address</Button> */}
-              <EditOrAddAddress title="Add" />
-            </article>
-          </section>
-          <section className="mb-9">
-            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
-              <h2 className="shrink-0 font-semibold text-primary-500">
+            <div className="mb-3 flex items-center justify-between border-b border-[#D2D2D2]">
+              <h2 className="shrink-0 pt-5 font-semibold text-primary-500">
                 Delivery Address
               </h2>
             </div>
-            <div className="mb-4 flex items-start justify-between py-5">
-              <div>
-                <p className="mb-1.5 flex items-center gap-x-1 text-xs text-gray-500">
-                  <OneUserSvg /> C Darl Uzu
-                </p>
-                <p className="mb-1.5 flex items-center gap-x-1 text-xs text-gray-500">
-                  <LocationSVG fill={"#E29A13"} className="h-4 w-4" /> Court
-                  Estate, Durumi | Federal Capital Territory - ABUJA- DURUMI |
-                  900103
-                </p>
-                <p className="flex items-center gap-x-1 text-xs text-gray-500">
-                  <PhoneSVG /> +234 7035286570
-                </p>
-              </div>
-              <Button
-                className="w-fit py-2.5 text-xs font-bold"
-                variant="outline"
-              >
-                Change
-              </Button>
-            </div>
 
-            <article className="max-w-[320px] rounded border border-gray-300 p-5 text-xs">
-              <p>Click on Add Address to add a new address</p>
-              <Button className="mt-3 w-fit">Add Address</Button>
-            </article>
+            {/* {address?.map((a, i) => ( */}
+            {address && (
+              <Address
+                key={0}
+                firstname={address.firstname}
+                lastname={address.lastname}
+                defaultaddress={address.defaultaddress}
+                address={address.address}
+                phone={address.phone}
+                postalcode={address.postalcode}
+                state={address.state}
+                city={address.city}
+                country={address.country}
+                _id={address._id}
+                show={false}
+              />
+            )}
+            {/* ))} */}
           </section>
-          <section>
-            <div className="mb-6 flex items-center justify-between border-b border-[#D2D2D2] pb-3">
+          {/* <section> */}
+          {/* <div className="mb-6 flex items-center justify-between border-b border-[#D2D2D2] pb-3">
               <h2 className="shrink-0 font-semibold text-primary-500">
                 Payment Options
               </h2>
@@ -107,47 +233,43 @@ export default function Checkout() {
                 </div>
                 PayStack
               </label>
-            </div>
-
-            {/* <div className="mt-3.5 flex items-center gap-x-2">
-              <input type="radio" id="paystack" />
-              <label htmlFor="paystack" className="flex items-center gap-x-0.5">
-                <div className="relative h-3.5 w-3.5 overflow-hidden">
-                  <Image
-                    src="/images/flutter.png"
-                    alt=""
-                    fill
-                    sizes="14px"
-                    className="h-auto w-3.5"
-                  />
-                </div>
-                Flutterwave
-              </label>
             </div> */}
-          </section>
+          {/* </section> */}
         </section>
-        <section className="grid w-[372px] shrink-0 gap-y-2">
+        <section className="grid w-full shrink-0 gap-y-2 md:w-[372px]">
           <h2 className="shrink-0 font-semibold text-primary-500">
             Order Summary
           </h2>
 
           <article className="rounded border border-[#9F9FA0] bg-gray-100">
             <div className="grid gap-y-5 px-5 py-6">
-              <SummaryProductCard />
-              <SummaryProductCard />
+              {cart.map((product, i) => (
+                <SummaryProductCard
+                  key={i}
+                  name={product.name}
+                  imageUrl={product.coverimage}
+                  qty={product.quantity}
+                  price={product.subprice}
+                />
+              ))}
             </div>
 
             <div className="gap-y-2.5 border-y border-y-gray-300 px-6 py-6 text-primary-500">
               <p className="flex justify-between">
-                Subtotal <span>₦1,374</span>
+                Subtotal <span>{formatNaira(calculateTotal(cart))}</span>
               </p>
               <p className="flex justify-between">
-                Delivery Fees <span>₦210</span>
+                Delivery Fees <span>₦{deliveryFee}</span>
               </p>
             </div>
             <div className="px-5 py-6">
               <p className="flex justify-between font-bold text-primary-500">
-                Total <span>₦210</span>
+                Total{" "}
+                <span>
+                  {formatNaira(
+                    (totalAmount ?? calculateTotal(cart)) + deliveryFee,
+                  )}
+                </span>
               </p>
             </div>
           </article>
@@ -166,21 +288,24 @@ export default function Checkout() {
             <input
               type="text"
               placeholder="Coupon Code"
-              className="mb-3 w-full rounded border bg-gray-100 px-5 py-3"
+              value={coupon}
+              onChange={(e) => setCouponId(e.target.value)}
+              className="mb-3 h-10 w-full rounded border bg-gray-100 px-5 py-3 outline-none"
             />
             <Button
               variant="outline"
               className="w-fit py-2.5 text-xs font-bold"
+              onClick={handleCoupon}
             >
               Apply Coupon
             </Button>
           </article>
-          <Link
-            href={routes.PHARMARCYPAYMENT}
+          <Button
+            onClick={handlePayment}
             className="inline-block rounded-lg bg-primary-500 py-3 text-center font-semibold text-white"
           >
             Place Order
-          </Link>
+          </Button>
         </section>
       </div>
     </main>

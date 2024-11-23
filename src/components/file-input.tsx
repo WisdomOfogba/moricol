@@ -10,9 +10,13 @@ interface FileAttachmentProps {
   acceptedFileTypes?: string;
   id?: string;
   caption?: string;
-  onUpload?: (file: File, field?: any, setLoading?: (loading: boolean) => void) => void
-  field?: string
-  uploaded?: boolean
+  onUpload?: (
+    file: File,
+    field?: any,
+    setLoading?: (loading: boolean) => void,
+  ) => void;
+  field?: string;
+  uploaded?: boolean;
 }
 
 const FileInput: React.FC<FileAttachmentProps> = ({
@@ -22,7 +26,7 @@ const FileInput: React.FC<FileAttachmentProps> = ({
   acceptedFileTypes = "*",
   caption = "Upload all attachment",
   uploaded = false,
-  field
+  field,
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,7 +43,9 @@ const FileInput: React.FC<FileAttachmentProps> = ({
     <div>
       <h3 className="text-grey-800 mb-2.5 inline-block font-medium">{title}</h3>
 
-      <label className={`flex h-[104px] cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-primary-500 text-sm text-gray-500 ${uploaded ? 'bg-green-200' : 'bg-primary-50'}`}>
+      <label
+        className={`flex h-[104px] cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-primary-500 text-sm text-gray-500 ${uploaded ? "bg-green-200" : "bg-primary-50"}`}
+      >
         <input
           id={id}
           type="file"
@@ -47,7 +53,14 @@ const FileInput: React.FC<FileAttachmentProps> = ({
           onChange={handleFileChange}
           accept={acceptedFileTypes}
         />
-        {loading ? <BiLoaderCircle className="mr-2 inline text-primary-500 animate-spin" size={20} /> : <BiUpload className="mr-2 inline text-primary-500" size={20} />}
+        {loading ? (
+          <BiLoaderCircle
+            className="mr-2 inline animate-spin text-primary-500"
+            size={20}
+          />
+        ) : (
+          <BiUpload className="mr-2 inline text-primary-500" size={20} />
+        )}
         {caption}
         {fileName && (
           <p className="mt-2 text-sm text-gray-600">Uploaded: {fileName}</p>

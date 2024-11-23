@@ -194,10 +194,10 @@ function CredentialsApply({ job_id }: { job_id: string }) {
         <hr className="my-8" />
         <FileUpload
           title="Select CV"
-          accept=".pdf"
+          accept="image/png, image/jpeg"
           file={cvFile}
           setFile={setCvFile}
-          formats="PDF"
+          formats="Png/Jpeg"
         />
       </div>
       <div className="mt-6"></div>

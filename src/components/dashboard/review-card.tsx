@@ -1,25 +1,31 @@
+import { convertDate } from "@/util/get-total";
 import Image from "next/image";
 
-export default function ReviewCard() {
+export default function ReviewCard({
+  review,
+  date,
+  rating,
+  name,
+}: {
+  rating: number;
+  name: string;
+  review: string;
+  date: string;
+}) {
   return (
-    <article className="border-b border-b-gray-300 px-10 pb-6 text-xs text-[#777A95] last:border-none">
-      <div className="gap mb-1 flex items-center gap-x-12">
-        <Profile />
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Integer vulputate blandit arcu
-          amet. Enim vel orci non habitant euismod aliquam eget. Gravida laoreet
-          pellentesque arcu velit. Massa quis arcu arcu neque pellentesque sit
-          morbi consequat ut. Duis pretium.
-        </p>
+    <article className="border-b border-b-gray-300 px-10 pb-6 text-xs text-[#777A95] last:border-none lg:flex">
+      <div className="mb-5">
+        <Profile name={name} rating={rating} />
+        <p className="pt-5">{review}</p>
       </div>
-      <p className="text-right">2023-05-18</p>
+      <p className="text-right">{convertDate(date)}</p>
     </article>
   );
 }
 
-function Profile() {
+function Profile({ name, rating }: { name: string; rating: number }) {
   return (
-    <article className="flex shrink-0 items-center gap-x-2">
+    <article className="flex shrink-0 items-center gap-x-4">
       <Image
         src="/images/client.jpg"
         alt=""
@@ -28,8 +34,14 @@ function Profile() {
         className="h-12 w-auto rounded-xl"
       />
       <div>
-        <h3 className="text-base font-medium text-gray-700">Bolaji Samuel</h3>
-        <div>⭐⭐⭐⭐⭐</div>
+        <h3 className="text-base font-medium text-gray-700">{name}</h3>
+        <div className="flex gap-2">
+          {Array(rating)
+            .fill("")
+            .map(() => (
+              <span key={Math.random()}>⭐</span>
+            ))}
+        </div>
       </div>
     </article>
   );

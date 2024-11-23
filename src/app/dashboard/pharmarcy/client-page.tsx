@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/util/cn";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Button from "@/components/button";
 import PageToolBar from "@/components/dashboard/pharmacy-page-toolbar";
 import ProductCard from "@/components/dashboard/pharmacy-product-card";
@@ -13,10 +16,14 @@ import {
 import useFetch from "@/hooks/useFetch";
 import onlinePharmacyApi from "@/api/online-pharmacy";
 import SliderUtil from "@/components/dashboard/SliderUtil";
-
+import { Loader } from "lucide-react";
 export default function HomePage() {
-  const { data: bestProducts } = useFetch(onlinePharmacyApi.getBestProducts);
-  const { data: newProducts } = useFetch(onlinePharmacyApi.getNewProducts);
+  const { data: bestProducts, loading: bloading } = useFetch(
+    onlinePharmacyApi.getBestProducts,
+  );
+  const { data: newProducts, loading: nloading } = useFetch(
+    onlinePharmacyApi.getNewProducts,
+  );
 
   const [showbestSellingProducts, setBestSellingProducts] = useState(false);
   const [shownewProducts, setNewProducts] = useState(false);
@@ -28,38 +35,73 @@ export default function HomePage() {
     setNewProducts(false);
   };
   function Header() {
+    const dashboardCarouselSettings = {
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      speed: 1000,
+      autoplay: true,
+      autoplaySpeed: 5000,
+      cssEase: "linear",
+      initialSlide: 0,
+      // nextArrow: (
+      //   <NextArrow />
+      //   // <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 border-2 border-white bg-primary-500" />
+      // ),
+      // prevArrow: (
+      //   <PrevArrow />
+
+      //   // <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 border-2 border-white bg-primary-500" />
+      // ),
+    };
+
     return (
-      <section className="relative flex h-[282px] items-center rounded-2xl bg-[#212844] text-white">
-        <div className="ml-16 max-w-[339px]">
-          <h1 className="mb-4 text-xl">
-            Get the best of services with Moricol Online Pharmacy
-          </h1>
-          <ul>
-            <li className="flex items-center gap-x-3 text-2xl font-bold">
-              <BulletPoint />
-              Medications
-            </li>
-            <li className="flex items-center gap-x-3 text-2xl font-bold">
-              <BulletPoint />
-              All Consumables
-            </li>
-          </ul>
-        </div>
+      <div className="max-w-screen mr-5 overflow-hidden pr-5 lg:max-w-[900px]">
+        <Slider {...dashboardCarouselSettings}>
+          {Array(3)
+            .fill("")
+            .map(() => (
+              <section
+                key={Math.random() * 5}
+                className="max-w-screen relative flex items-center overflow-x-hidden rounded-2xl bg-[#212844] px-3 pb-8 pr-5 pt-5 text-white"
+              >
+                <div className="mt-3 lg:ml-16 lg:mt-8 lg:max-w-[339px]">
+                  <h1 className="mb-4 w-[70%] text-pretty lg:w-full lg:text-xl">
+                    Get the best of services with Moricol Online Pharmacy
+                  </h1>
+                  <ul>
+                    <li className="mb-3 flex items-center gap-x-3 text-sm font-bold lg:text-2xl">
+                      <BulletPoint />
+                      Medications
+                    </li>
+                    <li className="flex items-center gap-x-3 text-sm font-bold lg:text-2xl">
+                      <BulletPoint />
+                      All Consumables
+                    </li>
+                  </ul>
+                </div>
 
-        <BackgroundIllustrationSVG className="absolute bottom-0 right-4" />
+                <BackgroundIllustrationSVG className="absolute bottom-0 right-4 hidden lg:block" />
 
-        <Image
-          src="/images/dashboard/female-doctor-looking-her-hand.png"
-          alt="a female doctor looking at her hand"
-          height={302}
-          width={523}
-          className="absolute bottom-0 right-0 z-10"
-        />
+                <Image
+                  src="/images/dashboard/female-doctor-looking-her-hand.png"
+                  alt="a female doctor looking at her hand"
+                  height={302}
+                  width={523}
+                  className="absolute -right-10 bottom-0 h-[170px] w-[300px] bg-center lg:right-0 lg:flex lg:h-[302px] lg:w-[523px]"
+                />
 
-        <SliderIndicator className="absolute bottom-6 left-16" />
-        <SliderNextButton className="absolute -right-5 top-1/2 -translate-y-1/2 border-2 border-white bg-primary-500" />
-        <SliderPrevButton className="absolute -left-5 top-1/2 -translate-y-1/2 border-2 border-white bg-primary-500" />
-      </section>
+                <SliderIndicator className="absolute bottom-2 left-3 lg:bottom-4 lg:left-20" />
+                {/* <SliderNextButton className="absolute right-1 top-80 z-[999] mb-5 border-2 border-white bg-primary-500 lg:right-16" />
+
+                <SliderPrevButton className="absolute top-80 z-[999] mb-5 border-2 border-white bg-primary-500 lg:left-10" /> */}
+              </section>
+            ))}
+        </Slider>
+        <SliderNextButton className="absolute -right-2 top-72 z-[99] mb-5 border-2 border-white bg-primary-500 sm:-right-0 md:-right-5 lg:right-14 xl:right-[70px] 2xl:right-20" />
+
+        <SliderPrevButton className="absolute -left-3 top-72 z-[99] mb-5 border-2 border-white bg-primary-500 lg:left-10" />
+      </div>
     );
   }
 
@@ -123,7 +165,7 @@ export default function HomePage() {
     navigateBackToHomePage: () => void;
   }) {
     return (
-      <section className="px-16 py-4">
+      <section className="px-5 py-4 lg:px-16">
         <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
           <h2 className="shrink-0 text-lg font-semibold text-primary-500">
             New Products
@@ -136,22 +178,32 @@ export default function HomePage() {
             Back
           </Button>
         </div>
-        <div className="grid gap-5 py-3 lg:grid-cols-6">
-          {newProducts?.data.map((drug) => {
-            if (drug?.product) {
-              return (
-                <ProductCard
-                  key={drug.product?._id}
-                  id={drug.product?._id}
-                  prescription={drug.product?.prescription}
-                  drugName={drug.product?.name}
-                  imageUrl={drug.product?.coverimage}
-                  price={drug.product?.price}
-                />
-              );
-            }
-          })}
-        </div>
+        {nloading ? (
+          <Loader className="h-7 w-7 animate-spin" />
+        ) : (
+          <div className="grid grid-cols-1 py-3 lg:grid-cols-5 lg:gap-5 2xl:grid-cols-5">
+            {newProducts?.data.map((drug, index) => {
+              if (drug?.product) {
+                // console.log(drug.product);
+                return (
+                  <ProductCard
+                    key={index}
+                    discount={
+                      ((drug.product?.price - drug.product?.discount_price) /
+                        drug.product?.price) *
+                      100
+                    }
+                    id={drug.product?._id}
+                    prescription={drug.product?.prescription}
+                    drugName={drug.product?.name}
+                    imageUrl={drug.product?.coverimage}
+                    price={drug.product?.price}
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
       </section>
     );
   }
@@ -162,7 +214,7 @@ export default function HomePage() {
     navigateBackToHomePage: () => void;
   }) {
     return (
-      <section className="px-16 py-4">
+      <section className="px-5 py-4 lg:px-16">
         <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
           <h2 className="shrink-0 text-lg font-semibold text-primary-500">
             Best Selling Products
@@ -175,36 +227,45 @@ export default function HomePage() {
             Back
           </Button>
         </div>
-        <div className="grid justify-between gap-5 py-3 lg:grid-cols-6">
-          {bestProducts?.data.map((drug) => {
-            if (drug?.product) {
-              return (
-                <ProductCard
-                  key={drug.product?._id}
-                  id={drug.product?._id}
-                  prescription={drug.product?.prescription}
-                  drugName={drug.product?.name}
-                  imageUrl={drug.product?.coverimage}
-                  price={drug.product?.price}
-                />
-              );
-            }
-          })}
-        </div>
+        {bloading ? (
+          <Loader className="h-7 w-7 animate-spin" />
+        ) : (
+          <div className="grid grid-cols-1 py-3 lg:grid-cols-5 lg:gap-5 2xl:grid-cols-5">
+            {bestProducts?.data.map((drug, index) => {
+              if (drug?.product) {
+                return (
+                  <ProductCard
+                    key={index}
+                    discount={
+                      ((drug.product?.price - drug.product?.discount_price) /
+                        drug.product?.price) *
+                      100
+                    }
+                    id={drug.product?._id}
+                    prescription={drug.product?.prescription}
+                    drugName={drug.product?.name}
+                    imageUrl={drug.product?.coverimage}
+                    price={drug.product?.price}
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
       </section>
     );
   }
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <PageToolBar />
 
       {!shownewProducts && !showbestSellingProducts && (
-        <section className="grid gap-y-9 px-16 py-8">
+        <section className="grid gap-y-9 py-8 pl-4 pr-8 md:px-12 lg:px-16">
           <Header />
 
           <section>
-            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
+            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3 pr-10 lg:pr-0">
               <h2 className="shrink-0 text-lg font-semibold text-primary-500">
                 New Products
               </h2>
@@ -216,13 +277,18 @@ export default function HomePage() {
                 View All
               </Button>
             </div>
-            <div className="w-full">
-              {newProducts?.data && <SliderUtil data={newProducts.data} />}
-            </div>
+            {nloading ? (
+              <Loader className="h-7 w-7 animate-spin" />
+            ) : (
+              <div className="w-screen pt-5 lg:max-w-[900px]">
+                {newProducts?.data && <SliderUtil data={newProducts.data} />}
+              </div>
+            )}
           </section>
 
           <section>
-            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3">
+            <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3 pr-10 lg:pr-0">
+              {/* <div className="flex items-center justify-between border-b border-[#D2D2D2] pb-3"> */}
               <h2 className="shrink-0 text-lg font-semibold text-primary-500">
                 Best Selling Products
               </h2>
@@ -234,9 +300,14 @@ export default function HomePage() {
                 View All
               </Button>
             </div>
-            <div className="w-full">
-              {bestProducts?.data && <SliderUtil data={bestProducts.data} />}
-            </div>
+            {bloading ? (
+              <Loader className="h-7 w-7 animate-spin" />
+            ) : (
+              // <div className="w-full max-w-[360px] pt-5 sm:max-w-[390px] lg:max-w-[900px]">
+              <div className="w-screen pt-5 lg:max-w-[900px]">
+                {bestProducts?.data && <SliderUtil data={bestProducts.data} />}
+              </div>
+            )}
           </section>
         </section>
       )}

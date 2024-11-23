@@ -1,5 +1,6 @@
 import { HeartSVG } from "@/components/svgs";
 import { routes } from "@/constants/routes";
+import { OrdersProvider } from "@/hooks/useOrders";
 import Link from "next/link";
 
 const accountLinks = [
@@ -22,14 +23,14 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="px-8 py-10">
+    <main className="px-4 py-10 lg:px-8">
       <div className="border-b border-[#D2D2D2] pb-3">
         <h1 className="shrink-0 text-lg font-semibold text-primary-500">
           Account
         </h1>
       </div>
-      <div className="flex items-start gap-x-7 py-3.5">
-        <aside className="w-[243px] shrink-0 rounded border border-[#CACACA] p-6">
+      <div className="items-start gap-x-7 py-3.5 md:flex">
+        <aside className="w-full shrink-0 rounded border border-[#CACACA] p-6 md:w-[243px]">
           <ul className="grid gap-y-5">
             {accountLinks.map(({ name, link, icon }) => (
               <li
@@ -47,7 +48,9 @@ export default function AccountLayout({
             ))}
           </ul>
         </aside>
-        <section className="grow">{children}</section>
+        <section className="mt-5 grow lg:mt-0">
+          <OrdersProvider>{children}</OrdersProvider>
+        </section>
       </div>
     </main>
   );
