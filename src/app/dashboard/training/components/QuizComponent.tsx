@@ -1,3 +1,8 @@
+"use client"
+import { CourseApi } from "@/api/training";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 
 interface Option {
@@ -18,15 +23,21 @@ interface Quiz {
 
 interface QuizProps {
   quiz: Quiz;
+  courseid: string;
+  lessonid: string;
+  sectionid: string
 }
 
-const QuizComponent: React.FC<QuizProps> = ({ quiz }) => {
+const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessonid }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null,
   );
   const [userScore, setUserScore] = useState(quiz.user_score); // Tracks the user's current score
   const [isAnswerConfirmed, setIsAnswerConfirmed] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = () => {
     if (selectedOptionIndex !== null) {
@@ -57,17 +68,24 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz }) => {
 
   const handleFinish = async () => {
     const userScorePercentage = (userScore / quiz.questions.length) * 100;
-
-    // Example API endpoint for submitting score
-    await fetch("/api/submit-score", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user_score: userScorePercentage }),
-    });
-
-    alert(`Score submitted: ${userScorePercentage}%`);
+    try {
+      setIsLoading(true);
+      await CourseApi.updateQuizScore({
+        userid: session?.user.id as string,
+        session: session as Session,
+        lessonid,
+        sectionid,
+        courseid,
+        score: userScorePercentage,
+      }
+      );
+      enqueueSnackbar("Completed Quiz Succesfully.", { variant: "success" });
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("There was an Error trying to Update your score, Pls try again later.", { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -92,10 +110,10 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz }) => {
               (option, index) => (
                 <label
                   key={index}
-                  className={`flex cursor-pointer items-center rounded-lg border p-3 transition hover:bg-gray-100 ${
+                  className={`flex cursor-pointer items-center rounded-lg border p-3 transition  ${
                     selectedOptionIndex === index
-                      ? `${isAnswerConfirmed ? `${option.isCorrect ? "bg-lime-500 hover:bg-lime-500" : "bg-red-500 hover:bg-red-500"}` : "bg-blue-200 hover:bg-blue-200"}`
-                      : "bg-white"
+                      ? `${isAnswerConfirmed ? `${option.isCorrect ? "bg-green-500 hover:bg-green-500" : "bg-red-500 hover:bg-red-500"}` : "bg-blue-200 hover:bg-blue-200"}`
+                      : "bg-white hover:bg-gray-100"
                   }`}
                 >
                   <input
@@ -154,7 +172,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz }) => {
             onClick={handleFinish}
             className="rounded-lg bg-yellow-500 px-6 py-2 font-bold text-white transition hover:bg-yellow-600"
           >
-            CONTINUE
+            {isLoading ? "Loading..." : "COMPLETE"}
           </button>
 
           <button

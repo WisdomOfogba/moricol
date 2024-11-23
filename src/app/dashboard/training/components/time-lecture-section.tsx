@@ -10,12 +10,10 @@ export default function CourseTimeLecturesSection({
   sections?: number;
 }) {
   return (
-    <ul className="text-s flex gap-x-4 flex-wrap">
+    <ul className="text-sm flex gap-x-4 flex-wrap">
       {sections && (
-        <li className="flex items-center gap-x-1.5">
-          <>
+        <li className="flex items-center gap-1.5">
             <FolderSvg /> {sections} sections
-          </>
         </li>
       )}
       {lectures && (
@@ -25,10 +23,8 @@ export default function CourseTimeLecturesSection({
         </li>
       )}
       {time && (
-        <li className="flex items-center gap-x-1.5">
-          <>
+        <li className="flex items-center gap-1.5">
             <ClockSvg /> {time}
-          </>
         </li>
       )}
     </ul>

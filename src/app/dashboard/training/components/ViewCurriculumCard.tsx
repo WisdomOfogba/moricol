@@ -19,7 +19,7 @@ export default function ViewCurriculumCard({
   setLesson,
 }: {
   curriculum: curriculum;
-  setLesson: (type: string, lesson: section) => void;
+  setLesson: (type: string, lesson?: section, sectionid?: string) => void;
 }) {
   const [isAccordionOpen, setAccordion] = useState(false);
   const [active, setActive] = useState("");
@@ -28,7 +28,7 @@ export default function ViewCurriculumCard({
     <article className="border-b last:border-b-0">
       <button
         className={`{isAccordionOpen ? "rounded-t-xl" : "rounded-xl"} flex w-full items-center justify-between p-5`}
-        onClick={() => setAccordion(!isAccordionOpen)}
+        onClick={() => {setAccordion(!isAccordionOpen); setLesson("")}}
       >
         <div
           className={`flex items-center gap-x-2 ${isAccordionOpen ? "font-medium text-primary-500" : "text-[#1D2026]"}`}
@@ -84,7 +84,7 @@ export default function ViewCurriculumCard({
             ) : (
               <li
                 onClick={() => {
-                  setLesson(section.lesson.lesson_type, section);
+                  setLesson(section.lesson.lesson_type, section, curriculum._id);
                   setActive(section._id);
                 }}
                 className={`text-s flex cursor-pointer items-center justify-between px-5 py-2 hover:bg-secondary-50 ${active === section._id && "bg-secondary-50"}`}

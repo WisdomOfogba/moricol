@@ -258,7 +258,7 @@ export const CourseApi = {
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Error Marking Lesson");
+      const errorMessage = handleAxiosError(error, "Error Updating Score");
       throw new Error(errorMessage);
     }
   },

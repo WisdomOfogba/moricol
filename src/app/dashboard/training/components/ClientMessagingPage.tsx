@@ -55,8 +55,6 @@ export default function ClientMessagingPage({
         message: newMessage,
         session,    
       });
-
-      console.log("Message sent successfully:", response);
       setMessages((prev) => [ response.data, ...prev]);
       setNewMessage("");
     } catch (err) {

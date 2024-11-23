@@ -99,24 +99,28 @@ export default function CourseDetail({
     </ul>
   );
   return (
-    <main className="pb-20">
-      <section className="flex items-center justify-between bg-[#F5F7FA] px-8 py-5">
-        <div className="flex gap-x-4 items-center">
-          <PrevPageBtn />
-          <div>
-            <h1 className="mb-3 text-base sm:text-lg font-medium text-[#1D2026] relative">
-              {course?.title || course?.bundle}
-            </h1>
+    <main className="w-full pb-20">
+      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
+        <PrevPageBtn />
+        <div className="flex w-full">
+          <div className="flex w-full flex-col">
+            <div className="flex w-full items-start justify-between">
+              <h1 className="relative mb-3 w-40 sm:w-min truncate text-base font-medium text-[#1D2026] sm:text-lg">
+                {course?.title || course?.bundle}
+              </h1>
+              <p className="text-base text-primary-500 lg:text-2xl">
+                PRICE: ₦{course?.price}
+              </p>
+            </div>
             <CourseTimeLecturesSection
               sections={course.curriculum?.length}
               time={course.duration}
             />
           </div>
         </div>
-        <p className="text-lg lg:text-2xl text-primary-500">PRICE: ₦{course?.price}</p>
       </section>
 
-      <section className="mb-16 flex flex-col xl:flex-row items-center xl:items-start justify-between gap-6 px-14 py-6">
+      <section className="mb-16 flex flex-col items-center justify-between gap-6 px-4 py-6 sm:px-14 xl:flex-row xl:items-start">
         {/* Right hand side */}
         <div className="grid w-full gap-y-10">
           {/* Heading */}
@@ -128,11 +132,11 @@ export default function CourseDetail({
               <span className="mx-2">{">"}</span>
             </div>
 
-            <h2 className="mb-6 text-xl sm:text-3xl font-semibold">
+            <h2 className="mb-6 text-xl font-semibold sm:text-3xl">
               {course.title || course.bundle}
             </h2>
 
-            <div className="flex justify-between w-full">
+            <div className="flex w-full justify-between">
               <article className="flex items-center gap-x-3">
                 <div className="flex">
                   <div className="relative h-[50px] w-[50px] overflow-hidden rounded-full border-[3px] border-white">
@@ -151,7 +155,7 @@ export default function CourseDetail({
                   </h3>
                 </div>
               </article>
-              <div className="hidden sm:flex items-center gap-x-2">
+              <div className="hidden items-center gap-x-2 sm:flex">
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
                   {course?.rating}{" "}
@@ -178,12 +182,12 @@ export default function CourseDetail({
           </div>
 
           {/* Links */}
-          <section>
-            <ul className="flex gap-x-6 border-b border-b-[#E9EAF0]">
+          <section className="flex w-full overflow-auto no-scrollbar">
+            <ul className="flex gap-x-6 border-b border-b-[#E9EAF0] w-max sm:w-full">
               {type === "online" ? (
                 <>
                   {onlineCourseDescriptionDetailLink.map(({ name, link }) => (
-                    <li className="w-full" key={name}>
+                    <li className="w-[160px] sm:w-full" key={name}>
                       <button
                         className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
                         onClick={() => setActiveLink(link)}
@@ -195,16 +199,17 @@ export default function CourseDetail({
                 </>
               ) : (
                 <>
-                  {type !== "classroom" && courseDescriptionDetailLink.map(({ name, link }) => (
-                    <li className="w-full" key={name}>
-                      <button
-                        className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
-                        onClick={() => setActiveLink(link)}
-                      >
-                        {name}
-                      </button>
-                    </li>
-                  ))}
+                  {type !== "classroom" &&
+                    courseDescriptionDetailLink.map(({ name, link }) => (
+                      <li className="w-full" key={name}>
+                        <button
+                          className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
+                          onClick={() => setActiveLink(link)}
+                        >
+                          {name}
+                        </button>
+                      </li>
+                    ))}
                 </>
               )}
             </ul>
@@ -380,7 +385,7 @@ export default function CourseDetail({
                               style={{ objectFit: "cover" }}
                             />
                           </div>
-                          <h4 className="text-lg font-semibold text-[#1D2026]">
+                          <h4 className="w-32 truncate text-lg font-semibold text-[#1D2026] sm:w-full">
                             {instructor.instructor}
                           </h4>
                         </article>
@@ -436,7 +441,7 @@ export default function CourseDetail({
             View All <ArrowRightSvg className="-rotate-180" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {data.map((course, i) => (
             <CourseCard key={i} courseData={course} type={type} />
           ))}
@@ -475,10 +480,8 @@ function CourseDetailSummary({
     },
   ];
 
-
-
   return (
-    <article className="w-[424px] shrink-0 shadow-md">
+    <article className="w-full shrink-0 px-4 shadow-md xl:w-[424px]">
       {/* Course Details */}
       <div className="grid gap-y-6 p-6">
         {highlightDetails.map(({ title, detail, icon }, i) => (

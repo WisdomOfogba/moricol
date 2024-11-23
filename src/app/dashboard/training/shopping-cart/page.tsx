@@ -15,8 +15,8 @@ export default function ShoppingCard() {
   const sum = getSum();
 
   return (
-    <main>
-      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-8 py-10">
+    <main className="w-full">
+      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-4 sm:px-14 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
         <p className="text-sm text-[#6E7485]">
@@ -24,21 +24,21 @@ export default function ShoppingCard() {
         </p>
       </section>
 
-      <div className="px-14">
+      <div className="px-4 sm:px-14">
         <section>
           <h3 className="mb-6 text-center text-xl font-semibold text-[#1D2026]">
             Shopping Cart ({cartCount})
           </h3>
-          <div className="mb-10 flex flex-col items-center gap-6 px-14 xl:flex-row xl:items-start">
+          <div className="mb-10 flex flex-col items-center gap-6 px-4 xl:flex-row xl:items-start">
             <section className="w-full overflow-x-scroll">
-              <div className="border border-[#E9EAF0] w-full">
+              <div className={`border border-[#E9EAF0] ${cartCount > 0 ? "w-min" : "w-full"}`}>
                 <div className="grid grid-cols-[3fr_1fr_1fr] w-full gap-x-6 border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
                   <h3>COURSE</h3>
                   <h3>PRICES</h3>
                   <h3>ACTION</h3>
                 </div>
                 {/* <Wishlists /> */}
-                <div className="">
+                <div>
                   <CartDetails />
                 </div>
               </div>
