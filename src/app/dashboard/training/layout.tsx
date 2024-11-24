@@ -51,7 +51,7 @@ async function ToolBar() {
       <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
       </Link>
-      <Link href="/" className="relative block cursor-pointer sm:flex">
+      <Link href="/" className="relative block cursor-pointer sm:hidden">
         <Home />
       </Link>
 
