@@ -117,6 +117,8 @@ export default function LoanHistorySingleClient({
                     <div>
                       <p className="font-semibold">N{payment.repay_amount.toLocaleString('en-NG')}</p>
                       <p className="text-sm text-gray-600">{formatDateToWords(payment.due_date)}</p>
+                      <small className="text-xs text-gray-600">{payment.balance.toLocaleString('en-NG')}</small>
+
                     </div>
                     <span
                       className={`rounded-full px-2 py-1 text-xs ${payment.loan_paid === true

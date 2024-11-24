@@ -30,7 +30,7 @@ function DashboardLayoutClient({
   return (
     // <section className="flex h-screen overflow-y-hidden" onClick={(e) => {
     <section
-      className="flex"
+      className="flex h-screen"
       onClick={(e) => {
         if (e.target instanceof HTMLAnchorElement) {
           setIsSidebarOpen(false);

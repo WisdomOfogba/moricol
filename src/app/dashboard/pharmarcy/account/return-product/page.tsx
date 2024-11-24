@@ -1,9 +1,9 @@
 "use client";
 
 
-import SummaryProductCard from "@/components/dashboard/summary-product-card";
-import Quantity from "../../components/increase-decrese-quantity";
-import SubmitProposal from "../../modals/refund-process";
+// import SummaryProductCard from "@/components/dashboard/summary-product-card";
+// import Quantity from "../../components/increase-decrese-quantity";
+// import SubmitProposal from "../../modals/refund-process";
 
 export default function ReturnProduct() {
   return (
@@ -11,7 +11,7 @@ export default function ReturnProduct() {
       <div>
         <button
           className="pb-5 text-xs font-bold text-primary-500"
-          //   onClick={() => setState("list")}
+        //   onClick={() => setState("list")}
         >
           &larr; My Orders
         </button>
@@ -50,9 +50,9 @@ export default function ReturnProduct() {
         <ul className="grid gap-y-1.5">
           <li>
             <article className="rounded border border-gray-300 px-3.5 py-5">
-              <SummaryProductCard />
+              {/* <SummaryProductCard /> */}
               <p className="mb-1 mt-5">Quantity</p>
-              <Quantity />
+              {/* <Quantity /> */}
             </article>
           </li>
         </ul>
@@ -120,7 +120,7 @@ export default function ReturnProduct() {
           </div>
         </section>
       </div>
-      <SubmitProposal />
+      {/* <SubmitProposal /> */}
     </section>
   );
 }
