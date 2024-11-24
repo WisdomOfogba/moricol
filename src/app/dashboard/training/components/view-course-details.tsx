@@ -283,7 +283,7 @@ export default function ViewCourseDetail({
           {/* Links */}
           <section className="flex w-full">
             <ul className="flex w-full gap-x-6 border-b border-b-[#E9EAF0]">
-              {singleCourse.course.curriculum.length > 0 &&
+              {singleCourse.course?.curriculum &&
                 courseDescriptionDetailLink.map(({ name, link }, i) => (
                   <li key={i} className="w-full">
                     <button
@@ -364,7 +364,7 @@ export default function ViewCourseDetail({
           )}
         </div>
 
-        {singleCourse.courseorder.curriculum.length > 0 && (
+        {singleCourse.courseorder?.curriculum.length > 0 && (
           <section className="flex w-full flex-col items-start">
             <div className="w-full shrink-0 xl:max-w-[524px]">
               <div className="mb-3.5 flex items-center justify-between font-semibold">
@@ -393,7 +393,7 @@ export default function ViewCourseDetail({
               </div>
             </div>
             <div className="p-4 w-full shrink-0 xl:max-w-[524px]">
-              {singleCourse.course.redirect_course.redirect && (
+              {singleCourse.course?.redirect_course.redirect && (
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-gray-800">
                     Redirect Links
