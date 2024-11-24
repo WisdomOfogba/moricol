@@ -19,7 +19,7 @@ const MakeAppointmentPayment = ({ price, tosend }: { price: number, tosend: any 
         storeToLocalStorage({
             service: 'telemedicine',
             link: routes.TELEMEDICINE_APPOINTMENTS,
-            toSend: tosend
+            toSend: { ...tosend, medication: tosend.medication.map((med: { days: string, drug: string, drugs?: string }) => ({ days: parseInt(med.days), drug: med.drugs, })) }
         });
         try {
             setIsLoading(true);

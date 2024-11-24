@@ -5,8 +5,8 @@ import { useState } from "react";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import Image from "next/image";
 import { curriculum } from "@/definition";
-import VideoDuration from "./VideoDuration";
-import PDFFileSize from "./PdfUrl";
+// import VideoDuration from "./VideoDuration";
+// import PDFFileSize from "./PdfUrl";
 
 export default function CurriculumCard({
   curriculum,
@@ -51,7 +51,6 @@ export default function CurriculumCard({
                     </div>
                     <p className="text-[#4E5566]">{section.lesson_name}</p>
                   </div>
-                  <VideoDuration videoUrl={section.lesson.content} />
                 </>
               ) : (
                 <>
@@ -59,7 +58,6 @@ export default function CurriculumCard({
                     <File />
                   <p className="text-[#4E5566]">{section.lesson_name}</p>
                 </div>
-                  {section.lesson.lesson_type === "pdf" || section.lesson.lesson_type === "assignment" ? <PDFFileSize pdfUrl={section.lesson.content} /> : `${section.lesson.content}`}
                 </>
               )}
             </li>

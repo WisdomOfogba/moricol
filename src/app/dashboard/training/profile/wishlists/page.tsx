@@ -56,9 +56,9 @@ export default async function TrainingProfileWishlists() {
         </h2>
       </section>
 
-      <section>
-        <div className={`border border-[#E9EAF0] ${Courses.length > 0 ? "w-min" : "w-full"}`}>
-          <div className="grid grid-cols-[3fr_1fr_2fr] border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
+      <section className="w-full overflow-auto">
+        <div className={`border border-[#E9EAF0] ${Courses.length > 0 ? "w-min sm:w-full" : "w-full"}`}>
+          <div className="grid grid-cols-[3fr_1fr_1fr] border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
             <h3>COURSE</h3>
             <h3>PRICES</h3>
             <h3>ACTION</h3>
@@ -90,7 +90,7 @@ async function Wishlists({ course }: { course: courseorder }) {
   }
 
   return (
-    <article className="grid grid-cols-[3fr_1fr_2fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
+    <article className="grid grid-cols-[3fr_1fr_1fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
       <WishlistCourseCard course={course} />
       <div className="text-lg font-medium text-primary-500">
         ₦{course.amount}

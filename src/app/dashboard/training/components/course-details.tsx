@@ -160,8 +160,6 @@ export default function CourseDetail({
                 <p className="font-medium text-[#1D2026]">
                   {course?.rating}{" "}
                   <span className="text-sm font-normal text-[#6E7485]">
-                    {" "}
-                    (100 Rating)
                   </span>
                 </p>
               </div>

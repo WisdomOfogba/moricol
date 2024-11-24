@@ -371,7 +371,7 @@ export type AppointmentScheduleData = {
   } | null;
 };
 
-export type AppointmentStatus = "" | "ongoing" | "upcoming" | "past";
+export type AppointmentStatus = "" | "ongoing" | "accepted" | "past";
 
 export type SingleAppointmentData = {
   time: {
@@ -586,19 +586,40 @@ export type Dashboard = {
   ];
 };
 
+export type comment = {
+  _id: string;
+  userid: userid
+  courseid: string;
+  reply: reply[],
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+}
+
+export type userid = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+}
+
+export type reply = {
+  _id: string;
+  userid: userid;
+  courseid: string;
+  reply: string,
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+}
+
 export type SingleCourse = {
-  comment: [
-    {
-      id: string;
-      author: string;
-      avatar: string;
-      content: string;
-      timestamp: string;
-      isAdmin: boolean;
-    },
-  ];
+  comment: comment[]
   review: string[];
   course: {
+    redirect_course: {
+      links: string[];
+      redirect: boolean;
+    }
     _id: string;
     title: string;
     bundle: string;
@@ -687,7 +708,7 @@ export type archive = {
   admin_details: {
     name: string;
   };
-};
+}
 
 export type messaging = {
   _id: string;
@@ -778,3 +799,13 @@ export type ReviewData = {
   __v: number
 }
   */
+
+export type NotesData = {
+  _id: string,
+  title: string,
+  comment: string,
+  staffid: string,
+  appointmentid: string,
+  createdAt: string,
+  __v: number
+}
