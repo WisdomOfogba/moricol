@@ -28,7 +28,11 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       } else {
         enqueueSnackbar("Logged in successfully!", { variant: "success" });
         // router.push(callbackUrl ?? "/");
-        window.location.href = callbackUrl ?? "/";
+        if (callbackUrl) {
+          window.location.replace(callbackUrl);
+        } else {
+          window.location.href = "/";
+        }
       }
     } catch (error) {
       enqueueSnackbar("An unexpected error occurred. Please try again.", {
