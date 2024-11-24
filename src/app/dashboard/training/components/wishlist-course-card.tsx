@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 // import { StarSVG } from "@/components/svgs";
 import { courseorder } from "@/definition";
@@ -9,21 +9,26 @@ import { CourseApi } from "@/api/training";
 import { Session } from "next-auth";
 
 export default function WishlistCourseCard({
+  wishList,
   course,
 }: {
+  wishList: boolean;
   course: courseorder;
 }) {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const handleCancel = async ({courseid}: {courseid: string}) => {
+  const handleCancel = async ({ courseid }: { courseid: string }) => {
     try {
       await CourseApi.unsaveCourse({
         userid: session?.user.id as string,
         session: session as Session,
         courseid,
       });
-      enqueueSnackbar(`Deleted ${course.courseid.bundle || course.courseid.title} from wishlist succesfully`, { variant: "success" });
+      enqueueSnackbar(
+        `Deleted ${course.courseid.bundle || course.courseid.title} from wishlist succesfully`,
+        { variant: "success" },
+      );
     } catch (error) {
       console.error(error);
       enqueueSnackbar("Error deleting from wishlist", { variant: "error" });
@@ -32,12 +37,14 @@ export default function WishlistCourseCard({
 
   return (
     <article className="flex items-center gap-x-5 text-[#1D2026]">
-      <button
-        className="cursor-pointer"
-        onClick={() => handleCancel({ courseid: course.courseid._id })}
-      >
-        <CircleCancel />
-      </button>
+      {wishList && (
+        <button
+          className="cursor-pointer"
+          onClick={() => handleCancel({ courseid: course.courseid._id })}
+        >
+          <CircleCancel />
+        </button>
+      )}
       <div className="relative h-[120px] w-40 overflow-hidden">
         <Image
           src={course.courseid?.thumbnail}
@@ -50,7 +57,7 @@ export default function WishlistCourseCard({
         <div>
           {/* Course title */}
           <h3 className="mb-6 w-[312px] font-medium">
-            {course.courseid?.title || course.courseid.bundle}
+            {course.courseid?.title || course.courseid?.bundle}
           </h3>
         </div>
 

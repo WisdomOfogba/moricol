@@ -40,7 +40,7 @@ async function getOrder() {
     return Order;
   } catch (error) {
     throw new Error(
-      error instanceof Error ? error.message : "Failed to get Courses data",
+      error instanceof Error ? error.message : "Failed to get Order History data",
     );
   }
 }
