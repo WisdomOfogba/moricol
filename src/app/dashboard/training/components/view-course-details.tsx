@@ -478,11 +478,13 @@ const CommentSection = ({
   const [comment, setComment] = useState(initialComment);
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      setLoading(true)
       const response = await sendComment({
         userid: session?.user.id as string,
         comment: commentText,
@@ -491,8 +493,10 @@ const CommentSection = ({
       });
       setComment((prev) => [...prev, response.data]);
       setCommentText("");
-    } catch (err) {
-      console.error("Failed to post Comment:", err);
+    } catch (error) {
+      console.error("Failed to post Comment:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -543,10 +547,11 @@ const CommentSection = ({
           className="w-full rounded-md border p-2 text-sm focus:p-2"
         />
         <button
+        disabled={commentText === ""}
           onClick={handleCommentSubmit}
           className="mt-2 rounded bg-primary-500 px-4 py-2 text-sm text-white"
         >
-          Post a Comment
+          {loading ? "Posting Comment..." : "Post a Comment"}
         </button>
       </div>
     </div>
