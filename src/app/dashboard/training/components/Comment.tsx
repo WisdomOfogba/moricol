@@ -58,11 +58,13 @@ const ReplySection = ({ reply: initialReply, showReplyForm, commentid }: { reply
   const [reply, setReply] = useState(initialReply);
   const { data: session } = useSession();
   const [replyText, setReplyText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleReplySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      setLoading(true)
       const response = await sendReply({
         userid: session?.user.id as string,
         reply: replyText,
@@ -73,6 +75,8 @@ const ReplySection = ({ reply: initialReply, showReplyForm, commentid }: { reply
       setReplyText("");
     } catch (err) {
       console.error("Failed to Reply Post:", err);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -104,18 +108,19 @@ const ReplySection = ({ reply: initialReply, showReplyForm, commentid }: { reply
   return (
     <div>
       {showReplyForm && (
-        <div className="ml-12 mt-3 flex flex-col gap-x-4 sm:flex-row">
+        <div className="ml-12 mt-3 items-start flex flex-col gap-x-4 ">
           <textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
             placeholder="Write your reply..."
-            className="w-full rounded-md border p-2 text-sm focus:p-2 sm:w-2/3"
+            className="w-full rounded-md border p-2 text-sm focus:p-2"
           />
           <button
+          disabled={replyText === ""}
             onClick={handleReplySubmit}
             className="mt-2 rounded bg-primary-500 px-4 py-2 text-sm text-white"
           >
-            Post Reply
+          {loading ? "Replying Comment..." : "Reply Comment"}
           </button>
         </div>
       )}
