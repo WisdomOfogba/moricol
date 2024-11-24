@@ -55,16 +55,12 @@ async function ToolBar() {
         <Home />
       </Link>
 
-      {/* Button and Input */}
-      <div className="mx-auto flex items-center justify-center">
-        <Link href="/dashboard/training">
-          <LayoutDashboard />
-        </Link>
-      </div>
-
       {/* Icon and Profile */}
       <div className="flex grow items-center justify-end gap-x-6">
         <div className="flex grow items-center justify-end gap-x-6">
+          <Link href="/dashboard/training">
+            <LayoutDashboard />
+          </Link>
           <Link href="/dashboard/training/profile" className="relative">
             <UserCircle2 />
           </Link>
