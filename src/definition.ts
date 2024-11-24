@@ -297,8 +297,13 @@ export type ProfileData = {
   demographic: {
     bloodgroup: string;
     genotype: string;
-    allergy: string[];
+    allergy: string[] | string;
     reports: string[];
+    emergency_contact: string;
+    emergency_name: string;
+    kin_name: string;
+    kin_relationship: string;
+    kin_number: string;
   };
   mail_on: boolean;
   _id: string;
@@ -320,7 +325,8 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
-};
+
+}
 
 export type TelemedicineCategoryData = {
   category: {
@@ -690,86 +696,6 @@ export type messaging = {
   __v: number;
 };
 
-/*
-export type CourseData = {
-  _id: string;
-  bundle: string;
-  bundle_option: string;
-  title: string;
-  care_certificate: boolean;
-  price: number;
-  rating: number;
-  level: number;
-  thumbnail: string;
-  add_on: string[];
-  online_course: [{
-    course: string;
-    _id: string;
-  }];
-  classroom_course: [{
-    course: string;
-    _id: string;
-  }];
-  description: string;
-  instructors: [
-    {
-      instructor: string;
-      _id: string;
-    }
-  ];
-  start_messagge: string;
-  end_messagge: string;
-  editedBy: string;
-  editedAt: string;
-  createdAt: string;
-  __v: number;
-  client: number;
-  category: string,
-  start_date: string,
-  end_date: string,
-  duration: string,
-  duration_description: string,
-  benefits: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  sections: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  for_who: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  redirect_course: { links: string[], redirect: boolean },
-  standalone: true,
-  curriculum: string[],
-  requirement: string[],
-  quantity: number,
-}
-
-export type ReviewData = {
-  _id: string,
-  userid: {
-    _id: string,
-    firstname: string,
-    lastname: string
-  },
-  courseid: string,
-  courseType: string,
-  review: string,
-  rating: number,
-  createdAt: string,
-  __v: number
-}
-  */
-
 export type NotesData = {
   _id: string,
   title: string,
@@ -778,4 +704,25 @@ export type NotesData = {
   appointmentid: string,
   createdAt: string,
   __v: number
+}
+
+
+export type MassageData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  photo: string;
+  massage_specialty: {
+    _id: string;
+    experience: number;
+    massageid: string;
+    massagetime: {
+      end_time: string;
+      start_time: string;
+      _id: string;
+    }[];
+    rating: number;
+    specialtyprice: number;
+    totalreviews: number;
+  }[];
 }

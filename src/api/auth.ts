@@ -2,6 +2,8 @@
 import { API_BASE_URL } from '@/constants/config';
 import axios from 'axios';
 import handleAxiosError from './handle-axios-error';
+import { createClientAxios } from './axios-client';
+import { Session } from 'next-auth';
 
 
 // Base URL of the external API
@@ -86,7 +88,7 @@ export const confirmPasswordResetCode = async (code: string, email: string) => {
 };
 
 export interface ResetPasswordData {
-  email: string;
+  userid: string;
   currentpassword: string;
   newpassword: string;
 }
@@ -94,9 +96,11 @@ export interface ResetPasswordData {
 /**
  * Function to reset user password.
  *
- * @param resetData - Object containing email, current password, and new password.
+ * @param resetData - Object containing user id, current password, and new password.
  */
-export const resetPassword = async (resetData: ResetPasswordData) => {
+export const resetPassword = async (resetData: ResetPasswordData, session: Session) => {
+  const axios = createClientAxios({ session });
+
   try {
     const response = await axios.post(
       `${API_BASE_URL}/user/reset/password`,

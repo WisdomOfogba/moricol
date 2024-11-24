@@ -7,11 +7,22 @@ import { BiLock } from "react-icons/bi";
 import { FiEyeOff } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import Button from "@/components/button";
+import { resetPassword } from "@/api/auth";
+import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
+import { useSnackbar } from "notistack";
+import { Session } from "next-auth";
 
 export default function ChangePasswordClient() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const togglePasswordVisibility = (field: "current" | "new" | "confirm") => {
     switch (field) {
@@ -27,9 +38,47 @@ export default function ChangePasswordClient() {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (currentPassword === "" || newPassword === "" || confirmPassword === "") {
+      alert("All fields are required");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    if (currentPassword === newPassword) {
+      alert("Current and new passwords cannot be the same");
+      return;
+    }
+
+
+    setLoading(true);
+    try {
+      await resetPassword({
+        userid: session?.user?.id as string,
+        currentpassword: currentPassword,
+        newpassword: newPassword,
+      }, session as Session);
+
+      enqueueSnackbar("Password updated successfully", { variant: "success" });
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+    } catch (error) {
+      enqueueSnackbar("Error updating password", { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="py-5sssss mx-auto max-w-lg lg:container">
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+    <div className="py-5 mx-auto max-w-lg">
+      <h1 className="text-2xl font-bold mb-4">Change Password</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <Label className="block pb-2" htmlFor="current-password">
             Current Password
@@ -39,8 +88,10 @@ export default function ChangePasswordClient() {
             <Input
               id="current-password"
               type={showCurrentPassword ? "text" : "password"}
-              className="pl-10 pr-10"
+              className="pl-10 pr-10 focus:pl-10"
               placeholder="Password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
             />
             <button
               type="button"
@@ -65,8 +116,10 @@ export default function ChangePasswordClient() {
             <Input
               id="new-password"
               type={showNewPassword ? "text" : "password"}
-              className="pl-10 pr-10"
+              className="pl-10 pr-10 focus:pl-10"
               placeholder="Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             <button
               type="button"
@@ -91,8 +144,10 @@ export default function ChangePasswordClient() {
             <Input
               id="confirm-password"
               type={showConfirmPassword ? "text" : "password"}
-              className="pl-10 pr-10"
-              placeholder="Password"
+              className="pl-10 pr-10 focus:pl-10"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <button
               type="button"
@@ -110,9 +165,10 @@ export default function ChangePasswordClient() {
 
         <Button
           type="submit"
-          className="w-full bg-primary-500 text-white hover:bg-primary-600"
+          disabled={loading}
+          className="w-full bg-primary-500 flex items-center justify-center text-white hover:bg-primary-600"
         >
-          UPDATE
+          {loading ? <Loader2 className="animate-spin" /> : "UPDATE"}
         </Button>
       </form>
     </div>

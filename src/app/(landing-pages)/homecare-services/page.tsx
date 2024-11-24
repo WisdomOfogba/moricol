@@ -3,15 +3,15 @@ import Link from "next/link";
 
 export default function Homecare() {
   return (
-    <header className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-x-20 px-4 sm:px-8 md:px-12 lg:px-20 py-8 md:py-12 pt-10">
+    <header className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-x-20 px-4 sm:px-8 md:px-12 lg:px-20 py-8 md:py-12 pt-10">
       <Image
         src="/images/homecare.png"
         alt=""
         width={600}
         height={600}
-        className="w-full md:w-1/2 h-auto"
+        className="w-full lg:w-1/2 max-w-[600px] h-auto"
       />
-      <div className="w-full md:w-1/2 md:max-w-[600px]">
+      <div className="w-full">
         <h1 className="mb-4 md:mb-8 text-3xl md:text-4xl lg:text-5.5xl font-bold leading-tight md:leading-[3.5rem]">
           Bringing Quality Healthcare to Your Home
         </h1>

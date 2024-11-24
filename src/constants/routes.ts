@@ -18,7 +18,7 @@ export const routes = {
 
   // Massage dashboard links
   MASSAGEDASHBOARDHOME: "/dashboard/massage",
-  MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists/1",
+  MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists",
   MASSAGESPECIALISTS: "/dashboard/massage/specialists",
   MASSAGESERVICES: "/dashboard/massage/services",
   MASSAGEAPPOINTMENTS: "/dashboard/massage/appointments",

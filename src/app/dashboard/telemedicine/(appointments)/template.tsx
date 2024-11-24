@@ -8,7 +8,7 @@ export default function AppointmentsLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname()
-    const isCallOrChat = pathname?.includes('call') || pathname?.includes('chat')
+    const isCallOrChat = pathname?.includes('call') || pathname?.includes('messages')
 
     if (isCallOrChat) {
         return children

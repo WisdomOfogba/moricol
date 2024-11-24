@@ -39,6 +39,8 @@ export default function LoanHistorySingleClient({
     return { due_date, next_payment_amount, next_payment_id };
   }
 
+  console.log(installment_period);
+
   return (
     <div className="min-h-screen">
       <div className="border-b border-gray-300 px-4 py-2">
@@ -117,8 +119,11 @@ export default function LoanHistorySingleClient({
                     <div>
                       <p className="font-semibold">N{payment.repay_amount.toLocaleString('en-NG')}</p>
                       <p className="text-sm text-gray-600">{formatDateToWords(payment.due_date)}</p>
-                      <small className="text-xs text-gray-600">{payment.balance.toLocaleString('en-NG')}</small>
+                      {!payment.loan_paid && <>
+                        {payment.loan_overdue && <small className="text-xs text-red-600 uppercase ">loan overdue {" "} </small>}
 
+                        <small className="text-xs text-gray-600 block">Balance : ₦{payment.balance.toLocaleString('en-NG')}</small>
+                      </>}
                     </div>
                     <span
                       className={`rounded-full px-2 py-1 text-xs ${payment.loan_paid === true
