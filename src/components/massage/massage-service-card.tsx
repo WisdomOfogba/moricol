@@ -5,7 +5,7 @@ export default function MassageServiceCard({
   bg,
   service,
 }: {
-  id: number;
+  id: string | number;
   bg: string;
   service: string;
 }) {

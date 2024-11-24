@@ -4,11 +4,13 @@ import { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const originalUrl = req.nextUrl.protocol + req.headers.get('host') + req.nextUrl.pathname
+  console.log(req.url);
 
   if (req.nextUrl.pathname.startsWith("/dashboard")) {
     if (!token) {
-      const signInUrl = new URL("/signin", req.url);
-      signInUrl.searchParams.set("callbackUrl", req.url);
+      const signInUrl = new URL("/signin", originalUrl);
+      signInUrl.searchParams.set("callbackUrl", originalUrl);
       return NextResponse.redirect(signInUrl);
     }
   }

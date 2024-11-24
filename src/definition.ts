@@ -726,3 +726,17 @@ export type MassageData = {
     totalreviews: number;
   }[];
 }
+
+export type MassageServiceData = {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  functionality: string;
+  price: number;
+  client: number;
+  createdAt: string;
+  editedBy: string | null;
+  editedAt: string;
+  __v: number;
+}
