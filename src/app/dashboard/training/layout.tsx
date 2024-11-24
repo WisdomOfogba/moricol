@@ -46,7 +46,7 @@ async function ToolBar() {
   const profileData = await getProfileData();
 
   return (
-    <header className="flex items-center gap-x-20 border-b bg-white px-5 py-4">
+    <header className="flex items-center justify-between border-b bg-white px-5 py-4">
       {/* Logo */}
       <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
