@@ -13,6 +13,7 @@ import Link from "next/link";
 import { SelectContent, Select, SelectItem, SelectTrigger, SelectValue } from "../select";
 import { useRouter } from "next/navigation";
 import { servicesDashboardLinks } from "@/constants";
+import { signOut } from "next-auth/react";
 
 
 
@@ -98,7 +99,7 @@ function ProfileDropdown() {
             ))}
           </SelectContent>
         </Select>
-        <Button variant="text" className="text-lg font-bold text-primary-500">
+        <Button variant="text" onClick={() => signOut()} className="text-lg font-bold text-primary-500">
           Sign Out
         </Button>
       </div>

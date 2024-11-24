@@ -1,56 +1,70 @@
+import { massageApi } from "@/api/massage";
 import NavigateToPrevPage from "@/components/dashboard/prev-page";
 import MassageServiceCard from "@/components/massage/massage-service-card";
-import { services } from "@/constants";
 import { routes } from "@/constants/routes";
+import { MassageServiceData } from "@/definition";
+import { getUserSession } from "@/lib/auth";
+import { Metadata } from "next";
 import Link from "next/link";
 
-export default function ServiceDetail({ params }: { params: { id: string } }) {
-  const data = services.find(({ id }) => +params.id === id);
 
-  if (!data) return <>This service doesn`&apos;t exist</>;
+export const dynamic = 'force-dynamic';
+
+async function getSingleMassageData(id: string) {
+  try {
+    const session = await getUserSession();
+    if (!session || !session.user || !('id' in session.user)) {
+      throw new Error('User session is invalid or user ID is missing');
+    }
+    const { data: featuredMassageData }: { data: MassageServiceData } = await massageApi.getSingleMassage(id, session);
+    return { featuredMassageData };
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to get profile data');
+  }
+}
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+): Promise<Metadata> {
+  const id = params.id;
+  const { featuredMassageData } = await getSingleMassageData(id);
+  return {
+    title: `Massage Service: ${featuredMassageData.name}`,
+    description: `Details about the massage service: ${featuredMassageData.description}`,
+  };
+};
+
+export default async function ServiceDetail({ params }: { params: { id: string } }) {
+
+  const { featuredMassageData } = await getSingleMassageData(params.id);
+  const data = featuredMassageData;
 
   return (
     <main>
       <NavigateToPrevPage />
 
       <div className="px-20 pb-20 pt-9">
-        <MassageServiceCard bg={data.bg} service={data.service} id={data.id} />
+        <MassageServiceCard bg={data.image} service={data.name} id={data._id} />
 
         <div className="mt-5 grid gap-y-6">
-          <div>
-            <h3 className="font-semibold">Pricing</h3>
-            <p>₦15,000 Per Hour (Moricol Location)</p>
-          </div>
+
+
           <div>
             <h3 className="font-semibold">Description</h3>
             <p>
-              A gentle, relaxing massage that uses long, gliding strokes to
-              improve circulation and promote overall well-being
+              {data.description}
             </p>
           </div>
           <div>
             <h3 className="font-semibold">Functionality</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur. Venenatis malesuada proin
-              nulla aliquet nunc. Proin id eu enim feugiat leo. Nunc at non
-              ullamcorper fringilla dui venenatis aliquet venenatis vel. Tortor
-              felis consectetur tempus euismod in lacus. Elementum scelerisque
-              fringilla senectus pharetra vulputate diam lorem. Mauris netus
-              iaculis accumsan adipiscing donec urna dui. Ornare massa accumsan
-              nec suscipit. Pretium pretium et sem venenatis libero. Tellus ante
-              eu varius bibendum auctor id. Accumsan nisl turpis vitae diam.
-              Dolor vel aliquet donec pharetra faucibus. Interdum id tortor
-              libero duis vitae. Sit imperdiet id rhoncus arcu consequat quis.
-              Enim in lectus ut massa quis duis pulvinar. Quis dui nisl amet
-              accumsan placerat dictum velit a ut. Eget phasellus pulvinar donec
-              in in. Convallis sed cras id id. Aliquet posuere massa enim sit
-              nullam. Lectus cras commodo viverra cursus ut venenatis erat
+              {data.functionality}
               dictum.
             </p>
           </div>
           <div>
             <Link
-              href={routes.MASSAGESPECIALISTS}
+              href={`${routes.MASSAGESPECIALISTS}?id=${data._id}`}
               className="hover:bg-primary-500-80 inline-block w-full rounded-lg bg-primary-500 py-3.5 text-center text-white"
             >
               GO TO MASSEUSE
