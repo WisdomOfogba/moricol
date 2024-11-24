@@ -586,19 +586,40 @@ export type Dashboard = {
   ];
 };
 
+export type comment = {
+  _id: string;
+  userid: userid
+  courseid: string;
+  reply: reply[],
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+}
+
+export type userid = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+}
+
+export type reply = {
+  _id: string;
+  userid: userid;
+  courseid: string;
+  reply: string,
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+}
+
 export type SingleCourse = {
-  comment: [
-    {
-      id: string;
-      author: string;
-      avatar: string;
-      content: string;
-      timestamp: string;
-      isAdmin: boolean;
-    },
-  ];
+  comment: comment[]
   review: string[];
   course: {
+    redirect_course: {
+      links: string[];
+      redirect: boolean;
+    }
     _id: string;
     title: string;
     bundle: string;

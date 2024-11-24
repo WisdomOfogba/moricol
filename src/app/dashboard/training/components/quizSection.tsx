@@ -65,7 +65,6 @@ export default function QuizSection({ quiz, lessonid, courseid, sectionid }: { q
       if (response.status === 200) {
         setScore(calculatedScore);
         setSubmitted(true);
-        console.log("Quiz submitted successfully!");
       }
       enqueueSnackbar("Quiz submitted successfully!", { variant: "success" });
     } catch (error) {

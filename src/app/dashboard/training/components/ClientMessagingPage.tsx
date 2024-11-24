@@ -16,7 +16,7 @@ import { archive, messaging } from "@/definition";
 export default function ClientMessagingPage({
     archive,
   messages: initialMessages,
-  session, // Now passed as prop
+  session,
   adminid,
 }: {
     archive: archive[];
@@ -53,7 +53,7 @@ export default function ClientMessagingPage({
       const response = await sendMessage({
         adminid,
         message: newMessage,
-        session,    
+        session,
       });
       setMessages((prev) => [ response.data, ...prev]);
       setNewMessage("");

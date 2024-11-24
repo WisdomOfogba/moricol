@@ -7,7 +7,7 @@ import { CartProvider } from "@/lib/TrainingCartContext";
 import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
-import { LayoutDashboard, UserCircle2 } from "lucide-react";
+import { Home, LayoutDashboard, UserCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -50,6 +50,9 @@ async function ToolBar() {
       {/* Logo */}
       <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
+      </Link>
+      <Link href="/" className="relative block cursor-pointer sm:flex">
+        <Home />
       </Link>
 
       {/* Button and Input */}
