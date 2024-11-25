@@ -39,7 +39,6 @@ export default function LoanHistorySingleClient({
     return { due_date, next_payment_amount, next_payment_id };
   }
 
-  console.log(installment_period);
 
   return (
     <div className="min-h-screen">

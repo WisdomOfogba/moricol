@@ -35,7 +35,7 @@ export const massageApi = {
     getSingleMassage: async (massageId: string, session: Session) => {
         return makeApiRequest({
             endpoint: endpoints.getSingleMassage,
-            payload: { massageId },
+            payload: { massageid: massageId },
             errorMessage: "Failed to retrieve massage service details",
             session
         });

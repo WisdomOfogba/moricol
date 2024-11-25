@@ -184,7 +184,6 @@ export default function HomePage() {
           <div className="grid grid-cols-1 py-3 lg:grid-cols-5 lg:gap-5 2xl:grid-cols-5">
             {newProducts?.data.map((drug, index) => {
               if (drug?.product) {
-                // console.log(drug.product);
                 return (
                   <ProductCard
                     key={index}

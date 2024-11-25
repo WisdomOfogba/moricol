@@ -107,7 +107,7 @@ function DashboardLayoutClient({
       {!fromRecruitment && (
         <aside
           // className={`no-scrollbar ease absolute z-[55] max-h-screen min-h-screen w-[85%] shrink-0 sm:w-[75%] md:w-[328px] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transform bg-primary-500 transition-all duration-300 md:relative md:translate-x-0 max-w-[328px] shadow-xl`}
-          className={`ease absolute z-[995] w-[85%] shrink-0 sm:w-[75%] md:w-[328px] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} max-w-[328px] transform bg-primary-500 shadow-xl transition-all duration-300 md:relative md:translate-x-0`}
+          className={`ease absolute h-screen z-[995] w-[85%] shrink-0 sm:w-[75%] md:w-[328px] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} max-w-[328px] transform bg-primary-500 shadow-xl transition-all duration-300 md:relative md:translate-x-0`}
         >
           {isSidebarOpen && (
             <div className="circle absolute right-[-35px] top-2 z-[100] rounded-full bg-white text-3xl text-red-500 sm:text-4xl md:hidden">

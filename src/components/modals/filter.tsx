@@ -6,7 +6,7 @@ import { CancelSvg, FilterSVG } from "../svgs";
 import ModalLayout from "../layouts/modal-layout";
 import SelectInput from "../auth/select-input";
 
-export default function FilterButton() {
+export default function FilterButton({ submitFilters }: { submitFilters: () => void }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -36,19 +36,19 @@ export default function FilterButton() {
               </button>
             </div>
 
-            <form>
+            <form onSubmit={submitFilters}>
               <div className="grid grid-cols-2 gap-x-14 gap-y-6">
-                <SelectInput label="Massage Type" name="">
+                <SelectInput label="Massage Type" name="massageType">
                   <option value="">All</option>
                 </SelectInput>
-                <SelectInput label="Ratings" name="">
+                <SelectInput label="Ratings" name="ratings">
                   <option value="">All</option>
                 </SelectInput>
-                <SelectInput label="Gender" name="">
+                <SelectInput label="Gender" name="gender">
                   <option value="">All</option>
                 </SelectInput>
               </div>
-              <Button className="mt-6">Apply Filter</Button>
+              <Button type="submit" className="mt-6">Apply Filter</Button>
             </form>
           </article>
         </ModalLayout>
