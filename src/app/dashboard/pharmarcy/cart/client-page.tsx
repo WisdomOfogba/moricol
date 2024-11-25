@@ -11,14 +11,10 @@ import { RootState } from "@/lib/store";
 import { clearCart, removeFromCart } from "@/lib/features/cartSlice";
 import { formatNaira } from "@/util/currency-format";
 import { calculateTotal } from "@/util/get-total";
+import { useRouter } from "next/navigation";
 // import { Loader } from "lucide-react";
 export default function CartPage() {
-  // const { data: bestProducts, loading: bloading } = useFetch(
-  //   onlinePharmacyApi.getBestProducts,
-  // );
-  // const { data: newProducts, loading: nloading } = useFetch(
-  //   onlinePharmacyApi.getNewProducts,
-  // );
+  const router = useRouter();
   const cart = useAppSelector((state: RootState) => state.drugcart.cart);
   const dispatch = useAppDispatch();
 
@@ -80,9 +76,9 @@ export default function CartPage() {
                                 ? "Verification Pending"
                                 : formatNaira(
                                     c.subprice * c.quantity! +
-                                      (c.variant[0].price * c.quantity!)+
-                                      (c.variant[1].price * c.quantity!) +
-                                      (c.variant[2].price * c.quantity!),
+                                      c.variant[0].price * c.quantity! +
+                                      c.variant[1].price * c.quantity! +
+                                      c.variant[2].price * c.quantity!,
                                   )}
                             </span>
                             <button
@@ -102,6 +98,9 @@ export default function CartPage() {
             <>
               <div className="mb-6 flex justify-between">
                 <Button
+                  onClick={() =>
+                    router.push("/dashboard/pharmarcy/all-products")
+                  }
                   variant="outline"
                   className="w-fit border border-[#9F9FA0] py-3 text-xs font-bold"
                 >

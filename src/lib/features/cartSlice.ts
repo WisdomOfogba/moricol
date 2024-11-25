@@ -27,7 +27,6 @@ export interface Order {
   prescription_needed: boolean;
   couponid: string | null;
   coupon_used: boolean;
-  trackingid: string;
   items: Product[];
   addressid: string;
   report: [{ name: string; upload: string }];

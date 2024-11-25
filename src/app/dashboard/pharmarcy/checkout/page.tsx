@@ -25,7 +25,6 @@ export default function Checkout() {
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [coupon, setCouponId] = useState<string>("");
-  const [userData, setUserData] = useState<PrescriptionParams>();
   const cart = useAppSelector((state) => state.drugcart.cart);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
@@ -65,13 +64,6 @@ export default function Checkout() {
   };
   const handlePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    const presDetails = localStorage.getItem("nin");
-    if (presDetails) {
-      const userPresDetails: PrescriptionParams = JSON.parse(presDetails);
-      setUserData(userPresDetails);
-    }
-
     const order: Order = {
       // @ts-expect-error: 'id' is not a property of 'session'
       userid: session?.user.id,
@@ -80,34 +72,49 @@ export default function Checkout() {
       prescription_needed: checkPrescription(cart),
       couponid: null,
       coupon_used: coupon != "",
-      // @ts-expect-error: 'id' is not a property of 'session'
-      trackingid: session?.user.id,
       items: cart,
       addressid: address?._id ?? "",
       report: [
         {
-          name: userData?.name ?? "polie",
-          upload: userData?.fileName ?? "",
+          name: "",
+          upload: "",
         },
       ],
-      nin: userData?.nin ?? "",
+      nin: "",
     };
-    localStorage.removeItem("nin");
+
     if (checkPrescription(cart)) {
-      await onlinePharmacyApi
-        .createOrder(session!, order)
-        .then(() => {
-          localStorage.removeItem("cart");
-          enqueueSnackbar(
-            "Pending Order successfully created. Payment can be made after Doctor's approval",
-            { variant: "success" },
-          );
-          router.push("/dashboard/pharmarcy/account");
-        })
-        .catch((err) => {
-          console.log(err);
-          enqueueSnackbar(err, { variant: "error" });
-        });
+      const presDetails = localStorage.getItem("nin");
+      if (presDetails) {
+        const userPresDetails: PrescriptionParams = JSON.parse(presDetails);
+
+        await onlinePharmacyApi
+          .createOrder(session!, {
+            ...order,
+            report: [
+              {
+                name: userPresDetails.name,
+                upload: userPresDetails.fileName,
+              },
+            ],
+            nin: userPresDetails.nin,
+          })
+          .then(() => {
+            localStorage.removeItem("cart");
+            enqueueSnackbar(
+              "Pending Order successfully created. Payment can be made after Doctor's approval",
+              { variant: "success" },
+            );
+            router.push("/dashboard/pharmarcy/account");
+            // localStorage.removeItem("nin");
+          })
+          .catch((err) => {
+            console.log(err);
+            enqueueSnackbar(err, { variant: "error" });
+          });
+      } else {
+        enqueueSnackbar("NIN missing! ", { variant: "error" });
+      }
     } else {
       await onlinePharmacyApi
         .makePayment(
@@ -193,7 +200,6 @@ export default function Checkout() {
               </h2>
             </div>
 
-            {/* {address?.map((a, i) => ( */}
             {address && (
               <Address
                 key={0}
@@ -210,31 +216,7 @@ export default function Checkout() {
                 show={false}
               />
             )}
-            {/* ))} */}
           </section>
-          {/* <section> */}
-          {/* <div className="mb-6 flex items-center justify-between border-b border-[#D2D2D2] pb-3">
-              <h2 className="shrink-0 font-semibold text-primary-500">
-                Payment Options
-              </h2>
-            </div>
-
-            <div className="flex items-center gap-x-2">
-              <input type="radio" id="paystack" />
-              <label htmlFor="paystack" className="flex items-center gap-x-0.5">
-                <div className="relative h-3.5 w-3.5 overflow-hidden">
-                  <Image
-                    src="/images/paystack.png"
-                    alt=""
-                    fill
-                    sizes="14px"
-                    className="h-auto w-3.5"
-                  />
-                </div>
-                PayStack
-              </label>
-            </div> */}
-          {/* </section> */}
         </section>
         <section className="grid w-full shrink-0 gap-y-2 md:w-[372px]">
           <h2 className="shrink-0 font-semibold text-primary-500">
@@ -256,7 +238,7 @@ export default function Checkout() {
 
             <div className="gap-y-2.5 border-y border-y-gray-300 px-6 py-6 text-primary-500">
               <p className="flex justify-between">
-                Subtotal <span>{formatNaira(calculateTotal(cart))}</span>
+                Subtotal <span>{formatNaira(totalAmount)}</span>
               </p>
               <p className="flex justify-between">
                 Delivery Fees <span>₦{deliveryFee}</span>
@@ -264,12 +246,7 @@ export default function Checkout() {
             </div>
             <div className="px-5 py-6">
               <p className="flex justify-between font-bold text-primary-500">
-                Total{" "}
-                <span>
-                  {formatNaira(
-                    (totalAmount ?? calculateTotal(cart)) + deliveryFee,
-                  )}
-                </span>
+                Total <span>{formatNaira(totalAmount + deliveryFee)}</span>
               </p>
             </div>
           </article>
