@@ -107,6 +107,7 @@ const apiEndpoints = {
   savedProduct: {
     getSavedProducts: onlinePharmacyUrl + "/retrieve/save/product",
     save: onlinePharmacyUrl + "/save/product",
+    delete: onlinePharmacyUrl + "/delete/save/product",
   },
   payment: {
     makePayment: onlinePharmacyUrl + "/make/payment",
@@ -219,6 +220,30 @@ const onlinePharmacyApi = {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + apiEndpoints.savedProduct.save,
+        {
+          userid,
+          productid,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(
+        error,
+        "Error creating saving product",
+      );
+      throw new Error(errorMessage);
+    }
+  },
+  deletesaveProduct: async (
+    session: Session,
+    userid: string,
+    productid: string,
+  ) => {
+    const axios = createClientAxios({ session: session });
+
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + apiEndpoints.savedProduct.delete,
         {
           userid,
           productid,
