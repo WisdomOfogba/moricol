@@ -9,14 +9,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "res.cloudinary.com",
+        hostname: "*",
+        protocol: "http",
       },
       {
-        hostname: "i5.walmartimages.com",
-      },
-      {
-        hostname: "img.freepik.com",
-      },
+        hostname: "*",
+        protocol: "https",
+      }
     ],
   },
 };

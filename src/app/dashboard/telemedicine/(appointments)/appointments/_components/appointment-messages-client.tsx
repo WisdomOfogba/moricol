@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Video,
   Phone,
-  Paperclip,
-  Image,
+  // Paperclip,
+  // Image,
   ChevronLeft,
   SendHorizonal,
 } from "lucide-react";
@@ -14,68 +14,97 @@ import { Textarea } from "@/components/textarea";
 import { ShadButton } from "@/components/shadcn-button";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { io, Socket } from "socket.io-client";
+import { useSession } from "next-auth/react";
+import { API_BASE_URL } from "@/constants/config";
 
-const messages = [
-  {
-    id: 1,
-    sender: "Dr. Frank Ufondu",
-    content:
-      "Hey man, following from our last meeting i wanted to remind you of the medications you were to takealongside the Malaria medications.",
-    timestamp: "21 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: false,
-  },
-  {
-    id: 2,
-    sender: "Nomso Onyemuwa",
-    content:
-      "Thanks for the reminder. I wasn't able to get the Paracetamol but got Panadol-Extra instead. I hope no issues?",
-    timestamp: "15 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: true,
-  },
-  {
-    id: 3,
-    sender: "Dr. Frank Ufondu",
-    content: "That's fine. Hope you're getting better?",
-    timestamp: "2 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: false,
-  },
-  {
-    id: 1,
-    sender: "Dr. Frank Ufondu",
-    content:
-      "Hey man, following from our last meeting i wanted to remind you of the medications you were to takealongside the Malaria medications.",
-    timestamp: "21 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: false,
-  },
-  {
-    id: 2,
-    sender: "Nomso Onyemuwa",
-    content:
-      "Thanks for the reminder. I wasn't able to get the Paracetamol but got Panadol-Extra instead. I hope no issues?",
-    timestamp: "15 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: true,
-  },
-  {
-    id: 3,
-    sender: "Dr. Frank Ufondu",
-    content: "That's fine. Hope you're getting better?",
-    timestamp: "2 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-    isUser: false,
-  },
-];
+// Move messages to state
+interface Message {
+  id: string;
+  sender: string;
+  content: string;
+  timestamp: string;
+  avatar: string;
+  isUser: boolean;
+}
+
+interface ChatPayload {
+  userid: string;
+  appointmentid: string;
+  usertype: string;
+  text: string;
+}
 
 export default function AppointmentMessagesClient() {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const socketRef = useRef<Socket | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const params = useParams();
+  const appointmentId = params.id as string;
+  const { data: session } = useSession();
 
-  const id = "jdj";
+  // Auto scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Socket setup
+  useEffect(() => {
+    const socket = io(API_BASE_URL || '', {
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+    });
+
+    socket.emit("telemedicinechat", appointmentId);
+
+    socket.on("receieve_telemedicine_chat", (message: {
+      sender: string;
+      text: string;
+    }) => {
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        sender: message.sender,
+        content: message.text,
+        timestamp: new Date().toLocaleTimeString(),
+        avatar: "/placeholder.svg?height=40&width=40",
+        isUser: false
+      }]);
+    });
+
+    socketRef.current = socket;
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [appointmentId]);
+
+  const handleSendMessage = useCallback(() => {
+    if (!newMessage.trim() || !socketRef.current) return;
+
+    const messageData: ChatPayload = {
+      userid: session?.user?.id as string,
+      appointmentid: appointmentId,
+      usertype: "user",
+      text: newMessage.trim()
+    };
+
+    socketRef.current.emit("send_telemedicine_chat", messageData);
+
+    setMessages(prev => [...prev, {
+      id: Date.now().toString(),
+      sender: session?.user?.firstname + " " + session?.user?.lastname || "User",
+      content: newMessage.trim(),
+      timestamp: new Date().toLocaleTimeString(),
+      avatar: session?.user?.image || "",
+      isUser: true
+    }]);
+
+    setNewMessage("");
+  }, [newMessage, appointmentId, session]);
+
 
   return (
     <div className="flex h-[90vh] flex-col bg-gray-100">
@@ -100,7 +129,7 @@ export default function AppointmentMessagesClient() {
             </div>
           </div>
           <div className="flex space-x-2">
-            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${id}/video-call`}>
+            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/video-call`}>
               <ShadButton
                 variant="ghost"
                 size="icon"
@@ -109,7 +138,7 @@ export default function AppointmentMessagesClient() {
                 <Video className="h-5 w-5" />
               </ShadButton>
             </Link>
-            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${id}/call`}>
+            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/call`}>
               <ShadButton
                 variant="ghost"
                 size="icon"
@@ -125,7 +154,7 @@ export default function AppointmentMessagesClient() {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.isUser ? "justify-end" : "justify-start"} space-x-4`}
+              className={`flex ${message.isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
             >
               {!message.isUser && (
                 <Avatar>
@@ -159,27 +188,34 @@ export default function AppointmentMessagesClient() {
               )}
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
       {/* Message input */}
       <div className="border-t bg-white p-4">
         <div className="flex items-center space-x-2">
-          <ShadButton variant="ghost" size="icon">
-            <Paperclip className="h-5 w-5" />
-          </ShadButton>
-          <ShadButton variant="ghost" size="icon">
-            <Image className="h-5 w-5" />
-          </ShadButton>
           <Textarea
             placeholder="Type a message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
             className="h-5 flex-1 resize-none rounded-lg border p-2"
             rows={1}
+            maxLength={1000}
           />
 
-          <ShadButton variant="ghost" size="icon">
+          <ShadButton
+            variant="ghost"
+            size="icon"
+            onClick={handleSendMessage}
+            disabled={!newMessage.trim()}
+          >
             <SendHorizonal className="h-8 w-8 text-blue-500" />
           </ShadButton>
         </div>

@@ -64,7 +64,6 @@ async function getLoanData(loanid: string) {
 
 async function LoanHistorySingle({ params }: { params: { loan_id: string } }) {
   const loanData = await getLoanData(params.loan_id);
-  console.log(loanData);
 
   return (
     <LoanHistorySingleClient

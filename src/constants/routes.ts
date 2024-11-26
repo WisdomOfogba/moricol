@@ -18,7 +18,7 @@ export const routes = {
 
   // Massage dashboard links
   MASSAGEDASHBOARDHOME: "/dashboard/massage",
-  MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists/1",
+  MASSAGESINGLESPECIALIST: "/dashboard/massage/specialists",
   MASSAGESPECIALISTS: "/dashboard/massage/specialists",
   MASSAGESERVICES: "/dashboard/massage/services",
   MASSAGEAPPOINTMENTS: "/dashboard/massage/appointments",
@@ -140,6 +140,5 @@ export const routes = {
   TELEMEDICINE_PRACTITIONERS_FAVORITES:
     "/dashboard/telemedicine/practitioners/favorites",
   TELEMEDICINE_ORGANIZATION: '/dashboard/telemedicine/organization',
-  TELEMEDICINE_ORGANIZATION_CREATE: '/dashboard/telemedicine/organization/create',
-  TELEMEDICINE_APPOINTMENTS_REMINDER: '/dashboard/telemedicine/appointments/reminder'
+  TELEMEDICINE_ORGANIZATION_CREATE: '/dashboard/telemedicine/organization/create'
 };

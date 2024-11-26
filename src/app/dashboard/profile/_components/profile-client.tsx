@@ -136,6 +136,23 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
     }
   }
 
+  const handleUploadPhoto = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    setLoading(true);
+    try {
+      const url = await uploadToCloudinary(file);
+      setEditedProfileData(prev => ({
+        ...prev,
+        photo: url
+      }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   console.log(editedProfileData);
   return (
     <div className="mx-auto xl:container">
@@ -195,7 +212,7 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
               </div>
               <div>
                 <Label htmlFor="allergies">Allergies</Label>
-                {isRecordEditable && <small className="text-sm text-gray-500 mb-2 block">List any allergies, separated by commas</small>}
+                {isRecordEditable && <small className="text-md font-bold text-gray-600 mb-2 block">List any allergies, separated by commas</small>}
                 <Textarea
                   id="allergies"
                   placeholder="List any allergies (separate with commas)"
@@ -332,13 +349,23 @@ export default function ProfileClient({ profileData }: { profileData: ProfileDat
                   />
                 </div>
                 <Link
-                  href={routes.TELEMEDICINE_PROFILE + "/change-password"}
+                  href={routes.PROFILE + "/change-password"}
                   className="md:text-md text-sm text-primary-600"
                 >
                   Change Password?
                 </Link>
               </div>
               <div className="space-y-4">
+                {/* {change profile photo} */}
+                {isAcctEditable && <FileInput caption="upload profile photo" title=""
+                  field="photo"
+                  onUpload={handleUploadPhoto}
+                />}
+                {/* {preview profile photo} */}
+                {!isAcctEditable && <div className="relative w-24 h-24 rounded-full overflow-hidden">
+                  <img src={editedProfileData.photo} alt="profile photo" className="w-full h-full rounded-full object-cover" />
+                </div>}
+
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>

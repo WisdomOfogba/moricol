@@ -55,7 +55,7 @@ const UploadAppointmentFiles = ({ appointmentid }: UploadAppointmentFilesProps) 
     };
 
     return (
-        <div id="upload" className="px-4">
+        <div id="upload" className="">
             <h3 className=" font-semibold">Upload Attachment (Lab report, prescription, etc)</h3>
             <p className="text-xs text-gray-500">This will help us understand your condition better</p>
             <br />
