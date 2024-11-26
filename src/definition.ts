@@ -442,6 +442,7 @@ export type SingleAppointmentData = {
 };
 
 export type CourseData = {
+  coursetype: string;
   _id: string;
   bundle: string;
   bundle_option: string;
@@ -467,7 +468,7 @@ export type CourseData = {
   description: string;
   instructors: [
     {
-      instructor: string;
+      instructor: instructors;
       _id: string;
     },
   ];
@@ -510,7 +511,7 @@ export type CourseData = {
 
 export type curriculum = {
   section_name: string;
-  section: section[]
+  section: section[];
   _id: string;
 };
 
@@ -546,6 +547,7 @@ export type section = {
 export type ReviewData = {
   _id: string;
   userid: {
+    photo: string;
     _id: string;
     firstname: string;
     lastname: string;
@@ -588,38 +590,39 @@ export type Dashboard = {
 
 export type comment = {
   _id: string;
-  userid: userid
+  userid: userid;
   courseid: string;
-  reply: reply[],
+  reply: reply[];
   comment: string;
   createdAt: string;
   isAdmin: boolean;
-}
+};
 
 export type userid = {
   _id: string;
   firstname: string;
   lastname: string;
-}
+  photo: string;
+};
 
 export type reply = {
   _id: string;
   userid: userid;
   courseid: string;
-  reply: string,
+  reply: string;
   comment: string;
   createdAt: string;
   isAdmin: boolean;
-}
+};
 
 export type SingleCourse = {
-  comment: comment[]
+  comment: comment[];
   review: string[];
   course: {
     redirect_course: {
       links: string[];
       redirect: boolean;
-    }
+    };
     _id: string;
     title: string;
     bundle: string;
@@ -674,7 +677,7 @@ export type courseorder = {
     duration: string;
     instructors: [
       {
-        instructor: string;
+        instructor: instructors;
         _id: string;
       },
     ];
@@ -701,14 +704,16 @@ export type courseorder = {
 export type instructors = {
   _id: string;
   name: string;
+  photo: string;
 };
 
 export type archive = {
   _id: string;
   admin_details: {
     name: string;
+    photo: string;
   };
-}
+};
 
 export type messaging = {
   _id: string;
@@ -720,92 +725,12 @@ export type messaging = {
   __v: number;
 };
 
-/*
-export type CourseData = {
+export type NotesData = {
   _id: string;
-  bundle: string;
-  bundle_option: string;
   title: string;
-  care_certificate: boolean;
-  price: number;
-  rating: number;
-  level: number;
-  thumbnail: string;
-  add_on: string[];
-  online_course: [{
-    course: string;
-    _id: string;
-  }];
-  classroom_course: [{
-    course: string;
-    _id: string;
-  }];
-  description: string;
-  instructors: [
-    {
-      instructor: string;
-      _id: string;
-    }
-  ];
-  start_messagge: string;
-  end_messagge: string;
-  editedBy: string;
-  editedAt: string;
+  comment: string;
+  staffid: string;
+  appointmentid: string;
   createdAt: string;
   __v: number;
-  client: number;
-  category: string,
-  start_date: string,
-  end_date: string,
-  duration: string,
-  duration_description: string,
-  benefits: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  sections: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  for_who: [
-    {
-      option: string,
-      _id: string
-    }
-  ],
-  redirect_course: { links: string[], redirect: boolean },
-  standalone: true,
-  curriculum: string[],
-  requirement: string[],
-  quantity: number,
-}
-
-export type ReviewData = {
-  _id: string,
-  userid: {
-    _id: string,
-    firstname: string,
-    lastname: string
-  },
-  courseid: string,
-  courseType: string,
-  review: string,
-  rating: number,
-  createdAt: string,
-  __v: number
-}
-  */
-
-export type NotesData = {
-  _id: string,
-  title: string,
-  comment: string,
-  staffid: string,
-  appointmentid: string,
-  createdAt: string,
-  __v: number
-}
+};

@@ -14,12 +14,12 @@ import Image from "next/image";
 import { archive, messaging } from "@/definition";
 
 export default function ClientMessagingPage({
-    archive,
+  archive,
   messages: initialMessages,
   session,
   adminid,
 }: {
-    archive: archive[];
+  archive: archive[];
   adminid: string;
   messages: messaging[];
   session: Session; // session is passed down from the server component
@@ -27,19 +27,52 @@ export default function ClientMessagingPage({
   const [messages, setMessages] = useState(initialMessages);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const isInitialRender = useRef(true);
+  const lastMessageId = useRef(messages[0]?._id); // Track the last message's ID
 
-    const admin = archive.find(a => a._id === adminid);
+  const admin = archive.find((a) => a._id === adminid);
 
-    const scrollToBottom = () => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    };
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
+    // Scroll to bottom only on initial render or when a new message is added
+    if (isInitialRender.current) {
       scrollToBottom();
-    }, [messages]);
-    
+      isInitialRender.current = false;
+    } else {
+      const latestMessage = messages[0];
+      if (latestMessage?._id !== lastMessageId.current) {
+        // Scroll only if a new message is added
+        lastMessageId.current = latestMessage?._id;
+        scrollToBottom();
+      }
+    }
+  }, [messages]);
+
+  // Polling for new messages
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const response = await fetchMessages();
+        if (response.data) {
+          setMessages((prevMessages) => {
+            const newMessages = response.data.filter(
+              (msg) => !prevMessages.some((prev) => prev._id === msg._id)
+            );
+            return [...newMessages, ...prevMessages];
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +88,7 @@ export default function ClientMessagingPage({
         message: newMessage,
         session,
       });
-      setMessages((prev) => [ response.data, ...prev]);
+      setMessages((prev) => [response.data, ...prev]);
       setNewMessage("");
     } catch (err) {
       console.error("Failed to send message:", err);
@@ -69,7 +102,7 @@ export default function ClientMessagingPage({
   }: {
     adminid: string;
     message: string;
-    session: Session; // Using session passed from parent
+    session: Session;
   }) {
     try {
       const response = await CourseApi.sendMessages({
@@ -81,7 +114,22 @@ export default function ClientMessagingPage({
       return response;
     } catch (error) {
       throw new Error(
-        error instanceof Error ? error.message : "Failed to send Message",
+        error instanceof Error ? error.message : "Failed to send message"
+      );
+    }
+  }
+
+  async function fetchMessages() {
+    try {
+      const response = await CourseApi.getMessages({
+        adminid,
+        userid: session.user.id,
+        session,
+      });
+      return response;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to fetch messages"
       );
     }
   }
@@ -93,7 +141,7 @@ export default function ClientMessagingPage({
         <article className="flex items-center gap-x-4">
           <div className="relative h-16 w-16 rounded-full">
             <Image
-              src="/images/client.jpg"
+              src={admin?.admin_details.photo || "/images/client.jpg"}
               alt=""
               fill
               sizes="48px"
@@ -115,14 +163,17 @@ export default function ClientMessagingPage({
 
       {/* Messaging Body */}
       <section className="no-scrollbar grid max-h-[678px] gap-y-6 overflow-y-auto px-6 py-12">
-        {messages.slice().reverse().map((msg) =>
-          msg.sender === "user" ? (
-            <OutGoingMessage key={msg._id} msg={msg} />
-          ) : (
-            <IncomingMessage key={msg._id} msg={msg} />
-          ),
-        )}
-      <div ref={messagesEndRef}></div>
+        {messages
+          .slice()
+          .reverse()
+          .map((msg) =>
+            msg.sender === "user" ? (
+              <OutGoingMessage key={msg._id} msg={msg} />
+            ) : (
+              <IncomingMessage key={msg._id} msg={msg} />
+            )
+          )}
+        <div ref={messagesEndRef}></div>
       </section>
 
       {/* Messaging Footer */}

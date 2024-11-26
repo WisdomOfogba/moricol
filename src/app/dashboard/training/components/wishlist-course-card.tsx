@@ -60,17 +60,6 @@ export default function WishlistCourseCard({
             {course.courseid?.title || course.courseid?.bundle}
           </h3>
         </div>
-
-        {/* if there are more than two authors use the dot separator else comot am */}
-        {/* <div className="text-sm text-[#4E5566]">
-          <span className="mr-1.5 text-[#A1A5B3]">Course by:</span>
-          {course.courseid?.instructors.map((instructor) => (
-            <>
-              <div className="mx-1.5 inline-block h-1 w-1 rounded-full bg-[#4E5566]" />{" "}
-              {instructor.instructor}
-            </>
-          ))}
-        </div> */}
       </div>
     </article>
   );

@@ -6,7 +6,7 @@ import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
 // import { BiDownload } from "react-icons/bi";
-import { section, SingleCourse, comment } from "@/definition";
+import { section, SingleCourse, comment, ProfileData } from "@/definition";
 import ViewCurriculumCard from "./ViewCurriculumCard";
 import VideoPlayer from "./VideoPlayer";
 import QuizComponent from "./QuizComponent";
@@ -29,8 +29,10 @@ const courseDescriptionDetailLink = [
 ];
 
 export default function ViewCourseDetail({
+  profileData,
   singleCourse,
 }: {
+  profileData: ProfileData;
   singleCourse: SingleCourse;
 }) {
   const [activeLink, setActiveLink] = useState("overview");
@@ -79,7 +81,6 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
-
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
@@ -127,7 +128,7 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src="/images/client.jpg"
+                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
                           alt=""
                           className="flex w-full"
                         />
@@ -141,7 +142,7 @@ export default function ViewCourseDetail({
                             <>
                               <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
                               <span className="w-32 truncate">
-                                {instructor.instructor}
+                                {instructor.instructor.name || instructor.instructor}
                               </span>
                             </>
                           ),
@@ -174,9 +175,12 @@ export default function ViewCourseDetail({
             <>
               <VideoPlayer videoUrl={lesson?.lesson.content} />
               <div className="flex w-full items-center justify-between gap-4">
-                <h2 className="mb-6 text-3xl font-semibold">
-                  {lesson?.lesson_name}
-                </h2>
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
                 {lesson !== null && (
                   <MarkLesson
                     lessonid={lesson._id}
@@ -198,9 +202,12 @@ export default function ViewCourseDetail({
                 />
               )}
               <div className="flex w-full items-center justify-between gap-4">
-                <h2 className="mb-6 text-3xl font-semibold">
-                  {lesson?.lesson_name}
-                </h2>
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
                 {lesson !== null && (
                   <MarkLesson
                     lessonid={lesson._id}
@@ -213,11 +220,83 @@ export default function ViewCourseDetail({
           )}
           {activeLesson === "assignment" && (
             <>
-              <h1>{`${lesson?.lesson_name}`}</h1>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <File className="h-12 w-12" />
+                  <div>
+                    <h3 className="mb-1 font-medium text-[#1D2026]">
+                      {lesson && lesson.lesson_name}
+                    </h3>
+                  </div>
+                </div>
+                {lesson && (
+                  <button
+                    onClick={handleDownload}
+                    className="bg-primary-500 px-6 py-3 font-semibold text-white"
+                  >
+                    Download File
+                  </button>
+                )}
+              </article>
               <div className="flex w-full items-center justify-between gap-4">
-                <h2 className="mb-6 text-3xl font-semibold">
-                  {lesson?.lesson_name}
-                </h2>
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "caption" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "text" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
                 {lesson !== null && (
                   <MarkLesson
                     lessonid={lesson._id}
@@ -266,9 +345,12 @@ export default function ViewCourseDetail({
                 )}
               </article>
               <div className="flex w-full items-center justify-between gap-4">
-                <h2 className="mb-6 text-3xl font-semibold">
-                  {lesson?.lesson_name}
-                </h2>
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
                 {lesson !== null && (
                   <MarkLesson
                     lessonid={lesson._id}
@@ -357,6 +439,7 @@ export default function ViewCourseDetail({
           {activeLink === "comments" && (
             <section>
               <CommentSection
+                profileData={profileData}
                 courseid={singleCourse.course._id}
                 comment={singleCourse.comment}
               />
@@ -392,7 +475,7 @@ export default function ViewCourseDetail({
                 {/* <CurriculumCard /> */}
               </div>
             </div>
-            <div className="p-4 w-full shrink-0 xl:max-w-[524px]">
+            <div className="w-full shrink-0 p-4 xl:max-w-[524px]">
               {singleCourse.course?.redirect_course.redirect && (
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-gray-800">
@@ -442,9 +525,11 @@ export default function ViewCourseDetail({
 // }
 
 const CommentSection = ({
+  profileData,
   comment: initialComment,
   courseid,
 }: {
+  profileData: ProfileData;
   comment: comment[];
   courseid: string;
 }) => {
@@ -484,7 +569,7 @@ const CommentSection = ({
     e.preventDefault();
 
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await sendComment({
         userid: session?.user.id as string,
         comment: commentText,
@@ -496,7 +581,7 @@ const CommentSection = ({
     } catch (error) {
       console.error("Failed to post Comment:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -536,7 +621,7 @@ const CommentSection = ({
       </h3>
 
       {comment.map((comment, i) => (
-        <Comment key={i} comment={comment} />
+        <Comment profileData={profileData} key={i} comment={comment} />
       ))}
 
       <div className="mt-3 flex flex-col items-start gap-x-4">
@@ -547,7 +632,7 @@ const CommentSection = ({
           className="w-full rounded-md border p-2 text-sm focus:p-2"
         />
         <button
-        disabled={commentText === ""}
+          disabled={commentText === ""}
           onClick={handleCommentSubmit}
           className="mt-2 rounded bg-primary-500 px-4 py-2 text-sm text-white"
         >

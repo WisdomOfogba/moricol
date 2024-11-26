@@ -63,7 +63,6 @@ function InstructorCard({instructor}: {instructor: instructors}) {
           <h3 className="mb-1 text-lg font-medium leading-6 text-[#1D2026]">
             {instructor.name}
           </h3>
-          <p className="text-sm leading-5 text-[#8C94A3]">Software Developer</p>
         </div>
       </div>
       <div className="border-t border-t-[#E9EAF0] px-5 py-4">

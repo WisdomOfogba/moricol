@@ -36,6 +36,7 @@ const endpoints = {
   updateQuizScore: `${API_BASE_URL}/user/training/mark/quiz/score`,
   sendComment: `${API_BASE_URL}/user/training/create/comment`,
   sendReply: `${API_BASE_URL}/user/training/create/reply`,
+  sendReview: `${API_BASE_URL}/user/training/create/review`,
 };
 
 export const CourseApi = {
@@ -53,7 +54,7 @@ export const CourseApi = {
         email,
         amount,
       });
-      return response.data;
+      return response;
     } catch (error) {
       const errorMessage = handleAxiosError(
         error,
@@ -396,6 +397,36 @@ export const CourseApi = {
         userid,
         reply,
         commentid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Repying Post");
+      throw new Error(errorMessage);
+    }
+  },
+  sendReview: async ({
+    userid,
+    review,
+    coursetype,
+    rating,
+    courseid,
+    session,
+  }: {
+    userid: string;
+    review: string,
+    coursetype: string,
+    rating: number,
+    courseid: string,
+    session: Session; 
+  }) => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.sendReview}`, {
+        userid,
+        review,
+        courseType: coursetype + "course",
+        rating,
+        courseid,
       });
       return response.data;
     } catch (error) {

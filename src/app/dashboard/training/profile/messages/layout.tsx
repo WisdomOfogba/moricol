@@ -75,7 +75,7 @@ function MessageUserCard({ archive }: { archive: archive }) {
     <Link href={`/dashboard/training/profile/messages/${archive._id}`} className="transition-color flex cursor-pointer gap-x-4 px-6 py-3 duration-300 hover:bg-primary-50">
       <div className="relative h-12 w-12 rounded-full">
         <Image
-          src="/images/client.jpg"
+          src={archive.admin_details.photo || "/images/client.jpg"}
           alt=""
           fill
           sizes="48px"
