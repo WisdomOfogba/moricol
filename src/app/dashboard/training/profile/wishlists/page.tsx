@@ -91,7 +91,7 @@ async function Wishlists({ course }: { course: courseorder }) {
 
   return (
     <article className="grid grid-cols-[3fr_1fr_1fr] items-center border-b border-b-[#E9EAF0] px-6 py-6 last:border-none">
-      <WishlistCourseCard course={course} />
+      <WishlistCourseCard wishList={true} course={course} />
       <div className="text-lg font-medium text-primary-500">
         ₦{course.amount}
       </div>
