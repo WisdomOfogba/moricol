@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import CourseCard from "./card-course";
-import { FilterSVG, SearchSvg } from "@/components/svgs";
+// import { FilterSVG, SearchSvg } from "@/components/svgs";
 import { CourseData } from "@/definition";
 
 const categories = ["Classroom", "Visual", "Bundle", "Online"];
@@ -30,7 +30,7 @@ export default function CourseCategories({
 
   return (
     <section className="w-full">
-      {/* Filter section */}
+      {/* Filter section
       <section className="mb-10 w-full px-4 sm:px-14">
         <div className="flex w-full justify-between">
           <div className="flex w-full gap-x-6">
@@ -45,7 +45,7 @@ export default function CourseCategories({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <div className="w-full overflow-auto no-scrollbar">
         <ul className="mb-8 flex w-max sm:w-full justify-between">
@@ -86,14 +86,14 @@ export default function CourseCategories({
   );
 }
 
-function FilterBtn() {
-  return (
-    <button className="hidden items-center gap-x-6 border border-primary-500 px-6 py-3 sm:flex">
-      <FilterSVG /> <span>Filter</span>
-      <span className="bg-primary-500 px-1.5 py-1 text-white">3</span>
-    </button>
-  );
-}
+// function FilterBtn() {
+//   return (
+//     <button className="hidden items-center gap-x-6 border border-primary-500 px-6 py-3 sm:flex">
+//       <FilterSVG /> <span>Filter</span>
+//       <span className="bg-primary-500 px-1.5 py-1 text-white">3</span>
+//     </button>
+//   );
+// }
 
 // function FilterContainer({
 //   title,

@@ -26,11 +26,12 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
+
           const user = response.data.userDetails;
           user.token = response.data.token;
 
           return user;
-          
+
         } catch (error) {
           throw new Error(error as string ?? 'cannot login, something went wrong');
         }
@@ -42,7 +43,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: any }) {
-     
+
       if (user) {
         token.id = user._id;
         token.email = user.email;
@@ -51,7 +52,7 @@ export const authOptions: NextAuthOptions = {
         token.language = user.language;
         token.token = user.token;
       }
-      
+
       return token;
     },
     async session({ session, token }: { session: any; token: JWT; user: any }) {
@@ -61,8 +62,8 @@ export const authOptions: NextAuthOptions = {
         session.user.token = token.token;
         session.user.firstname = token.firstname;
         session.user.lastname = token.lastname;
-        session.user.language = token.language; 
-      return session;
+        session.user.language = token.language;
+        return session;
 
       }
       return session;

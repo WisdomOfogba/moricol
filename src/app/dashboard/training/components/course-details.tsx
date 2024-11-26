@@ -11,7 +11,7 @@ import {
   NetworkSvg,
   // NotebookSvg,
   // NotepadSvg,
-  Spinner,
+  // Spinner,
   // StackSvg,
   StarSVG,
   // TrophySvg,
@@ -32,12 +32,24 @@ import CourseCard from "./card-course";
 import MakeTrainingPaymentButton from "./make-training-payments";
 import Addwishlist from "./addwishlist";
 import AddCart from "./addCart";
+import Review from "./Review";
 
 const courseDescriptionDetailLink = [
   {
     name: "Overview",
     link: "overview",
   },
+  {
+    name: "Instructor",
+    link: "instructor",
+  },
+  {
+    name: "Review",
+    link: "review",
+  },
+];
+
+const courseClassRoomDescriptionDetailLink = [
   {
     name: "Instructor",
     link: "instructor",
@@ -105,7 +117,7 @@ export default function CourseDetail({
         <div className="flex w-full">
           <div className="flex w-full flex-col">
             <div className="flex w-full items-start justify-between">
-              <h1 className="relative mb-3 w-40 sm:w-min truncate text-base font-medium text-[#1D2026] sm:text-lg">
+              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] sm:w-min sm:text-lg">
                 {course?.title || course?.bundle}
               </h1>
               <p className="text-base text-primary-500 lg:text-2xl">
@@ -148,8 +160,8 @@ export default function CourseDetail({
                   <h3 className="text-medium flex flex-wrap items-center gap-x-1.5 text-[#1D2026]">
                     {course.instructors.map((instructor) => (
                       <>
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                        <span>{instructor.instructor}</span>
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />
+                        <span className="w-32 truncate">{instructor.instructor.name}</span>
                       </>
                     ))}
                   </h3>
@@ -159,10 +171,7 @@ export default function CourseDetail({
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
                   {course?.rating}{" "}
-                  <span className="text-sm font-normal text-[#6E7485]">
-                    {" "}
-                    (100 Rating)
-                  </span>
+                  <span className="text-sm font-normal text-[#6E7485]"></span>
                 </p>
               </div>
             </div>
@@ -182,14 +191,14 @@ export default function CourseDetail({
           </div>
 
           {/* Links */}
-          <section className="flex w-full overflow-auto no-scrollbar">
-            <ul className="flex gap-x-6 border-b border-b-[#E9EAF0] w-max sm:w-full">
+          <section className="no-scrollbar flex w-full overflow-auto">
+            <ul className="flex w-full gap-x-6 border-b border-b-[#E9EAF0]">
               {type === "online" ? (
                 <>
                   {onlineCourseDescriptionDetailLink.map(({ name, link }) => (
-                    <li className="w-[160px] sm:w-full" key={name}>
+                    <li className="w-full" key={name}>
                       <button
-                        className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
+                        className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
                         onClick={() => setActiveLink(link)}
                       >
                         {name}
@@ -199,17 +208,33 @@ export default function CourseDetail({
                 </>
               ) : (
                 <>
-                  {type !== "classroom" &&
-                    courseDescriptionDetailLink.map(({ name, link }) => (
-                      <li className="w-full" key={name}>
-                        <button
-                          className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? 'border-b-[#FF6636]"' : "border-b-transparent"}`}
-                          onClick={() => setActiveLink(link)}
-                        >
-                          {name}
-                        </button>
-                      </li>
-                    ))}
+                  {type !== "classroom" ? (
+                    <>
+                      {courseDescriptionDetailLink.map(({ name, link }) => (
+                        <li className="w-full" key={name}>
+                          <button
+                            className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
+                            onClick={() => setActiveLink(link)}
+                          >
+                            {name}
+                          </button>
+                        </li>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {courseClassRoomDescriptionDetailLink.map(({ name, link }) => (
+                        <li className="w-full" key={name}>
+                          <button
+                            className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
+                            onClick={() => setActiveLink(link)}
+                          >
+                            {name}
+                          </button>
+                        </li>
+                      ))}
+                    </>
+                  )}
                 </>
               )}
             </ul>
@@ -380,13 +405,16 @@ export default function CourseDetail({
                           <div className="relative h-[63px] w-[63px] overflow-hidden rounded-full">
                             <Image
                               fill
-                              src="/images/client.jpg"
+                              src={
+                                instructor.instructor.photo ||
+                                "/images/client.jpg"
+                              }
                               alt=""
                               style={{ objectFit: "cover" }}
                             />
                           </div>
                           <h4 className="w-32 truncate text-lg font-semibold text-[#1D2026] sm:w-full">
-                            {instructor.instructor}
+                            {instructor.instructor.name}
                           </h4>
                         </article>
                       </li>
@@ -398,25 +426,11 @@ export default function CourseDetail({
 
           {/* Rating | Feedback */}
           {activeLink === "review" && (
-            <>
-              <section className="grid gap-y-5">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-semibold text-[#1D2026]">
-                    Students Feedback
-                  </h3>
-                </div>
-                <div>
-                  {review.map((review, i) => (
-                    <CourseReview key={i} review={review} />
-                  ))}
-                  <hr className="my-5 h-[1px] border-none bg-[#E9EAF0] last:hidden" />
-                </div>
-                <button className="group flex w-fit items-center gap-x-3 bg-primary-100 px-6 py-3 font-semibold text-primary-500">
-                  Load More{" "}
-                  <Spinner className="duration-700 group-hover:motion-safe:animate-spin" />
-                </button>
-              </section>
-            </>
+            <Review
+              coursetype={type}
+              courseid={course._id}
+              initialReview={review}
+            />
           )}
         </div>
 
@@ -429,7 +443,7 @@ export default function CourseDetail({
       </section>
 
       {/* Related courses */}
-      <section className="px-14">
+      <section className="px-4 sm:px-14">
         <div className="mb-10 flex items-center justify-between">
           <h2 className="text-3xl font-semibold text-[#1D2026]">
             Related Courses
@@ -483,7 +497,7 @@ function CourseDetailSummary({
   return (
     <article className="w-full shrink-0 px-4 shadow-md xl:w-[424px]">
       {/* Course Details */}
-      <div className="grid gap-y-6 p-6">
+      <div className="grid gap-y-6 p-2 sm:px-6">
         {highlightDetails.map(({ title, detail, icon }, i) => (
           <div className="flex justify-between text-sm" key={i}>
             <p className="flex items-center gap-x-2 text-[#1D2026]">
@@ -557,39 +571,6 @@ function CourseDetailSummary({
           </ul>
         </div>
       )}
-    </article>
-  );
-}
-
-function CourseReview({ review }: { review: ReviewData }) {
-  return (
-    <article className="flex items-start gap-x-4">
-      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
-        <Image
-          src="/images/client.jpg"
-          alt=""
-          fill
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-
-      <div>
-        <div className="mb-2 flex items-center gap-x-2">
-          <h4 className="text-sm font-medium text-[#1D2026]">{`${review.userid.firstname} ${review.userid.lastname}`}</h4>
-          <div className="h-1 w-1 rounded-full bg-[#6E7485]" />
-          <p className="text-xs">{review.createdAt}</p>
-        </div>
-        <ul className="mb-3 flex">
-          {Array(review.rating)
-            .fill("")
-            .map((_, i) => (
-              <li key={i}>
-                <StarSVG fill="#FD8E1F" />
-              </li>
-            ))}
-        </ul>
-        <p className="text-sm text-[#4E5566]">{review.review}</p>
-      </div>
     </article>
   );
 }

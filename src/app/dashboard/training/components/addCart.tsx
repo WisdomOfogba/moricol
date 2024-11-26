@@ -26,6 +26,7 @@ const AddCart = ({
         coursetype: type,
         instructors: course.instructors.map((instructor) => ({
           instructor: instructor.instructor,
+          _id: instructor._id,
         })),
         rating: course.rating,
         thumbnail: course.thumbnail,

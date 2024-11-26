@@ -3,12 +3,14 @@ import axios from "axios";
 import handleAxiosError from "./handle-axios-error";
 import {
   archive,
+  comment,
   CourseData,
   courseorder,
   Dashboard,
   instructors,
   messaging,
   OrderData,
+  reply,
   ReviewData,
   SingleCourse,
 } from "@/definition";
@@ -26,20 +28,29 @@ const endpoints = {
   getCourse: `${API_BASE_URL}/user/training/mycourses`,
   getInstructors: `${API_BASE_URL}/user/training/myinstructor`,
   saveCourse: `${API_BASE_URL}/user/training/saved/course`,
+  unsaveCourse: `${API_BASE_URL}/user/training/delete/saved/course`,
   getSavedCourse: `${API_BASE_URL}/user/training/retrieve/saved/course`,
   getArchive: `${API_BASE_URL}/user/training/message/archive`,
   getMessages: `${API_BASE_URL}/user/training/retrieve/messages`,
   sendMessages: `${API_BASE_URL}/user/training/send/message`,
   updateQuizScore: `${API_BASE_URL}/user/training/mark/quiz/score`,
+  sendComment: `${API_BASE_URL}/user/training/create/comment`,
+  sendReply: `${API_BASE_URL}/user/training/create/reply`,
+  sendReview: `${API_BASE_URL}/user/training/create/review`,
 };
 
 export const CourseApi = {
-  makePayment: async (
+  makePayment: async ({
+    userid,
+    email,
+    amount,
+    session,
+  }: {
     userid: string,
     email: string,
     amount: number,
     session: Session,
-  ) => {
+  }) => {
     const axios = createClientAxios({ session });
 
     try {
@@ -70,6 +81,28 @@ export const CourseApi = {
         userid,
         coursetype: type + "course",
         courseid: id,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error saving Course");
+      throw new Error(errorMessage);
+    }
+  },
+  unsaveCourse: async ({
+    userid,
+    session,
+    courseid,
+  }: {
+    userid: string;
+    session: Session;
+    courseid: string;
+  }) => {
+    const axios = createClientAxios({ session });
+
+    try {
+      const response = await axios.post(endpoints.unsaveCourse, {
+        userid,
+        courseid,
       });
       return response.data;
     } catch (error) {
@@ -216,7 +249,7 @@ export const CourseApi = {
     lessonid: string;
     sectionid: string;
     courseid: string;
-    session: Session
+    session: Session;
   }) => {
     const axios = createClientAxios({ session });
     try {
@@ -325,6 +358,84 @@ export const CourseApi = {
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Error sending Messages");
+      throw new Error(errorMessage);
+    }
+  },
+  sendComment: async ({
+    userid,
+    comment,
+    courseid,
+    session,
+  }: {
+    userid: string;
+    comment: string;
+    courseid: string;
+    session: Session; 
+  }): Promise<{ data: comment }> => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.sendComment}`, {
+        userid,
+        comment,
+        courseid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Posting Comment");
+      throw new Error(errorMessage);
+    }
+  },
+  sendReply: async ({
+    userid,
+    reply,
+    commentid,
+    session,
+  }: {
+    userid: string;
+    reply: string;
+    commentid: string;
+    session: Session; 
+  }): Promise<{ data: reply }> => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.sendReply}`, {
+        userid,
+        reply,
+        commentid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Repying Post");
+      throw new Error(errorMessage);
+    }
+  },
+  sendReview: async ({
+    userid,
+    review,
+    coursetype,
+    rating,
+    courseid,
+    session,
+  }: {
+    userid: string;
+    review: string,
+    coursetype: string,
+    rating: number,
+    courseid: string,
+    session: Session; 
+  }) => {
+    const axios = createClientAxios({ session });
+    try {
+      const response = await axios.post(`${endpoints.sendReview}`, {
+        userid,
+        review,
+        courseType: coursetype + "course",
+        rating,
+        courseid,
+      });
+      return response.data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error, "Error Repying Post");
       throw new Error(errorMessage);
     }
   },

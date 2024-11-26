@@ -2,9 +2,8 @@ import { SearchSvg } from "@/components/svgs";
 import Image from "next/image";
 // import ComposeMessage from "../../modals/compose-message";
 import { getUserSession } from "@/lib/auth";
-import { archive, messaging } from "@/definition";
+import { archive } from "@/definition";
 import { CourseApi } from "@/api/training";
-import { formatRelativeTime } from "@/util/formatTime";
 import Link from "next/link";
 
 async function getSavedCourses() {
@@ -75,7 +74,7 @@ function MessageUserCard({ archive }: { archive: archive }) {
     <Link href={`/dashboard/training/profile/messages/${archive._id}`} className="transition-color flex cursor-pointer gap-x-4 px-6 py-3 duration-300 hover:bg-primary-50">
       <div className="relative h-12 w-12 rounded-full">
         <Image
-          src="/images/client.jpg"
+          src={archive.admin_details.photo || "/images/client.jpg"}
           alt=""
           fill
           sizes="48px"
@@ -93,53 +92,5 @@ function MessageUserCard({ archive }: { archive: archive }) {
         <div className="flex items-center justify-between"></div>
       </div>
     </Link>
-  );
-}
-
-export function ThreeDotsMenu() {
-  return (
-    <div className="flex h-6 w-6 items-center justify-center gap-x-[3px]">
-      {Array(3)
-        .fill("")
-        .map((_, i) => (
-          <div key={i} className="h-1 w-1 rounded-full bg-[#1D2026]" />
-        ))}
-    </div>
-  );
-}
-
-export function IncomingMessage({msg}: {msg: messaging}) {
-  return (
-    <article className="w-full max-w-[536px]">
-      <div className="mb-2 flex items-center gap-x-1.5">
-        <div className="relative h-6 w-6 rounded-full">
-          <Image
-            src="/images/client.jpg"
-            alt=""
-            fill
-            sizes="24px"
-            style={{ objectFit: "cover", borderRadius: "50%" }}
-          />
-        </div>
-        <p className="text-xs text-[#6E7485]">{formatRelativeTime(msg.createdAt)}</p>
-      </div>
-      <p className="bg-primary-100 px-3 py-2 text-sm text-[#1D2026]">
-        {msg.message}
-      </p>
-    </article>
-  );
-}
-
-export function OutGoingMessage({msg}: {msg: messaging}) {
-  return (
-    <div className="flex justify-end">
-      <article className="w-full max-w-[536px]">
-        <p className="mb-2 text-right text-xs text-[#6E7485]">{formatRelativeTime(msg.createdAt)}</p>
-
-        <p className="bg-primary-100 px-3 py-2 text-sm text-[#1D2026]">
-          {msg.message}
-        </p>
-      </article>
-    </div>
   );
 }

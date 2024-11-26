@@ -1,23 +1,13 @@
 "use client";
 
+import { CartData } from "@/definition";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 // Updated CourseData Type
-export type Coursedata = {
-  _id: string;
-  title: string;
-  price: number;
-  coursetype: string;
-  instructors: {
-    instructor: string;
-  }[];
-  rating: number;
-  thumbnail: string
-};
 
 type CartContextType = {
-  cart: Coursedata[];
-  addToCart: (item: Coursedata) => void;
+  cart: CartData[];
+  addToCart: (item: CartData) => void;
   removeFromCart: (id: string) => void;
   cartCount: number;
 };
@@ -25,7 +15,7 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Coursedata[]>([]);
+  const [cart, setCart] = useState<CartData[]>([]);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -38,7 +28,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (item: Coursedata) => {
+  const addToCart = (item: CartData) => {
     setCart((prevCart) => {
       const exists = prevCart.some((cartItem) => cartItem._id === item._id);
       if (exists) return prevCart;
