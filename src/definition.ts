@@ -442,6 +442,7 @@ export type SingleAppointmentData = {
 };
 
 export type CourseData = {
+  coursetype: string;
   _id: string;
   bundle: string;
   bundle_option: string;
@@ -467,7 +468,7 @@ export type CourseData = {
   description: string;
   instructors: [
     {
-      instructor: string;
+      instructor: instructors;
       _id: string;
     },
   ];
@@ -510,7 +511,7 @@ export type CourseData = {
 
 export type curriculum = {
   section_name: string;
-  section: section[]
+  section: section[];
   _id: string;
 };
 
@@ -546,6 +547,7 @@ export type section = {
 export type ReviewData = {
   _id: string;
   userid: {
+    photo: string;
     _id: string;
     firstname: string;
     lastname: string;
@@ -588,39 +590,39 @@ export type Dashboard = {
 
 export type comment = {
   _id: string;
-  userid: userid
+  userid: userid;
   courseid: string;
-  reply: reply[],
+  reply: reply[];
   comment: string;
   createdAt: string;
   isAdmin: boolean;
-}
+};
 
 export type userid = {
   _id: string;
   firstname: string;
   lastname: string;
   photo: string;
-}
+};
 
 export type reply = {
   _id: string;
   userid: userid;
   courseid: string;
-  reply: string,
+  reply: string;
   comment: string;
   createdAt: string;
   isAdmin: boolean;
-}
+};
 
 export type SingleCourse = {
-  comment: comment[]
+  comment: comment[];
   review: string[];
   course: {
     redirect_course: {
       links: string[];
       redirect: boolean;
-    }
+    };
     _id: string;
     title: string;
     bundle: string;
@@ -675,7 +677,7 @@ export type courseorder = {
     duration: string;
     instructors: [
       {
-        instructor: string;
+        instructor: instructors;
         _id: string;
       },
     ];
@@ -702,6 +704,7 @@ export type courseorder = {
 export type instructors = {
   _id: string;
   name: string;
+  photo: string;
 };
 
 export type archive = {
@@ -710,7 +713,7 @@ export type archive = {
     name: string;
     photo: string;
   };
-}
+};
 
 export type messaging = {
   _id: string;
@@ -723,11 +726,11 @@ export type messaging = {
 };
 
 export type NotesData = {
-  _id: string,
-  title: string,
-  comment: string,
-  staffid: string,
-  appointmentid: string,
-  createdAt: string,
-  __v: number
-}
+  _id: string;
+  title: string;
+  comment: string;
+  staffid: string;
+  appointmentid: string;
+  createdAt: string;
+  __v: number;
+};

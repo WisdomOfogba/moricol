@@ -69,7 +69,7 @@ export default function ClientMessagingPage({
       } catch (err) {
         console.error("Error fetching messages:", err);
       }
-    }, 5000); // Poll every 5 seconds
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);

@@ -81,7 +81,6 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
-
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
@@ -129,7 +128,7 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src="/images/client.jpg"
+                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
                           alt=""
                           className="flex w-full"
                         />
@@ -143,7 +142,7 @@ export default function ViewCourseDetail({
                             <>
                               <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
                               <span className="w-32 truncate">
-                                {instructor.instructor}
+                                {instructor.instructor.name || instructor.instructor}
                               </span>
                             </>
                           ),

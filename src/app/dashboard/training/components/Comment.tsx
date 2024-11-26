@@ -62,8 +62,8 @@ const ReplySection = ({ reply: initialReply, showReplyForm, commentid, profileDa
   const handleReplySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setLoading(true)
     try {
-      setLoading(true)
       const response = await sendReply({
         userid: session?.user.id as string,
         reply: replyText,

@@ -60,7 +60,7 @@ const CartDetails = () => {
                       {cart.instructors.map((instructor, i) => (
                         <span key={i}>
                           <div className="mx-1.5 inline-block h-1 w-1 rounded-full bg-[#4E5566]" />{" "}
-                          {instructor.instructor}
+                          {instructor.instructor.name}
                         </span>
                       ))}
                     </div>
