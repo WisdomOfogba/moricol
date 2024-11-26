@@ -40,12 +40,17 @@ const endpoints = {
 };
 
 export const CourseApi = {
-  makePayment: async (
+  makePayment: async ({
+    userid,
+    email,
+    amount,
+    session,
+  }: {
     userid: string,
     email: string,
     amount: number,
     session: Session,
-  ) => {
+  }) => {
     const axios = createClientAxios({ session });
 
     try {
