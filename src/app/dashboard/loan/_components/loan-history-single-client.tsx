@@ -121,7 +121,7 @@ export default function LoanHistorySingleClient({
                       {!payment.loan_paid && <>
                         {payment.loan_overdue && <small className="text-xs text-red-600 uppercase ">loan overdue {" "} </small>}
 
-                        <small className="text-xs text-gray-600 block">Balance : ₦{payment.balance.toLocaleString('en-NG')}</small>
+                        <small className="text-xs text-gray-600 block">Balance : ₦{payment.repay_amount.toLocaleString('en-NG')}</small>
                       </>}
                     </div>
                     <span
