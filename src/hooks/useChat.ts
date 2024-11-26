@@ -12,8 +12,6 @@ interface UseChatProps {
 export function useChat({
     roomId,
     userId,
-    userName,
-    userAvatar = ""
 }: UseChatProps) {
     const [messages, setMessages] = useState<MessagePayload[]>([]);
     const [isTyping, setIsTyping] = useState<Record<string, boolean>>({});

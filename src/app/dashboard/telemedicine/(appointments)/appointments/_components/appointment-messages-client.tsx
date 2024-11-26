@@ -187,39 +187,41 @@ export default function AppointmentMessagesClient() {
 
 
 // Memoize message components to prevent unnecessary re-renders
-const MessageItem = memo(({ message, isUser, username }: { message: MessagePayload, isUser: boolean, username: string }) => (
-  <div
-    className={`flex ${!isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
-  >
-    {!isUser && (
-      <Avatar>
-        <AvatarFallback>{message.userid}</AvatarFallback>
-      </Avatar>
-    )}
+const MessageItem = memo(function MessageItem({ message, isUser, username }: { message: MessagePayload, isUser: boolean, username: string }) {
+  return (
     <div
-      className={`flex-1 ${isUser ? "text-right" : "text-left"}`}
+      className={`flex ${!isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
     >
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold">{username}</h3>
-        <span className="text-sm text-gray-500">
-          {/* {message.timestamp} */}
-          no time stamps
-        </span>
-      </div>
-      <p
-        className={`mt-1 inline-block rounded-lg p-3 shadow ${isUser ? "bg-primary-500 text-white" : "bg-white"}`}
-      >
-        {message.text}
-      </p>
+      {!isUser && (
+        <Avatar>
+          <AvatarFallback>{message.userid}</AvatarFallback>
+        </Avatar>
+      )}
       <div
-        className={`my-2 flex items-center space-x-2 ${isUser ? "justify-end" : "justify-start"}`}
-      ></div>
+        className={`flex-1 ${isUser ? "text-right" : "text-left"}`}
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold">{username}</h3>
+          <span className="text-sm text-gray-500">
+            {/* {message.timestamp} */}
+            no time stamps
+          </span>
+        </div>
+        <p
+          className={`mt-1 inline-block rounded-lg p-3 shadow ${isUser ? "bg-primary-500 text-white" : "bg-white"}`}
+        >
+          {message.text}
+        </p>
+        <div
+          className={`my-2 flex items-center space-x-2 ${isUser ? "justify-end" : "justify-start"}`}
+        ></div>
+      </div>
+      {isUser && (
+        <Avatar>
+          {/* <AvatarImage src={message.avatar} alt={message.sender} /> */}
+          <AvatarFallback>{username}</AvatarFallback>
+        </Avatar>
+      )}
     </div>
-    {isUser && (
-      <Avatar>
-        {/* <AvatarImage src={message.avatar} alt={message.sender} /> */}
-        <AvatarFallback>{username}</AvatarFallback>
-      </Avatar>
-    )}
-  </div>
-));
+  );
+});
