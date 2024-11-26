@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Button from "../button";
-// import { MdNotifications } from "react-icons/md";
+import { MdNotifications } from "react-icons/md";
 import { EditSVG } from "../svgs";
 import { BiMenu } from "react-icons/bi";
 import DashboardPathsSectionName from "./dashboard-paths-section-name";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { SelectContent, Select, SelectItem, SelectTrigger, SelectValue } from "../select";
 import { useRouter } from "next/navigation";
 import { servicesDashboardLinks } from "@/constants";
+import { signOut } from "next-auth/react";
 
 
 
@@ -41,7 +42,7 @@ export default function DashboardToolbar({
         <DashboardPathsSectionName />
       </div>
       <div className="flex items-center gap-x-4">
-        {/* <MdNotifications className="text-3xl text-primary-50" /> */}
+        <MdNotifications className="text-3xl text-primary-50" />
         <div className="h-10 w-10 md:h-12 md:w-12">
           <Image
             src="/images/client.jpg"
@@ -98,7 +99,7 @@ function ProfileDropdown() {
             ))}
           </SelectContent>
         </Select>
-        <Button variant="text" className="text-lg font-bold text-primary-500">
+        <Button variant="text" onClick={() => signOut()} className="text-lg font-bold text-primary-500">
           Sign Out
         </Button>
       </div>

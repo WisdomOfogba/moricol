@@ -1,7 +1,12 @@
+"use client";
 import Button from "@/components/button";
-import { refundPolicyAgreement } from "../../action";
+import { routes } from "@/constants/routes";
+
+import { useRouter, useParams } from "next/navigation";
 
 export default function ReturnPolicy() {
+  const { id } = useParams();
+  const router = useRouter();
   return (
     <section className="text-sm">
       <div className="border-b border-gray-300 pt-5">
@@ -33,7 +38,10 @@ export default function ReturnPolicy() {
         semper. Diam vulputate nulla ultricies tortor varius molestie nulla
       </p>
 
-      <form className="mt-5" action={refundPolicyAgreement}>
+      <form
+        className="mt-5"
+        action={() => router.push(routes.PHARMARCYRETURNPRODUCT + `/${id}`)}
+      >
         <div className="flex items-center gap-x-2">
           <input type="checkbox" id="agree" className="h-5 w-5" />
           <label htmlFor="agree" className="text-gray-500">

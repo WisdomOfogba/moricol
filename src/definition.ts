@@ -273,11 +273,6 @@ export interface Demographic {
   genetype: string;
   reports: string[];
   allergy: string[];
-  emergency_contact: string;
-  emergency_name: string;
-  kin_name: string;
-  kin_relationship: string;
-  kin_number: string;
 }
 
 export interface ProfileRequestType {
@@ -439,6 +434,19 @@ export type SingleAppointmentData = {
   paymentid: string;
   createdAt: string;
   __v: number;
+};
+
+export type CartData = {
+  _id: string;
+  title: string;
+  price: number;
+  coursetype: string;
+  rating: number;
+  thumbnail: string;
+  instructors: {
+    instructor: instructors;
+    _id: string;
+  }[];
 };
 
 export type CourseData = {
@@ -732,5 +740,39 @@ export type NotesData = {
   staffid: string;
   appointmentid: string;
   createdAt: string;
+  __v: number;
+};
+
+export type MassageData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  photo: string;
+  massage_specialty: {
+    _id: string;
+    experience: number;
+    massageid: string;
+    massagetime: {
+      end_time: string;
+      start_time: string;
+      _id: string;
+    }[];
+    rating: number;
+    specialtyprice: number;
+    totalreviews: number;
+  }[];
+};
+
+export type MassageServiceData = {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  functionality: string;
+  price: number;
+  client: number;
+  createdAt: string;
+  editedBy: string | null;
+  editedAt: string;
   __v: number;
 };

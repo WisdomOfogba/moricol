@@ -4,14 +4,60 @@ import React, { useEffect, useRef, useState } from "react";
 import { PaperPlaneSvg, PencilLine } from "@/components/svgs";
 import Button from "@/components/button";
 import { CourseApi } from "@/api/training";
-import {
-  IncomingMessage,
-  OutGoingMessage,
-  ThreeDotsMenu,
-} from "../profile/messages/layout";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { archive, messaging } from "@/definition";
+import { formatRelativeTime } from "@/util/formatTime";
+
+function ThreeDotsMenu() {
+  return (
+    <div className="flex h-6 w-6 items-center justify-center gap-x-[3px]">
+      {Array(3)
+        .fill("")
+        .map((_, i) => (
+          <div key={i} className="h-1 w-1 rounded-full bg-[#1D2026]" />
+        ))}
+    </div>
+  );
+}
+
+
+function IncomingMessage({msg}: {msg: messaging}) {
+  return (
+    <article className="w-full max-w-[536px]">
+      <div className="mb-2 flex items-center gap-x-1.5">
+        <div className="relative h-6 w-6 rounded-full">
+          <Image
+            src="/images/client.jpg"
+            alt=""
+            fill
+            sizes="24px"
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
+        </div>
+        <p className="text-xs text-[#6E7485]">{formatRelativeTime(msg.createdAt)}</p>
+      </div>
+      <p className="bg-primary-100 px-3 py-2 text-sm text-[#1D2026]">
+        {msg.message}
+      </p>
+    </article>
+  );
+}
+
+function OutGoingMessage({msg}: {msg: messaging}) {
+  return (
+    <div className="flex justify-end">
+      <article className="w-full max-w-[536px]">
+        <p className="mb-2 text-right text-xs text-[#6E7485]">{formatRelativeTime(msg.createdAt)}</p>
+
+        <p className="bg-primary-100 px-3 py-2 text-sm text-[#1D2026]">
+          {msg.message}
+        </p>
+      </article>
+    </div>
+  );
+}
+
 
 export default function ClientMessagingPage({
   archive,

@@ -36,12 +36,12 @@ const MakeTrainingPaymentButton = ({
     });
     try {
       setIsLoading(true);
-      const response = await CourseApi.makePayment(
-        session?.user.id as string,
-        session?.user.email as string,
-        totalPrice,
-        session as Session,
-      );
+      const response = await CourseApi.makePayment({
+        userid: session?.user.id as string,
+        email: session?.user.email as string,
+        amount: totalPrice,
+        session: session as Session,
+    });
       window.open(response.data, "_self");
     } catch (error) {
       console.error(error);

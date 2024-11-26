@@ -4,6 +4,8 @@ import LoanHistoryClient from "../_components/loan-history-client";
 import { getUserSession } from "@/lib/auth";
 import loanApi from "@/api/loan";
 
+export const revalidate = 60; // Set revalidation time to 60 seconds
+
 export const metadata = {
   title: "Loan History",
   description: "view your loan history",

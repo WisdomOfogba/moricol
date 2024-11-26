@@ -26,7 +26,7 @@ export default async function Blog({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <header className="relative h-[300px] md:h-[400px] lg:h-[562.5px] bg-black/40 bg-[url('/images/blog-bg-img.jpg')] bg-cover bg-no-repeat bg-blend-overlay flex items-end">
+      <header style={{ backgroundImage: `url(${blogData.upload})` }} className="relative h-[300px] md:h-[400px] lg:h-[562.5px] bg-black/40 bg-cover bg-no-repeat bg-blend-overlay flex items-end">
         <div className="p-8 md:p-14 max-w-[90%] md:max-w-[80%] lg:max-w-[762px] text-white">
           <h1 className="mb-3 text-2xl md:text-4xl lg:text-5xl uppercase tracking-[0.35px]">
             {blogData.title}

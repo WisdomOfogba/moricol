@@ -75,7 +75,7 @@ function FileUpload({ title, accept, file, setFile, formats }: FileUploadProps) 
                             onClick={onButtonClick}
                             className="rounded-md bg-yellow-100 px-4 py-2 text-yellow-800 transition duration-300 hover:bg-yellow-200"
                         >
-                            Add image
+                            Add {accept.includes(".pdf") ? "file" : "image"}
                         </button>
                         <input
                             ref={inputRef}

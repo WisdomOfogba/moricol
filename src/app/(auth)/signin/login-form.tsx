@@ -6,12 +6,14 @@ import { useSnackbar } from "notistack";
 import TextInput from "@/components/auth/text-input";
 import Link from "next/link";
 import Button from "@/components/button";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -27,7 +29,7 @@ export default function LoginForm({ callbackUrl }: { callbackUrl: string }) {
         enqueueSnackbar(result.error, { variant: "error" });
       } else {
         enqueueSnackbar("Logged in successfully!", { variant: "success" });
-        // router.push(callbackUrl ?? "/");
+        router.replace(callbackUrl ?? "/");
         window.location.href = callbackUrl ?? "/";
       }
     } catch (error) {
