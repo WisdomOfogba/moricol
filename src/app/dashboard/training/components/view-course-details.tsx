@@ -142,7 +142,7 @@ export default function ViewCourseDetail({
                             <>
                               <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
                               <span className="w-32 truncate">
-                                {instructor.instructor.name || instructor.instructor}
+                                {instructor.instructor.name || "665711e1356671"}
                               </span>
                             </>
                           ),
