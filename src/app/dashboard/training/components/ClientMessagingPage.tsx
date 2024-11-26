@@ -7,11 +7,22 @@ import { CourseApi } from "@/api/training";
 import {
   IncomingMessage,
   OutGoingMessage,
-  ThreeDotsMenu,
 } from "../profile/messages/layout";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { archive, messaging } from "@/definition";
+
+function ThreeDotsMenu() {
+  return (
+    <div className="flex h-6 w-6 items-center justify-center gap-x-[3px]">
+      {Array(3)
+        .fill("")
+        .map((_, i) => (
+          <div key={i} className="h-1 w-1 rounded-full bg-[#1D2026]" />
+        ))}
+    </div>
+  );
+}
 
 export default function ClientMessagingPage({
   archive,
