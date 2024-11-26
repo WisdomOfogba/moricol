@@ -7,7 +7,7 @@ import { CartProvider } from "@/lib/TrainingCartContext";
 import { getUserSession } from "@/lib/auth";
 import { ProfileData } from "@/definition";
 import { profileApi } from "@/api/profile";
-import { LayoutDashboard, UserCircle2 } from "lucide-react";
+import { Home, LayoutDashboard, UserCircle2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -46,22 +46,21 @@ async function ToolBar() {
   const profileData = await getProfileData();
 
   return (
-    <header className="flex items-center gap-x-20 border-b bg-white px-5 py-4">
+    <header className="flex items-center justify-between border-b bg-white px-5 py-4">
       {/* Logo */}
       <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
       </Link>
-
-      {/* Button and Input */}
-      <div className="mx-auto flex items-center justify-center">
-        <Link href="/dashboard/training">
-          <LayoutDashboard />
-        </Link>
-      </div>
+      <Link href="/" className="relative block cursor-pointer sm:hidden">
+        <Home />
+      </Link>
 
       {/* Icon and Profile */}
       <div className="flex grow items-center justify-end gap-x-6">
         <div className="flex grow items-center justify-end gap-x-6">
+          <Link href="/dashboard/training">
+            <LayoutDashboard />
+          </Link>
           <Link href="/dashboard/training/profile" className="relative">
             <UserCircle2 />
           </Link>

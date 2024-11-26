@@ -41,7 +41,6 @@ export interface LoanHistoryItem {
   status: string;
 }
 
-
 export type UserDetails = {
   auth: Record<string, unknown>;
   _id: string;
@@ -72,14 +71,25 @@ export type LoginResponse = {
   };
 };
 
-
-
 export type UserResumeResponse = {
   reference: { name: string; email: string; phone: string };
-  contact_details: { name: string; phone: string; socials: { option: string; optionUrl: string }[] };
+  contact_details: {
+    name: string;
+    phone: string;
+    socials: { option: string; optionUrl: string }[];
+  };
   upload: { cv: string; picture: string };
-  others: { skills: string[]; languages: string[]; hobby: string[]; notice_period: string };
-  job_preference: { job_function: string[]; job_location: string[]; salary_range: string };
+  others: {
+    skills: string[];
+    languages: string[];
+    hobby: string[];
+    notice_period: string;
+  };
+  job_preference: {
+    job_function: string[];
+    job_location: string[];
+    salary_range: string;
+  };
   _id: string;
   userid: string;
   bio: string;
@@ -99,8 +109,7 @@ export type UserResumeResponse = {
   createdAt: string;
   coverletter: string;
   __v: number;
-}
-
+};
 
 export type Education = {
   _id: string;
@@ -113,9 +122,7 @@ export type Education = {
   inview: boolean;
 };
 
-
-export type ResumeType = 'local' | 'foreign'
-
+export type ResumeType = "local" | "foreign";
 
 export type Certification = {
   _id: string;
@@ -127,8 +134,6 @@ export type Certification = {
   grade: string;
   inview: boolean;
 };
-
-
 
 export interface JobPostResponse {
   _id: string;
@@ -170,7 +175,6 @@ export interface JobPostResponse {
   __v: number;
 }
 
-
 export type FilterValues = {
   job_titles: string[];
   job_types: ("fulltime" | "parttime" | "contract")[];
@@ -185,7 +189,7 @@ export type LoanCategory = {
   _id: string;
   name: string;
   image: string;
-}
+};
 
 export type LoanDetails = {
   range: {
@@ -210,18 +214,17 @@ export type LoanDetails = {
   client: number;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type Plan = {
-  title: string
-  plan_type: string
-  min_members: number
-  max_members: number
-  subtitle: string
-  durations: { label: string, price: string }[]
-  highlighted?: boolean
-}
+  title: string;
+  plan_type: string;
+  min_members: number;
+  max_members: number;
+  subtitle: string;
+  durations: { label: string; price: string }[];
+  highlighted?: boolean;
+};
 
 export type Organization = {
   _id: string;
@@ -236,8 +239,7 @@ export type Organization = {
   active: boolean;
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type OrganizationMember = {
   _id: string;
@@ -254,8 +256,7 @@ export type OrganizationMember = {
   };
   createdAt: string;
   __v: number;
-}
-
+};
 
 export type LoanDataType = {
   _id: string;
@@ -266,7 +267,6 @@ export type LoanDataType = {
   createdAt: string;
   __v: number;
 };
-
 
 export interface Demographic {
   bloodgroup: string;
@@ -291,7 +291,6 @@ export interface ProfileRequestType {
   language: string;
   demographic: Demographic;
 }
-
 
 export type ProfileData = {
   demographic: {
@@ -325,8 +324,7 @@ export type ProfileData = {
   __v: number;
   phone: string;
   photo: string;
-
-}
+};
 
 export type TelemedicineCategoryData = {
   category: {
@@ -438,7 +436,21 @@ export type SingleAppointmentData = {
   __v: number;
 };
 
+export type CartData = {
+  _id: string;
+  title: string;
+  price: number;
+  coursetype: string;
+  rating: number;
+  thumbnail: string;
+  instructors: {
+    instructor: instructors;
+    _id: string;
+  }[];
+};
+
 export type CourseData = {
+  coursetype: string;
   _id: string;
   bundle: string;
   bundle_option: string;
@@ -464,7 +476,7 @@ export type CourseData = {
   description: string;
   instructors: [
     {
-      instructor: string;
+      instructor: instructors;
       _id: string;
     },
   ];
@@ -507,7 +519,7 @@ export type CourseData = {
 
 export type curriculum = {
   section_name: string;
-  section: section[]
+  section: section[];
   _id: string;
 };
 
@@ -543,6 +555,7 @@ export type section = {
 export type ReviewData = {
   _id: string;
   userid: {
+    photo: string;
     _id: string;
     firstname: string;
     lastname: string;
@@ -583,19 +596,41 @@ export type Dashboard = {
   ];
 };
 
+export type comment = {
+  _id: string;
+  userid: userid;
+  courseid: string;
+  reply: reply[];
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+};
+
+export type userid = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  photo: string;
+};
+
+export type reply = {
+  _id: string;
+  userid: userid;
+  courseid: string;
+  reply: string;
+  comment: string;
+  createdAt: string;
+  isAdmin: boolean;
+};
+
 export type SingleCourse = {
-  comment: [
-    {
-      id: string;
-      author: string;
-      avatar: string;
-      content: string;
-      timestamp: string;
-      isAdmin: boolean;
-    },
-  ];
+  comment: comment[];
   review: string[];
   course: {
+    redirect_course: {
+      links: string[];
+      redirect: boolean;
+    };
     _id: string;
     title: string;
     bundle: string;
@@ -650,7 +685,7 @@ export type courseorder = {
     duration: string;
     instructors: [
       {
-        instructor: string;
+        instructor: instructors;
         _id: string;
       },
     ];
@@ -677,14 +712,16 @@ export type courseorder = {
 export type instructors = {
   _id: string;
   name: string;
+  photo: string;
 };
 
 export type archive = {
   _id: string;
   admin_details: {
     name: string;
+    photo: string;
   };
-}
+};
 
 export type messaging = {
   _id: string;
@@ -697,15 +734,14 @@ export type messaging = {
 };
 
 export type NotesData = {
-  _id: string,
-  title: string,
-  comment: string,
-  staffid: string,
-  appointmentid: string,
-  createdAt: string,
-  __v: number
-}
-
+  _id: string;
+  title: string;
+  comment: string;
+  staffid: string;
+  appointmentid: string;
+  createdAt: string;
+  __v: number;
+};
 
 export type MassageData = {
   _id: string;
@@ -725,7 +761,7 @@ export type MassageData = {
     specialtyprice: number;
     totalreviews: number;
   }[];
-}
+};
 
 export type MassageServiceData = {
   _id: string;

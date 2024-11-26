@@ -7,6 +7,7 @@ import { useState } from "react";
 import onlinePharmacyApi, { CreateAddressParams } from "@/api/online-pharmacy";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
+import { states } from "@/constants/states";
 
 export default function EditOrAddAddress({
   title,
@@ -201,13 +202,28 @@ export default function EditOrAddAddress({
                   >
                     State
                   </label>
-                  <input
+                  <select
+                    value={address.state}
+                    onChange={(e) =>
+                      setAddress({ ...address, state: e.target.value })
+                    }
+                    id="state"
+                    name="state"
+                    className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-sm text-[#6E7285] outline-none"
+                  >
+                    {states.map((state) => (
+                      <option key={state} className="capitalize" value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                  {/* <input
                     type="text"
                     name="state"
                     value={address.state}
                     onChange={handleChange}
                     className="w-full rounded border border-[#CECECE] bg-[#F0F0F0] px-6 py-3 text-xs text-[#6E7285]"
-                  />
+                  /> */}
                 </div>
               </li>
 

@@ -55,7 +55,11 @@ function InstructorCard({instructor}: {instructor: instructors}) {
   return (
     <article className="w-full border border-[#E9EAF0] bg-white">
       <div className="relative h-[312px] overflow-hidden">
-        <Image src="/images/dashboard/drug.png" fill alt="" sizes="312px" />
+        <Image 
+          src={instructor.photo || "/images/dashboard/drug.png"}
+          fill 
+          alt="" 
+          sizes="312px" />
       </div>
 
       <div>
@@ -63,7 +67,6 @@ function InstructorCard({instructor}: {instructor: instructors}) {
           <h3 className="mb-1 text-lg font-medium leading-6 text-[#1D2026]">
             {instructor.name}
           </h3>
-          <p className="text-sm leading-5 text-[#8C94A3]">Software Developer</p>
         </div>
       </div>
       <div className="border-t border-t-[#E9EAF0] px-5 py-4">

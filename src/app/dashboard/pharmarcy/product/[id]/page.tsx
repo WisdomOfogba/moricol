@@ -68,7 +68,11 @@ export default function ProductPage() {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [attribute, setAttribut] = useState<{ color: string; size: string }>();
+  const [attribute, setAttribut] = useState<{
+    color: string;
+    size: string;
+    brand: string;
+  }>();
   const cart = useAppSelector((state: RootState) => state.drugcart.cart);
   const [quantity, setQuantity] = useState<number>(0);
   const [drug, setDrug] = useState<SingleProduct | null>(null);
@@ -95,6 +99,7 @@ export default function ProductPage() {
       if (index != -1) {
         setQuantity(cart[index].quantity!);
         setAttribut({
+          brand: cart[index].variant[0].value,
           color: cart[index].variant[1].value,
           size: cart[index].variant[2].value,
         });
@@ -142,7 +147,7 @@ export default function ProductPage() {
           return item;
         }
       });
-      // console.log(newCart);
+
       dispatch(setCart(newCart));
       localStorage.setItem("cart", JSON.stringify(newCart));
       if (variant_type === "color") {
@@ -156,6 +161,12 @@ export default function ProductPage() {
         setAttribut({
           ...attribute,
           size: attribute?.size == value ? "" : value,
+        });
+      } else {
+        //@ts-expect-error: there'll be id
+        setAttribut({
+          ...attribute,
+          brand: attribute?.brand == value ? "" : value,
         });
       }
     }
@@ -243,44 +254,20 @@ export default function ProductPage() {
               {drug?.product.name}
             </h1>
 
-            {/* Brand | Rating | Availability */}
-            <div className="grid grid-cols-2 gap-x-7 gap-y-3 text-xl md:grid-cols-1">
-              <p className="mb-1.5">
-                Brand:{" "}
-                {drug?.product.attribute.brand.map((b, i) => (
-                  <span key={i} className="text-primary-500">
-                    {b.value}
-                  </span>
-                ))}
-              </p>
+            {/*  Rating | Availability */}
+            <div className="grid grid-cols-1 gap-x-7 gap-y-3 text-xl">
               <div className="mb-2 mt-0.5 flex items-center gap-x-1">
                 {drug.product.rating != undefined &&
                   Array(drug?.product.rating)
                     .fill("")
-                    .map(() => <StarSVG key={Math.random() * 10} fill="#E7A542" />)}
+                    .map(() => (
+                      <StarSVG key={Math.random() * 10} fill="#E7A542" />
+                    ))}
                 {drug.product.rating != undefined &&
                   drug?.product.rating < 5 &&
                   Array(5 - drug?.product.rating)
                     .fill("")
-                    .map(() => <StarSVG key={Math.random() * 10}  />
-                        )
-                }
-                {/* {drug?.product.rating &&
-                  Array(drug?.product.rating)
-                    .fill("")
-                    .map(() => <StarSVG fill="#E7A542" />)}
-                {drug?.product.rating &&
-                  drug?.product.rating < 5 &&
-                  Array(5 - drug?.product.rating)
-                    .fill("")
-                    .map(() => <StarSVG />)} */}
-                {/* <p>Rating:{String(drug.product.rating)}</p> */}
-
-                {/*                 
-                <StarSVG />
-                <StarSVG />
-                <StarSVG /> */}
-                {/* <p>({drug?.productreview.length})</p> */}
+                    .map(() => <StarSVG key={Math.random() * 10} />)}
               </div>
               <p className="mb-5 text-[#2C2D33]">
                 Status:{" "}
@@ -306,15 +293,47 @@ export default function ProductPage() {
               </p>
             </div>
 
-            {/* Color | Size */}
-            <div className="mb-7 flex flex-wrap gap-x-7">
+            {/* Brand | Color | Size */}
+            <div className="mb-7 flex flex-wrap gap-6">
+              {/* Brand */}
+              <div className="shrink-0">
+                {drug?.product.attribute.brand.length > 0 && (
+                  <h3 className="mb-1 text-gray-700">Brand</h3>
+                )}
+
+                <div className="flex flex-wrap gap-x-1.5">
+                  {drug?.product.attribute.brand.map((b, index) => (
+                    <div className="flex flex-col items-center" key={index}>
+                      <button
+                        // key={index}
+                        onClick={() => {
+                          handleVariantChange(
+                            drug?.product._id,
+                            b.price,
+                            b.value,
+                            "brand",
+                          );
+                        }}
+                        className={
+                          attribute?.brand == b.value
+                            ? "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-primary-500 p-2 capitalize text-white"
+                            : "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2 capitalize"
+                        }
+                      >
+                        {b.value}
+                      </button>
+                      <p className="text-[0.7rem]">+ ₦{b.price}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {/* Color */}
               <div className="shrink-0">
-                {
-                  drug?.product.attribute.color.length > 0
-                  && <h3 className="mb-1 text-lg text-gray-700">Color</h3>
-                }
-                
+                {drug?.product.attribute.color.length > 0 && (
+                  <h3 className="mb-1 text-gray-700">Color</h3>
+                )}
+
                 <div className="flex flex-wrap gap-x-1.5">
                   {drug?.product.attribute.color.map((col, index) => (
                     <div className="flex flex-col items-center" key={index}>
@@ -330,8 +349,8 @@ export default function ProductPage() {
                         }}
                         className={
                           attribute?.color == col.value
-                            ? "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-primary-500 p-2 text-white"
-                            : "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2"
+                            ? "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-primary-500 p-2 capitalize text-white"
+                            : "flex h-8 shrink-0 items-center justify-center rounded border border-[#DEE2E2] bg-white p-2 capitalize"
                         }
                       >
                         {col.value}
@@ -343,12 +362,10 @@ export default function ProductPage() {
               </div>
               {/* Sizes */}
               <div className="shrink-0">
-                
-                {
-                  drug?.product.attribute.size.length > 0
-                  &&  <h3 className="mb-1 text-lg text-gray-700">Size</h3>
-                }
-               
+                {drug?.product.attribute.size.length > 0 && (
+                  <h3 className="mb-1 text-gray-700">Size</h3>
+                )}
+
                 <div className="flex flex-wrap gap-x-1.5">
                   {drug?.product.attribute.size.map((s, index) => (
                     <div className="flex flex-col items-center" key={index}>
@@ -361,8 +378,6 @@ export default function ProductPage() {
                             s.value,
                             "size",
                           );
-                          // //@ts-expect-error: therell be value
-                          // setAttribut({ ...attribute, size: s.value });
                         }}
                         className={
                           attribute?.size == s.value
@@ -379,7 +394,6 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* Cart */}
             <div className="mb-6 flex items-center gap-x-2 rounded border px-5 py-4">
               <p>Quantity</p>
               <div className="flex items-center gap-x-3 rounded border px-3.5 py-2 text-sm">
@@ -424,7 +438,6 @@ export default function ProductPage() {
                         ],
                       }),
                     );
-                    // console.log(cart);
                   }}
                 >
                   +
@@ -472,8 +485,6 @@ export default function ProductPage() {
                         }),
                       );
                     }
-
-                    // console.log(cart);
                   }}
                   className="mt-2 px-4 py-3 font-semibold"
                 >
@@ -488,12 +499,6 @@ export default function ProductPage() {
                 </button>
               </div>
             </div>
-
-            {/* Categories */}
-            {/* <p>
-              Categories:{" "}
-              <span className="text-primary-500">{drug?.product.category}</span>
-            </p> */}
           </div>
         </section>
         <section className="bg-gray-50">

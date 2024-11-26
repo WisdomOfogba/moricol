@@ -184,7 +184,7 @@ export default function MyOrders() {
       status === "delivered"
         ? "Delivered"
         : status === "pending"
-          ? "Pending Shipping"
+          ? "Pending Approval"
           : status === "approved"
             ? "Approved - Proceed to pay"
             : "Returned Order";
@@ -352,7 +352,7 @@ export default function MyOrders() {
             ))}
           </ul>
         </section>
-        {orders[item].status == "approved" && (
+        {orders[item].status == "approved" && !orders[item].order_paid && (
           <Button
             onClick={makePayment}
             className="my-3 w-fit rounded-lg bg-primary-500 px-5 py-3 font-bold text-white hover:bg-primary-500/90"

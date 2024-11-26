@@ -1,6 +1,6 @@
 "use client";
-import Button from "@/components/button";
-import { LogoutSvg } from "@/components/svgs";
+// import Button from "@/components/button";
+// import { LogoutSvg } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode, useState } from "react";
@@ -8,7 +8,7 @@ import DashboardToolbar from "../dashboard-toolbar";
 import { MdCancel } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { routes } from "@/constants/routes";
-import { signOut } from "next-auth/react";
+// import { signOut } from "next-auth/react";
 
 function DashboardLayoutClient({
   children,
@@ -30,7 +30,7 @@ function DashboardLayoutClient({
   return (
     // <section className="flex h-screen overflow-y-hidden" onClick={(e) => {
     <section
-      className="flex h-screen"
+      className="flex"
       onClick={(e) => {
         if (e.target instanceof HTMLAnchorElement) {
           setIsSidebarOpen(false);
@@ -131,14 +131,14 @@ function DashboardLayoutClient({
           </Link>
           <ul className="py-3 sm:py-4">
             {slot}
-            <li className="mt-3 border-t border-t-white sm:mt-4">
+            {/* <li className="mt-3 border-t border-t-white sm:mt-4">
               <Button
                 onClick={() => signOut()}
                 className="flex w-full items-center gap-x-2 px-4 py-4 text-sm font-semibold sm:gap-x-2.5 sm:px-8 sm:py-4 sm:text-base md:px-8 md:py-5"
               >
                 <LogoutSvg fill="white" /> Logout
               </Button>
-            </li>
+            </li> */}
           </ul>
         </aside>
       )}

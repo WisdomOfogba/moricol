@@ -1,28 +1,26 @@
 "use client";
 
-import { ChatCircles, File, StarSVG } from "@/components/svgs";
+import { File, StarSVG } from "@/components/svgs";
 import Image from "next/image";
 import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
-import { BiDownload } from "react-icons/bi";
-import { section, SingleCourse } from "@/definition";
+// import { BiDownload } from "react-icons/bi";
+import { section, SingleCourse, comment, ProfileData } from "@/definition";
 import ViewCurriculumCard from "./ViewCurriculumCard";
 import VideoPlayer from "./VideoPlayer";
 import QuizComponent from "./QuizComponent";
+import MarkLesson from "./MarkLesson";
+import Comment from "./Comment";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { CourseApi } from "@/api/training";
+import Link from "next/link";
 
 const courseDescriptionDetailLink = [
   {
     name: "Overview",
     link: "overview",
-  },
-  {
-    name: "Lectures Notes",
-    link: "notes",
-  },
-  {
-    name: "Attach File",
-    link: "files",
   },
   {
     name: "Comments",
@@ -31,8 +29,10 @@ const courseDescriptionDetailLink = [
 ];
 
 export default function ViewCourseDetail({
+  profileData,
   singleCourse,
 }: {
+  profileData: ProfileData;
   singleCourse: SingleCourse;
 }) {
   const [activeLink, setActiveLink] = useState("overview");
@@ -65,7 +65,22 @@ export default function ViewCourseDetail({
         ))}
     </ul>
   );
+  const handleDownload = async () => {
+    const fileUrl = lesson ? lesson.lesson.content : "";
 
+    const response = await fetch(fileUrl);
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    {
+      lesson && link.setAttribute("download", `${lesson.lesson_name}.pdf`);
+    }
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
@@ -113,7 +128,7 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src="/images/client.jpg"
+                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
                           alt=""
                           className="flex w-full"
                         />
@@ -126,8 +141,8 @@ export default function ViewCourseDetail({
                           (instructor) => (
                             <>
                               <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                              <span className="w-16 truncate">
-                                {instructor.instructor}
+                              <span className="w-32 truncate">
+                                {instructor.instructor.name || "665711e1356671"}
                               </span>
                             </>
                           ),
@@ -139,10 +154,7 @@ export default function ViewCourseDetail({
                     <FiveStar className="h-6 w-6" />
                     <p className="font-medium text-[#1D2026]">
                       {singleCourse.courseorder.courseid.rating}{" "}
-                      <span className="text-sm font-normal text-[#6E7485]">
-                        {" "}
-                        (451,444 Rating)
-                      </span>
+                      <span className="text-sm font-normal text-[#6E7485]"></span>
                     </p>
                   </div>
                 </div>
@@ -162,9 +174,21 @@ export default function ViewCourseDetail({
           {activeLesson === "video" && (
             <>
               <VideoPlayer videoUrl={lesson?.lesson.content} />
-              <h2 className="mb-6 text-3xl font-semibold">
-                {lesson?.lesson_name}
-              </h2>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
             </>
           )}
           {activeLesson === "quiz" && (
@@ -177,25 +201,181 @@ export default function ViewCourseDetail({
                   quiz={lesson.lesson.quiz}
                 />
               )}
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
             </>
           )}
-          {activeLesson === "assignment" && <h1>{`${lesson?.lesson_name}`}</h1>}
-          {activeLesson === "survey" && <h1>{`${lesson?.lesson_name}`}</h1>}
-          {activeLesson === "pdf" && <h1>{`${lesson?.lesson_name}`}</h1>}
+          {activeLesson === "assignment" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <File className="h-12 w-12" />
+                  <div>
+                    <h3 className="mb-1 font-medium text-[#1D2026]">
+                      {lesson && lesson.lesson_name}
+                    </h3>
+                  </div>
+                </div>
+                {lesson && (
+                  <button
+                    onClick={handleDownload}
+                    className="bg-primary-500 px-6 py-3 font-semibold text-white"
+                  >
+                    Download File
+                  </button>
+                )}
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "caption" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "text" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "survey" && (
+            <>
+              <h1>{`${lesson?.lesson_name}`}</h1>
+              <div className="flex w-full items-center justify-between gap-4">
+                <h2 className="mb-6 text-3xl font-semibold">
+                  {lesson?.lesson_name}
+                </h2>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "pdf" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <File className="h-12 w-12" />
+                  <div>
+                    <h3 className="mb-1 font-medium text-[#1D2026]">
+                      {lesson && lesson.lesson_name}
+                    </h3>
+                  </div>
+                </div>
+                {lesson && (
+                  <button
+                    onClick={handleDownload}
+                    className="bg-primary-500 px-6 py-3 font-semibold text-white"
+                  >
+                    Download File
+                  </button>
+                )}
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.course._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
 
           {/* Links */}
-          <section className="no-scrollbar flex w-full overflow-auto">
-            <ul className="flex w-max gap-x-6 border-b border-b-[#E9EAF0] sm:w-full">
-              {courseDescriptionDetailLink.map(({ name, link }, i) => (
-                <li key={i} className="w-[160px] sm:w-full">
-                  <button
-                    className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
-                    onClick={() => setActiveLink(link)}
-                  >
-                    {name}
-                  </button>
-                </li>
-              ))}
+          <section className="flex w-full">
+            <ul className="flex w-full gap-x-6 border-b border-b-[#E9EAF0]">
+              {singleCourse.course?.curriculum &&
+                courseDescriptionDetailLink.map(({ name, link }, i) => (
+                  <li key={i} className="w-full">
+                    <button
+                      className={`inline-block w-full border-b-2 pb-5 text-center ${activeLink === link ? "border-b-[#FF6636]" : "border-b-transparent"}`}
+                      onClick={() => setActiveLink(link)}
+                    >
+                      {name}
+                    </button>
+                  </li>
+                ))}
             </ul>
           </section>
 
@@ -212,7 +392,7 @@ export default function ViewCourseDetail({
           )}
 
           {/* Lecture Notes */}
-          {activeLink === "notes" && (
+          {/* {activeLink === "notes" && (
             <section>
               <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-2xl font-semibold text-[#1D2026]">
@@ -244,50 +424,79 @@ export default function ViewCourseDetail({
                 </p>
               </div>
             </section>
-          )}
+          )} */}
 
           {/* Attach Files (01) */}
-          {activeLink === "files" && (
+          {/* {activeLink === "files" && (
             <section>
               <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
                 Attach Files <span className="font-normal">(01)</span>
               </h3>
               <AttachementCard />
             </section>
-          )}
+          )} */}
 
           {activeLink === "comments" && (
             <section>
-              <CommentSection comment={singleCourse.comment} />
+              <CommentSection
+                profileData={profileData}
+                courseid={singleCourse.course._id}
+                comment={singleCourse.comment}
+              />
             </section>
           )}
         </div>
 
-        {singleCourse.courseorder.curriculum.length > 0 && (
-          <section className="w-full max-w-[524px] shrink-0">
-            <div className="mb-3.5 flex items-center justify-between font-semibold">
-              <h3 className="text-[#1D2026]">Course contents</h3>
-              <p className="text-xs text-[#23BD33]">
-                {singleCourse.courseorder.progress}% Completed
-              </p>
-            </div>
-            <div className="mb-4 bg-[#E9EAF0]">
+        {singleCourse.courseorder?.curriculum.length > 0 && (
+          <section className="flex w-full flex-col items-start">
+            <div className="w-full shrink-0 xl:max-w-[524px]">
+              <div className="mb-3.5 flex items-center justify-between font-semibold">
+                <h3 className="text-[#1D2026]">Course contents</h3>
+                <p className="text-xs text-[#23BD33]">
+                  {singleCourse.courseorder.progress}% Completed
+                </p>
+              </div>
+              <div className="mb-4 bg-[#E9EAF0]">
+                <div
+                  style={{ width: `${singleCourse.courseorder.progress}%` }}
+                  className={`h-[3px] bg-[#23BD33]`}
+                ></div>
+              </div>
               <div
-                style={{ width: `${singleCourse.courseorder.progress}%` }}
-                className={`h-[3px] bg-[#23BD33]`}
-              ></div>
+                className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}
+              >
+                {singleCourse.course?.curriculum.map((curriculum, i) => (
+                  <ViewCurriculumCard
+                    setLesson={handleSetLesson}
+                    key={i}
+                    curriculum={curriculum}
+                  />
+                ))}
+                {/* <CurriculumCard /> */}
+              </div>
             </div>
-            <div
-              className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}
-            >
-              {singleCourse.course?.curriculum.map((curriculum, i) => (
-                <ViewCurriculumCard
-                  setLesson={handleSetLesson}
-                  key={i}
-                  curriculum={curriculum}
-                />
-              ))}
-              {/* <CurriculumCard /> */}
+            <div className="w-full shrink-0 p-4 xl:max-w-[524px]">
+              {singleCourse.course?.redirect_course.redirect && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Redirect Links
+                  </h3>
+                  <div className="space-y-2">
+                    {singleCourse.course.redirect_course.links.map(
+                      (link, i) => (
+                        <Link
+                          key={i}
+                          href={link}
+                          target="_blank"
+                          className="block break-words text-blue-600 hover:underline"
+                        >
+                          {link}
+                        </Link>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -296,38 +505,33 @@ export default function ViewCourseDetail({
   );
 }
 
-function AttachementCard() {
-  return (
-    <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
-      <div className="flex items-center gap-x-3">
-        <File className="h-12 w-12" />
-        <div>
-          <h3 className="mb-1 font-medium text-[#1D2026]">
-            Create acount on webo
-          </h3>
-          <p className="text-sm text-[#6E7485]">12.6 MB</p>
-        </div>
-      </div>
-      <button className="bg-primary-500 px-6 py-3 font-semibold text-white">
-        Download File
-      </button>
-    </article>
-  );
-}
+// function AttachementCard() {
+//   return (
+//     <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+//       <div className="flex items-center gap-x-3">
+//         <File className="h-12 w-12" />
+//         <div>
+//           <h3 className="mb-1 font-medium text-[#1D2026]">
+//             Create acount on webo
+//           </h3>
+//           <p className="text-sm text-[#6E7485]">12.6 MB</p>
+//         </div>
+//       </div>
+//       <button className="bg-primary-500 px-6 py-3 font-semibold text-white">
+//         Download File
+//       </button>
+//     </article>
+//   );
+// }
 
 const CommentSection = ({
-  comment,
+  profileData,
+  comment: initialComment,
+  courseid,
 }: {
-  comment: [
-    {
-      id: string;
-      author: string;
-      avatar: string;
-      content: string;
-      timestamp: string;
-      isAdmin: boolean;
-    },
-  ];
+  profileData: ProfileData;
+  comment: comment[];
+  courseid: string;
 }) => {
   //   const comments = [
   //     {
@@ -356,6 +560,56 @@ const CommentSection = ({
   //       isAdmin: false,
   //     },
   //   ];
+  const [comment, setComment] = useState(initialComment);
+  const { data: session } = useSession();
+  const [commentText, setCommentText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleCommentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const response = await sendComment({
+        userid: session?.user.id as string,
+        comment: commentText,
+        session: session as Session,
+        courseid,
+      });
+      setComment((prev) => [...prev, response.data]);
+      setCommentText("");
+    } catch (error) {
+      console.error("Failed to post Comment:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  async function sendComment({
+    userid,
+    comment,
+    courseid,
+    session,
+  }: {
+    userid: string;
+    comment: string;
+    courseid: string;
+    session: Session;
+  }) {
+    try {
+      const response = await CourseApi.sendComment({
+        userid,
+        comment,
+        courseid,
+        session,
+      });
+      return response;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to post Comment",
+      );
+    }
+  }
 
   return (
     <div>
@@ -366,39 +620,25 @@ const CommentSection = ({
         </span>
       </h3>
 
-      {comment.map((comment) => (
-        <div key={comment.id} className="mb-4 flex space-x-3">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full">
-            <Image
-              src="/images/client.jpg"
-              alt=""
-              fill
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-          <div className="flex-1">
-            <div className="mb-3 flex items-center space-x-2">
-              <span className="text-sm font-medium text-[#1D2026]">
-                {comment.author}
-              </span>
-              {comment.isAdmin && (
-                <span className="bg-[#564FFD] px-1.5 py-1 text-xs text-white">
-                  ADMIN
-                </span>
-              )}
-              <span className="h-1 w-1 rounded-full bg-[#6E7485]"></span>
-              <span className="text-xs text-[#6E7485]">
-                {comment.timestamp}
-              </span>
-            </div>
-            <p className="mb-3 mt-1 text-sm">{comment.content}</p>
-            <button className="flex items-center gap-x-2 text-sm text-[#8C94A3]">
-              <ChatCircles />
-              REPLY
-            </button>
-          </div>
-        </div>
+      {comment.map((comment, i) => (
+        <Comment profileData={profileData} key={i} comment={comment} />
       ))}
+
+      <div className="mt-3 flex flex-col items-start gap-x-4">
+        <textarea
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="Write your Comment..."
+          className="w-full rounded-md border p-2 text-sm focus:p-2"
+        />
+        <button
+          disabled={commentText === ""}
+          onClick={handleCommentSubmit}
+          className="mt-2 rounded bg-primary-500 px-4 py-2 text-sm text-white"
+        >
+          {loading ? "Posting Comment..." : "Post a Comment"}
+        </button>
+      </div>
     </div>
   );
 };
