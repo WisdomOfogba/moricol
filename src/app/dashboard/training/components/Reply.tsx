@@ -1,11 +1,9 @@
-import { reply } from "@/definition";
+import { ProfileData, reply } from "@/definition";
 import { formatRelativeTime } from "@/util/formatTime";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 
-const Reply = ({ reply }: {reply: reply}) => {
-    const { data: session } = useSession();
+const Reply = ({ reply, profileData }: {reply: reply, profileData: ProfileData}) => {
 
   return (
     <div key={reply._id} className="mb-4">
@@ -13,8 +11,8 @@ const Reply = ({ reply }: {reply: reply}) => {
         {/* Reply Avatar */}
         <div className="relative h-8 w-8 overflow-hidden rounded-full">
           <Image
-            src="/images/client.jpg"
-            alt={`${reply.userid.firstname || session?.user.firstname} ${reply.userid.lastname || session?.user.lastname}`}
+            src={reply.userid.photo || profileData.photo || "/images/client.jpg"}
+            alt={`${reply.userid.firstname || profileData.firstname} ${reply.userid.lastname || profileData.lastname}`}
             fill
             style={{ objectFit: "cover" }}
           />
@@ -24,7 +22,7 @@ const Reply = ({ reply }: {reply: reply}) => {
         <div className="flex-1">
           <div className="mb-1 flex items-center space-x-2">
             <span className="text-sm font-medium text-[#1D2026]">
-            {reply.userid.firstname || session?.user.firstname} {reply.userid.lastname || session?.user.lastname}
+            {reply.userid.firstname || profileData.firstname} {reply.userid.lastname || profileData.lastname}
             </span>
             <span className="text-xs text-[#6E7485]">
               {formatRelativeTime(reply.createdAt)}

@@ -1,6 +1,6 @@
 "use client";
 import { ChatCircles } from "@/components/svgs";
-import { comment, reply } from "@/definition";
+import { comment, ProfileData, reply } from "@/definition";
 import { formatRelativeTime } from "@/util/formatTime";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -9,8 +9,7 @@ import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import { CourseApi } from "@/api/training";
 
-const Comment = ({ comment }: { comment: comment }) => {
-  const { data: session } = useSession();
+const Comment = ({ profileData, comment }: { profileData: ProfileData; comment: comment }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
 
   return (
@@ -20,8 +19,8 @@ const Comment = ({ comment }: { comment: comment }) => {
         {/* User Avatar */}
         <div className="relative h-10 w-10 overflow-hidden rounded-full">
           <Image
-            src="/images/client.jpg"
-            alt={`${comment.userid.firstname || session?.user.firstname} ${comment.userid.lastname || session?.user.lastname}`}
+            src={comment.userid.photo || profileData.photo || "/images/client.jpg"}
+            alt={`${comment.userid.firstname || profileData.firstname} ${comment.userid.lastname || profileData.lastname}`}
             fill
             style={{ objectFit: "cover" }}
           />
@@ -31,7 +30,7 @@ const Comment = ({ comment }: { comment: comment }) => {
         <div className="flex-1">
           <div className="mb-2 flex items-center space-x-2">
             <span className="text-sm font-medium text-[#1D2026]">
-            {comment.userid.firstname || session?.user.firstname} {comment.userid.lastname || session?.user.lastname}
+            {comment.userid.firstname || profileData.firstname} {comment.userid.lastname || profileData.lastname}
             </span>
             <span className="text-xs text-[#6E7485]">
               {formatRelativeTime(comment.createdAt)}
@@ -49,12 +48,12 @@ const Comment = ({ comment }: { comment: comment }) => {
       </div>
 
       {/* Replies Section */}
-        <ReplySection commentid={comment._id} showReplyForm={showReplyForm} reply={comment.reply} />
+        <ReplySection profileData={profileData} commentid={comment._id} showReplyForm={showReplyForm} reply={comment.reply} />
     </div>
   );
 };
 
-const ReplySection = ({ reply: initialReply, showReplyForm, commentid }: { reply: reply[], showReplyForm: boolean, commentid: string }) => {
+const ReplySection = ({ reply: initialReply, showReplyForm, commentid, profileData }: { reply: reply[], showReplyForm: boolean, commentid: string, profileData: ProfileData }) => {
   const [reply, setReply] = useState(initialReply);
   const { data: session } = useSession();
   const [replyText, setReplyText] = useState("");
@@ -126,7 +125,7 @@ const ReplySection = ({ reply: initialReply, showReplyForm, commentid }: { reply
       )}
       <div className="ml-6 mt-4 border-l-2 border-gray-200 pl-4">
         {reply.map((reply, i) => (
-          <Reply key={i} reply={reply} />
+          <Reply profileData={profileData} key={i} reply={reply} />
         ))}
       </div>
     </div>
