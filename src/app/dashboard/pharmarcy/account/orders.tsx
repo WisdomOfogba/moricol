@@ -25,7 +25,7 @@ export interface Order {
   order_returned: boolean;
   order_paid: boolean;
   paymentid: string;
-  status: "delivered" | "pending" | "returned" | "approved";
+  status: "delivered" | "pending" | "pending order" | "returned" | "approved";
   total_amount: number;
   userid: string;
   delivery_fee: number;
@@ -123,24 +123,33 @@ export default function MyOrders() {
               //     new Date(a.createdAt).getTime(),
               // )
               // .slice(0, 5)
-              .map((order, i) => (
-                <li
-                  key={i}
-                  className="border border-b-gray-300 px-6 py-5 last:border-none"
-                >
-                  <OrderSummary
-                    productNames={order.items
-                      .filter((e) => e.productid != null)
-                      .map((e) => e.productid.name)
-                      .join(", ")}
-                    imageUrl={order.items[0].productid?.coverimage}
-                    index={i}
-                    status={order.status}
-                    orderDate={order.createdAt}
-                    orderId={order._id}
-                  />
-                </li>
-              ))
+              .map((order, i) => {
+                let status = order.status;
+                if (
+                  (status == "pending" && order.order_paid) ||
+                  (status == "approved" && order.order_paid)
+                )
+                  status = "pending order";
+                return (
+                  <li
+                    key={i}
+                    className="border border-b-gray-300 px-6 py-5 last:border-none"
+                  >
+                    <OrderSummary
+                      productNames={order.items
+                        .filter((e) => e.productid != null)
+                        .map((e) => e.productid.name)
+                        .join(", ")}
+                      imageUrl={order.items[0].productid?.coverimage}
+                      index={i}
+                      status={status}
+                      paid={order.order_paid}
+                      orderDate={order.createdAt}
+                      orderId={order._id}
+                    />
+                  </li>
+                );
+              })
           ) : (
             <div className="flex h-full w-full flex-col items-center justify-center py-10">
               <Loader2 className="h-10 w-10 animate-spin" />
@@ -154,40 +163,55 @@ export default function MyOrders() {
 
   function OrderSummary({
     status,
-
+    paid,
     imageUrl,
     productNames,
     orderId,
     orderDate,
     index,
   }: {
-    status: "delivered" | "pending" | "returned" | "approved";
-
+    status:
+      | "delivered"
+      | "pending"
+      | "pending order"
+      | "returned"
+      | "approved"
+      | "shipping";
+    paid: boolean;
     orderId: string;
     orderDate: string;
     index: number;
     imageUrl: string;
     productNames: string;
   }) {
+    console.log(status, paid);
     const { setState } = useOrders();
 
     const bgColor =
-      status === "delivered"
-        ? "#1F922B"
-        : status === "pending"
-          ? "#E2AC5A"
-          : status === "approved"
-            ? "#660066"
-            : "#59B2F3";
+      status === "shipping"
+        ? "#A95C68"
+        : status === "pending order"
+          ? "#FFA500"
+          : status === "delivered"
+            ? "#1F922B"
+            : status === "pending"
+              ? "#E2AC5A"
+              : status === "approved"
+                ? "#660066"
+                : "#59B2F3";
 
     const statusText =
-      status === "delivered"
-        ? "Delivered"
-        : status === "pending"
-          ? "Pending Approval"
-          : status === "approved"
-            ? "Approved - Proceed to pay"
-            : "Returned Order";
+      status === "shipping"
+        ? "Order Shipped"
+        : status === "pending order"
+          ? "Pending Order"
+          : status === "delivered"
+            ? "Delivered"
+            : status === "pending"
+              ? "Pending Approval"
+              : status === "approved"
+                ? "Approved - Proceed to pay"
+                : "Returned Order";
 
     const setParticularItem = async (index: number) => {
       setItem(index);
@@ -197,7 +221,9 @@ export default function MyOrders() {
       await setParticularItem(index).then(() => {
         status === "delivered"
           ? setState("delivered")
-          : status === "pending"
+          : status === "pending" ||
+              status === "pending order" ||
+              status === "shipping"
             ? setState("pending")
             : status === "approved"
               ? setState("approved")
