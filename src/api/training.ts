@@ -54,7 +54,7 @@ export const CourseApi = {
         email,
         amount,
       });
-      return response;
+      return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(
         error,

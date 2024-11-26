@@ -525,10 +525,6 @@ export const trainingDashboardProfileLinks = [
     href: routes.TRAININGPROFILEPURCHASEHISTORY,
     name: "Purchase History",
   },
-  {
-    href: routes.TRAININGPROFILESETTINGS,
-    name: "Settings",
-  },
 ];
 
 export const servicesDashboardLinks = [

@@ -19,7 +19,7 @@ const MakeTrainingPaymentButton = ({
     coursetype: string;
   }>;
   button?: string;
-  type?: any;
+  type?: string;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
