@@ -22,11 +22,9 @@ export function formatDate(isoDate: string): string {
   const hours = date.getHours();
   const minutes = date.getMinutes().toString().padStart(2, "0");
 
-  // Convert 24-hour time to 12-hour time
   const amPm = hours >= 12 ? "PM" : "AM";
   const hour12 = hours % 12 || 12;
 
-  // Format day with ordinal suffix
   const ordinal = (n: number) => {
     const suffixes = ["th", "st", "nd", "rd"];
     const v = n % 100;

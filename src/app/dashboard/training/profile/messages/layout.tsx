@@ -1,6 +1,5 @@
 import { SearchSvg } from "@/components/svgs";
 import Image from "next/image";
-// import ComposeMessage from "../../modals/compose-message";
 import { getUserSession } from "@/lib/auth";
 import { archive } from "@/definition";
 import { CourseApi } from "@/api/training";

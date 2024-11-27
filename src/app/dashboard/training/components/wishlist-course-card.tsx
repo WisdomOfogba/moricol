@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-// import { StarSVG } from "@/components/svgs";
 import { courseorder } from "@/definition";
 import { CircleCancel } from "@/components/svgs";
 import { useSnackbar } from "notistack";

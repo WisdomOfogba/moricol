@@ -16,8 +16,8 @@ interface Question {
 }
 
 interface Quiz {
-  mark: string; // Total possible score (e.g., "50")
-  user_score: number; // User's initial score (e.g., "0")
+  mark: string;
+  user_score: number;
   questions: Question[];
 }
 
@@ -148,16 +148,6 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
                 : "Confirm"}
             </button>
           </div>
-          {/* <button
-            onClick={isAnswerConfirmed ? handleNext : handleConfirm}
-            disabled={selectedOptionIndex === null}
-          >
-            {isAnswerConfirmed
-              ? currentQuestionIndex === quiz.questions.length - 1
-                ? "complete"
-                : "Next"
-              : "Confirm"}
-          </button> */}
         </div>
       ) : (
         <div className="mx-auto mt-10 w-full max-w-md rounded-lg bg-white p-6 text-center flex flex-col items-center">

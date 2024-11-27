@@ -3,7 +3,6 @@ import { courseorder, OrderData } from "@/definition";
 import { CourseApi } from "@/api/training";
 import { getUserSession } from "@/lib/auth";
 import MakeTrainingPaymentButton from "../../components/make-training-payments";
-// import AddCart from "../../components/addCart";
 
 async function getSavedCourses() {
   const session = await getUserSession();
@@ -66,9 +65,6 @@ export default async function TrainingProfileWishlists() {
           {Courses.map((course, i) => (
             <Wishlists key={i} course={course} />
           ))}
-          {/* <Wishlists />
-          <Wishlists />
-          <Wishlists /> */}
         </div>
       </section>
     </main>
