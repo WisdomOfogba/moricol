@@ -185,7 +185,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -197,7 +197,7 @@ export default function ViewCourseDetail({
                 <QuizComponent
                   lessonid={lesson._id}
                   sectionid={sectionid}
-                  courseid={singleCourse.course._id}
+                  courseid={singleCourse.courseorder._id}
                   quiz={lesson.lesson.quiz}
                 />
               )}
@@ -212,7 +212,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -249,7 +249,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -275,7 +275,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -301,7 +301,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -318,7 +318,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -355,7 +355,7 @@ export default function ViewCourseDetail({
                   <MarkLesson
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
