@@ -816,3 +816,23 @@ export type MessagePayload = {
   usertype: 'user' | 'staff',
   text: string
 };
+
+
+export type CreateAppointmentPayload = {
+  userid: string;
+  massageid: string;
+  staffid: string;
+  paystackref: string;
+  home_service: boolean;
+  end_time: string;
+  start_time: string;
+  date: string;
+  note: string;
+  amount: number;
+  extrafee: number;
+  km: number;
+  bvn: string;
+  address: string;
+  landmark: string;
+  state: string;
+};

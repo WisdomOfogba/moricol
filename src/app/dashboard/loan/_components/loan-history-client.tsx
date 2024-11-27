@@ -30,7 +30,7 @@ const LoanCard: React.FC<LoanCardProps> = ({ loan, view }) => (
         <div>
           <p className="font-semibold">Loan Amount: {loan.amount}</p>
           <p className="text-sm text-gray-600">
-            Duration: {loan.total_days} Months
+            Duration: {loan.total_days} Days
           </p>
         </div>
         {view === "pending" && (<span
@@ -80,8 +80,8 @@ export default function LoanHistoryClient({
   const [loading, setLoading] = useState(true);
   const tabChange = (value: string) => {
     setLoading(true);
-    setActiveTab(value);
     router.replace(`${routes.LOANHISTORY}?v=${value}`);
+    setActiveTab(value);
   }
 
   useEffect(() => {
@@ -105,13 +105,20 @@ export default function LoanHistoryClient({
               <TabsTrigger className="text-xs" value="processed">Processed Loans {loading && activeTab === "processed" && <Spinner />}</TabsTrigger>
               <TabsTrigger className="text-xs" value="active">Active Loans {loading && activeTab === "active" && <Spinner />}</TabsTrigger>
             </TabsList>
-            <TabsContent value={activeTab} className="mt-4 space-y-4">
+            {!loading && <TabsContent value={activeTab} className="mt-4 space-y-4">
               {loanData.map((loan: LoanHistoryType, index: number) => (
                 <LoanCard view={activeTab} key={index} loan={loan} />
               ))}
 
               {loanData.length === 0 && <NoItemsFound />}
-            </TabsContent>
+            </TabsContent>}
+
+            {loading && <TabsContent value={activeTab} className="mt-4 space-y-4">
+              <div className="flex items-center justify-center">
+                <p>Loading data...</p>
+              </div>
+            </TabsContent>}
+
           </Tabs>
         </div>
       </div>
