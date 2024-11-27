@@ -155,10 +155,7 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src={
-                            singleCourse.courseorder.courseid.instructors[0]
-                              .instructor.photo || "/images/client.jpg"
-                          }
+                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
                           alt=""
                           className="flex w-full"
                         />

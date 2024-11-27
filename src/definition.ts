@@ -776,4 +776,64 @@ export type MassageServiceData = {
   editedBy: string | null;
   editedAt: string;
   __v: number;
+}
+
+export type SingleMassageData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  gender: string;
+  staff_placement: {
+    service: string;
+    specialty: string | null;
+    language: string;
+    experience: number;
+    price: number;
+    bio: string;
+    service_blocked: boolean;
+    caregiver: boolean;
+    serviceid: string;
+    _id: string;
+  }[];
+  massage_specialty: {
+    massageid: string;
+    experience: number;
+    rating: number;
+    specialtyprice: number;
+    totalreviews: number;
+    massagetime: {
+      end_time: string;
+      start_time: string;
+      _id: string;
+    }[];
+    _id: string;
+  }[];
+}
+
+
+export type MessagePayload = {
+  userid: string,
+  appointmentid: string,
+  usertype: 'user' | 'staff',
+  text: string
+};
+
+
+export type CreateAppointmentPayload = {
+  userid: string;
+  massageid: string;
+  staffid: string;
+  paystackref: string;
+  home_service: boolean;
+  end_time: string;
+  start_time: string;
+  date: string;
+  note: string;
+  amount: number;
+  extrafee: number;
+  km: number;
+  bvn: string;
+  address: string;
+  landmark: string;
+  state: string;
 };

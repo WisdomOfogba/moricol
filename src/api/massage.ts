@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "@/constants/config";
 import { Session } from "next-auth";
 import { makeApiRequest } from ".";
+import { CreateAppointmentPayload } from "@/definition";
 
 const endpoints = {
     getAllMassage: `${API_BASE_URL}/user/massage/retrieve/all/massage`,
@@ -53,7 +54,7 @@ export const massageApi = {
     getSingleStaff: async (staffId: string, session: Session) => {
         return makeApiRequest({
             endpoint: endpoints.getSingleStaff,
-            payload: { staffId },
+            payload: { staffid: staffId },
             errorMessage: "Failed to retrieve staff details",
             session
         });
@@ -102,30 +103,22 @@ export const massageApi = {
     },
 
     appointment: {
-        create: async (appointmentData: {
-            userid: string;
-            massageid: string;
-            staffid: string;
-            paystackref: string;
-            home_service: boolean;
-            end_time: string;
-            start_time: string;
-            date: string;
-            note: string;
-            amount: number;
-            km: string;
-            bvn: string;
-            address: string;
-            landmark: string;
-            state: string;
-        }, session: Session) => {
+        create: async (appointmentData: CreateAppointmentPayload, session: Session) => {
             return makeApiRequest({
                 endpoint: endpoints.appointment.create,
                 payload: appointmentData,
                 errorMessage: "Failed to create massage appointment",
                 session
             });
-        }
+        },
+        makePayment: async (paymentData: { userid: string; email: string; amount: number; }, session: Session) => {
+            return makeApiRequest({
+                endpoint: endpoints.appointment.makePayment,
+                payload: paymentData,
+                errorMessage: "Failed to make payment",
+                session,
+            });
+        },
 
     }
 };

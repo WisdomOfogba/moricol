@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import {
   Video,
   Phone,
@@ -15,95 +15,79 @@ import { ShadButton } from "@/components/shadcn-button";
 import Link from "next/link";
 import { routes } from "@/constants/routes";
 import { useRouter, useParams } from "next/navigation";
-import { io, Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
-import { API_BASE_URL } from "@/constants/config";
-
-// Move messages to state
-interface Message {
-  id: string;
-  sender: string;
-  content: string;
-  timestamp: string;
-  avatar: string;
-  isUser: boolean;
-}
-
-interface ChatPayload {
-  userid: string;
-  appointmentid: string;
-  usertype: string;
-  text: string;
-}
+import { useChat } from "@/hooks/useChat";
+import { MessagePayload } from "@/definition";
 
 export default function AppointmentMessagesClient() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState("");
-  const socketRef = useRef<Socket | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+  const { data: session } = useSession();
   const params = useParams();
   const appointmentId = params.id as string;
-  const { data: session } = useSession();
 
-  // Auto scroll to bottom when new messages arrive
+  const {
+    messages,
+    isConnected,
+    sendMessage,
+    emitTyping,
+    emitStopTyping,
+  } = useChat({
+    roomId: appointmentId,
+    userId: session?.user?.id || '',
+    userName: `${session?.user?.firstname} ${session?.user?.lastname}`,
+    userAvatar: session?.user?.image as string
+  });
+
+  const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Socket setup
   useEffect(() => {
-    const socket = io(API_BASE_URL || '', {
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    });
-
-    socket.emit("telemedicinechat", appointmentId);
-
-    socket.on("receieve_telemedicine_chat", (message: {
-      sender: string;
-      text: string;
-    }) => {
-      setMessages(prev => [...prev, {
-        id: Date.now().toString(),
-        sender: message.sender,
-        content: message.text,
-        timestamp: new Date().toLocaleTimeString(),
-        avatar: "/placeholder.svg?height=40&width=40",
-        isUser: false
-      }]);
-    });
-
-    socketRef.current = socket;
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [appointmentId]);
+    if (!session?.user?.id) {
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(false);
+  }, [session?.user?.id]);
 
   const handleSendMessage = useCallback(() => {
-    if (!newMessage.trim() || !socketRef.current) return;
+    if (!newMessage.trim() || !isConnected) return;
 
-    const messageData: ChatPayload = {
-      userid: session?.user?.id as string,
-      appointmentid: appointmentId,
-      usertype: "user",
-      text: newMessage.trim()
-    };
-
-    socketRef.current.emit("send_telemedicine_chat", messageData);
-
-    setMessages(prev => [...prev, {
-      id: Date.now().toString(),
-      sender: session?.user?.firstname + " " + session?.user?.lastname || "User",
-      content: newMessage.trim(),
-      timestamp: new Date().toLocaleTimeString(),
-      avatar: session?.user?.image || "",
-      isUser: true
-    }]);
-
+    sendMessage(newMessage.trim());
     setNewMessage("");
-  }, [newMessage, appointmentId, session]);
+  }, []);
+
+
+  console.log(isConnected)
+
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
+        <p className="text-gray-500">Connecting to chat...</p>
+      </div>
+    );
+  }
+
+  if (!session?.user?.id) {
+    return (
+      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
+        <p className="text-gray-500">Please sign in to access chat</p>
+      </div>
+    );
+  }
+
+  if (!isConnected) {
+    return (
+      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
+        <p className="text-gray-500">Unable to connect to chat. Please try again later.</p>
+      </div>
+    );
+  }
 
 
   return (
@@ -152,41 +136,7 @@ export default function AppointmentMessagesClient() {
         <div className="px-6">
           {/* Messages */}
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
-            >
-              {!message.isUser && (
-                <Avatar>
-                  <AvatarImage src={message.avatar} alt={message.sender} />
-                  <AvatarFallback>{message.sender[0]}</AvatarFallback>
-                </Avatar>
-              )}
-              <div
-                className={`flex-1 ${message.isUser ? "text-right" : "text-left"}`}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">{message.sender}</h3>
-                  <span className="text-sm text-gray-500">
-                    {message.timestamp}
-                  </span>
-                </div>
-                <p
-                  className={`mt-1 inline-block rounded-lg p-3 shadow ${message.isUser ? "bg-primary-500 text-white" : "bg-white"}`}
-                >
-                  {message.content}
-                </p>
-                <div
-                  className={`my-2 flex items-center space-x-2 ${message.isUser ? "justify-end" : "justify-start"}`}
-                ></div>
-              </div>
-              {message.isUser && (
-                <Avatar>
-                  <AvatarImage src={message.avatar} alt={message.sender} />
-                  <AvatarFallback>{message.sender[0]}</AvatarFallback>
-                </Avatar>
-              )}
-            </div>
+            <MessageItem key={message.text} message={message} isUser={message.userid === session.user.id} username={`${session.user.firstname} ${session.user.lastname}`} />
           ))}
           <div ref={messagesEndRef} />
         </div>
@@ -198,7 +148,11 @@ export default function AppointmentMessagesClient() {
           <Textarea
             placeholder="Type a message..."
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={(e) => {
+              setNewMessage(e.target.value);
+              emitTyping();
+            }}
+            onBlur={emitStopTyping}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -208,13 +162,14 @@ export default function AppointmentMessagesClient() {
             className="h-5 flex-1 resize-none rounded-lg border p-2"
             rows={1}
             maxLength={1000}
+            disabled={!isConnected}
           />
 
           <ShadButton
             variant="ghost"
             size="icon"
             onClick={handleSendMessage}
-            disabled={!newMessage.trim()}
+            disabled={!isConnected || !newMessage.trim()}
           >
             <SendHorizonal className="h-8 w-8 text-blue-500" />
           </ShadButton>
@@ -223,3 +178,50 @@ export default function AppointmentMessagesClient() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+// Memoize message components to prevent unnecessary re-renders
+const MessageItem = memo(function MessageItem({ message, isUser, username }: { message: MessagePayload, isUser: boolean, username: string }) {
+  return (
+    <div
+      className={`flex ${!isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
+    >
+      {!isUser && (
+        <Avatar>
+          <AvatarFallback>{message.userid}</AvatarFallback>
+        </Avatar>
+      )}
+      <div
+        className={`flex-1 ${isUser ? "text-right" : "text-left"}`}
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold">{username}</h3>
+          <span className="text-sm text-gray-500">
+            {/* {message.timestamp} */}
+            no time stamps
+          </span>
+        </div>
+        <p
+          className={`mt-1 inline-block rounded-lg p-3 shadow ${isUser ? "bg-primary-500 text-white" : "bg-white"}`}
+        >
+          {message.text}
+        </p>
+        <div
+          className={`my-2 flex items-center space-x-2 ${isUser ? "justify-end" : "justify-start"}`}
+        ></div>
+      </div>
+      {isUser && (
+        <Avatar>
+          {/* <AvatarImage src={message.avatar} alt={message.sender} /> */}
+          <AvatarFallback>{username}</AvatarFallback>
+        </Avatar>
+      )}
+    </div>
+  );
+});

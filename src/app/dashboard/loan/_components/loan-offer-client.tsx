@@ -102,7 +102,6 @@ export default function LoanOfferClient({
   }, [loanAmount, loanDuration]);
 
 
-
   return (
     <div className="min-h-screen">
       <div className="mx-auto bg-white">
@@ -171,11 +170,19 @@ export default function LoanOfferClient({
                 </div>
                 <div className="flex justify-between">
                   <span>Interest Daily</span>
-                  <span>{loanDuration.interest.toFixed(2)}% / {loanDuration.late_interest.toFixed(2)}% </span>
+                  <span>{loanDuration.interest.toFixed(2)}%  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Charges Daily</span>
-                  <span>₦{Math.round(dailyInterest).toLocaleString()} / ₦{Math.round(dailyLateInterest).toLocaleString()}</span>
+                  <span>₦{Math.round(dailyInterest).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Late Interest Daily</span>
+                  <span>{loanDuration.late_interest.toFixed(2)}%  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Late Charges Daily</span>
+                  <span> ₦{Math.round(dailyLateInterest).toLocaleString()}</span>
                 </div>
               </div>
               <div className="mb-6 flex items-start rounded-lg bg-primary-100 p-4">

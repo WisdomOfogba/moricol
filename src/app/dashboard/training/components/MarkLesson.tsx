@@ -25,14 +25,13 @@ const MarkLesson = ({
   const handlePay = async () => {
     try {
       setIsLoading(true);
-      const response = await CourseApi.markLesson({
+      await CourseApi.markLesson({
         userid: session?.user.id as string,
         lessonid,
         sectionid,
         courseid,
         session: session as Session,
       });
-      console.log(response, lessonid, sectionid, courseid)
       setCompleted(true);
     } catch (error) {
       console.error(error);
