@@ -17,6 +17,7 @@ export function useSocketConnection() {
         });
 
         socketRef.current.on('connect', () => {
+            console.log('connected')
             setIsConnected(true);
             setError(null);
             reconnectAttempts.current = 0;

@@ -429,7 +429,16 @@ export type SingleAppointmentData = {
     _id: string;
   }>;
   userid: string;
-  staffid: string;
+  staffid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    photo: string;
+    age: string;
+    gender: 'male' | 'female';
+    state: string;
+    country: string;
+  } | string
   subcategoryid: string;
   paymentid: string;
   createdAt: string;

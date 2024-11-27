@@ -17,9 +17,13 @@ import { routes } from "@/constants/routes";
 import { useRouter, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useChat } from "@/hooks/useChat";
-import { MessagePayload } from "@/definition";
+import { MessagePayload, SingleAppointmentData } from "@/definition";
 
-export default function AppointmentMessagesClient() {
+export default function AppointmentMessagesClient({
+  appointment
+}: {
+  appointment: SingleAppointmentData
+}) {
   const { data: session } = useSession();
   const params = useParams();
   const appointmentId = params.id as string;
@@ -31,7 +35,10 @@ export default function AppointmentMessagesClient() {
     emitTyping,
     emitStopTyping,
   } = useChat({
-    roomId: appointmentId,
+    roomId: {
+      appointmentid: appointmentId,
+      userid: session?.user.id as string
+    },
     userId: session?.user?.id || '',
     userName: `${session?.user?.firstname} ${session?.user?.lastname}`,
     userAvatar: session?.user?.image as string
@@ -54,41 +61,20 @@ export default function AppointmentMessagesClient() {
     setIsLoading(false);
   }, [session?.user?.id]);
 
-  const handleSendMessage = useCallback(() => {
-    if (!newMessage.trim() || !isConnected) return;
-
+  const handleSendMessage = () => {
     sendMessage(newMessage.trim());
     setNewMessage("");
-  }, []);
-
-
-  console.log(isConnected)
-
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Connecting to chat...</p>
-      </div>
-    );
   }
 
-  if (!session?.user?.id) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Please sign in to access chat</p>
-      </div>
-    );
-  }
 
-  if (!isConnected) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Unable to connect to chat. Please try again later.</p>
-      </div>
-    );
-  }
 
+  function getStaffDetails() {
+    if (typeof appointment.staffid === 'string') {
+      return { firstname: '', lastname: '', photo: '' }
+    } else {
+      return appointment.staffid
+    }
+  }
 
   return (
     <div className="flex h-[90vh] flex-col bg-gray-100">
@@ -104,11 +90,11 @@ export default function AppointmentMessagesClient() {
               />
             </div>
             <Avatar>
-              <AvatarImage src="/images/client.jpg" alt="David Moore" />
+              <AvatarImage src={getStaffDetails().photo} alt={getStaffDetails().firstname} />
               <AvatarFallback>DM</AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="font-semibold">David Moore</h2>
+              <h2 className="font-semibold">{`${getStaffDetails().firstname} ${getStaffDetails().lastname}`}</h2>
               <p className="text-sm text-gray-500">17 September, 2023</p>
             </div>
           </div>
@@ -136,7 +122,7 @@ export default function AppointmentMessagesClient() {
         <div className="px-6">
           {/* Messages */}
           {messages.map((message) => (
-            <MessageItem key={message.text} message={message} isUser={message.userid === session.user.id} username={`${session.user.firstname} ${session.user.lastname}`} />
+            <MessageItem key={message.text} message={message} isUser={message.userid === session?.user.id} username={`${session?.user.firstname} ${session?.user.lastname}`} />
           ))}
           <div ref={messagesEndRef} />
         </div>
