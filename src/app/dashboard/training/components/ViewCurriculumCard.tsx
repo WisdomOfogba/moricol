@@ -49,7 +49,7 @@ export default function ViewCurriculumCard({
             {section.lesson.lesson_type === "video" ? (
               <li
                 onClick={() => {
-                  setLesson(section.lesson.lesson_type, section);
+                  setLesson(section.lesson.lesson_type, section, curriculum._id);
                   setActive(section.lesson_name);
                 }}
                 className={`text-s flex cursor-pointer items-center justify-between px-5 py-2 hover:bg-secondary-50 ${active === section.lesson_name && "bg-secondary-50"}`}

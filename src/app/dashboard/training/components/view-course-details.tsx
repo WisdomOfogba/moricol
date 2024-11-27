@@ -81,6 +81,36 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
+  const courseCurriculum = singleCourse.course.curriculum;
+  const orderCurriculum = singleCourse.courseorder.curriculum;
+
+  const mergedCurriculum = courseCurriculum.map((section) => {
+    // Match the corresponding section in `courseorder.curriculum` (if sections need matching)
+    const matchingOrderSection = orderCurriculum.find((orderSection) =>
+      orderSection.section.some((orderLesson) =>
+        section.section.some(
+          (lesson) => lesson.lesson.content === orderLesson.lesson.content,
+        ),
+      ),
+    );
+
+    return {
+      _id: section._id, // Add _id from courseid section
+      section_name: section.section_name,
+      section: section.section.map((lesson) => {
+        // Find the matching lesson based on `lesson.content`
+        const matchingLesson = matchingOrderSection?.section.find(
+          (orderLesson) => orderLesson.lesson.content === lesson.lesson.content,
+        );
+
+        return {
+          ...lesson, // Includes lesson_name, lesson_type, content
+          lesson_completed: matchingLesson?.lesson_completed || false, // Default to false
+          _id: lesson._id, // Include the lesson _id
+        };
+      }),
+    };
+  });
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
@@ -128,7 +158,10 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
+                          src={
+                            singleCourse.courseorder.courseid.instructors[0]
+                              .instructor.photo || "/images/client.jpg"
+                          }
                           alt=""
                           className="flex w-full"
                         />
@@ -183,9 +216,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -197,7 +231,7 @@ export default function ViewCourseDetail({
                 <QuizComponent
                   lessonid={lesson._id}
                   sectionid={sectionid}
-                  courseid={singleCourse.course._id}
+                  courseid={singleCourse.courseorder._id}
                   quiz={lesson.lesson.quiz}
                 />
               )}
@@ -210,9 +244,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -247,9 +282,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -273,9 +309,64 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "description" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.courseorder._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "notes" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -299,9 +390,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -316,9 +408,10 @@ export default function ViewCourseDetail({
                 </h2>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -353,9 +446,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -465,7 +559,7 @@ export default function ViewCourseDetail({
               <div
                 className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}
               >
-                {singleCourse.course?.curriculum.map((curriculum, i) => (
+                {mergedCurriculum.map((curriculum, i) => (
                   <ViewCurriculumCard
                     setLesson={handleSetLesson}
                     key={i}

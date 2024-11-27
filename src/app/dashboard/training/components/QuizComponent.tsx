@@ -38,6 +38,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const handleConfirm = () => {
     if (selectedOptionIndex !== null) {
@@ -79,6 +80,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
         score: userScorePercentage,
       }
       );
+      setCompleted(true);
       enqueueSnackbar("Completed Quiz Succesfully.", { variant: "success" });
     } catch (error) {
       console.error(error);
@@ -171,8 +173,9 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
           <button
             onClick={handleFinish}
             className="rounded-lg bg-yellow-500 px-6 py-2 font-bold text-white transition hover:bg-yellow-600"
+            disabled={completed}
           >
-            {isLoading ? "Loading..." : "COMPLETE"}
+            {isLoading ? "Loading..." : completed ? "SUBMITED" : "SUBMIT"}
           </button>
 
           <button
