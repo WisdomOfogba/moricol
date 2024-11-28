@@ -80,8 +80,8 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
-  const courseCurriculum = singleCourse.course.curriculum;
-  const orderCurriculum = singleCourse.courseorder.curriculum;
+  const courseCurriculum = singleCourse.course?.curriculum || [];
+  const orderCurriculum = singleCourse.courseorder?.curriculum || [];
 
   const mergedCurriculum = courseCurriculum.map((section) => {
     const matchingOrderSection = orderCurriculum.find((orderSection) =>

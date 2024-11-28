@@ -684,6 +684,7 @@ export type courseorder = {
     thumbnail: string;
     description: string;
     duration: string;
+    client: string;
     instructors: [
       {
         instructor: instructors;
