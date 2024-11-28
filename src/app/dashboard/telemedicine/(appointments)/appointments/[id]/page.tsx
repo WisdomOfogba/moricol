@@ -67,7 +67,6 @@ async function SingleAppointment({
             </Button>
           </Link>
           <div className="flex justify-between">
-            {/* @ts-expect-error -- not a problem */}
             <Profile photo={appointment.staffid?.photo} date={appointment.date} name={appointment.staffid?.firstname + ' ' + appointment.staffid?.lastname} />
 
             <Link
@@ -143,7 +142,7 @@ async function SingleAppointment({
                 />
               </Link>
               <EndAppointmentModal appointmentid={id} />
-              {review && <ReviewClient appointmentid={id} staffid={appointment.staffid} />}
+              {review && <ReviewClient appointmentid={id} staffid={appointment.staffid._id} />}
             </div>
           </div>
         </section>

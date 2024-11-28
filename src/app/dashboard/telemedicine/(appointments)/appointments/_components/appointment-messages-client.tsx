@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import {
   Video,
   Phone,
-  // Paperclip,
-  // Image,
   ChevronLeft,
   SendHorizonal,
+  Loader2,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import { Textarea } from "@/components/textarea";
@@ -17,9 +16,15 @@ import { routes } from "@/constants/routes";
 import { useRouter, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useChat } from "@/hooks/useChat";
-import { MessagePayload } from "@/definition";
+import dayjs from "dayjs";
+import { MessagePayload, SingleAppointmentData } from "@/definition";
+import { BsExclamationCircle } from "react-icons/bs";
 
-export default function AppointmentMessagesClient() {
+export default function AppointmentMessagesClient({
+  appointment
+}: {
+  appointment: SingleAppointmentData
+}) {
   const { data: session } = useSession();
   const params = useParams();
   const appointmentId = params.id as string;
@@ -31,10 +36,12 @@ export default function AppointmentMessagesClient() {
     emitTyping,
     emitStopTyping,
   } = useChat({
-    roomId: appointmentId,
+    roomId: {
+      appointmentid: appointmentId,
+      userid: session?.user.id as string
+    },
     userId: session?.user?.id || '',
-    userName: `${session?.user?.firstname} ${session?.user?.lastname}`,
-    userAvatar: session?.user?.image as string
+    session_close: appointment.session_close
   });
 
   const [newMessage, setNewMessage] = useState("");
@@ -54,40 +61,21 @@ export default function AppointmentMessagesClient() {
     setIsLoading(false);
   }, [session?.user?.id]);
 
-  const handleSendMessage = useCallback(() => {
-    if (!newMessage.trim() || !isConnected) return;
-
+  const handleSendMessage = () => {
     sendMessage(newMessage.trim());
     setNewMessage("");
-  }, []);
-
-
-  console.log(isConnected)
-
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Connecting to chat...</p>
-      </div>
-    );
   }
 
-  if (!session?.user?.id) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Please sign in to access chat</p>
-      </div>
-    );
+
+
+  function getStaffDetails() {
+    if (typeof appointment.staffid === 'string') {
+      return { firstname: '', lastname: '', photo: '' }
+    } else {
+      return appointment.staffid
+    }
   }
 
-  if (!isConnected) {
-    return (
-      <div className="flex h-[90vh] items-center justify-center bg-gray-100">
-        <p className="text-gray-500">Unable to connect to chat. Please try again later.</p>
-      </div>
-    );
-  }
 
 
   return (
@@ -104,16 +92,25 @@ export default function AppointmentMessagesClient() {
               />
             </div>
             <Avatar>
-              <AvatarImage src="/images/client.jpg" alt="David Moore" />
-              <AvatarFallback>DM</AvatarFallback>
+              <AvatarImage src={getStaffDetails().photo} alt={getStaffDetails().firstname} />
+              <AvatarFallback>{getStaffDetails().firstname}</AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="font-semibold">David Moore</h2>
-              <p className="text-sm text-gray-500">17 September, 2023</p>
+              <h2 className="font-semibold">{`${getStaffDetails().firstname} ${getStaffDetails().lastname}`}</h2>
+              {!isLoading && !appointment.session_close && <p className="text-sm text-gray-500">{
+                dayjs().format('MMMM D, YYYY')
+              }</p>}
+              {!isLoading && appointment.session_close && <p className="text-sm text-gray-500">
+                SESSION ENDED
+              </p>}
+
+              {isLoading && <div className="text-sm text-gray-500 flex items-center italics">
+                Connecting <Loader2 className="animate-spin ml-2 h-4 w-4" />
+              </div>}
             </div>
           </div>
           <div className="flex space-x-2">
-            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/video-call`}>
+            {appointment.sessiontype.video && <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/video-call`}>
               <ShadButton
                 variant="ghost"
                 size="icon"
@@ -121,8 +118,8 @@ export default function AppointmentMessagesClient() {
               >
                 <Video className="h-5 w-5" />
               </ShadButton>
-            </Link>
-            <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/call`}>
+            </Link>}
+            {appointment.sessiontype.audio && <Link href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/call`}>
               <ShadButton
                 variant="ghost"
                 size="icon"
@@ -130,20 +127,53 @@ export default function AppointmentMessagesClient() {
               >
                 <Phone className="h-5 w-5" />
               </ShadButton>
-            </Link>
+            </Link>}
           </div>
         </div>
-        <div className="px-6">
+        {appointment.sessiontype.chat && <div className="px-6">
           {/* Messages */}
           {messages.map((message) => (
-            <MessageItem key={message.text} message={message} isUser={message.userid === session.user.id} username={`${session.user.firstname} ${session.user.lastname}`} />
+            <MessageItem photo={message.userid === session?.user.id ? appointment.userid.photo : getStaffDetails().photo} key={message.text} message={message} isUser={message.userid === session?.user.id} username={`${session?.user.firstname} ${session?.user.lastname}`} />
           ))}
           <div ref={messagesEndRef} />
-        </div>
+        </div>}
+
+        {!appointment.sessiontype.chat &&
+          <div className="flex flex-col items-center justify-center p-4 bg-yellow-100 border border-yellow-300 rounded">
+            <BsExclamationCircle className="h-12 w-12 text-yellow-500 mb-4" aria-hidden="true" />
+            <h2 className="font-semibold text-lg">Chat is not available for this appointment.</h2>
+            <p className="text-sm text-gray-600">Allowed session types:</p>
+            <ul className="list-disc list-inside text-gray-600 mt-2">
+              {appointment.sessiontype.chat && (
+                <li className="flex items-center gap-2">
+                  <Link className="flex items-center gap-2" href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/messages`}>
+                    <span className="text-green-500">💬</span> Chat
+                  </Link>
+                </li>
+              )}
+              {appointment.sessiontype.video && (
+                <li className="flex items-center gap-2">
+                  <Link className="flex items-center gap-2" href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/video-call`}>
+                    <Video className="h-4 w-4 text-green-500" /> Video
+                  </Link>
+                </li>
+              )}
+              {appointment.sessiontype.audio && (
+                <li className="flex items-center gap-2">
+                  <Link className="flex items-center gap-2" href={`${routes.TELEMEDICINE_APPOINTMENTS}/${appointmentId}/call`}>
+                    <Phone className="h-4 w-4 text-green-500" /> Audio
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </div>
+
+        }
       </div>
 
       {/* Message input */}
       <div className="border-t bg-white p-4">
+        <small className="uppercase text-xs text-red-500">no connected</small>
         <div className="flex items-center space-x-2">
           <Textarea
             placeholder="Type a message..."
@@ -187,16 +217,15 @@ export default function AppointmentMessagesClient() {
 
 
 // Memoize message components to prevent unnecessary re-renders
-const MessageItem = memo(function MessageItem({ message, isUser, username }: { message: MessagePayload, isUser: boolean, username: string }) {
+const MessageItem = memo(function MessageItem({ message, isUser, username, photo }: { message: MessagePayload, isUser: boolean, username: string, photo: string }) {
   return (
     <div
       className={`flex ${!isUser ? "justify-end" : "justify-start"} space-x-4 mb-4`}
     >
-      {!isUser && (
-        <Avatar>
-          <AvatarFallback>{message.userid}</AvatarFallback>
-        </Avatar>
-      )}
+      <Avatar>
+        <AvatarImage src={photo} alt={username} />
+        <AvatarFallback>{username.slice(0, 2)}</AvatarFallback>
+      </Avatar>
       <div
         className={`flex-1 ${isUser ? "text-right" : "text-left"}`}
       >
@@ -216,12 +245,7 @@ const MessageItem = memo(function MessageItem({ message, isUser, username }: { m
           className={`my-2 flex items-center space-x-2 ${isUser ? "justify-end" : "justify-start"}`}
         ></div>
       </div>
-      {isUser && (
-        <Avatar>
-          {/* <AvatarImage src={message.avatar} alt={message.sender} /> */}
-          <AvatarFallback>{username}</AvatarFallback>
-        </Avatar>
-      )}
+
     </div>
   );
 });
