@@ -16,8 +16,8 @@ interface Question {
 }
 
 interface Quiz {
-  mark: string; // Total possible score (e.g., "50")
-  user_score: number; // User's initial score (e.g., "0")
+  mark: string;
+  user_score: number;
   questions: Question[];
 }
 
@@ -38,6 +38,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const handleConfirm = () => {
     if (selectedOptionIndex !== null) {
@@ -79,6 +80,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
         score: userScorePercentage,
       }
       );
+      setCompleted(true);
       enqueueSnackbar("Completed Quiz Succesfully.", { variant: "success" });
     } catch (error) {
       console.error(error);
@@ -146,16 +148,6 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
                 : "Confirm"}
             </button>
           </div>
-          {/* <button
-            onClick={isAnswerConfirmed ? handleNext : handleConfirm}
-            disabled={selectedOptionIndex === null}
-          >
-            {isAnswerConfirmed
-              ? currentQuestionIndex === quiz.questions.length - 1
-                ? "complete"
-                : "Next"
-              : "Confirm"}
-          </button> */}
         </div>
       ) : (
         <div className="mx-auto mt-10 w-full max-w-md rounded-lg bg-white p-6 text-center flex flex-col items-center">
@@ -171,8 +163,9 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
           <button
             onClick={handleFinish}
             className="rounded-lg bg-yellow-500 px-6 py-2 font-bold text-white transition hover:bg-yellow-600"
+            disabled={completed}
           >
-            {isLoading ? "Loading..." : "COMPLETE"}
+            {isLoading ? "Loading..." : completed ? "SUBMITED" : "SUBMIT"}
           </button>
 
           <button

@@ -141,13 +141,13 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
         <h3 className="mb-1.5 text-xs text-[#6E7485]">
           {singleCourse.courseorder.courseid?.description ? singleCourse.courseorder.courseid?.description : "No Description"}
         </h3>
-        <p className="text-sm font-medium text-[#1D2026]">{singleCourse.courseorder.courseid?.title ? singleCourse.courseorder.courseid?.title : "No Title"}</p>
+        <p className="text-sm font-medium text-[#1D2026]">{singleCourse.courseorder.courseid?.title ? singleCourse.courseorder.courseid?.title : singleCourse.courseorder.courseid.bundle}</p>
       </div>
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-t-[#E9EAF0] p-4 text-sm text-[#4E5566]">
         <Link
-          href={`${routes.TRAININGVIEWCOURSE}/${singleCourse.courseorder.courseid?._id ? singleCourse.courseorder.courseid?._id : "No-Description"}/${course._id}`}
+          href={`${routes.TRAININGVIEWCOURSE}/${singleCourse.courseorder.courseid?._id && singleCourse.courseorder.courseid?._id}/${course._id}`}
           className={`inline-block rounded-none border-none bg-primary-100 px-4 py-3 text-center font-semibold text-primary-500 hover:bg-primary-500 hover:text-white ${progress > 0 ? "w-fit" : "w-full"}`}
         >
           Watch Lecture

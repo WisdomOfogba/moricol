@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import PrevPageBtn from "../view-course/prev-page-btn";
 import CourseTimeLecturesSection from "./time-lecture-section";
-// import { BiDownload } from "react-icons/bi";
 import { section, SingleCourse, comment, ProfileData } from "@/definition";
 import ViewCurriculumCard from "./ViewCurriculumCard";
 import VideoPlayer from "./VideoPlayer";
@@ -81,6 +80,34 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
+  const courseCurriculum = singleCourse.course?.curriculum || [];
+  const orderCurriculum = singleCourse.courseorder?.curriculum || [];
+
+  const mergedCurriculum = courseCurriculum.map((section) => {
+    const matchingOrderSection = orderCurriculum.find((orderSection) =>
+      orderSection.section.some((orderLesson) =>
+        section.section.some(
+          (lesson) => lesson.lesson.content === orderLesson.lesson.content,
+        ),
+      ),
+    );
+
+    return {
+      _id: section._id, 
+      section_name: section.section_name,
+      section: section.section.map((lesson) => {
+        const matchingLesson = matchingOrderSection?.section.find(
+          (orderLesson) => orderLesson.lesson.content === lesson.lesson.content,
+        );
+
+        return {
+          ...lesson,
+          lesson_completed: matchingLesson?.lesson_completed || false,
+          _id: lesson._id,
+        };
+      }),
+    };
+  });
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
@@ -183,9 +210,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -197,7 +225,7 @@ export default function ViewCourseDetail({
                 <QuizComponent
                   lessonid={lesson._id}
                   sectionid={sectionid}
-                  courseid={singleCourse.course._id}
+                  courseid={singleCourse.courseorder._id}
                   quiz={lesson.lesson.quiz}
                 />
               )}
@@ -210,9 +238,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -247,9 +276,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -273,9 +303,64 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "description" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.courseorder._id}
+                  />
+                )}
+              </div>
+            </>
+          )}
+          {activeLesson === "notes" && (
+            <>
+              <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
+                <div className="flex items-center gap-x-3">
+                  <h3 className="mb-1 font-medium text-[#1D2026]">
+                    {lesson && lesson.lesson_name}
+                  </h3>
+                </div>
+              </article>
+              <div className="flex w-full items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-y-2">
+                  <h2 className="text-3xl font-semibold">
+                    {lesson?.lesson_name}
+                  </h2>
+                  <p>{lesson?.lesson.lesson_type}</p>
+                </div>
+                {lesson !== null && (
+                  <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
+                    lessonid={lesson._id}
+                    sectionid={sectionid}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -299,9 +384,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -316,9 +402,10 @@ export default function ViewCourseDetail({
                 </h2>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -353,9 +440,10 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
-                    courseid={singleCourse.course._id}
+                    courseid={singleCourse.courseorder._id}
                   />
                 )}
               </div>
@@ -391,51 +479,6 @@ export default function ViewCourseDetail({
             </section>
           )}
 
-          {/* Lecture Notes */}
-          {/* {activeLink === "notes" && (
-            <section>
-              <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-2xl font-semibold text-[#1D2026]">
-                  Lectures Note
-                </h3>
-                <button className="flex items-center gap-x-2 bg-primary-100 px-4 py-3 font-medium text-primary-500">
-                  <BiDownload /> Download Notes
-                </button>
-              </div>
-              <div className="grid gap-y-5 text-sm text-[#4E5566]">
-                <p>
-                  We cover everything you need to build your first website. From
-                  creating your first page through to uploading your website to
-                  the internet. We’ll use the world’s most popular (and Level 2)
-                  web design tool called Visual Studio Code. There are exercise
-                  files you can download and then work along with me. At the end
-                  of each video I have a downloadable version of where we are in
-                  the process so that you can compare your project with mine.
-                  This will enable you to see easily where you might have a
-                  problem. We will delve into all the good stuff such as how to
-                  create your very own mobile burger menu from scratch learning
-                  some basic JavaScript and jQuery.
-                </p>
-                <p>
-                  If that all sounds a little too fancy - don’t worry, this
-                  course is aimed at people new to web design and who have never
-                  coded before. We’ll start right at the beginning and work our
-                  way through step by step.
-                </p>
-              </div>
-            </section>
-          )} */}
-
-          {/* Attach Files (01) */}
-          {/* {activeLink === "files" && (
-            <section>
-              <h3 className="mb-5 text-2xl font-semibold text-[#1D2026]">
-                Attach Files <span className="font-normal">(01)</span>
-              </h3>
-              <AttachementCard />
-            </section>
-          )} */}
-
           {activeLink === "comments" && (
             <section>
               <CommentSection
@@ -465,7 +508,7 @@ export default function ViewCourseDetail({
               <div
                 className={`${singleCourse.courseorder.curriculum.length > 0 ? "border text-xs" : "border-0"}`}
               >
-                {singleCourse.course?.curriculum.map((curriculum, i) => (
+                {mergedCurriculum.map((curriculum, i) => (
                   <ViewCurriculumCard
                     setLesson={handleSetLesson}
                     key={i}
@@ -505,25 +548,6 @@ export default function ViewCourseDetail({
   );
 }
 
-// function AttachementCard() {
-//   return (
-//     <article className="flex items-center justify-between bg-[#F5F7FA] p-6">
-//       <div className="flex items-center gap-x-3">
-//         <File className="h-12 w-12" />
-//         <div>
-//           <h3 className="mb-1 font-medium text-[#1D2026]">
-//             Create acount on webo
-//           </h3>
-//           <p className="text-sm text-[#6E7485]">12.6 MB</p>
-//         </div>
-//       </div>
-//       <button className="bg-primary-500 px-6 py-3 font-semibold text-white">
-//         Download File
-//       </button>
-//     </article>
-//   );
-// }
-
 const CommentSection = ({
   profileData,
   comment: initialComment,
@@ -533,33 +557,6 @@ const CommentSection = ({
   comment: comment[];
   courseid: string;
 }) => {
-  //   const comments = [
-  //     {
-  //       id: 1,
-  //       author: "Jane Doe",
-  //       avatar: "/api/placeholder/40/40",
-  //       content: "This is an example comment. It could be about anything!",
-  //       timestamp: "1 week ago",
-  //       isAdmin: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       author: "John Smith",
-  //       avatar: "/api/placeholder/40/40",
-  //       content:
-  //         "Here's another comment. Notice how it's structured similarly to the others.",
-  //       timestamp: "1 week ago",
-  //       isAdmin: true,
-  //     },
-  //     {
-  //       id: 3,
-  //       author: "Alice Johnson",
-  //       avatar: "/api/placeholder/40/40",
-  //       content: "Great discussion everyone! Keep the comments coming.",
-  //       timestamp: "1 week ago",
-  //       isAdmin: false,
-  //     },
-  //   ];
   const [comment, setComment] = useState(initialComment);
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState("");

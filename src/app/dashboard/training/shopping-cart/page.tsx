@@ -49,14 +49,6 @@ export default function ShoppingCard() {
                 <span className="text-[#6E7485]">Subtotal</span>
                 <span className="font-medium text-[#1D2026]">₦{sum} NAIRA</span>
               </p>
-              {/* <p className="flex items-center justify-between text-sm">
-                <span className="text-[#6E7485]">Coupon Discount</span>
-                <span className="font-medium text-[#1D2026]">0%</span>
-              </p>
-              <p className="flex items-center justify-between text-sm">
-                <span className="text-[#6E7485]">Taxs</span>
-                <span className="font-medium text-[#1D2026]">₦0 NAIRA</span>
-              </p> */}
               <hr />
               <p className="flex items-center justify-between text-[#202029]">
                 Total:{" "}
@@ -72,21 +64,6 @@ export default function ShoppingCard() {
                 }))}
               />
               <hr className="my-2" />
-              {/* <div>
-                <h3 className="mb-4 text-sm font-medium text-[#1D2026]">
-                  Apply coupon code
-                </h3>
-                <div className="flex justify-between border py-1.5 pl-4 pr-1.5">
-                  <input
-                    type="text"
-                    className="none text-sm text-[#8C94A3] focus:outline"
-                    placeholder="Coupon code"
-                  />
-                  <button className="bg-black px-4 py-3 text-sm font-semibold text-white">
-                    Apply
-                  </button>
-                </div>
-              </div> */}
             </section>
           </div>
         </section>

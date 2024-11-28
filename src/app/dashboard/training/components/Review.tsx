@@ -22,7 +22,7 @@ const Review = ({ initialReview, coursetype, courseid }: { initialReview: Review
       return;
     }
 
-    setIsLoading(true); // Show loading spinner
+    setIsLoading(true);
 
     try {
       setIsLoading(true);

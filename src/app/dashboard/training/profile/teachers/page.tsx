@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-// import { StarSVG } from "@/components/svgs";
 import { instructors } from "@/definition";
 import { CourseApi } from "@/api/training";
 import { getUserSession } from "@/lib/auth";
@@ -39,12 +38,6 @@ export default async function TrainingProfileTeachers() {
           {Instructors.map((instructor, i) => (
             <InstructorCard instructor={instructor} key={i} />
           ))}
-          {/* <InstructorCard />
-          <InstructorCard />
-          <InstructorCard />
-          <InstructorCard />
-          <InstructorCard />
-          <InstructorCard /> */}
         </div>
       </section>
     </main>
