@@ -666,7 +666,7 @@ export default function MyOrders() {
             <a
               href={receipt}
               download="receipt.pdf"
-              className="absolute bottom-6 right-5 flex flex-col items-center rounded-lg border border-dotted border-primary-500 bg-[#F2EAEA] px-16 py-2 text-sm"
+              className="absolute bottom-3 lg:bottom-6 right-3 lg:right-5 flex flex-col items-center rounded-lg border border-dotted border-primary-500 bg-[#F2EAEA] px-4 lg:px-16 py-2 text-sm"
             >
               <DownloadSvg />
               Download Receipt

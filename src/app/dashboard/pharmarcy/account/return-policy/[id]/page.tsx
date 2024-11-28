@@ -14,29 +14,41 @@ export default function ReturnPolicy() {
           &larr; Return Policy
         </h2>
       </div>
+      
+      <h2 className='font-semibold'>Return and Refund Policy </h2>
+      
+      <p className='py-5'>Eligibility for Returns Only</p> 
       <p className="my-5 text-gray-500">
-        Lorem ipsum dolor sit amet consectetur. Ornare magnis fusce in volutpat
-        mauris. Leo at sit scelerisque turpis id quis. Eu iaculis at volutpat
-        amet enim id pulvinar ornare diam. Dui turpis erat in est aliquam neque.
-        Mauris quis gravida vitae massa blandit tempor in est risus. Bibendum ut
-        at a massa. Cursus arcu amet eget vitae diam ultricies. Orci sagittis
-        rhoncus sed faucibus. Sed penatibus amet elit pellentesque leo ornare.
-        Egestas tincidunt donec egestas sed egestas eu. Urna eget augue nibh
-        varius in fringilla sem aliquet aenean. Ultrices dignissim suscipit id
-        fames ultricies scelerisque ultricies libero quisque. Risus adipiscing
-        lectus tristique lorem lorem. Ac duis vestibulum feugiat enim nisi
-        lorem. Id ullamcorper adipiscing faucibus at. Nec eget in rhoncus mi.
-        Gravida a elit nisl maecenas nulla. Vel sit est ac urna ac velit in in.
-        Euismod ullamcorper eu sed nullam. Interdum sodales proin sagittis ac
-        nulla. Sed id auctor integer massa eget condimentum eget. Morbi
-        condimentum cursus eu neque dolor vitae nisl metus. Id adipiscing
-        sagittis viverra mi sagittis tellus volutpat id. Condimentum mus cum
-        lacinia auctor nisl rhoncus nibh. Quis urna faucibus orci purus
-        scelerisque senectus ridiculus quam. Phasellus blandit amet adipiscing
-        aliquam vel erat venenatis congue. A ultricies ut nisl tortor. Laoreet
-        cursus pharetra mi hendrerit pellentesque magna tristique tincidunt
-        semper. Diam vulputate nulla ultricies tortor varius molestie nulla
-      </p>
+      i) Unopened and unused products only are eligible for return. <br />
+       ii) Prescription medications cannot be returned unless they are defective or damaged.  <br />
+       iii) Returns must be within 48 hours.  <br />   
+       Return Process: Users will receive a 48-hour span to return goods of the order delivery.  <br />
+        iv) Users are advised to contact our customer support team to 
+        initiate a return authorization number and return shipping instructions.
+         Users are to package the items securely, including the original packaging and any 
+         accompanying documentation. 
+         Users are to ship the package to the designated return address using the provided shipping details.
+         </p>
+
+         <p className='py-5'>Refunds:</p> 
+         
+          1) Refunds will be issued to the original payment method.
+          Refunds take 5 business days to process.
+           However, return shipping costs are the responsibility of the user (customer) unless the return is defective product due to our error.
+           <p className='py-5'>Exceptions:</p>  
+           <p>
+           In the event of receiving a damaged or defective product,
+             please contact Customer Support immediately.
+              We will provide a prepaid shipping label for returns 
+              and issue a full refund replacement. 
+              In the event of receiving a wrong Or an incorrect order, 
+              please contact our customer support team immediately,
+               and we will arrange for a correct product to be
+                shipped to you at no additional cost and provide a 
+                prepaid shipping label for the return of the incorrect item.
+           </p>
+             
+    
 
       <form
         className="mt-5"
