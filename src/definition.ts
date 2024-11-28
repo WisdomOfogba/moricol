@@ -446,7 +446,7 @@ export type SingleAppointmentData = {
     gender: 'male' | 'female';
     state: string;
     country: string;
-  } | string;
+  }
   subcategoryid: string;
   paymentid: string;
   createdAt: string;

@@ -13,9 +13,12 @@ interface UseMediaStreamReturn {
     requestPermissions: () => Promise<void>;
 }
 
+
+
+
 export const useMediaStream = ({
     video = true,
-    audio = true
+    audio = true,
 }: UseMediaStreamProps = {}): UseMediaStreamReturn => {
     const [stream, setStream] = useState<MediaStream | undefined>(undefined);
     const [error, setError] = useState<string | null>(null);

@@ -6,7 +6,7 @@ import { ShadButton } from "@/components/shadcn-button";
 import { routes } from "@/constants/routes";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useRef, } from "react";
 import Image from "next/image";
 import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
 import { useSocketConnection } from "@/hooks/useSocketConnection";
@@ -37,13 +37,12 @@ const CallClient: React.FC<CallClientProps> = ({ appointment }) => {
     stream,
     permissionStatus,
     showPermissionModal,
-    error: permissionError,
     closePermissionModal
   } = useAudioPermission();
 
   const {
     peer,
-    remoteStream,
+    // remoteStream,
     connectionStatus,
     error: peerError
   } = usePeerConnection({
@@ -53,13 +52,13 @@ const CallClient: React.FC<CallClientProps> = ({ appointment }) => {
   });
 
   const {
-    callStatus,
+    // callStatus,
     isMuted,
     callDuration,
-    initiateCall,
-    acceptCall,
-    rejectCall,
-    endCall,
+    // initiateCall,
+    // acceptCall,
+    // rejectCall,
+    // endCall,
     toggleMute
   } = useCallControls({
     socket,
@@ -72,7 +71,6 @@ const CallClient: React.FC<CallClientProps> = ({ appointment }) => {
 
   const localAudioRef = useRef<HTMLAudioElement>(null);
   const remoteAudioRef = useRef<HTMLAudioElement>(null);
-  const [error, setError] = useState<string | null>(null);
 
 
 
@@ -94,17 +92,16 @@ const CallClient: React.FC<CallClientProps> = ({ appointment }) => {
         closePermissionModal={closePermissionModal}
       />}
 
-      {error && (
+      {peerError.audio && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="rounded bg-white p-4">
             <h3 className="text-red-500">Error</h3>
-            <p>{error}</p>
+            <p>{peerError.audio}</p>
             <button onClick={() => window.location.reload()}>Retry</button>
           </div>
         </div>
       )}
 
-      {/* Chat area */}
       <div className="flex-1">
         <CallHeader
           router={router}
@@ -117,12 +114,11 @@ const CallClient: React.FC<CallClientProps> = ({ appointment }) => {
           <div className="relative flex h-full flex-1 flex-col overflow-hidden">
             <div className="h-full w-full">
               <div className="flex h-[80%] flex-1 flex-col items-center justify-center p-4">
-                <h1 className="mb-1 text-2xl font-semibold">Kathryn Cooper</h1>
-                <p className="mb-6 text-gray-600">Doctor</p>
+                <h1 className="mb-1 text-2xl font-semibold">{getStaffDetails().firstname} {getStaffDetails().lastname.toUpperCase()}</h1>
 
                 <Avatar className="mb-8 h-48 w-48">
-                  <AvatarImage alt="Kathryn Cooper" src="/images/client.jpg" />
-                  <AvatarFallback>KC</AvatarFallback>
+                  <AvatarImage alt="Kathryn Cooper" src={getStaffDetails().photo} />
+                  <AvatarFallback>{getStaffDetails().firstname.slice(0, 2)}</AvatarFallback>
                 </Avatar>
 
                 <div className="rounded-full bg-gray-800 px-4 py-2 text-white">
@@ -262,18 +258,19 @@ function CallFooterControls(
             </ShadButton>
           </div>
 
-          {/* <ShadButton
+          <ShadButton
             variant="outline"
             size="icon"
             className="h-12 w-12 rounded-xl bg-white bg-opacity-80"
-            onClick={() => setIsCameraOff(!isCameraOff)}
+            onClick={toggleMute}
+
           >
-            {isCameraOff ? (
+            {isMuted ? (
               <MicOff className="h-8 w-8 text-primary-500" />
             ) : (
               <Mic className="h-8 w-8 text-primary-500" />
             )}
-          </ShadButton> */}
+          </ShadButton>
           <div />
         </div>
       </div>

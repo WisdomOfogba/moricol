@@ -43,6 +43,8 @@ export const useCallControls = ({
         if (!socket) return;
 
         socket.on('incoming-call', ({ callerId }) => {
+            console.log('Incoming call from', callerId);
+
             setCallStatus('ringing');
         });
 

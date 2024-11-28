@@ -10,8 +10,8 @@ const PermissionModal = ({ permissionStatus, closePermissionModal }: { permissio
                     <>
                         Microphone access has been blocked. To use this feature, please:
                         <ol className="ml-4 list-decimal">
-                            <li>Click the camera/microphone icon in your browser's address bar</li>
-                            <li>Select "Allow" for microphone access</li>
+                            <li>Click the camera/microphone icon in your browser&apos;s address bar</li>
+                            <li>Select &quot;Allow&quot; for microphone access</li>
                             <li>Refresh the page</li>
                         </ol>
                     </>

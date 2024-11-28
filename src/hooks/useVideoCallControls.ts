@@ -16,7 +16,6 @@ interface UseVideoCallControlsReturn {
     isMuted: boolean;
     isVideoOff: boolean;
     callDuration: number;
-    error: string | null;
     isReconnecting: boolean;
     initiateCall: (receiverId: string) => void;
     acceptCall: (callerId: string) => void;
@@ -37,7 +36,6 @@ export const useVideoCallControls = ({
 }: UseVideoCallControlsProps): UseVideoCallControlsReturn => {
     const [callStatus, setCallStatus] = useState<'idle' | 'ringing' | 'connecting' | 'connected' | 'ended' | 'failed'>('idle');
     const [callDuration, setCallDuration] = useState(0);
-    const [error, setError] = useState<string | null>(null);
     const [isReconnecting, setIsReconnecting] = useState(false);
     const timerRef = useRef<NodeJS.Timeout>();
 
@@ -46,6 +44,7 @@ export const useVideoCallControls = ({
         if (!socket) return;
 
         socket.on('incoming-call', ({ callerId }) => {
+            console.log(callerId)
             setCallStatus('ringing');
         });
 
@@ -54,6 +53,7 @@ export const useVideoCallControls = ({
             if (peer && localStream) {
                 const call = peer.call(peerId, localStream);
                 call.on('stream', (remoteMediaStream) => {
+                    console.log(remoteMediaStream);
                     setCallStatus('connected');
                 });
             }
@@ -82,6 +82,8 @@ export const useVideoCallControls = ({
         peer.on('call', (call) => {
             call.answer(localStream);
             call.on('stream', (remoteMediaStream) => {
+                console.log(remoteMediaStream);
+
                 setCallStatus('connected');
             });
         });
@@ -195,7 +197,6 @@ export const useVideoCallControls = ({
         isMuted: localStream?.getAudioTracks().some(track => track.enabled) || false, // Check localStream
         isVideoOff: localStream?.getVideoTracks().some(track => track.enabled) || false, // Check localStream
         callDuration,
-        error,
         isReconnecting,
         initiateCall,
         acceptCall,

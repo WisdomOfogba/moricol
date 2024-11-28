@@ -5,7 +5,6 @@ interface UsePeerConnectionProps {
     userId: string;
     stream: MediaStream | undefined | null;
     mode: 'audio' | 'video';
-    constraints?: MediaStreamConstraints;
 }
 
 interface UsePeerConnectionReturn {
@@ -23,7 +22,7 @@ interface UsePeerConnectionReturn {
     disconnectPeer: () => void;
 }
 
-export const usePeerConnection = ({ userId, stream, mode, constraints }: UsePeerConnectionProps): UsePeerConnectionReturn => {
+export const usePeerConnection = ({ userId, stream, mode }: UsePeerConnectionProps): UsePeerConnectionReturn => {
     const [peer, setPeer] = useState<Peer | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [connectionStatus, setConnectionStatus] = useState<{
@@ -49,8 +48,8 @@ export const usePeerConnection = ({ userId, stream, mode, constraints }: UsePeer
         });
 
         newPeer.on('error', (err) => {
-            setError({ audio: `PeerJS error: ${err.message}` });
-            setConnectionStatus({ audio: 'disconnected' });
+            setError({ [mode]: `PeerJS error: ${err.message}` });
+            setConnectionStatus((prev) => ({ ...prev, [mode]: 'disconnected' }));
         });
 
         newPeer.on('call', (call) => {

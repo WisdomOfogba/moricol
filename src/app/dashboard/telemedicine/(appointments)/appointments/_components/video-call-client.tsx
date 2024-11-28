@@ -1,9 +1,9 @@
 "use client";
 
-import { Video, ChevronLeft, MicOff, Mic, PhoneOff, CameraOff, Camera, Loader2 } from "lucide-react";
+import { ChevronLeft, MicOff, Mic, PhoneOff, CameraOff, Camera, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import { ShadButton } from "@/components/shadcn-button";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { SingleAppointmentData } from "@/definition";
 import dayjs from "dayjs";
@@ -11,7 +11,6 @@ import { useSocketConnection } from "@/hooks/useSocketConnection";
 import { usePeerConnection } from "@/hooks/usePeerConnection";
 import { useVideoCallControls } from "@/hooks/useVideoCallControls";
 import { useRef, useEffect } from "react";
-import Image from "next/image";
 import { useMediaStream } from "@/hooks/useMediaStream";
 
 interface VideoCallClientProps {
@@ -21,7 +20,6 @@ interface VideoCallClientProps {
 export default function VideoCallClient({ appointment }: VideoCallClientProps) {
   const router = useRouter();
   const { data: session } = useSession();
-  const params = useParams();
 
   // Video refs
   const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -30,16 +28,16 @@ export default function VideoCallClient({ appointment }: VideoCallClientProps) {
   // Get media stream first
   const {
     stream: localStream,
-    error: mediaError,
-    isLoading: mediaLoading,
-    permissionStatus
+    // error: mediaError,
+    // isLoading: mediaLoading,
+    // permissionStatus
   } = useMediaStream();
 
   // Initialize peer with stream
   const {
     peer,
     remoteStream,
-    connectionStatus,
+    // connectionStatus,
     error: peerError
   } = usePeerConnection({
     userId: session?.user?.id as string,
@@ -48,7 +46,7 @@ export default function VideoCallClient({ appointment }: VideoCallClientProps) {
   });
 
   // Initialize socket
-  const { socket, isConnected } = useSocketConnection(false);
+  const { socket } = useSocketConnection(false);
 
   // Finally initialize call controls
   const {
@@ -56,11 +54,10 @@ export default function VideoCallClient({ appointment }: VideoCallClientProps) {
     isMuted,
     isVideoOff,
     callDuration,
-    error: callError,
     isReconnecting,
-    initiateCall,
-    acceptCall,
-    rejectCall,
+    // initiateCall,
+    // acceptCall,
+    // rejectCall,
     endCall,
     toggleMute,
     toggleVideo,
@@ -70,7 +67,7 @@ export default function VideoCallClient({ appointment }: VideoCallClientProps) {
     peer,
     appointmentId: appointment._id,
     userId: session?.user?.id as string,
-    localStream, // Added localStream here
+    localStream,
     onCallEnd: () => router.back()
   });
 
@@ -194,11 +191,11 @@ export default function VideoCallClient({ appointment }: VideoCallClientProps) {
       </div>
 
       {/* Error modal */}
-      {callError && (
+      {peerError.video && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="w-[90%] max-w-md rounded-lg bg-white p-6">
             <h3 className="mb-2 text-lg font-semibold text-red-600">Error</h3>
-            <p className="mb-4 text-gray-600">{callError}</p>
+            <p className="mb-4 text-gray-600">{peerError.video}</p>
             <div className="flex justify-end space-x-2">
               <ShadButton variant="outline" onClick={() => router.back()}>
                 Close
