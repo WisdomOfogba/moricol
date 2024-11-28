@@ -5,8 +5,6 @@ import { useState } from "react";
 import CourseTimeLecturesSection from "./time-lecture-section";
 import Image from "next/image";
 import { curriculum } from "@/definition";
-// import VideoDuration from "./VideoDuration";
-// import PDFFileSize from "./PdfUrl";
 
 export default function CurriculumCard({
   curriculum,

@@ -526,6 +526,7 @@ export type curriculum = {
 export type section = {
   lesson_name: string;
   _id: string;
+  lesson_completed: boolean
   lesson: {
     lesson_type: string;
     content: string;
@@ -683,6 +684,7 @@ export type courseorder = {
     thumbnail: string;
     description: string;
     duration: string;
+    client: string;
     instructors: [
       {
         instructor: instructors;

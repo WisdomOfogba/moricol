@@ -3,7 +3,6 @@
 import { CartData } from "@/definition";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-// Updated CourseData Type
 
 type CartContextType = {
   cart: CartData[];

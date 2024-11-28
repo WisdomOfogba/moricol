@@ -1,6 +1,5 @@
-// Page.tsx (Server Component)
 import React from "react";
-import { getUserSession } from "@/lib/session"; // Ensure this is a server-side function
+import { getUserSession } from "@/lib/session"; 
 import ClientMessagingPage from "../../../components/ClientMessagingPage";
 import { CourseApi } from "@/api/training";
 
@@ -11,7 +10,7 @@ async function fetchData({userId, session, adminId}:{userId: string, session: an
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const session = await getUserSession(); // Call on server-side
+  const session = await getUserSession();
   
   if (!session?.user?.id) {
     return <p>User session is invalid.</p>;
