@@ -8,22 +8,18 @@ interface UseChatProps {
         appointmentid: string;
     }
     userId: string;
-    userName: string;
-    userAvatar?: string;
+    session_close: boolean
 }
 
 export function useChat({
     roomId,
     userId,
+    session_close
 }: UseChatProps) {
     const [messages, setMessages] = useState<MessagePayload[]>([]);
     const [isTyping, setIsTyping] = useState<Record<string, boolean>>({});
-    const { socket, isConnected, error } = useSocketConnection();
+    const { socket, isConnected, error } = useSocketConnection(session_close);
 
-    console.log({
-        coon: isConnected,
-        socket, error
-    })
 
 
     useEffect(() => {

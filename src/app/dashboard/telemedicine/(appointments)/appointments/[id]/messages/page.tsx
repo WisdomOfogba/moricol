@@ -33,8 +33,6 @@ async function AppointmentMessages({
   const session = await getUserSession();
   const appointment = await getAppointment(session as Session, params.id);
 
-  console.log(appointment)
-
 
   return (
     <div>

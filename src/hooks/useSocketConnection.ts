@@ -4,7 +4,7 @@ import { Socket, io } from 'socket.io-client';
 
 
 
-export function useSocketConnection() {
+export function useSocketConnection(session_close: boolean) {
     const socketRef = useRef<Socket | null>(null);
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -12,6 +12,7 @@ export function useSocketConnection() {
     const maxRecon = 5
 
     useEffect(() => {
+        if (session_close) return
         socketRef.current = io(API_BASE_URL, {
             transports: ['websocket', 'polling'],
         });
@@ -24,7 +25,7 @@ export function useSocketConnection() {
         });
 
         socketRef.current.on('disconnect', () => {
-            console.log('disconnectednneted')
+            console.log('disconnected')
             setIsConnected(false);
         });
 
