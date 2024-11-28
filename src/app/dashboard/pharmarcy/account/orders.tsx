@@ -492,7 +492,7 @@ export default function MyOrders() {
                   <div className="relative h-[75px] w-[79px] overflow-hidden text-xs">
                     <Image
                       src={
-                        it.productid.coverimage ?? "/images/dashboard/drug.png"
+                        it.productid?.coverimage ?? "/images/dashboard/drug.png"
                       }
                       alt=""
                       className=""
@@ -500,7 +500,7 @@ export default function MyOrders() {
                       sizes="79px"
                     />
                   </div>
-                  {it.productid.name ?? "Some drug"}
+                  {it.productid?.name ?? "Some drug"}
                 </td>
                 <td className="text-primary-500">₦{it.price}</td>
                 <td className="py-3.5">
@@ -517,7 +517,7 @@ export default function MyOrders() {
                   <div className="flex flex-col justify-end gap-x-4 gap-y-2 font-bold text-primary-500 md:flex-row">
                     <Link
                       href={
-                        routes.PHARMARCYPRODUCTREVIEW + `/${it.productid._id}`
+                        routes.PHARMARCYPRODUCTREVIEW + `/${it.productid?._id}`
                       }
                     >
                       Rate this item

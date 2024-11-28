@@ -15,10 +15,10 @@ export default function ReturnPolicy() {
         </h2>
       </div>
       
-      <h2 className='font-semibold'>Return and Refund Policy </h2>
+      <h2 className='pt-3 font-semibold'>Return and Refund Policy </h2>
       
-      <p className='py-5'>Eligibility for Returns Only</p> 
-      <p className="my-5 text-gray-500">
+      <p className='py-3'>Eligibility for Returns Only</p> 
+      <p className="mb-3 text-gray-500">
       i) Unopened and unused products only are eligible for return. <br />
        ii) Prescription medications cannot be returned unless they are defective or damaged.  <br />
        iii) Returns must be within 48 hours.  <br />   
