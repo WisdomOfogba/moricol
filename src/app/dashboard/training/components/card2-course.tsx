@@ -56,7 +56,7 @@ export default function CourseCard2({
             <StarSVG fill="#FD8E1F" /> {courseData.courseid?.rating}
           </p>
           <p>
-            100 <span className="#8C94A3">students</span>
+            {courseData.courseid.client} <span className="#8C94A3">students</span>
           </p>
         </div>
       </article>

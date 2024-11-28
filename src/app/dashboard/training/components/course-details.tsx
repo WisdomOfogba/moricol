@@ -2,23 +2,11 @@
 
 import {
   ArrowRightSvg,
-  // Clipboard,
   ClockSvg,
-  // DollarSignSvg,
-  // Envelop,
-  // Facebook,
   GreenCheckmarCircle,
   NetworkSvg,
-  // NotebookSvg,
-  // NotepadSvg,
-  // Spinner,
-  // StackSvg,
   StarSVG,
-  // TrophySvg,
-  // TvSvg,
-  // Twitter,
   TwoUserCutOffSvg,
-  // Whatsapp,
 } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
@@ -78,13 +66,6 @@ const onlineCourseDescriptionDetailLink = [
     link: "review",
   },
 ];
-
-// const socialLinks = [
-//   { icon: <Facebook />, key: "facebook" },
-//   { icon: <Twitter />, key: "twitter" },
-//   { icon: <Envelop />, key: "mail" }, // Changed Envelop to Mail as it's not in lucide-react
-//   { icon: <Whatsapp />, key: "whatsapp" },
-// ];
 
 export default function CourseDetail({
   course,

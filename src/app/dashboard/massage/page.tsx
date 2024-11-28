@@ -80,7 +80,6 @@ export default async function MassageHome() {
           {featuredMassageData.map((service) => (
             <MassageServiceCard key={service._id} id={service._id as string} bg={service.image} service={service.name} />
           ))}
-
         </div>
       </section>
     </main>
@@ -89,7 +88,7 @@ export default async function MassageHome() {
 
 function MasseuseCard({ specialist }: { specialist: MassageData }) {
   return (
-    <Link href={routes.MASSAGESINGLESPECIALIST} className="block hover:opacity-90 transition-opacity">
+    <Link href={`${routes.MASSAGESINGLESPECIALIST}/${specialist._id}`} className="block hover:opacity-90 transition-opacity">
       <article className="overflow-hidden rounded-lg border border-gray-200 shadow-sm">
         <div className="relative h-[140px] w-full">
           <Image
@@ -104,7 +103,7 @@ function MasseuseCard({ specialist }: { specialist: MassageData }) {
             <span className="text-yellow-400">⭐</span>
             <span className="font-medium text-gray-500">{specialist.rating || 4.5}</span>
           </p> */}
-          <h3 className="mb-1 text-sm font-medium">{specialist.firstname} {specialist.lastname}</h3>
+          <h3 className="mb-1 text-sm font-medium capitalize">{specialist.firstname} {specialist.lastname}</h3>
           {/* <p className="text-xs text-gray-500">{specialist.massage_specialty[0].massageid}</p> */}
         </div>
       </article>
