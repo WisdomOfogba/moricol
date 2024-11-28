@@ -110,12 +110,12 @@ export default function ViewCourseDetail({
   });
   return (
     <main className="w-full pb-20">
-      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
+      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 md:px-14">
         <PrevPageBtn />
         <div className="flex w-full">
           <div className="flex w-full flex-col">
             <div className="flex w-full items-center justify-between">
-              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] sm:w-min sm:text-lg">
+              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] md:w-min md:text-lg">
                 {singleCourse.courseorder.courseid.title ||
                   singleCourse.courseorder.courseid.bundle}
               </h1>
@@ -130,7 +130,7 @@ export default function ViewCourseDetail({
         </div>
       </section>
 
-      <section className="mb-16 flex flex-col-reverse items-center justify-between gap-6 px-4 py-6 sm:px-14 xl:flex-row xl:items-start">
+      <section className="mb-16 flex flex-col-reverse items-center justify-between gap-6 px-4 py-6 md:px-14 xl:flex-row xl:items-start">
         {/* Right hand side */}
         <div className="grid w-full gap-y-10">
           {/* Heading */}
@@ -138,13 +138,13 @@ export default function ViewCourseDetail({
             <>
               <div className="w-full">
                 {/* <Breadcrumb /> */}
-                <div className="mb-3 hidden text-sm sm:block">
+                <div className="mb-3 hidden text-sm md:block">
                   <a href="/dashboard/training/profile">Home</a>{" "}
                   <span className="mx-2">{">"}</span> Online{" "}
                   <span className="mx-2">{">"}</span>
                 </div>
 
-                <h2 className="my-6 text-xl font-semibold sm:mb-6 sm:text-3xl">
+                <h2 className="my-6 text-xl font-semibold md:mb-6 md:text-3xl">
                   {singleCourse.courseorder.courseid.title ||
                     singleCourse.courseorder.courseid.bundle}
                 </h2>
@@ -177,7 +177,7 @@ export default function ViewCourseDetail({
                       </h3>
                     </div>
                   </article>
-                  <div className="hidden items-center gap-x-2 sm:flex">
+                  <div className="hidden items-center gap-x-2 md:flex">
                     <FiveStar className="h-6 w-6" />
                     <p className="font-medium text-[#1D2026]">
                       {singleCourse.courseorder.courseid.rating}{" "}

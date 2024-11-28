@@ -26,7 +26,7 @@ export default async function TrainingProfileTeachers() {
   const Instructors = await getInstructors()
 
   return (
-    <main className="px-4 sm:px-14 py-12">
+    <main className="px-4 md:px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-center text-2xl font-semibold text-[#1D2026]">
           Instructors ({Instructors.length})

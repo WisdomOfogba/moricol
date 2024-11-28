@@ -48,10 +48,10 @@ async function ToolBar() {
   return (
     <header className="flex items-center justify-between border-b bg-white px-5 py-4">
       {/* Logo */}
-      <Link href="/" className="relative hidden h-16 w-[127px] sm:block">
+      <Link href="/" className="relative hidden h-16 w-[127px] md:block">
         <Image src="/logo.svg" alt="" fill sizes="127px" />
       </Link>
-      <Link href="/" className="relative block cursor-pointer sm:hidden">
+      <Link href="/" className="relative block cursor-pointer md:hidden">
         <Home />
       </Link>
 

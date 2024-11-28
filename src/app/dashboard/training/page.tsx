@@ -38,7 +38,7 @@ export default async function Home() {
   } = await getCoursesData();
   return (
     <main>
-      <section className="mb-6 flex items-start justify-between px-4 sm:px-14 py-8">
+      <section className="mb-6 flex items-start justify-between px-4 md:px-14 py-8">
           <Link
             href={routes.TRAININGPROFILECOURSES}
             className="font-semibold text-primary-500"

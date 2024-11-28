@@ -16,7 +16,7 @@ export default function ShoppingCard() {
 
   return (
     <main className="w-full">
-      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-4 sm:px-14 py-10">
+      <section className="mb-6 flex flex-col items-center justify-between gap-y-4 bg-[#F5F7FA] px-4 md:px-14 py-10">
         <h1 className="text-2xl font-semibold text-[#1D2026]">Shopping Cart</h1>
         {/* <BreadCrumb /> */}
         <p className="text-sm text-[#6E7485]">
@@ -24,7 +24,7 @@ export default function ShoppingCard() {
         </p>
       </section>
 
-      <div className="px-4 sm:px-14">
+      <div className="px-4 md:px-14">
         <section>
           <h3 className="mb-6 text-center text-xl font-semibold text-[#1D2026]">
             Shopping Cart ({cartCount})

@@ -93,12 +93,12 @@ export default function CourseDetail({
   );
   return (
     <main className="w-full pb-20">
-      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 sm:px-14">
+      <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 md:px-14">
         <PrevPageBtn />
         <div className="flex w-full">
           <div className="flex w-full flex-col">
             <div className="flex w-full items-start justify-between">
-              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] sm:w-min sm:text-lg">
+              <h1 className="relative mb-3 w-40 truncate text-base font-medium text-[#1D2026] md:w-min md:text-lg">
                 {course?.title || course?.bundle}
               </h1>
               <p className="text-base text-primary-500 lg:text-2xl">
@@ -113,7 +113,7 @@ export default function CourseDetail({
         </div>
       </section>
 
-      <section className="mb-16 flex flex-col items-center justify-between gap-6 px-4 py-6 sm:px-14 xl:flex-row xl:items-start">
+      <section className="mb-16 flex flex-col items-center justify-between gap-6 px-4 py-6 md:px-14 xl:flex-row xl:items-start">
         {/* Right hand side */}
         <div className="grid w-full gap-y-10">
           {/* Heading */}
@@ -125,7 +125,7 @@ export default function CourseDetail({
               <span className="mx-2">{">"}</span>
             </div>
 
-            <h2 className="mb-6 text-xl font-semibold sm:text-3xl">
+            <h2 className="mb-6 text-xl font-semibold md:text-3xl">
               {course.title || course.bundle}
             </h2>
 
@@ -148,7 +148,7 @@ export default function CourseDetail({
                   </h3>
                 </div>
               </article>
-              <div className="hidden items-center gap-x-2 sm:flex">
+              <div className="hidden items-center gap-x-2 md:flex">
                 <FiveStar className="h-6 w-6" />
                 <p className="font-medium text-[#1D2026]">
                   {course?.rating}{" "}
@@ -394,7 +394,7 @@ export default function CourseDetail({
                               style={{ objectFit: "cover" }}
                             />
                           </div>
-                          <h4 className="w-32 truncate text-lg font-semibold text-[#1D2026] sm:w-full">
+                          <h4 className="w-32 truncate text-lg font-semibold text-[#1D2026] md:w-full">
                             {instructor.instructor.name}
                           </h4>
                         </article>
@@ -424,7 +424,7 @@ export default function CourseDetail({
       </section>
 
       {/* Related courses */}
-      <section className="px-4 sm:px-14">
+      <section className="px-4 md:px-14">
         <div className="mb-10 flex items-center justify-between">
           <h2 className="text-3xl font-semibold text-[#1D2026]">
             Related Courses
@@ -478,7 +478,7 @@ function CourseDetailSummary({
   return (
     <article className="w-full shrink-0 px-4 shadow-md xl:w-[424px]">
       {/* Course Details */}
-      <div className="grid gap-y-6 p-2 sm:px-6">
+      <div className="grid gap-y-6 p-2 md:px-6">
         {highlightDetails.map(({ title, detail, icon }, i) => (
           <div className="flex justify-between text-sm" key={i}>
             <p className="flex items-center gap-x-2 text-[#1D2026]">
