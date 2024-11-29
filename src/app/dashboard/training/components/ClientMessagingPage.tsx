@@ -37,7 +37,7 @@ function IncomingMessage({msg}: {msg: messaging}) {
         </div>
         <p className="text-xs text-[#6E7485]">{formatRelativeTime(msg.createdAt)}</p>
       </div>
-      <p className="bg-primary-100 px-3 py-2 text-sm text-[#1D2026]">
+      <p className="bg-primary-300 px-3 py-2 text-sm text-[#1D2026]">
         {msg.message}
       </p>
     </article>

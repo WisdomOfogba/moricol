@@ -55,9 +55,6 @@ export default async function TrainingProfileLayout({
               <h3 className="mb-3.5 text-2xl font-semibold text-[#1D2026]">
                 {profileData.firstname}{" "}{profileData.lastname}
               </h3>
-              <p className="text-gray-500">
-                {profileData.occupation}
-              </p>
             </div>
           </div>
 
