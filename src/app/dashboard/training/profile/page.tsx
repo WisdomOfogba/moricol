@@ -47,7 +47,7 @@ export default async function TrainingProfile() {
   const {profileData, dashboard } = await getData();
 
   return (
-    <main className="px-4 sm:px-14 w-full py-12">
+    <main className="px-4 md:px-14 w-full py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
           Dashboard
@@ -90,7 +90,7 @@ export default async function TrainingProfile() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between gap-6">
           {dashboard.courses.map((item, i) => (
             <MyCourseCard key={i} progress={item.progress} course={item} />
           ))}

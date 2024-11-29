@@ -44,11 +44,11 @@ export default async function TrainingProfileLayout({
 
   return (
     <section className="no-scrollbar overflow-y-auto">
-      <div className="relative bg-primary-100 px-4 sm:px-14 pt-9">
+      <div className="relative bg-primary-100 px-4 md:px-14 pt-9">
         <article className="relative -bottom-2 border border-primary-500 bg-white">
           <div className="flex items-center gap-x-6 border-b border-primary-500 p-10">
-            <div className="relative h-[60px] w-[60px] sm:h-[100px] sm:w-[100px] overflow-hidden rounded-full">
-              <Image width={100} height={100} className="w-16 sm:w-28" src={profileData.photo ? profileData.photo : "/images/client.jpg"} alt="" />
+            <div className="relative h-[60px] w-[60px] md:h-[100px] md:w-[100px] overflow-hidden rounded-full">
+              <Image width={100} height={100} className="w-16 md:w-28" src={profileData.photo ? profileData.photo : "/images/client.jpg"} alt="" />
             </div>
 
             <div>
@@ -61,7 +61,7 @@ export default async function TrainingProfileLayout({
             </div>
           </div>
 
-          <ul className="flex justify-between w-full overflow-auto gap-x-6 px-4 sm:px-14 no-scrollbar">{profileLinksList}</ul>
+          <ul className="flex justify-between w-full overflow-auto gap-x-6 px-4 md:px-14 no-scrollbar">{profileLinksList}</ul>
         </article>
       </div>
       {children}

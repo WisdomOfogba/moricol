@@ -33,7 +33,7 @@ export default async function TrainingProfileMessages({
   const archive = await getSavedCourses();
 
   return (
-    <main className="px-4 sm:px-14 py-12">
+    <main className="px-4 md:px-14 py-12">
       <section className="flex flex-col items-center xl:items-start xl:flex-row gap-6">
         {/* Friend list section */}
         <aside className="w-full xl:w-[424px] shrink-0 border border-[#E9EAF0] py-6">

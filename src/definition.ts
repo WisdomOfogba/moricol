@@ -428,8 +428,25 @@ export type SingleAppointmentData = {
     upload: string;
     _id: string;
   }>;
-  userid: string;
-  staffid: string;
+  userid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    gender: 'male' | 'female';
+    country: string;
+    state: string;
+    photo: string;
+  };
+  staffid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    photo: string;
+    age: string;
+    gender: 'male' | 'female';
+    state: string;
+    country: string;
+  }
   subcategoryid: string;
   paymentid: string;
   createdAt: string;

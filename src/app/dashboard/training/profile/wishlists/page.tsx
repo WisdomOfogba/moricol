@@ -48,7 +48,7 @@ export default async function TrainingProfileWishlists() {
   const Courses = await getSavedCourses();
 
   return (
-    <main className="px-4 sm:px-14 py-12">
+    <main className="px-4 md:px-14 py-12">
       <section className="mb-10">
         <h2 className="mb-6 text-2xl font-semibold text-[#1D2026]">
           Wishlists ({Courses.length})
@@ -56,7 +56,7 @@ export default async function TrainingProfileWishlists() {
       </section>
 
       <section className="w-full overflow-auto">
-        <div className={`border border-[#E9EAF0] ${Courses.length > 0 ? "w-min sm:w-full" : "w-full"}`}>
+        <div className={`border border-[#E9EAF0] ${Courses.length > 0 ? "w-min lg:w-full" : "w-full"}`}>
           <div className="grid grid-cols-[3fr_1fr_1fr] border-b border-b-[#E9EAF0] px-6 py-5 text-sm font-medium text-[#4E5566]">
             <h3>COURSE</h3>
             <h3>PRICES</h3>
