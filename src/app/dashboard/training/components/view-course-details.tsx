@@ -155,7 +155,7 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src={singleCourse.courseorder.courseid.instructors[0].instructor.photo || "/images/client.jpg"}
+                          src={singleCourse.courseorder.courseid.instructors[0]?.instructor.photo || "/images/client.jpg"}
                           alt=""
                           className="flex w-full"
                         />
@@ -496,12 +496,12 @@ export default function ViewCourseDetail({
               <div className="mb-3.5 flex items-center justify-between font-semibold">
                 <h3 className="text-[#1D2026]">Course contents</h3>
                 <p className="text-xs text-[#23BD33]">
-                  {singleCourse.courseorder.progress}% Completed
+                  {singleCourse.courseorder.progress.toFixed(0)}% Completed
                 </p>
               </div>
               <div className="mb-4 bg-[#E9EAF0]">
                 <div
-                  style={{ width: `${singleCourse.courseorder.progress}%` }}
+                  style={{ width: `${singleCourse.courseorder.progress.toFixed(0)}%` }}
                   className={`h-[3px] bg-[#23BD33]`}
                 ></div>
               </div>

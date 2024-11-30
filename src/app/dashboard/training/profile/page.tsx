@@ -124,6 +124,8 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
     return;
   }
 
+  const index = singleCourse.courseorder.coursetype.lastIndexOf("course")
+
   return (
     <article className="border border-[#E9EAF0] bg-white">
       {/* Image */}
@@ -139,7 +141,7 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
       {/* Details */}
       <div className="p-4">
         <h3 className="mb-1.5 text-xs text-[#6E7485]">
-          {singleCourse.courseorder.courseid?.description ? singleCourse.courseorder.courseid?.description : "No Description"}
+          {singleCourse.courseorder.coursetype ? singleCourse.courseorder.coursetype.slice(0, index) : "No Description"}
         </h3>
         <p className="text-sm font-medium text-[#1D2026]">{singleCourse.courseorder.courseid?.title ? singleCourse.courseorder.courseid?.title : singleCourse.courseorder.courseid.bundle}</p>
       </div>
@@ -153,7 +155,7 @@ async function MyCourseCard({ progress, course }: { progress: number, course: {c
           Watch Lecture
         </Link>
         {progress > 0 && (
-          <p className="font-medium text-[#23BD33]">{progress}% Completed</p>
+          <p className="font-medium text-[#23BD33]">{progress.toFixed(0)}% Completed</p>
         )}
       </div>
     </article>
