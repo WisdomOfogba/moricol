@@ -30,14 +30,47 @@ const courseDescriptionDetailLink = [
 export default function ViewCourseDetail({
   profileData,
   singleCourse,
+  courseid,
+  id,
 }: {
   profileData: ProfileData;
   singleCourse: SingleCourse;
+  courseid: string;
+  id: string;
 }) {
   const [activeLink, setActiveLink] = useState("overview");
   const [activeLesson, setActiveLesson] = useState("");
   const [sectionid, setSectionid] = useState("");
   const [lesson, setLesson] = useState<section | null>(null);
+  const [progress, setProgress] = useState(singleCourse.courseorder.progress)
+  const { data: session } = useSession();
+
+  async function getSingle() {
+    try {
+      const response = await CourseApi.getSingleCourse({
+        courseid: id,
+        userid: session?.user.id as string,
+        session: session as Session,
+        courseorderid: courseid,
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to update Progress"
+      );
+    }
+  }
+
+
+
+  const handleProgress = async () => {
+    try {
+      const single = await getSingle();
+      setProgress(single.courseorder.progress);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSetLesson = (
     type: string,
@@ -80,34 +113,31 @@ export default function ViewCourseDetail({
     link.click();
     document.body.removeChild(link);
   };
-  const courseCurriculum = singleCourse.course?.curriculum || [];
+  const courseCurriculum = singleCourse.courseorder.courseid.curriculum || [];
   const orderCurriculum = singleCourse.courseorder?.curriculum || [];
-
+  
   const mergedCurriculum = courseCurriculum.map((section) => {
     const matchingOrderSection = orderCurriculum.find((orderSection) =>
-      orderSection.section.some((orderLesson) =>
-        section.section.some(
-          (lesson) => lesson.lesson.content === orderLesson.lesson.content,
-        ),
-      ),
+      orderSection._id === section._id
     );
-
+  
     return {
-      _id: section._id, 
+      _id: section._id,
       section_name: section.section_name,
       section: section.section.map((lesson) => {
         const matchingLesson = matchingOrderSection?.section.find(
           (orderLesson) => orderLesson.lesson.content === lesson.lesson.content,
         );
-
+  
         return {
           ...lesson,
-          lesson_completed: matchingLesson?.lesson_completed || false,
+          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : lesson.lesson_completed || false,
           _id: lesson._id,
         };
       }),
     };
   });
+
   return (
     <main className="w-full pb-20">
       <section className="flex w-full items-center gap-x-4 bg-[#F5F7FA] px-4 py-5 md:px-14">
@@ -155,7 +185,10 @@ export default function ViewCourseDetail({
                         <Image
                           width={500}
                           height={281}
-                          src={singleCourse.courseorder.courseid.instructors[0]?.instructor.photo || "/images/client.jpg"}
+                          src={
+                            singleCourse.courseorder.courseid.instructors[0]
+                              ?.instructor.photo || "/images/client.jpg"
+                          }
                           alt=""
                           className="flex w-full"
                         />
@@ -210,6 +243,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -238,6 +272,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -276,6 +311,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -303,6 +339,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -330,6 +367,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -357,6 +395,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -384,6 +423,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -402,6 +442,7 @@ export default function ViewCourseDetail({
                 </h2>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -440,6 +481,7 @@ export default function ViewCourseDetail({
                 </div>
                 {lesson !== null && (
                   <MarkLesson
+                    setProgress={handleProgress}
                     lesson_completed={lesson.lesson_completed}
                     lessonid={lesson._id}
                     sectionid={sectionid}
@@ -496,13 +538,15 @@ export default function ViewCourseDetail({
               <div className="mb-3.5 flex items-center justify-between font-semibold">
                 <h3 className="text-[#1D2026]">Course contents</h3>
                 <p className="text-xs text-[#23BD33]">
-                  {singleCourse.courseorder.progress.toFixed(0)}% Completed
+                  {progress.toFixed(0)}% Completed
                 </p>
               </div>
               <div className="mb-4 bg-[#E9EAF0]">
                 <div
-                  style={{ width: `${singleCourse.courseorder.progress.toFixed(0)}%` }}
-                  className={`h-[3px] bg-[#23BD33]`}
+                  style={{
+                    width: `${progress.toFixed(0)}%`,
+                  }}
+                  className={`h-[3px] bg-[#23BD33] transition-all`}
                 ></div>
               </div>
               <div
