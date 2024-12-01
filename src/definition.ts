@@ -702,6 +702,7 @@ export type courseorder = {
     description: string;
     duration: string;
     client: string;
+    curriculum: curriculum[];
     instructors: [
       {
         instructor: instructors;

@@ -11,11 +11,13 @@ const MarkLesson = ({
     sectionid,
     courseid,
     lesson_completed,
-}: {
+    setProgress,
+  }: {
     lessonid: string;
     sectionid: string;
     courseid: string;
     lesson_completed: boolean;
+    setProgress: () => void;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
@@ -32,6 +34,7 @@ const MarkLesson = ({
         courseid,
         session: session as Session,
       });
+      setProgress()
       setCompleted(true);
     } catch (error) {
       console.error(error);
@@ -47,7 +50,7 @@ const MarkLesson = ({
       disabled={completed || lesson_completed}
       onClick={handlePay}
     >
-      {isLoading ? "Loading..." : completed || lesson_completed ? "Completed" : "Mark as Completed"}
+      {isLoading ? "Marking..." : completed || lesson_completed ? "Completed" : "Mark as Completed"}
     </button>
   );
 };

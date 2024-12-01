@@ -49,7 +49,7 @@ const page = async ({ params: {id, courseid} }: { params: { id: string, courseid
   }
   const singleCourse = await getSingle({courseid: id, courseorderid: courseid})
   return (
-    <ViewCourseDetail profileData={profileData} singleCourse={singleCourse} />
+    <ViewCourseDetail profileData={profileData} singleCourse={singleCourse} courseid={courseid} id={id}/>
   )
 }
 
