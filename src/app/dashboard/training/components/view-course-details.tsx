@@ -197,11 +197,11 @@ export default function ViewCourseDetail({
                       <p className="mb-1 text-sm text-[#6E7485]">Instructor</p>
                       <h3 className="text-medium flex flex-wrap items-center gap-x-1.5 text-[#1D2026]">
                         {singleCourse.courseorder.courseid.instructors.map(
-                          (instructor) => (
+                          (instructor, i) => (
                             <>
-                              <div className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                              <span className="w-32 truncate">
-                                {instructor.instructor.name || "665711e1356671"}
+                              <div key={i} className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
+                              <span key={instructor._id} className="w-32 truncate">
+                                {instructor.instructor.name || String(instructor.instructor)}
                               </span>
                             </>
                           ),

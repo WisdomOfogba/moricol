@@ -33,7 +33,7 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, sectionid, courseid, lessoni
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null,
   );
-  const [userScore, setUserScore] = useState(quiz.user_score); // Tracks the user's current score
+  const [userScore, setUserScore] = useState(quiz.user_score);
   const [isAnswerConfirmed, setIsAnswerConfirmed] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
