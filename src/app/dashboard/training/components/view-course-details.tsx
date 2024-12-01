@@ -131,7 +131,7 @@ export default function ViewCourseDetail({
   
         return {
           ...lesson,
-          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : false,
+          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : lesson.lesson_completed,
         };
       }),
     };
