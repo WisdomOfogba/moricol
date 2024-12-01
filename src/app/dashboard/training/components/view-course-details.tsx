@@ -114,7 +114,7 @@ export default function ViewCourseDetail({
     document.body.removeChild(link);
   };
   const courseCurriculum = singleCourse.courseorder.courseid.curriculum || [];
-  const orderCurriculum = singleCourse.courseorder?.curriculum || [];
+  const orderCurriculum = singleCourse.courseorder.curriculum || [];
   
   const mergedCurriculum = courseCurriculum.map((section) => {
     const matchingOrderSection = orderCurriculum.find((orderSection) =>
@@ -126,13 +126,12 @@ export default function ViewCourseDetail({
       section_name: section.section_name,
       section: section.section.map((lesson) => {
         const matchingLesson = matchingOrderSection?.section.find(
-          (orderLesson) => orderLesson.lesson.content === lesson.lesson.content,
+          (orderLesson) => orderLesson._id === lesson._id,
         );
   
         return {
           ...lesson,
-          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : lesson.lesson_completed || false,
-          _id: lesson._id,
+          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : false,
         };
       }),
     };
