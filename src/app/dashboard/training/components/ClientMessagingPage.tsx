@@ -22,13 +22,13 @@ function ThreeDotsMenu() {
 }
 
 
-function IncomingMessage({msg}: {msg: messaging}) {
+function IncomingMessage({msg, admin_photo}: {msg: messaging; admin_photo: string;}) {
   return (
     <article className="w-full max-w-[536px]">
       <div className="mb-2 flex items-center gap-x-1.5">
         <div className="relative h-6 w-6 rounded-full">
           <Image
-            src="/images/client.jpg"
+            src={admin_photo || "/images/client.jpg"}
             alt=""
             fill
             sizes="24px"
@@ -76,7 +76,7 @@ export default function ClientMessagingPage({
   const isInitialRender = useRef(true);
   const lastMessageId = useRef(messages[0]?._id); // Track the last message's ID
 
-  const admin = archive.find((a) => a._id === adminid);
+  const admin = archive.find((a) => a.admin_details._id === adminid);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -216,7 +216,7 @@ export default function ClientMessagingPage({
             msg.sender === "user" ? (
               <OutGoingMessage key={msg._id} msg={msg} />
             ) : (
-              <IncomingMessage key={msg._id} msg={msg} />
+              <IncomingMessage admin_photo={admin?.admin_details.photo as string} key={msg._id} msg={msg} />
             )
           )}
         <div ref={messagesEndRef}></div>

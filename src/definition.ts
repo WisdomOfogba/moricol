@@ -738,6 +738,7 @@ export type instructors = {
 export type archive = {
   _id: string;
   admin_details: {
+    _id: string;
     name: string;
     photo: string;
   };

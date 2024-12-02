@@ -42,7 +42,7 @@ export default function ViewCourseDetail({
   const [activeLesson, setActiveLesson] = useState("");
   const [sectionid, setSectionid] = useState("");
   const [lesson, setLesson] = useState<section | null>(null);
-  const [progress, setProgress] = useState(singleCourse.courseorder.progress)
+  const [progress, setProgress] = useState(singleCourse.courseorder.progress);
   const { data: session } = useSession();
 
   async function getSingle() {
@@ -56,12 +56,10 @@ export default function ViewCourseDetail({
       return response.data;
     } catch (error) {
       throw new Error(
-        error instanceof Error ? error.message : "Failed to update Progress"
+        error instanceof Error ? error.message : "Failed to update Progress",
       );
     }
   }
-
-
 
   const handleProgress = async () => {
     try {
@@ -115,12 +113,12 @@ export default function ViewCourseDetail({
   };
   const courseCurriculum = singleCourse.courseorder.courseid.curriculum || [];
   const orderCurriculum = singleCourse.courseorder.curriculum || [];
-  
+
   const mergedCurriculum = courseCurriculum.map((section) => {
-    const matchingOrderSection = orderCurriculum.find((orderSection) =>
-      orderSection._id === section._id
+    const matchingOrderSection = orderCurriculum.find(
+      (orderSection) => orderSection._id === section._id,
     );
-  
+
     return {
       _id: section._id,
       section_name: section.section_name,
@@ -128,10 +126,12 @@ export default function ViewCourseDetail({
         const matchingLesson = matchingOrderSection?.section.find(
           (orderLesson) => orderLesson._id === lesson._id,
         );
-  
+
         return {
           ...lesson,
-          lesson_completed: matchingLesson ? matchingLesson.lesson_completed : lesson.lesson_completed,
+          lesson_completed: matchingLesson
+            ? matchingLesson.lesson_completed
+            : lesson.lesson_completed,
         };
       }),
     };
@@ -169,8 +169,12 @@ export default function ViewCourseDetail({
                 {/* <Breadcrumb /> */}
                 <div className="mb-3 hidden text-sm md:block">
                   <a href="/dashboard/training/profile">Home</a>{" "}
-                  <span className="mx-2">{">"}</span> Online{" "}
-                  <span className="mx-2">{">"}</span>
+                  {singleCourse.courseorder?.curriculum.length > 0 && (
+                    <>
+                      <span className="mx-2">{">"}</span> online{" "}
+                      <span className="mx-2">{">"}</span>
+                    </>
+                  )}
                 </div>
 
                 <h2 className="my-6 text-xl font-semibold md:mb-6 md:text-3xl">
@@ -199,9 +203,16 @@ export default function ViewCourseDetail({
                         {singleCourse.courseorder.courseid.instructors.map(
                           (instructor, i) => (
                             <>
-                              <div key={i} className="h-1.5 w-1.5 rounded-full bg-[#1D2026]" />{" "}
-                              <span key={instructor._id} className="w-32 truncate">
-                                {instructor.instructor.name || String(instructor.instructor)}
+                              <div
+                                key={i}
+                                className="h-1.5 w-1.5 rounded-full bg-[#1D2026]"
+                              />{" "}
+                              <span
+                                key={instructor._id}
+                                className="w-32 truncate"
+                              >
+                                {instructor.instructor.name ||
+                                  String(instructor.instructor)}
                               </span>
                             </>
                           ),
